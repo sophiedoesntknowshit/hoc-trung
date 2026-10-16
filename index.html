@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Học tiếng Trung</title>
+<style>
+:root{
+  --bg:#0f1115; --card:#181b22; --card2:#20242e; --border:#2b303c;
+  --text:#e9ebf1; --muted:#9aa3b3; --accent:#4f8cff; --accent-dark:#3a6fd8;
+  --red:#e5484d; --orange:#f5a524; --green:#30a46c; --blue:#4f8cff;
+  --gold:#f2c94c; --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans SC","Microsoft YaHei",sans-serif;
+  font-size:17px;line-height:1.45;-webkit-text-size-adjust:100%}
+[hidden]{display:none !important}
+.wrap{max-width:720px;margin:0 auto;padding:16px 16px 72px}
+h1{font-size:28px;margin:4px 0 2px}
+h2{font-size:18px;margin:0 0 10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+p{margin:6px 0}
+.muted{color:var(--muted)}
+.small{font-size:14px}
+.center{text-align:center}
+.zh{font-family:"Noto Sans SC","Microsoft YaHei","PingFang SC",sans-serif}
+button{font:inherit;color:var(--text);border:1px solid var(--border);background:var(--card2);
+  border-radius:12px;padding:12px 18px;min-height:52px;cursor:pointer;font-size:17px;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button:active{transform:scale(.98)}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+button.primary:hover{background:var(--accent-dark)}
+button.big{width:100%;font-size:21px;min-height:64px}
+button.link{background:none;border:none;color:var(--accent);padding:0;min-height:0;font-size:15px}
+button.spk{background:none;border:1px solid var(--border);border-radius:999px;min-height:44px;min-width:44px;padding:6px 12px;font-size:22px}
+button.spk.sm{min-height:34px;min-width:34px;font-size:16px;padding:2px 8px;vertical-align:middle}
+button.small-btn{min-height:40px;padding:6px 14px;font-size:15px}
+select,input[type=file]{font:inherit;color:var(--text);background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:8px 12px;min-height:44px}
+input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent);flex:none}
+.box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin:14px 0}
+.row-between{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:12px 8px;text-align:center}
+.stat b{display:block;font-size:30px;line-height:1.1}
+.stat span{font-size:13px;color:var(--muted)}
+.decks{list-style:none;margin:0;padding:0}
+.decks li{border-top:1px solid var(--border)}
+.decks li:first-child{border-top:none}
+.decks label{display:flex;align-items:center;gap:12px;padding:12px 4px;cursor:pointer}
+.decks .emoji{font-size:24px;width:32px;text-align:center;flex:none}
+.decks .dtitle{flex:1;font-weight:600}
+.decks .counts{font-size:13px;color:var(--muted);text-align:right;white-space:nowrap}
+.setting{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--border)}
+.setting:first-of-type{border-top:none}
+.setting span{flex:1}
+.actions-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.actions-row button{padding:12px 8px;font-size:15px}
+/* session bar */
+.bar{position:sticky;top:0;background:var(--bg);padding:10px 0 8px;z-index:5;border-bottom:1px solid var(--border);margin-bottom:14px}
+.bar-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.clock{font-variant-numeric:tabular-nums;font-size:22px;font-weight:700}
+.track{height:8px;background:var(--card2);border-radius:999px;overflow:hidden;margin:8px 0 6px}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--green));transition:width .5s linear}
+.banner{background:#2a2612;border:1px solid var(--gold);color:var(--gold);border-radius:10px;padding:8px 12px;margin-top:8px;font-weight:600;text-align:center}
+/* card */
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 16px 14px;animation:pop .18s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.tag{font-size:12px;padding:3px 9px;border-radius:999px;background:var(--card2);border:1px solid var(--border);color:var(--muted)}
+.tag.new{background:#13331f;border-color:var(--green);color:#7fe0a8}
+.tag.recog{background:#132238;border-color:var(--blue);color:#9cc0ff}
+.tag.recall{background:#2e1f0c;border-color:var(--orange);color:#ffd27a}
+.tag.phrase{background:#2a1838;border-color:#a06bd8;color:#d7b6ff}
+.hanzi{font-size:clamp(60px,16vw,104px);line-height:1.15;text-align:center;margin:8px 0 4px;letter-spacing:.04em}
+.hanzi.mid{font-size:clamp(34px,8vw,48px);line-height:1.3}
+.pinyin{text-align:center;font-size:24px;color:#bcd0ff;margin-top:6px}
+.hanviet{text-align:center;color:var(--muted);margin-top:4px}
+.hanviet b{color:var(--text)}
+.meaning{text-align:center;font-size:24px;font-weight:600;margin:10px 0 4px}
+.meaning.front{font-size:30px;margin:28px 0 8px}
+.pos{text-align:center;color:var(--muted);margin-bottom:8px}
+.chiettu{background:#1d2a1e;border:1px solid #2f5d3a;border-left:4px solid var(--green);border-radius:10px;padding:10px 12px;margin:14px 0}
+.chiettu .label{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#7fe0a8;margin-bottom:4px;font-weight:700}
+.examples{margin-top:12px}
+.ex{border-top:1px solid var(--border);padding:10px 0}
+.ex-zh{font-size:22px}
+.ex-py{color:#bcd0ff;font-size:15px}
+.ex-vi{color:var(--muted);font-size:15px}
+.note{background:var(--card2);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:15px}
+.when{text-align:center;color:var(--muted);font-style:italic;margin-top:14px}
+.actions{margin-top:16px}
+.grades{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px}
+.grades.two{grid-template-columns:repeat(2,1fr)}
+.grades button{min-height:64px;font-weight:700;padding:8px 4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.grades small{font-weight:400;font-size:12px;color:var(--muted)}
+.g1{background:#3a1d1f;border-color:var(--red)}
+.g2{background:#3a2c12;border-color:var(--orange)}
+.g3{background:#163525;border-color:var(--green)}
+.g4{background:#16263f;border-color:var(--blue)}
+.hint{margin-top:12px;text-align:center;font-size:13px;color:var(--muted)}
+.hint kbd{background:var(--card2);border:1px solid var(--border);border-radius:5px;padding:1px 6px;font-family:inherit;font-size:12px}
+.pad-wrap{text-align:center;margin:12px 0 4px}
+.pad{display:block;margin:0 auto 8px;width:240px;height:240px;border-radius:8px;background:#fff;touch-action:none;cursor:crosshair}
+.big-emoji{font-size:64px;text-align:center}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--border)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#2b303c;color:#fff;padding:10px 16px;border-radius:10px;font-size:15px;z-index:20;max-width:90vw;box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.warn{background:#3a1d1f;border:1px solid var(--red);border-radius:var(--radius);padding:16px}
+code{background:var(--card2);padding:1px 6px;border-radius:5px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast" hidden></div>
+
+<script src="decks/chao-hoi.js"></script>
+<script src="decks/an-uong.js"></script>
+<script src="decks/di-lai.js"></script>
+<script src="decks/hoi-duong.js"></script>
+<script src="decks/mua-sam.js"></script>
+<script src="decks/khach-san.js"></script>
+<script src="decks/san-bay-du-lich.js"></script>
+<script src="decks/thoi-tiet-thoi-gian.js"></script>
+<script src="decks/tam-chuyen.js"></script>
+<script src="decks/suc-khoe.js"></script>
+<script src="decks/dien-thoai-thanh-toan.js"></script>
+<script src="decks/nha-cua-sinh-hoat.js"></script>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------- hằng số ----------
+  var STORE_KEY = "hoctrung.v1";
+  var DAY_MS = 86400000;
+  var TARGET_SEC = 45 * 60;
+  var RELEARN_GAP = 8;
+  var REFILL_NEW = 5;
+  var REFILL_EARLY = 10;
+  var MIN_CARDS_FOR_STREAK = 5;
+  var NEW_OPTIONS = [5, 10, 15, 20];
+
+  var app = document.getElementById("app");
+  var toastEl = document.getElementById("toast");
+  var DECKS = Array.isArray(window.DECKS) ? window.DECKS.filter(function (d) { return d && d.id; }) : [];
+
+  // ---------- tiện ích ----------
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+  function fmtClock(sec) { return pad2(Math.floor(sec / 60)) + ":" + pad2(sec % 60); }
+  function dateKey(d) { return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()); }
+  function fmtDate(key) { var p = String(key).split("-"); return p.length === 3 ? p[2] + "/" + p[1] : key; }
+  function startOfDay(ts) { var d = new Date(ts); d.setHours(0, 0, 0, 0); return d.getTime(); }
+  function round2(x) { return Math.round(x * 100) / 100; }
+  function byId(id) { return document.getElementById(id); }
+
+  var toastTimer = null;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.hidden = true; }, 2600);
+  }
+
+  // ---------- dữ liệu thẻ ----------
+  var ITEMS = [];
+  var ITEM_BY_ID = {};
+  DECKS.forEach(function (deck) {
+    (Array.isArray(deck.words) ? deck.words : []).forEach(function (w) {
+      if (!w || !w.hanzi) return;
+      var id = deck.id + ":" + w.hanzi;
+      if (ITEM_BY_ID[id]) return;
+      var it = { id: id, deckId: deck.id, deck: deck, kind: "word", data: w };
+      ITEMS.push(it); ITEM_BY_ID[id] = it;
+    });
+    (Array.isArray(deck.phrases) ? deck.phrases : []).forEach(function (p, i) {
+      if (!p || !p.zh) return;
+      var id = deck.id + ":p:" + i;
+      var it = { id: id, deckId: deck.id, deck: deck, kind: "phrase", data: p };
+      ITEMS.push(it); ITEM_BY_ID[id] = it;
+    });
+  });
+
+  // ---------- lưu trữ ----------
+  function defaultDb() {
+    return {
+      cards: {},
+      sessions: [],
+      settings: { newPerSession: 10, drawPad: true, autoSpeak: true, selectedDecks: DECKS.map(function (d) { return d.id; }) }
+    };
+  }
+  function num(x, d) { x = Number(x); return isFinite(x) ? x : d; }
+  function normalizeCard(c) {
+    if (!c || typeof c !== "object") return null;
+    var st = c.state === "learning" || c.state === "review" || c.state === "new" ? c.state : "new";
+    return {
+      state: st, ease: Math.max(1.3, num(c.ease, 2.5)), interval: Math.max(0, num(c.interval, 0)),
+      due: num(c.due, 0), reps: Math.max(0, Math.floor(num(c.reps, 0))),
+      lapses: Math.max(0, Math.floor(num(c.lapses, 0))), last: num(c.last, 0)
+    };
+  }
+  function normalizeDb(obj) {
+    var base = defaultDb();
+    if (!obj || typeof obj !== "object") return base;
+    if (obj.cards && typeof obj.cards === "object") {
+      Object.keys(obj.cards).forEach(function (id) {
+        var c = normalizeCard(obj.cards[id]);
+        if (c) base.cards[id] = c;
+      });
+    }
+    if (Array.isArray(obj.sessions)) base.sessions = obj.sessions.filter(function (s) { return s && typeof s === "object"; });
+    var s = obj.settings;
+    if (s && typeof s === "object") {
+      if (NEW_OPTIONS.indexOf(Number(s.newPerSession)) >= 0) base.settings.newPerSession = Number(s.newPerSession);
+      if (typeof s.drawPad === "boolean") base.settings.drawPad = s.drawPad;
+      if (typeof s.autoSpeak === "boolean") base.settings.autoSpeak = s.autoSpeak;
+      if (Array.isArray(s.selectedDecks)) base.settings.selectedDecks = s.selectedDecks.slice();
+    }
+    return base;
+  }
+  function loadDb() {
+    var raw = null;
+    try { raw = localStorage.getItem(STORE_KEY); } catch (e) { raw = null; }
+    if (!raw) return defaultDb();
+    try { return normalizeDb(JSON.parse(raw)); } catch (e) { return defaultDb(); }
+  }
+  function saveDb() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(db)); return true; }
+    catch (e) { toast("Không lưu được tiến độ (trình duyệt chặn localStorage?)"); return false; }
+  }
+  var db = loadDb();
+
+  function newCard() { return { state: "new", ease: 2.5, interval: 0, due: 0, reps: 0, lapses: 0, last: 0 }; }
+  function cardOf(id) { return db.cards[id] || newCard(); }
+  function cardState(id) { var c = db.cards[id]; return c && c.state ? c.state : "new"; }
+  function isNewItem(it) { return cardState(it.id) === "new"; }
+  function isDue(id, now) { var c = db.cards[id]; return !!c && c.state !== "new" && c.due <= now; }
+
+  function selectedDecks() {
+    var sel = db.settings.selectedDecks;
+    return DECKS.filter(function (d) { return sel.indexOf(d.id) >= 0; });
+  }
+
+  // ---------- SRS (SM-2 rút gọn) ----------
+  // due của Khó/Nhớ/Dễ tính từ 0h hôm nay + interval ngày, để thẻ luôn tới hạn ngay từ sáng.
+  function computeGrade(card, grade, now) {
+    var c = {
+      state: card.state, ease: card.ease, interval: card.interval,
+      due: card.due, reps: card.reps, lapses: card.lapses, last: card.last
+    };
+    var today = startOfDay(now);
+    if (grade === 1) {
+      c.lapses += 1; c.interval = 0; c.ease = Math.max(1.3, round2(c.ease - 0.2));
+      c.state = "learning"; c.due = now;
+    } else if (grade === 2) {
+      c.interval = c.interval === 0 ? 1 : Math.max(1, Math.round(c.interval * 1.2));
+      c.ease = Math.max(1.3, round2(c.ease - 0.15));
+      c.due = today + c.interval * DAY_MS; c.state = "review";
+    } else if (grade === 3) {
+      c.interval = c.interval === 0 ? 1 : c.interval === 1 ? 3 : Math.round(c.interval * c.ease);
+      c.due = today + c.interval * DAY_MS; c.state = "review";
+    } else {
+      c.interval = c.interval === 0 ? 3 : Math.round(Math.max(c.interval * c.ease * 1.3, c.interval + 2));
+      c.ease = round2(c.ease + 0.15);
+      c.due = today + c.interval * DAY_MS; c.state = "review";
+    }
+    c.reps += 1; c.last = now;
+    return c;
+  }
+  function intervalLabel(card, grade) {
+    var c = computeGrade(card, grade, Date.now());
+    if (grade === 1) return "lát nữa";
+    return c.interval + " ngày";
+  }
+  function applyGrade(id, grade) {
+    db.cards[id] = computeGrade(cardOf(id), grade, Date.now());
+    saveDb();
+  }
+
+  // ---------- phát âm ----------
+  var zhVoice = null;
+  function pickVoice() {
+    try {
+      var vs = window.speechSynthesis.getVoices() || [];
+      var best = null, any = null;
+      for (var i = 0; i < vs.length; i++) {
+        var lang = String(vs[i].lang || "").replace("_", "-");
+        if (/^zh-CN/i.test(lang) || /^cmn/i.test(lang)) { best = vs[i]; break; }
+        if (!any && /^zh/i.test(lang)) any = vs[i];
+      }
+      zhVoice = best || any;
+    } catch (e) { zhVoice = null; }
+  }
+  if (window.speechSynthesis) {
+    pickVoice();
+    try {
+      if (window.speechSynthesis.addEventListener) window.speechSynthesis.addEventListener("voiceschanged", pickVoice);
+      else window.speechSynthesis.onvoiceschanged = pickVoice;
+    } catch (e) { /* bỏ qua */ }
+  }
+  function speak(text) {
+    if (!text || !window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") return;
+    if (!zhVoice) pickVoice();
+    try {
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(String(text));
+      u.lang = "zh-CN";
+      u.rate = 0.9;
+      if (zhVoice) u.voice = zhVoice;
+      window.speechSynthesis.speak(u);
+    } catch (e) { /* không có giọng thì thôi */ }
+  }
+
+  // ---------- thống kê ----------
+  function streak() {
+    var byDay = {};
+    db.sessions.forEach(function (s) { if (s && s.date) byDay[s.date] = (byDay[s.date] || 0) + (Number(s.cards) || 0); });
+    var d = new Date(); d.setHours(0, 0, 0, 0);
+    if (!(byDay[dateKey(d)] >= MIN_CARDS_FOR_STREAK)) d.setDate(d.getDate() - 1);
+    var n = 0;
+    while (byDay[dateKey(d)] >= MIN_CARDS_FOR_STREAK) { n++; d.setDate(d.getDate() - 1); }
+    return n;
+  }
+  function deckCounts(deck, now) {
+    var r = { fresh: 0, learning: 0, due: 0, review: 0 };
+    ITEMS.forEach(function (it) {
+      if (it.deckId !== deck.id) return;
+      var c = db.cards[it.id];
+      if (!c || c.state === "new") { r.fresh++; return; }
+      if (c.state === "learning") r.learning++; else r.review++;
+      if (c.due <= now) r.due++;
+    });
+    return r;
+  }
+  function dueCount(decks, now) {
+    var ids = {}; decks.forEach(function (d) { ids[d.id] = true; });
+    return ITEMS.filter(function (it) { return ids[it.deckId] && isDue(it.id, now); }).length;
+  }
+  function learnedCount() {
+    return ITEMS.filter(function (it) { return cardState(it.id) !== "new"; }).length;
+  }
+
+  // ---------- hàng đợi ----------
+  function deckNewOrder(deck) {
+    var words = [], phrases = [];
+    ITEMS.forEach(function (it) {
+      if (it.deckId !== deck.id || !isNewItem(it)) return;
+      (it.kind === "word" ? words : phrases).push(it);
+    });
+    var out = [], wi = 0, pi = 0;
+    while (wi < words.length || pi < phrases.length) {
+      for (var k = 0; k < 3 && wi < words.length; k++) out.push(words[wi++]);
+      if (pi < phrases.length) out.push(phrases[pi++]);
+    }
+    return out;
+  }
+  function buildNewPool(decks) {
+    var lists = decks.map(deckNewOrder);
+    var out = [], i = 0, any = true;
+    while (any) {
+      any = false;
+      lists.forEach(function (l) { if (i < l.length) { out.push(l[i]); any = true; } });
+      i++;
+    }
+    return out;
+  }
+  function dueItems(decks, now) {
+    var ids = {}; decks.forEach(function (d) { ids[d.id] = true; });
+    return ITEMS.filter(function (it) { return ids[it.deckId] && isDue(it.id, now); })
+      .sort(function (a, b) { return db.cards[a.id].due - db.cards[b.id].due; });
+  }
+  function interleave(reviews, news) {
+    var out = [], r = 0, n = 0;
+    while (r < reviews.length || n < news.length) {
+      for (var k = 0; k < 3 && r < reviews.length; k++) out.push(reviews[r++]);
+      if (n < news.length) out.push(news[n++]);
+    }
+    return out;
+  }
+  function modeOf(it) {
+    if (it.kind === "phrase") return "phrase";
+    var c = db.cards[it.id];
+    if (!c || c.state === "new") return "new";
+    return c.reps % 2 === 0 ? "recog" : "recall";
+  }
+
+  // ---------- phiên học ----------
+  var view = "home";
+  var session = null;
+
+  function startSession() {
+    var decks = selectedDecks();
+    if (!decks.length) { toast("Chọn ít nhất 1 chủ đề đã"); return; }
+    if (session && session.timerId) clearInterval(session.timerId);
+    var now = Date.now();
+    var pool = buildNewPool(decks);
+    var firstNew = pool.splice(0, db.settings.newPerSession);
+    session = {
+      startedAt: now, elapsed: 0, timerId: null, decks: decks,
+      queue: interleave(dueItems(decks, now), firstNew), newPool: pool,
+      current: null, flipped: false, hint: false, keepPad: false,
+      shown45: false, doneCount: 0, touched: {}, spokenFor: ""
+    };
+    view = "session";
+    app.innerHTML = sessionShellHtml();
+    nextCard();
+    session.timerId = setInterval(tick, 1000);
+  }
+  function syncElapsed() { session.elapsed = Math.floor((Date.now() - session.startedAt) / 1000); }
+  function tick() {
+    if (!session) return;
+    syncElapsed();
+    var clock = byId("clock"); if (clock) clock.textContent = fmtClock(session.elapsed) + " / 45:00";
+    var prog = byId("prog"); if (prog) prog.style.width = Math.min(100, session.elapsed / TARGET_SEC * 100) + "%";
+    if (session.elapsed >= TARGET_SEC && !session.shown45) {
+      session.shown45 = true;
+      var b = byId("banner45"); if (b) b.hidden = false;
+      toast("Đủ 45 phút rồi 🎉 học tiếp thì cứ tiếp");
+    }
+  }
+  function requeue(it) {
+    session.queue.splice(Math.min(RELEARN_GAP, session.queue.length), 0, it);
+  }
+  function refillQueue() {
+    syncElapsed();
+    if (session.elapsed >= TARGET_SEC) return;
+    var more = session.newPool.splice(0, REFILL_NEW);
+    if (more.length) { session.queue = session.queue.concat(more); return; }
+    var ids = {}; session.decks.forEach(function (d) { ids[d.id] = true; });
+    var early = ITEMS.filter(function (it) { return ids[it.deckId] && cardState(it.id) !== "new"; })
+      .sort(function (a, b) {
+        var ta = session.touched[a.id] ? 1 : 0, tb = session.touched[b.id] ? 1 : 0;
+        return ta !== tb ? ta - tb : db.cards[a.id].due - db.cards[b.id].due;
+      })
+      .slice(0, REFILL_EARLY);
+    session.queue = session.queue.concat(early);
+  }
+  function nextCard() {
+    session.flipped = false; session.hint = false; session.keepPad = false;
+    if (!session.queue.length) refillQueue();
+    session.current = session.queue.shift() || null;
+    renderCard();
+  }
+  function markTouched(it) { session.doneCount++; session.touched[it.id] = true; }
+  function understood() {
+    var it = session.current;
+    if (!it || modeOf(it) !== "new") return;
+    var c = cardOf(it.id);
+    c.state = "learning"; c.interval = 0; c.due = Date.now();
+    db.cards[it.id] = c; saveDb();
+    markTouched(it); requeue(it); nextCard();
+  }
+  function flip() {
+    if (!session.current || session.flipped || modeOf(session.current) === "new") return;
+    session.flipped = true; session.keepPad = true;
+    renderCard();
+  }
+  function showHint() {
+    if (!session.current || session.hint) return;
+    session.hint = true; session.keepPad = true;
+    renderCard();
+  }
+  function gradeCurrent(grade) {
+    var it = session.current;
+    if (!it || !session.flipped) return;
+    if (modeOf(it) === "phrase" && grade !== 1 && grade !== 3) return;
+    applyGrade(it.id, grade);
+    markTouched(it);
+    if (grade === 1) requeue(it);
+    nextCard();
+  }
+  function endSession(force) {
+    if (!session) return;
+    syncElapsed();
+    if (!force && session.elapsed < TARGET_SEC && !confirm("Chưa đủ 45 phút đâu, thoát thật không?")) return;
+    clearInterval(session.timerId); session.timerId = null;
+    var minutes = Math.round(session.elapsed / 60);
+    var cards = Object.keys(session.touched).length;
+    db.sessions.push({ date: dateKey(new Date()), minutes: minutes, cards: cards, startedAt: session.startedAt });
+    if (db.sessions.length > 400) db.sessions = db.sessions.slice(-400);
+    saveDb();
+    session = null; view = "home"; render();
+    toast("Đã lưu phiên: " + minutes + " phút, " + cards + " thẻ");
+  }
+  function escapeSession() {
+    if (!session) return;
+    syncElapsed();
+    if (session.elapsed >= TARGET_SEC) { if (confirm("Kết thúc phiên và về trang chủ?")) endSession(true); }
+    else endSession(false);
+  }
+
+  // ---------- bảng viết tay ----------
+  var PAD = { drawing: false, pointerId: null, canvas: null };
+  function drawGrid(c) {
+    var ctx = c.getContext("2d");
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, c.width, c.height);
+    ctx.strokeStyle = "#d3d7de"; ctx.lineWidth = 1; ctx.setLineDash([6, 6]);
+    ctx.beginPath();
+    ctx.moveTo(c.width / 2, 0); ctx.lineTo(c.width / 2, c.height);
+    ctx.moveTo(0, c.height / 2); ctx.lineTo(c.width, c.height / 2);
+    ctx.moveTo(0, 0); ctx.lineTo(c.width, c.height);
+    ctx.moveTo(c.width, 0); ctx.lineTo(0, c.height);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.strokeStyle = "#9aa3b3"; ctx.strokeRect(0.5, 0.5, c.width - 1, c.height - 1);
+  }
+  function padPoint(c, e) {
+    var r = c.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * c.width / r.width, y: (e.clientY - r.top) * c.height / r.height };
+  }
+  function snapshotPad() {
+    var c = byId("pad");
+    if (!c) return null;
+    try { return c.toDataURL(); } catch (e) { return null; }
+  }
+  function restorePad(c, snap) {
+    if (!snap) return;
+    var img = new Image();
+    img.onload = function () { try { c.getContext("2d").drawImage(img, 0, 0); } catch (e) { /* bỏ qua */ } };
+    img.src = snap;
+  }
+  function clearPad() { var c = byId("pad"); if (c) drawGrid(c); }
+  function padStart(c, pt) {
+    var ctx = c.getContext("2d"), p = padPoint(c, pt);
+    ctx.strokeStyle = "#111"; ctx.lineWidth = 9; ctx.lineCap = "round"; ctx.lineJoin = "round";
+    ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x + 0.1, p.y + 0.1); ctx.stroke();
+    PAD.drawing = true; PAD.canvas = c;
+  }
+  function padMove(c, pt) {
+    if (!PAD.drawing || PAD.canvas !== c || !app.contains(c)) { PAD.drawing = false; return; }
+    var ctx = c.getContext("2d"), p = padPoint(c, pt);
+    ctx.lineTo(p.x, p.y); ctx.stroke();
+  }
+  function onPointerDown(e) {
+    var c = e.target;
+    if (!c || c.id !== "pad") return;
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    if (PAD.drawing && PAD.pointerId != null && PAD.pointerId !== e.pointerId) return; // ngón thứ 2
+    e.preventDefault();
+    try { c.setPointerCapture(e.pointerId); } catch (err) { /* bỏ qua */ }
+    PAD.pointerId = e.pointerId;
+    padStart(c, e);
+  }
+  function onPointerMove(e) {
+    var c = e.target;
+    if (!PAD.drawing || !c || c.id !== "pad" || e.pointerId !== PAD.pointerId) return;
+    e.preventDefault();
+    padMove(c, e);
+  }
+  function onPointerUp(e) {
+    if (e && PAD.pointerId != null && e.pointerId !== PAD.pointerId) return;
+    PAD.drawing = false; PAD.pointerId = null;
+  }
+  // Dự phòng cho trình duyệt cũ không có Pointer Events (iOS < 13).
+  function onTouchStart(e) {
+    var c = e.target;
+    if (!c || c.id !== "pad" || !e.touches.length) return;
+    e.preventDefault(); padStart(c, e.touches[0]);
+  }
+  function onTouchMove(e) {
+    var c = e.target;
+    if (!c || c.id !== "pad" || !e.touches.length) return;
+    e.preventDefault(); padMove(c, e.touches[0]);
+  }
+  function onMouseDown(e) {
+    var c = e.target;
+    if (!c || c.id !== "pad" || e.button !== 0) return;
+    e.preventDefault(); padStart(c, e);
+  }
+  function onMouseMove(e) {
+    var c = e.target;
+    if (!c || c.id !== "pad") return;
+    padMove(c, e);
+  }
+  function onPadEnd() { PAD.drawing = false; }
+
+  // ---------- backup ----------
+  function exportBackup() {
+    try {
+      var blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url; a.download = "hoctrung-backup-" + dateKey(new Date()) + ".json";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+      toast("Đã tải file backup");
+    } catch (e) { toast("Không xuất được backup"); }
+  }
+  // Gộp backup: không bao giờ làm mất thẻ; thẻ trùng giữ bản có `last` mới hơn (hòa thì reps nhiều hơn).
+  function mergeDb(cur, inc) {
+    var out = normalizeDb(cur);
+    var added = 0, updated = 0;
+    Object.keys(inc.cards).forEach(function (id) {
+      var a = out.cards[id], b = inc.cards[id];
+      if (!a) { out.cards[id] = b; added++; return; }
+      if (b.last > a.last || (b.last === a.last && b.reps > a.reps)) { out.cards[id] = b; updated++; }
+    });
+    var seen = {};
+    out.sessions = out.sessions.concat(inc.sessions).filter(function (s) {
+      var k = [s.date, s.minutes, s.cards, s.startedAt || ""].join("|");
+      if (seen[k]) return false;
+      seen[k] = true; return true;
+    }).sort(function (x, y) { return String(x.date) < String(y.date) ? -1 : String(x.date) > String(y.date) ? 1 : 0; });
+    if (out.sessions.length > 400) out.sessions = out.sessions.slice(-400);
+    return { db: out, added: added, updated: updated };
+  }
+  function importBackupFile(file) {
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      var obj = null;
+      try { obj = JSON.parse(String(reader.result)); } catch (e) { toast("File không phải JSON hợp lệ"); return; }
+      if (!obj || typeof obj !== "object" || !obj.cards || typeof obj.cards !== "object") { toast("File không đúng định dạng backup"); return; }
+      if (!confirm("Gộp tiến độ trong file này vào tiến độ hiện tại? (thẻ nào có ở cả hai thì giữ bản học gần nhất)")) return;
+      var r = mergeDb(db, normalizeDb(obj));
+      db = r.db; saveDb(); render();
+      toast("Đã nhập backup: +" + r.added + " thẻ mới, cập nhật " + r.updated + " thẻ");
+    };
+    reader.onerror = function () { toast("Không đọc được file"); };
+    reader.readAsText(file);
+  }
+
+  // ---------- HTML: trang chủ ----------
+  function homeHtml() {
+    var now = Date.now();
+    var sel = selectedDecks();
+    var due = dueCount(sel, now);
+    var newAvail = Math.min(db.settings.newPerSession, buildNewPool(sel).length);
+    var s = db.settings;
+    var deckRows = DECKS.map(function (d) {
+      var c = deckCounts(d, now);
+      var checked = s.selectedDecks.indexOf(d.id) >= 0 ? " checked" : "";
+      return '<li><label><input type="checkbox" data-deck="' + esc(d.id) + '"' + checked + '>' +
+        '<span class="emoji">' + esc(d.emoji || "📘") + '</span>' +
+        '<span class="dtitle">' + esc(d.title || d.id) + '</span>' +
+        '<span class="counts">mới ' + c.fresh + ' · học ' + c.learning + ' · hạn ' + c.due + '</span></label></li>';
+    }).join("");
+    var newOpts = NEW_OPTIONS.map(function (n) {
+      return '<option value="' + n + '"' + (n === s.newPerSession ? " selected" : "") + '>' + n + ' từ</option>';
+    }).join("");
+    return '<div class="wrap">' +
+      '<header><h1>学 Học tiếng Trung</h1><p class="muted">HSK 3 → 4 · nói chuyện · đi chơi</p></header>' +
+      '<section class="stats3">' +
+        '<div class="stat"><b>' + due + '</b><span>đến hạn</span></div>' +
+        '<div class="stat"><b>' + streak() + '</b><span>ngày liên tiếp</span></div>' +
+        '<div class="stat"><b>' + learnedCount() + '</b><span>thẻ đã gặp</span></div>' +
+      '</section>' +
+      '<button class="primary big" data-action="start">Học 45 phút</button>' +
+      '<p class="muted small center">Phiên này: ' + due + ' thẻ ôn + ' + newAvail + ' từ mới · ' + sel.length + '/' + DECKS.length + ' chủ đề</p>' +
+      '<section class="box"><div class="row-between"><h2>Chủ đề</h2><span>' +
+        '<button class="link" data-action="select-all">Chọn hết</button> · ' +
+        '<button class="link" data-action="select-none">Bỏ hết</button></span></div>' +
+        '<ul class="decks">' + deckRows + '</ul></section>' +
+      '<section class="box"><h2>Cài đặt</h2>' +
+        '<label class="setting"><span>Từ mới mỗi phiên</span><select data-setting="newPerSession">' + newOpts + '</select></label>' +
+        '<label class="setting"><span>Bảng viết tay khi ôn nghĩa → chữ</span><input type="checkbox" data-setting="drawPad"' + (s.drawPad ? " checked" : "") + '></label>' +
+        '<label class="setting"><span>Tự phát âm khi hiện chữ</span><input type="checkbox" data-setting="autoSpeak"' + (s.autoSpeak ? " checked" : "") + '></label>' +
+      '</section>' +
+      '<section class="actions-row">' +
+        '<button data-action="stats">📊 Thống kê</button>' +
+        '<button data-action="export">⬇ Xuất backup</button>' +
+        '<button data-action="import">⬆ Nhập backup</button>' +
+        '<input type="file" id="importFile" accept="application/json,.json" hidden>' +
+      '</section>' +
+      '<p class="muted small center">Phím tắt trong phiên: <kbd>Space</kbd> lật / nhớ · <kbd>1-4</kbd> chấm · <kbd>Enter</kbd> đã hiểu · <kbd>Esc</kbd> thoát</p>' +
+      '</div>';
+  }
+
+  // ---------- HTML: thống kê ----------
+  function statsHtml() {
+    var totals = { "new": 0, learning: 0, review: 0 };
+    var rows = DECKS.map(function (d) {
+      var c = { "new": 0, learning: 0, review: 0 };
+      ITEMS.forEach(function (it) {
+        if (it.deckId !== d.id) return;
+        var s = cardState(it.id);
+        if (!(s in c)) s = "new";
+        c[s]++;
+      });
+      totals["new"] += c["new"]; totals.learning += c.learning; totals.review += c.review;
+      return '<tr><td>' + esc(d.emoji || "📘") + ' ' + esc(d.title || d.id) + '</td>' +
+        '<td class="num">' + c["new"] + '</td><td class="num">' + c.learning + '</td><td class="num">' + c.review + '</td></tr>';
+    }).join("");
+    var sess = db.sessions.slice(-14).reverse();
+    var sessRows = sess.length ? sess.map(function (s) {
+      return '<tr><td>' + esc(fmtDate(s.date)) + '</td><td class="num">' + esc(s.minutes) + ' phút</td><td class="num">' + esc(s.cards) + ' thẻ</td></tr>';
+    }).join("") : '<tr><td colspan="3" class="muted">Chưa có phiên nào. Bấm Học 45 phút đi.</td></tr>';
+    return '<div class="wrap">' +
+      '<div class="row-between"><h1>Thống kê</h1><button class="small-btn" data-action="home">← Trang chủ</button></div>' +
+      '<section class="stats3">' +
+        '<div class="stat"><b>' + streak() + '</b><span>ngày liên tiếp</span></div>' +
+        '<div class="stat"><b>' + totals.learning + '</b><span>đang học</span></div>' +
+        '<div class="stat"><b>' + totals.review + '</b><span>đã thuộc (ôn)</span></div>' +
+      '</section>' +
+      '<section class="box"><h2>Theo chủ đề</h2><table><thead><tr><th>Chủ đề</th><th class="num">Mới</th><th class="num">Đang học</th><th class="num">Ôn</th></tr></thead>' +
+        '<tbody>' + rows + '<tr><th>Tổng</th><th class="num">' + totals["new"] + '</th><th class="num">' + totals.learning + '</th><th class="num">' + totals.review + '</th></tr></tbody></table></section>' +
+      '<section class="box"><h2>14 phiên gần nhất</h2><table><tbody>' + sessRows + '</tbody></table></section>' +
+      '</div>';
+  }
+
+  // ---------- HTML: phiên học ----------
+  function sessionShellHtml() {
+    return '<div class="wrap">' +
+      '<div class="bar">' +
+        '<div class="bar-top"><span id="clock" class="clock">00:00 / 45:00</span><button class="small-btn" data-action="end">Kết thúc</button></div>' +
+        '<div class="track"><div id="prog" class="fill"></div></div>' +
+        '<div id="counts" class="muted small"></div>' +
+        '<div id="banner45" class="banner"' + (session && session.shown45 ? "" : " hidden") + '>Đủ 45 phút rồi 🎉 muốn chơi tiếp thì cứ tiếp</div>' +
+      '</div>' +
+      '<div id="cardArea"></div>' +
+      '</div>';
+  }
+  function tagRow(it, label, cls) {
+    var w = it.data;
+    return '<div class="tags"><span class="tag ' + cls + '">' + label + '</span>' +
+      (w.hsk ? '<span class="tag">HSK ' + esc(w.hsk) + '</span>' : "") +
+      (w.pos ? '<span class="tag">' + esc(w.pos) + '</span>' : "") +
+      '<span class="tag">' + esc(it.deck.emoji || "") + ' ' + esc(it.deck.title || it.deckId) + '</span></div>';
+  }
+  function speakBtn(text, small) {
+    return '<button class="spk' + (small ? " sm" : "") + '" data-action="speak" data-text="' + esc(text) + '" title="Nghe">🔊</button>';
+  }
+  function exampleHtml(ex) {
+    if (!ex || !ex.zh) return "";
+    return '<div class="ex"><div class="ex-zh zh">' + esc(ex.zh) + ' ' + speakBtn(ex.zh, true) + '</div>' +
+      '<div class="ex-py">' + esc(ex.pinyin) + '</div><div class="ex-vi">' + esc(ex.vi) + '</div></div>';
+  }
+  function chietTuHtml(w) {
+    return w.chiettu ? '<div class="chiettu"><div class="label">Chiết tự</div><div>' + esc(w.chiettu) + '</div></div>' : "";
+  }
+  function pickExample(it) {
+    var exs = Array.isArray(it.data.examples) ? it.data.examples : [];
+    if (!exs.length) return null;
+    return exs[cardOf(it.id).reps % exs.length];
+  }
+  function hintHtml(text) { return '<div class="hint">' + text + '</div>'; }
+  function grades4Html(it) {
+    var c = cardOf(it.id);
+    return '<div class="grades">' +
+      '<button class="g1" data-action="grade" data-grade="1">Quên<small>1 · ' + intervalLabel(c, 1) + '</small></button>' +
+      '<button class="g2" data-action="grade" data-grade="2">Khó<small>2 · ' + intervalLabel(c, 2) + '</small></button>' +
+      '<button class="g3" data-action="grade" data-grade="3">Nhớ<small>3 · ' + intervalLabel(c, 3) + '</small></button>' +
+      '<button class="g4" data-action="grade" data-grade="4">Dễ<small>4 · ' + intervalLabel(c, 4) + '</small></button>' +
+      '</div>' + hintHtml('<kbd>1-4</kbd> chấm · <kbd>Space</kbd> = Nhớ');
+  }
+  function grades2Html(it) {
+    var c = cardOf(it.id);
+    return '<div class="grades two">' +
+      '<button class="g1" data-action="grade" data-grade="1">Quên<small>1 · ' + intervalLabel(c, 1) + '</small></button>' +
+      '<button class="g3" data-action="grade" data-grade="3">Nhớ<small>3 · ' + intervalLabel(c, 3) + '</small></button>' +
+      '</div>' + hintHtml('<kbd>1</kbd> Quên · <kbd>3</kbd> / <kbd>Space</kbd> Nhớ');
+  }
+  function flipBtnHtml() {
+    return '<div class="actions"><button class="primary big" data-action="flip">Lật</button></div>' +
+      hintHtml('<kbd>Space</kbd> / <kbd>Enter</kbd> lật · <kbd>Esc</kbd> thoát');
+  }
+  function padHtml() {
+    if (!db.settings.drawPad) return "";
+    return '<div class="pad-wrap"><canvas id="pad" class="pad" width="240" height="240"></canvas>' +
+      '<button class="small-btn" data-action="clear-pad">Xóa</button></div>';
+  }
+  function newWordHtml(it) {
+    var w = it.data;
+    var exs = (Array.isArray(w.examples) ? w.examples : []).slice(0, 2).map(exampleHtml).join("");
+    return '<div class="card">' + tagRow(it, "Từ mới", "new") +
+      '<div class="hanzi zh">' + esc(w.hanzi) + '</div><div class="center">' + speakBtn(w.hanzi) + '</div>' +
+      '<div class="pinyin">' + esc(w.pinyin) + '</div>' +
+      '<div class="hanviet">Hán Việt: <b>' + esc(w.hanviet) + '</b></div>' +
+      '<div class="meaning">' + esc(w.meaning) + '</div>' +
+      chietTuHtml(w) +
+      (exs ? '<div class="examples">' + exs + '</div>' : "") +
+      (w.note ? '<div class="note">💡 ' + esc(w.note) + '</div>' : "") +
+      '<div class="actions"><button class="primary big" data-action="understood">Đã hiểu</button></div>' +
+      hintHtml('<kbd>Enter</kbd> đã hiểu · thẻ sẽ quay lại sau ~8 thẻ') +
+      '</div>';
+  }
+  function recogHtml(it) {
+    var w = it.data;
+    var head = tagRow(it, "Nhận mặt chữ", "recog") +
+      '<div class="hanzi zh">' + esc(w.hanzi) + '</div><div class="center">' + speakBtn(w.hanzi) + '</div>';
+    if (!session.flipped) {
+      return '<div class="card">' + head + '<p class="muted center" style="margin-top:14px">Đọc được không? Nghĩa là gì?</p>' + flipBtnHtml() + '</div>';
+    }
+    return '<div class="card">' + head +
+      '<div class="pinyin">' + esc(w.pinyin) + '</div>' +
+      '<div class="hanviet">Hán Việt: <b>' + esc(w.hanviet) + '</b></div>' +
+      '<div class="meaning">' + esc(w.meaning) + '</div>' +
+      chietTuHtml(w) +
+      '<div class="examples">' + exampleHtml(pickExample(it)) + '</div>' +
+      grades4Html(it) + '</div>';
+  }
+  function recallHtml(it) {
+    var w = it.data;
+    var head = tagRow(it, "Nghĩa → chữ", "recall") +
+      '<div class="meaning front">' + esc(w.meaning) + '</div>' +
+      (w.pos ? '<div class="pos">' + esc(w.pos) + '</div>' : "");
+    if (!session.flipped) {
+      var hint = session.hint
+        ? '<div class="hanviet">Hán Việt: <b>' + esc(w.hanviet) + '</b></div>'
+        : '<div class="center"><button class="small-btn" data-action="hint">Gợi ý Hán Việt</button></div>';
+      return '<div class="card">' + head + hint + padHtml() + flipBtnHtml() + '</div>';
+    }
+    return '<div class="card">' + head +
+      '<div class="hanzi zh">' + esc(w.hanzi) + '</div><div class="center">' + speakBtn(w.hanzi) + '</div>' +
+      '<div class="pinyin">' + esc(w.pinyin) + '</div>' +
+      '<div class="hanviet">Hán Việt: <b>' + esc(w.hanviet) + '</b></div>' +
+      padHtml() +
+      '<div class="examples">' + exampleHtml(pickExample(it)) + '</div>' +
+      grades4Html(it) + '</div>';
+  }
+  function phraseHtml(it) {
+    var p = it.data;
+    var head = tagRow(it, "Mẫu câu", "phrase") +
+      (p.when ? '<div class="when">' + esc(p.when) + '</div>' : "") +
+      '<div class="meaning front">' + esc(p.vi) + '</div>';
+    if (!session.flipped) {
+      return '<div class="card">' + head + '<p class="muted center">Tiếng Trung nói sao?</p>' + flipBtnHtml() + '</div>';
+    }
+    return '<div class="card">' + head +
+      '<div class="hanzi mid zh">' + esc(p.zh) + '</div>' +
+      '<div class="pinyin">' + esc(p.pinyin) + '</div>' +
+      '<div class="center" style="margin-top:8px">' + speakBtn(p.zh) + '</div>' +
+      grades2Html(it) + '</div>';
+  }
+  function doneHtml() {
+    var minutes = Math.round(session.elapsed / 60);
+    return '<div class="card center"><div class="big-emoji">🏁</div><h1>Hết bài hôm nay</h1>' +
+      '<p class="muted">' + session.doneCount + ' lượt · ' + Object.keys(session.touched).length + ' thẻ · ' + minutes + ' phút. Ngon.</p>' +
+      '<div class="actions"><button class="primary big" data-action="end-force">Kết thúc</button></div>' +
+      hintHtml('<kbd>Enter</kbd> kết thúc') + '</div>';
+  }
+  function emptyHtml() {
+    return '<div class="card center"><div class="big-emoji">🫥</div><h1>Không có thẻ nào</h1>' +
+      '<p class="muted">Các chủ đề đã chọn không có từ nào. Kiểm tra lại thư mục <code>decks/</code>.</p>' +
+      '<div class="actions"><button class="primary big" data-action="end-force">Về trang chủ</button></div></div>';
+  }
+
+  function updateCounts() {
+    var el = byId("counts");
+    if (!el || !session) return;
+    var due = 0, fresh = 0;
+    session.queue.forEach(function (it) { if (isNewItem(it)) fresh++; else due++; });
+    el.textContent = "Đã làm " + session.doneCount + " · còn ôn " + due + " · từ mới còn " + fresh;
+  }
+  function renderCard() {
+    var area = byId("cardArea");
+    if (!area || !session) return;
+    var snap = session.keepPad ? snapshotPad() : null;
+    PAD.drawing = false; PAD.pointerId = null; PAD.canvas = null;
+    var it = session.current;
+    var html;
+    if (!it) {
+      syncElapsed();
+      html = session.elapsed >= TARGET_SEC ? doneHtml() : emptyHtml();
+    } else {
+      var mode = modeOf(it);
+      html = mode === "new" ? newWordHtml(it)
+        : mode === "recog" ? recogHtml(it)
+        : mode === "recall" ? recallHtml(it)
+        : phraseHtml(it);
+    }
+    area.innerHTML = html;
+    updateCounts();
+    var pad = byId("pad");
+    if (pad) { drawGrid(pad); restorePad(pad, snap); }
+    if (!session.keepPad) window.scrollTo(0, 0);
+    autoSpeak(it);
+  }
+  function autoSpeak(it) {
+    if (!it || !db.settings.autoSpeak) return;
+    var mode = modeOf(it);
+    var shouldSpeak = mode === "new" || session.flipped;
+    if (!shouldSpeak) return;
+    var key = it.id + ":" + (session.flipped ? "back" : "front");
+    if (session.spokenFor === key) return;
+    session.spokenFor = key;
+    speak(it.kind === "phrase" ? it.data.zh : it.data.hanzi);
+  }
+
+  // ---------- render chung ----------
+  function render() {
+    if (view === "stats") app.innerHTML = statsHtml();
+    else if (view === "session") { app.innerHTML = sessionShellHtml(); renderCard(); tick(); }
+    else app.innerHTML = homeHtml();
+    window.scrollTo(0, 0);
+  }
+  function missingDecksHtml() {
+    return '<div class="wrap"><div class="warn"><h1>Thiếu file bài học</h1>' +
+      '<p>Không thấy dữ liệu nào trong <code>window.DECKS</code>. Kiểm tra thư mục <code>decks/</code> nằm cạnh <code>index.html</code> và có đủ 12 file <code>.js</code>.</p>' +
+      '<p class="muted small">Mỗi file phải bắt đầu bằng <code>window.DECKS = window.DECKS || []; window.DECKS.push({...})</code>.</p></div></div>';
+  }
+
+  // ---------- sự kiện (event delegation trên #app) ----------
+  function setSelectedDecks(ids) {
+    db.settings.selectedDecks = ids;
+    saveDb(); render();
+  }
+  function onAction(action, el) {
+    switch (action) {
+      case "start": startSession(); break;
+      case "stats": view = "stats"; render(); break;
+      case "home": view = "home"; render(); break;
+      case "export": exportBackup(); break;
+      case "import": { var f = byId("importFile"); if (f) { f.value = ""; f.click(); } break; }
+      case "select-all": setSelectedDecks(DECKS.map(function (d) { return d.id; })); break;
+      case "select-none": setSelectedDecks([]); break;
+      case "speak": speak(el.getAttribute("data-text")); break;
+      case "understood": understood(); break;
+      case "flip": flip(); break;
+      case "hint": showHint(); break;
+      case "clear-pad": clearPad(); break;
+      case "grade": gradeCurrent(Number(el.getAttribute("data-grade"))); break;
+      case "end": endSession(false); break;
+      case "end-force": endSession(true); break;
+      default: break;
+    }
+  }
+  app.addEventListener("click", function (e) {
+    var el = e.target.closest ? e.target.closest("[data-action]") : null;
+    if (!el || !app.contains(el)) return;
+    e.preventDefault();
+    onAction(el.getAttribute("data-action"), el);
+  });
+  app.addEventListener("change", function (e) {
+    var t = e.target;
+    if (!t) return;
+    if (t.id === "importFile") { importBackupFile(t.files && t.files[0]); return; }
+    var deckId = t.getAttribute("data-deck");
+    if (deckId) {
+      var ids = db.settings.selectedDecks.filter(function (id) { return id !== deckId; });
+      if (t.checked) ids.push(deckId);
+      setSelectedDecks(ids);
+      return;
+    }
+    var key = t.getAttribute("data-setting");
+    if (!key) return;
+    if (key === "newPerSession") db.settings.newPerSession = Number(t.value) || 10;
+    else if (key === "drawPad") db.settings.drawPad = !!t.checked;
+    else if (key === "autoSpeak") db.settings.autoSpeak = !!t.checked;
+    saveDb(); render();
+  });
+  // Listener gắn 1 lần trên #app (delegation) nên đổi thẻ / vẽ lại canvas không rò listener.
+  if (window.PointerEvent) {
+    app.addEventListener("pointerdown", onPointerDown);
+    app.addEventListener("pointermove", onPointerMove);
+    app.addEventListener("pointerup", onPointerUp);
+    app.addEventListener("pointercancel", onPointerUp);
+  } else {
+    app.addEventListener("touchstart", onTouchStart, { passive: false });
+    app.addEventListener("touchmove", onTouchMove, { passive: false });
+    app.addEventListener("touchend", onPadEnd);
+    app.addEventListener("touchcancel", onPadEnd);
+    app.addEventListener("mousedown", onMouseDown);
+    app.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseup", onPadEnd);
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (view !== "session" || !session) return;
+    var t = e.target;
+    var tag = (t && t.tagName || "").toLowerCase();
+    if (tag === "input" || tag === "select" || tag === "textarea" || (t && t.isContentEditable)) return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    var key = e.key;
+    var isSpace = key === " " || key === "Spacebar";
+    // Space không cuộn trang; Space/Enter không "bấm" nút đang focus (vd. nút Kết thúc) thay cho phím tắt.
+    if (isSpace || key === "Enter") {
+      e.preventDefault();
+      if (tag === "button" && t.blur) t.blur();
+    }
+    // Giữ phím sẽ auto-repeat: chặn để Space giữ lâu không vừa lật vừa chấm Nhớ.
+    if (e.repeat) { e.preventDefault(); return; }
+    if (key === "Escape") { e.preventDefault(); escapeSession(); return; }
+    var it = session.current;
+    if (!it) {
+      if (key === "Enter") endSession(true);
+      return;
+    }
+    var mode = modeOf(it);
+    if (isSpace) {
+      if (mode === "new") return;
+      if (!session.flipped) flip(); else gradeCurrent(3);
+      return;
+    }
+    if (key === "Enter") {
+      e.preventDefault();
+      if (mode === "new") understood(); else if (!session.flipped) flip();
+      return;
+    }
+    if (/^[1-4]$/.test(key) && mode !== "new" && session.flipped) {
+      e.preventDefault();
+      gradeCurrent(Number(key));
+    }
+  });
+
+  // ---------- khởi động ----------
+  if (!DECKS.length) app.innerHTML = missingDecksHtml();
+  else render();
+})();
+</script>
+</body>
+</html>
