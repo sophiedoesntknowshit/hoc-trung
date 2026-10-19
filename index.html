@@ -31,7 +31,7 @@ button:active{transform:scale(.98)}
 button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
 button.primary:hover{background:var(--accent-dark)}
 button.big{width:100%;font-size:21px;min-height:64px}
-button.link{background:none;border:none;color:var(--accent);padding:0;min-height:0;font-size:15px}
+button.link{background:none;border:none;color:var(--accent);padding:0 8px;min-height:44px;font-size:15px;display:inline-flex;align-items:center;justify-content:center}
 button.spk{background:none;border:1px solid var(--border);border-radius:999px;min-height:44px;min-width:44px;padding:6px 12px;font-size:22px}
 button.spk.sm{min-height:34px;min-width:34px;font-size:16px;padding:2px 8px;vertical-align:middle}
 button.small-btn{min-height:40px;padding:6px 14px;font-size:15px}
@@ -57,6 +57,9 @@ input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent);flex:none
 .actions-row button{padding:12px 8px;font-size:15px}
 /* session bar */
 .bar{position:sticky;top:0;background:var(--bg);padding:10px 0 8px;z-index:5;border-bottom:1px solid var(--border);margin-bottom:14px}
+.bar.nostick{position:static}
+/* khổ ngang thấp (điện thoại xoay ngang): thanh audio phần Nghe gộp 1 hàng (bỏ tên đề, giữ nút Danh sách đề) */
+@media (max-height:500px){.bar{padding:6px 0 4px;margin-bottom:8px}.bar.exbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px}.bar.exbar .bar-top b{display:none}.bar.exbar .audio-ctl{flex:1;margin-top:0}.bar.exbar .audio-ctl input[type=range]{min-width:70px}}
 .bar-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .clock{font-variant-numeric:tabular-nums;font-size:22px;font-weight:700}
 .track{height:8px;background:var(--card2);border-radius:999px;overflow:hidden;margin:8px 0 6px}
@@ -93,6 +96,8 @@ input[type=checkbox]{width:22px;height:22px;accent-color:var(--accent);flex:none
 .grades.two{grid-template-columns:repeat(2,1fr)}
 .grades button{min-height:64px;font-weight:700;padding:8px 4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
 .grades small{font-weight:400;font-size:12px;color:var(--muted)}
+/* điện thoại: hàng nút Lật / Đã hiểu / chấm điểm dính đáy màn hình, khỏi phải cuộn (-16px = padding ngang của .card) */
+@media (max-width:600px){.dock{position:sticky;bottom:0;z-index:4;background:var(--card);margin:16px -16px 0;padding:10px 16px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--border)} .hint{display:none}}
 .g1{background:#3a1d1f;border-color:var(--red)}
 .g2{background:#3a2c12;border-color:var(--orange)}
 .g3{background:#163525;border-color:var(--green)}
@@ -119,7 +124,7 @@ code{background:var(--card2);padding:1px 6px;border-radius:5px}
 .audio-ctl{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:8px}
 .audio-ctl button{min-height:40px;padding:4px 10px;font-size:15px}
 .audio-ctl button.on{background:var(--accent);border-color:var(--accent);color:#fff}
-.audio-ctl input[type=range]{flex:1;min-width:120px;accent-color:var(--accent)}
+.audio-ctl input[type=range]{flex:1;min-width:120px;height:40px;margin:0;accent-color:var(--accent)}
 .audio-ctl .time{font-variant-numeric:tabular-nums;font-size:14px;color:var(--muted)}
 .ptabs{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;-webkit-overflow-scrolling:touch}
 .ptabs button{min-height:40px;padding:4px 12px;font-size:15px;white-space:nowrap;flex:none}
@@ -211,7 +216,7 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
 .tline .tzh{font-size:22px;line-height:1.5}
 .qz{border-top:1px solid var(--border);padding:12px 0}
 .qz:first-child{border-top:none;padding-top:0}
-.ptabs.lstabs{overflow-x:visible}
+.ptabs.lstabs{overflow-x:visible;position:sticky;top:0;z-index:5;background:var(--bg)}
 .ptabs.lstabs button{flex:1 1 0;min-width:0;padding:4px 6px}
 </style>
 </head>
@@ -688,6 +693,7 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
       shown45: false, doneCount: 0, touched: {}, spokenFor: ""
     };
     view = "session";
+    syncHistory();
     app.innerHTML = sessionShellHtml();
     nextCard();
     session.timerId = setInterval(tick, 1000);
@@ -727,7 +733,23 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
     session.current = session.queue.shift() || null;
     renderCard();
   }
-  function markTouched(it) { session.doneCount++; session.touched[it.id] = true; }
+  // Ghi phiên ngay khi học (không chờ bấm Kết thúc): reload / đóng tab giữa chừng vẫn tính phút + thẻ + streak.
+  // session.rec là chính object nằm trong db.sessions → mỗi lần saveDb() là cập nhật dòng đó.
+  function recordSession() {
+    if (!session) return;
+    syncElapsed();
+    var n = Object.keys(session.touched).length;
+    if (!n) return;
+    if (!session.rec) {
+      session.rec = { date: dateKey(new Date()), minutes: 0, cards: 0, startedAt: session.startedAt };
+      db.sessions.push(session.rec);
+      if (db.sessions.length > 400) db.sessions = db.sessions.slice(-400);
+    }
+    session.rec.minutes = Math.round(session.elapsed / 60);
+    session.rec.cards = n;
+    saveDb();
+  }
+  function markTouched(it) { session.doneCount++; session.touched[it.id] = true; recordSession(); }
   function understood() {
     var it = session.current;
     if (!it || modeOf(it) !== "new") return;
@@ -759,15 +781,20 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
     if (!session) return;
     syncElapsed();
     if (!force && session.elapsed < TARGET_SEC && !confirm("Chưa đủ 45 phút đâu, thoát thật không?")) return;
-    clearInterval(session.timerId); session.timerId = null;
-    var minutes = Math.round(session.elapsed / 60);
-    var cards = Object.keys(session.touched).length;
-    db.sessions.push({ date: dateKey(new Date()), minutes: minutes, cards: cards, startedAt: session.startedAt });
-    if (db.sessions.length > 400) db.sessions = db.sessions.slice(-400);
-    saveDb();
-    session = null; view = "home"; render();
-    toast("Đã lưu phiên: " + minutes + " phút, " + cards + " thẻ");
+    closeSession();
+    view = "home"; render();
   }
+  // Lưu lần cuối + dừng đồng hồ + bỏ phiên (dùng chung cho Kết thúc và nút Back của điện thoại).
+  function closeSession() {
+    if (!session) return;
+    recordSession();
+    clearInterval(session.timerId); session.timerId = null;
+    var r = session.rec || { minutes: 0, cards: 0 };
+    session = null;
+    toast("Đã lưu phiên: " + r.minutes + " phút, " + r.cards + " thẻ");
+  }
+  window.addEventListener("pagehide", recordSession);
+  document.addEventListener("visibilitychange", function () { if (document.hidden) recordSession(); });
   function escapeSession() {
     if (!session) return;
     syncElapsed();
@@ -1263,9 +1290,13 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
     prog.ans = {}; exam.freeShown = {}; exam.free = {}; saveExdb();
     examGoPos(0);
   }
-  function leaveExam() {
+  function stopExamMedia() {
     if (audioEl) audioEl.pause();
     try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* bỏ qua */ }
+  }
+  function leaveExam() {
+    stopExamMedia();
+    if (backTo("#exams")) return;
     view = "exams"; render();
   }
 
@@ -1516,7 +1547,7 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
       return '<button data-action="ex-go" data-n="' + esc(q.n) + '" class="' + cls + '">' + esc(q.n) + '</button>';
     }).join("");
     return '<div class="wrap">' +
-      '<div class="bar"><div class="bar-top"><b>' + esc(exam.data.title || exam.id) + '</b>' +
+      '<div class="bar exbar' + (/^L/.test(part.key || "") ? "" : " nostick") + '"><div class="bar-top"><b>' + esc(exam.data.title || exam.id) + '</b>' +
         '<button class="small-btn" data-action="exams">← Danh sách đề</button></div>' + audioCtlHtml() + '</div>' +
       (deafExam() ? '<div class="muted small" style="margin:6px 0">⚠️ Phần nghe đề này không có audio và lời thoại — nên làm phần Đọc/Viết.</div>' : "") +
       '<div class="ptabs">' + tabs + '</div>' +
@@ -1701,7 +1732,7 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
   function setLessonTab(tab) {
     if (!lesson || lesson.tab === tab) return;
     stopReading();
-    lesson.tab = tab; renderLesson(false);
+    lesson.tab = tab; renderLesson("tab");
   }
   function toggleLessonStudy() {
     if (!lesson) return;
@@ -1837,7 +1868,17 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
     if (!lesson) return;
     var y = window.scrollY || window.pageYOffset || 0;
     app.innerHTML = lessonHtml();
-    window.scrollTo(0, keepScroll ? y : 0);
+    // Đổi tab: giữ chỗ cuộn nếu còn ở trên hàng tab; đã cuộn qua thì đưa hàng tab lên sát mép trên (không về đầu trang).
+    if (keepScroll === "tab") {
+      var t = app.querySelector(".lstabs");
+      var top = 0;
+      if (t) { // hàng tab dính (sticky): đo vị trí gốc khi tạm tắt dính
+        t.style.position = "static";
+        top = Math.max(0, t.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0) - 8);
+        t.style.position = "";
+      }
+      window.scrollTo(0, Math.min(y, top));
+    } else window.scrollTo(0, keepScroll ? y : 0);
     if (reading && reading.elId) markReadLine(reading.elId);
   }
   function lessonReadAll(ti) {
@@ -1855,7 +1896,7 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
     if (e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
     if (e.key === "Escape") {
       e.preventDefault();
-      if (view === "lesson") { stopReading(); view = "lessons"; } else view = "home";
+      if (view === "lesson") { stopReading(); lessonPending = null; if (backTo("#lessons")) return; view = "lessons"; } else view = "home";
       render(); return;
     }
     if (view === "lesson" && lesson && /^[1-4]$/.test(e.key)) {
@@ -1897,7 +1938,7 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
       '<p class="muted small center">Phiên này: ' + due + ' thẻ ôn + ' + newAvail + ' từ mới · ' + sel.length + '/' + DECKS.length + ' bộ thẻ' +
         (lsMissing ? ' · ⚠️ ' + lsMissing + ' bài giáo trình chưa tải được' : "") + '</p>' +
       '<section class="box"><div class="row-between"><h2>Chủ đề</h2><span>' +
-        '<button class="link" data-action="select-all">Chọn hết</button> · ' +
+        '<button class="link" data-action="select-all">Chọn hết</button><span class="muted">·</span>' +
         '<button class="link" data-action="select-none">Bỏ hết</button></span></div>' +
         '<ul class="decks">' + deckRows + '</ul>' +
         (lsRows ? '<h2 style="margin-top:14px">Giáo trình đang học</h2><ul class="decks">' + lsRows + '</ul>' : "") + '</section>' +
@@ -1992,7 +2033,7 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
   function hintHtml(text) { return '<div class="hint">' + text + '</div>'; }
   function grades4Html(it) {
     var c = cardOf(it.id);
-    return '<div class="grades">' +
+    return '<div class="grades dock">' +
       '<button class="g1" data-action="grade" data-grade="1">Quên<small>1 · ' + intervalLabel(c, 1) + '</small></button>' +
       '<button class="g2" data-action="grade" data-grade="2">Khó<small>2 · ' + intervalLabel(c, 2) + '</small></button>' +
       '<button class="g3" data-action="grade" data-grade="3">Nhớ<small>3 · ' + intervalLabel(c, 3) + '</small></button>' +
@@ -2001,13 +2042,13 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
   }
   function grades2Html(it) {
     var c = cardOf(it.id);
-    return '<div class="grades two">' +
+    return '<div class="grades two dock">' +
       '<button class="g1" data-action="grade" data-grade="1">Quên<small>1 · ' + intervalLabel(c, 1) + '</small></button>' +
       '<button class="g3" data-action="grade" data-grade="3">Nhớ<small>3 · ' + intervalLabel(c, 3) + '</small></button>' +
       '</div>' + hintHtml('<kbd>1</kbd> Quên · <kbd>3</kbd> / <kbd>Space</kbd> Nhớ');
   }
   function flipBtnHtml() {
-    return '<div class="actions"><button class="primary big" data-action="flip">Lật</button></div>' +
+    return '<div class="actions dock"><button class="primary big" data-action="flip">Lật</button></div>' +
       hintHtml('<kbd>Space</kbd> / <kbd>Enter</kbd> lật · <kbd>Esc</kbd> thoát');
   }
   function padHtml() {
@@ -2026,7 +2067,7 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
       chietTuHtml(w) +
       (exs ? '<div class="examples">' + exs + '</div>' : "") +
       (w.note ? '<div class="note">💡 ' + esc(w.note) + '</div>' : "") +
-      '<div class="actions"><button class="primary big" data-action="understood">Đã hiểu</button></div>' +
+      '<div class="actions dock"><button class="primary big" data-action="understood">Đã hiểu</button></div>' +
       hintHtml('<kbd>Enter</kbd> đã hiểu · thẻ sẽ quay lại sau ~8 thẻ') +
       '</div>';
   }
@@ -2140,14 +2181,75 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
     else if (view === "exams" && EXAM_INDEX.length) app.innerHTML = examsHtml();
     else if (view === "exam" && exam) renderExam(false);
     else if (view === "lessons" && LESSON_INDEX.length) { app.innerHTML = lessonsHtml(); centerOnTab(); }
-    else if (view === "lesson" && lesson) { renderLesson(false); return; }
+    else if (view === "lesson" && lesson) { renderLesson(false); syncHistory(); return; }
     else if (view === "lesson-loading") app.innerHTML = '<div class="wrap"><div class="card center"><div class="big-emoji">⏳</div><p class="muted">Đang tải bài…</p>' +
       '<button class="small-btn" data-action="lessons">← Danh sách bài</button></div></div>';
     else if (view === "exam-loading") app.innerHTML = '<div class="wrap"><div class="card center"><div class="big-emoji">⏳</div><p class="muted">Đang tải đề…</p>' +
       '<button class="small-btn" data-action="exams">← Danh sách đề</button></div></div>';
     else { view = "home"; app.innerHTML = homeHtml(); }
+    syncHistory();
     window.scrollTo(0, 0);
   }
+
+  // ---------- định tuyến bằng hash: nút Back của điện thoại quay về màn trước ----------
+  // Hash không gửi lên server (GitHub Pages không 404), ?t= giữ nguyên.
+  // history.state = { d: độ sâu màn, n: số mục tính từ mục gốc (Trang chủ), p: hash màn trước }.
+  var DEPTH = { home: 0, exams: 1, lessons: 1, stats: 1, session: 1, exam: 2, lesson: 2, "exam-loading": 2, "lesson-loading": 2 };
+  var fromPop = false;
+  try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) { /* bỏ qua */ }
+  function baseUrl() { return location.pathname + location.search; }
+  function routeOf() {
+    switch (view) {
+      case "exams": return "#exams";
+      case "exam": return exam ? "#exam/" + exam.id : "#exams";
+      case "exam-loading": return examPending ? "#exam/" + examPending : "#exams";
+      case "lessons": return "#lessons";
+      case "lesson": return lesson ? "#lesson/" + lesson.id : "#lessons";
+      case "lesson-loading": return lessonPending ? "#lesson/" + lessonPending : "#lessons";
+      case "stats": return "#stats";
+      case "session": return "#session";
+      default: return "";
+    }
+  }
+  function syncHistory() {
+    if (fromPop) return;
+    var r = routeOf();
+    if (r === location.hash) return;
+    var st = history.state || {}, n = Number(st.n) || 0, d = DEPTH[view] || 0;
+    try {
+      if (!r && n > 0) { history.go(-n); return; } // về Trang chủ: lùi về mục gốc, stack không phình
+      if (d > (Number(st.d) || 0)) history.pushState({ d: d, n: n + 1, p: location.hash }, "", r || baseUrl());
+      else history.replaceState({ d: d, n: n, p: st.p }, "", r || baseUrl());
+    } catch (e) { /* bỏ qua */ }
+  }
+  // Nút quay lại trong app: nếu mục trước đúng là màn đích thì history.back() để Back của hệ điều hành khớp.
+  function backTo(route) {
+    var st = history.state;
+    if (fromPop || !st || st.p !== route || location.hash === route) return false;
+    history.back();
+    return true;
+  }
+  function routeTo(h) {
+    var m;
+    examPending = null; lessonPending = null;
+    // openExam / openLesson tự vẽ màn (đang tải, đề/bài, hoặc danh sách nếu lỗi).
+    if ((m = /^#exam\/(.+)$/.exec(h)) && EXAM_ID_RE.test(m[1])) { openExam(m[1]); return; }
+    if ((m = /^#lesson\/(.+)$/.exec(h)) && LESSON_META[m[1]]) { openLesson(m[1]); return; }
+    view = h === "#exams" ? "exams" : h === "#lessons" ? "lessons" : h === "#stats" ? "stats" : "home";
+    render();
+  }
+  window.addEventListener("popstate", function () {
+    if (!DECKS.length) return;
+    fromPop = true;
+    try {
+      var h = location.hash;
+      if (view === "exam" && h !== routeOf()) stopExamMedia();
+      if (view === "lesson") stopReading();
+      if (view === "session" && h !== "#session") closeSession();
+      if (h === "#session" && session) { render(); return; }
+      routeTo(h);
+    } finally { fromPop = false; }
+  });
   function missingDecksHtml() {
     return '<div class="wrap"><div class="warn"><h1>Thiếu file bài học</h1>' +
       '<p>Không thấy dữ liệu nào trong <code>window.DECKS</code>. Kiểm tra thư mục <code>decks/</code> nằm cạnh <code>index.html</code> và có đủ 12 file <code>.js</code>.</p>' +
@@ -2184,7 +2286,7 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
       case "end": endSession(false); break;
       case "end-force": endSession(true); break;
       // luyện đề
-      case "exams": if (view === "exam") leaveExam(); else { examPending = null; view = "exams"; render(); } break;
+      case "exams": if (view === "exam") leaveExam(); else { examPending = null; if (!backTo("#exams")) { view = "exams"; render(); } } break;
       case "ex-open": openExam(el.getAttribute("data-id")); break;
       case "ex-part": examPart(Number(el.getAttribute("data-part"))); break;
       case "ex-go": examGoN(Number(el.getAttribute("data-n")), true); break;
@@ -2217,7 +2319,7 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
       case "au-rate": setRate(Number(el.getAttribute("data-rate"))); break;
       case "au-item": seekToItem(true); break;
       // giáo trình
-      case "lessons": lessonPending = null; view = "lessons"; render(); break;
+      case "lessons": lessonPending = null; if (view === "lesson") stopReading(); if (!backTo("#lessons")) { view = "lessons"; render(); } break;
       case "ls-level": UI.lsLevel = Number(el.getAttribute("data-level")); saveUi(); render(); break;
       case "ls-open": openLesson(el.getAttribute("data-id")); break;
       case "ls-tab": setLessonTab(el.getAttribute("data-tab")); break;
@@ -2338,6 +2440,19 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
   document.addEventListener("keydown", lessonKey);
 
   // ---------- khởi động ----------
+  // Mở link / tải lại trang: về đúng màn theo hash. Mở mới (chưa có history.state của app) thì dựng
+  // mục gốc = Trang chủ (+ mục Danh sách đề/bài nếu link trỏ thẳng vào đề/bài) để Back lùi từng màn.
+  function initialRoute() {
+    var h = location.hash, st = history.state;
+    try {
+      if (!(st && typeof st.n === "number")) {
+        history.replaceState({ d: 0, n: 0 }, "", baseUrl());
+        var mid = /^#exam\//.test(h) ? "#exams" : /^#lesson\//.test(h) ? "#lessons" : "";
+        if (mid) history.pushState({ d: 1, n: 1, p: "" }, "", mid);
+      }
+    } catch (e) { /* bỏ qua */ }
+    routeTo(h);
+  }
   // Nạp file các bài giáo trình đang học TRƯỚC khi dựng thẻ (chờ xong/lỗi, tối đa 8s).
   function boot() {
     var ids = db.settings.enabledLessons.filter(function (id) { return !!LESSON_META[id]; });
@@ -2347,7 +2462,7 @@ button.lstoggle.on{background:#163525;border-color:var(--green)}
       rebuildItems();
       var miss = ids.filter(function (id) { return !lessonData(id); });
       if (!DECKS.length) app.innerHTML = missingDecksHtml();
-      else render();
+      else initialRoute();
       // Gọi sau render() để không bị vẽ đè; bài về muộn thì vòng dự phòng bên dưới dựng lại thẻ.
       if (miss.length) toast("Không tải được " + miss.length + " bài giáo trình (" + miss.join(", ") + ") — từ của bài chưa có trong phiên. Mở bài trong Giáo trình để thử lại.");
     };
