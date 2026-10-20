@@ -539,6 +539,137 @@ button.lstoggle.on{background:var(--green-soft);border-color:var(--green);color:
 .ptabs.lstabs{overflow-x:visible;position:sticky;top:0;z-index:5;background:var(--bg-glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding-top:6px;margin:0 -16px;padding-left:16px;padding-right:16px}
 .ptabs.lstabs button{flex:1 1 0;min-width:0;padding:4px 2px}
 @media (max-width:400px){.ptabs.lstabs button{font-size:13.5px}}
+/* trần ôn: dòng nhỏ dưới số "đến hạn" (phần dư để mấy hôm tới) — chữ mảnh nhạt, không gây áp lực */
+.stat .smore{margin-top:6px;padding:0 4px;font-size:10px;line-height:1.35;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+/* giáo trình: nút "Hiện cấp khác" cuối hàng tab cấp — viên thuốc viền đứt, chữ in hoa mảnh */
+button.lvmore{min-height:44px;padding:4px 14px;border-radius:999px;white-space:nowrap;background:transparent;border:1px dashed var(--line-strong);box-shadow:none;color:var(--muted);font-size:11px;font-weight:400;text-transform:uppercase;letter-spacing:.14em}
+.lvrow{display:flex;justify-content:flex-end;margin:-2px 0 8px}
+button.lvmore:hover{border-color:var(--glow);color:var(--accent-ink);background:var(--hover-tint);box-shadow:0 0 12px -6px rgba(224,53,43,.8)}
+/* thống kê: lượt ôn mỗi ngày — vạch sáng đỏ mảnh */
+.rvtable td{padding:7px 6px}
+.rvtable td.rvcell{width:58%}
+.rvbar{display:block;height:4px;border-radius:2px;background:rgba(255,222,208,.07);overflow:hidden}
+.rvbar i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,var(--wine),var(--glow));box-shadow:0 0 8px rgba(224,53,43,.7)}
+.rvbar i.full{background:linear-gradient(90deg,var(--glow),var(--glow-hot))}
+.capdone{max-width:32em;margin:4px auto 0}
+/* ---------- nói: thẻ nói + nhại bài khóa — nút mic viên thuốc viền đỏ phát sáng, đang ghi = lửa đỏ + vòng đập; chữ trạng thái in hoa mảnh ---------- */
+.say{text-align:center;margin:14px 0 4px;font-size:11.5px;font-weight:400;text-transform:uppercase;letter-spacing:.24em;text-indent:.24em;color:var(--accent-ink)}
+.vbox{margin-top:12px;text-align:center}
+.vbox.back{margin-top:4px}
+.vctl{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin-top:10px}
+button.mic{min-height:52px;min-width:170px;padding:8px 22px;border-radius:999px;font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.16em;text-indent:.16em;
+  background:transparent;color:var(--outline-ink);border:1px solid var(--outline-line);box-shadow:inset 0 0 14px -6px rgba(224,53,43,.6),0 0 18px -10px rgba(224,53,43,.9)}
+button.mic:hover{background:var(--accent-soft);border-color:var(--glow-hot);color:#fff}
+button.mic.sm{min-height:44px;min-width:0;padding:6px 16px;font-size:11.5px;letter-spacing:.12em;text-indent:.12em}
+button.mic.on{background:var(--btn-fire);border-color:var(--btn-line-h);color:var(--btn-ink);animation:micPulse 1.4s ease-in-out infinite}
+button.mic.wait{opacity:.7;border-style:dashed;box-shadow:none}
+.vtime{display:inline-block;margin-left:6px;font-variant-numeric:tabular-nums;letter-spacing:.06em;opacity:.85}
+@keyframes micPulse{0%,100%{box-shadow:0 0 0 0 rgba(224,53,43,.55),0 10px 30px -12px rgba(224,53,43,.9)}50%{box-shadow:0 0 0 9px rgba(224,53,43,0),0 10px 30px -12px rgba(224,53,43,.9)}}
+button.spk.vref{font-size:13px;padding:6px 16px;letter-spacing:.08em;min-height:44px}
+button.small-btn.vplay{border-color:var(--line-strong)}
+.vstat{margin-top:10px;font-size:11px;line-height:1.5;text-transform:uppercase;letter-spacing:.14em;color:var(--faint)}
+.vstat.warn{color:var(--orange-ink);text-transform:none;letter-spacing:.02em;font-size:13.5px}
+.vstat.live{color:var(--accent-ink)}
+.vstat .vsay{color:var(--muted)}
+.vdot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--glow-hot);box-shadow:0 0 8px var(--glow);margin-right:8px;vertical-align:1px;animation:micBlink 1s steps(2,start) infinite}
+@keyframes micBlink{to{visibility:hidden}}
+.vcmp{margin-top:12px;padding:10px 12px;border:1px solid var(--border);border-radius:14px;background:rgba(255,238,228,.03)}
+.vheard{font-size:13px;color:var(--muted);letter-spacing:.02em}
+.vheard .zh{font-family:var(--kai);font-size:19px;color:var(--zh-ink);margin-left:4px}
+.vpct{margin-top:4px;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.2em}
+.vpct.good{color:var(--green-ink);text-shadow:0 0 10px rgba(92,214,154,.45)}
+.vpct.mid{color:var(--orange-ink)}
+.vpct.low{color:var(--red-ink)}
+.vok{color:var(--green-ink);text-shadow:0 0 12px rgba(92,214,154,.45)}
+.vmiss{color:var(--red-ink);opacity:.8;text-decoration:underline wavy rgba(255,123,152,.55);text-underline-offset:.18em;text-decoration-thickness:1px}
+.vzh{margin-top:10px;font-size:22px;line-height:1.5;font-family:var(--kai)}
+.vnext{margin-top:12px;display:flex;justify-content:flex-end}
+/* ---------- thẻ Dịch câu (Việt → Trung): ô gõ viên thuốc tối viền đỏ phát sáng, chip từ khóa viền mảnh, nhãn in hoa mảnh giãn rộng ---------- */
+.tag.trans{background:var(--accent-soft);border-color:var(--accent-soft-line);color:var(--accent-soft-ink)}
+.card .meaning.front.trvi{font-size:24px;line-height:1.4;margin:22px 0 6px}
+.trkeys{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin:10px 0 4px}
+.trklab{width:100%;text-align:center;font-size:10.5px;text-transform:uppercase;letter-spacing:.24em;text-indent:.24em;color:var(--faint)}
+.trk{display:inline-flex;align-items:baseline;gap:6px;padding:3px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(14,8,8,.78);font-size:13.5px;line-height:1.5;color:var(--muted);letter-spacing:.02em}
+.trk b{font-family:var(--kai);font-weight:400;font-size:19px;color:var(--zh-ink);text-shadow:0 0 10px rgba(255,90,70,.35)}
+.trkeys button.trhint{min-height:44px;padding:4px 14px;font-size:11px;text-transform:uppercase;letter-spacing:.14em}
+.trform{margin:14px 0 4px}
+.trin{display:block;width:100%;min-height:54px;font-family:var(--kai);font-size:24px;line-height:1.3;color:var(--zh-ink);text-align:center;background:rgba(10,5,5,.6);
+  border:1px solid var(--outline-line);border-radius:999px;padding:8px 20px;box-shadow:inset 0 0 14px -6px rgba(224,53,43,.6),0 0 18px -10px rgba(224,53,43,.9)}
+.trin:focus{outline:none;border-color:var(--glow-hot);box-shadow:inset 0 0 14px -6px rgba(224,53,43,.6),0 0 0 3px rgba(224,53,43,.25),0 0 24px -6px rgba(224,53,43,.9)}
+.trin::placeholder{font-family:var(--sans);font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--placeholder)}
+.trres{text-align:left;margin-top:14px}
+.trrow{display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;padding:4px 0}
+.trlab{flex:none;width:6.6em;font-size:10.5px;text-transform:uppercase;letter-spacing:.2em;color:var(--faint)}
+.trzh{flex:1;min-width:0;font-family:var(--kai);font-size:24px;line-height:1.45;color:var(--zh-ink);word-break:break-all}
+.trpy{color:var(--pinyin);font-size:16px;letter-spacing:.04em;margin-top:2px}
+.trnote{margin-top:8px;font-size:10.5px;line-height:1.6;text-transform:uppercase;letter-spacing:.14em;color:var(--faint)}
+@media (max-width:400px){.trlab{width:100%}}
+/* nhại bài khóa */
+.shbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 10px;padding:8px 0 10px;border-bottom:1px solid var(--border)}
+.shbar .muted{flex:1;min-width:12em}
+.tline.shpick{cursor:pointer;opacity:.62}
+.tline.shpick:hover{opacity:1;background:var(--hover-tint)}
+.tline.shcur{background:rgba(224,53,43,.08);outline:1px solid rgba(224,53,43,.5);box-shadow:0 0 18px -8px rgba(224,53,43,.7)}
+/* cuộn tới câu (nhại / đọc cả bài): chừa chỗ thanh tab dính; trong phiên html.insess đã có scroll-padding-top */
+.tline{scroll-margin-top:68px}html.insess .tline{scroll-margin-top:0}
+.vbox.shctl{text-align:left;margin-top:8px}
+.vbox.shctl .vctl{justify-content:flex-start;gap:8px}
+.vbox.shctl .vstat,.vbox.shctl .vcmp{text-align:left}
+.setting .snote{display:block;margin-top:3px;font-size:11px;line-height:1.45;letter-spacing:.03em;color:var(--faint)}
+@media (max-width:400px){button.mic{min-width:0;width:100%}.vctl button.mic.sm{width:auto}}
+/* ---------- phiên chia 3 khúc: 3 đoạn vạch sáng đỏ mảnh + nhãn in hoa mảnh giãn rộng; khúc đang học sáng lên, khúc tới giờ nhấp nháy ---------- */
+.blks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:9px 0 7px}
+.blk{min-width:0;display:flex;flex-direction:column;gap:2px}
+.blk .bl{font-size:9.5px;line-height:1.7;text-transform:uppercase;letter-spacing:.16em;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.blk .bt{display:block;height:3px;border-radius:999px;background:rgba(255,230,220,.12)}
+.blk .bf{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#5a0a07,#e0352b 70%,#ffc2b4);box-shadow:0 0 10px 1px rgba(224,53,43,.85);transition:width .5s linear}
+.blk.done .bl{color:var(--bar-muted)}
+.blk.done .bl::before{content:"✓ ";color:var(--accent-ink)}
+.blk.done .bf{background:rgba(255,200,185,.32);box-shadow:none}
+.blk.on .bl{color:var(--bar-ink);text-shadow:0 0 10px rgba(255,90,70,.85)}
+.blk.on .bt{background:rgba(255,230,220,.2)}
+.blk.next .bl{color:var(--glow-pale);animation:blkBlink 1.2s ease-in-out infinite}
+@keyframes blkBlink{50%{opacity:.35}}
+.bar-sub{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.bar-sub #counts{flex:1;min-width:0}
+.bar button.blknext{flex:none;min-height:44px;padding:4px 12px;font-size:10.5px;text-transform:uppercase;letter-spacing:.14em}
+/* thẻ chuyển khúc + màn chọn khúc 3: 3 chấm sáng, tiêu đề in hoa mảnh giãn rộng */
+.blkdots{display:flex;justify-content:center;gap:12px;margin:8px 0 14px}
+.blkdots i{width:8px;height:8px;border-radius:50%;border:1px solid rgba(255,150,130,.55)}
+.blkdots i.done{background:rgba(255,150,130,.45);border-color:transparent}
+.blkdots i.on{background:var(--glow-hot);border-color:var(--glow-hot);box-shadow:0 0 10px 2px rgba(224,53,43,.85)}
+.blkno{text-align:center;font-size:10.5px;text-transform:uppercase;letter-spacing:.26em;text-indent:.26em;color:var(--accent-ink)}
+.blkgate{padding-top:24px}
+.blkgate h1{margin:16px 0 8px;font-size:26px;letter-spacing:.24em;text-indent:.24em;text-shadow:0 0 18px rgba(255,90,70,.5)}
+.blkgate .blkdesc{margin:6px 0 2px;letter-spacing:.02em}
+.blkopts{display:grid;gap:10px;margin:16px 0 8px}
+button.blkopt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:14px 16px;min-height:78px;border-radius:18px;
+  background:rgba(14,8,8,.78);border:1px solid var(--outline-line);box-shadow:inset 0 0 14px -6px rgba(224,53,43,.6),0 0 18px -10px rgba(224,53,43,.9)}
+button.blkopt:hover{background:var(--accent-soft);border-color:var(--glow-hot)}
+.blkopt .boi{flex:none;font-size:24px;width:34px;text-align:center}
+.blkopt .bot{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.blkopt b{font-weight:500;font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:var(--outline-ink)}
+.blkopt small{font-size:13px;line-height:1.4;color:var(--muted);letter-spacing:.02em}
+.blkopt small .zh{font-size:16px;color:var(--zh-ink)}
+.blkopt kbd{flex:none}
+.blkdone{margin-top:8px;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--faint)}
+@media (max-width:600px){.blkopt kbd{display:none}.blk .bl{letter-spacing:.1em}}
+/* thanh nhỏ dính trên màn bài/đề khi phiên đang chạy (khúc 3): kính tối, đồng hồ mảnh, vạch sáng đỏ ở đáy */
+.smini{position:fixed;top:0;left:0;right:0;z-index:8;padding-top:env(safe-area-inset-top);background:linear-gradient(180deg,var(--bar-top),var(--bar-bot));
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid rgba(224,53,43,.4);box-shadow:0 10px 24px -16px rgba(224,53,43,.6)}
+.smin{max-width:720px;margin:0 auto;padding:3px 16px;min-height:50px;display:flex;align-items:center;gap:10px}
+.smlab{flex:1;min-width:0;font-size:10.5px;text-transform:uppercase;letter-spacing:.18em;color:var(--bar-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.smclock{flex:none;font-family:var(--thin);font-weight:300;font-size:17px;letter-spacing:.08em;font-variant-numeric:lining-nums tabular-nums;color:var(--bar-ink)}
+.smini button.smback{flex:none;min-height:44px;padding:4px 14px;font-size:11px;text-transform:uppercase;letter-spacing:.14em;
+  background:var(--accent-soft);color:var(--accent-soft-ink);border-color:var(--accent-soft-line);box-shadow:0 0 14px -4px rgba(224,53,43,.6)}
+.smini button.smback:hover{background:var(--accent-soft-h);border-color:var(--glow-hot);color:#fff}
+.smtrack{height:2px;background:rgba(255,230,220,.1)}
+.smtrack i{display:block;height:100%;width:0;background:linear-gradient(90deg,#5a0a07,#e0352b 70%,#ffc2b4);box-shadow:0 0 8px rgba(224,53,43,.85);transition:width .5s linear}
+.smini.done .smlab{color:var(--glow-pale)}
+html.insess{scroll-padding-top:130px}
+html.insess body{padding-top:calc(53px + env(safe-area-inset-top))}
+html.insess .bar,html.insess .ptabs.lstabs{top:calc(53px + env(safe-area-inset-top))}
+@media (max-width:420px){.smname{display:none}.smlab{letter-spacing:.06em}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
 </style>
 <style id="theme-giay" media="not all">
@@ -936,6 +1067,133 @@ button.lstoggle.on{background:var(--green-soft);border-color:var(--green);color:
 .ptabs.lstabs{overflow-x:visible;position:sticky;top:0;z-index:5;background:var(--bg);padding-top:6px}
 .ptabs.lstabs button{flex:1 1 0;min-width:0;padding:4px 2px}
 @media (max-width:400px){.ptabs.lstabs button{font-size:14px}}
+/* trần ôn: dòng nhỏ dưới số "đến hạn" (phần dư để mấy hôm tới) */
+.stat .smore{margin-top:3px;padding:0 4px;font-size:12px;line-height:1.3;color:var(--muted)}
+/* giáo trình: nút "Hiện cấp khác" cuối hàng tab cấp — viên viền đứt nét màu mực nhạt */
+button.lvmore{min-height:44px;padding:4px 14px;border-radius:999px;white-space:nowrap;background:transparent;border:1.5px dashed var(--line);box-shadow:none;color:var(--muted);font-size:14px;font-weight:600}
+.lvrow{display:flex;justify-content:flex-end;margin:-2px 0 8px}
+button.lvmore:hover{border-color:var(--accent);color:var(--accent-ink);background:var(--hover-bg)}
+/* thống kê: lượt ôn mỗi ngày — thanh son trên nền giấy, ngày chạm trần tô vàng kim */
+.rvtable td{padding:7px 6px}
+.rvtable td.rvcell{width:58%}
+.rvbar{display:block;height:8px;border-radius:4px;background:var(--card2);border:1px solid var(--border);overflow:hidden}
+.rvbar i{display:block;height:100%;background:var(--accent)}
+.rvbar i.full{background:var(--gold)}
+.capdone{max-width:32em;margin:4px auto 0}
+/* ---------- nói: thẻ nói + nhại bài khóa — nút mic viền son trên nền giấy, đang ghi = son đặc + chấm đỏ nhấp nháy ---------- */
+.say{text-align:center;margin:12px 0 4px;font-size:15px;font-weight:700;color:var(--accent-ink)}
+.vbox{margin-top:10px;text-align:center}
+.vbox.back{margin-top:4px}
+.vctl{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin-top:10px}
+button.mic{min-height:52px;min-width:170px;padding:8px 20px;border-radius:14px;font-size:17px;font-weight:700;
+  background:var(--outline-bg);color:var(--outline-ink);border:1.5px solid var(--outline-line);box-shadow:0 2px 0 rgba(140,27,20,.18)}
+button.mic:hover{background:var(--accent-soft-h);border-color:var(--accent)}
+button.mic.sm{min-height:44px;min-width:0;padding:6px 14px;font-size:15px;border-radius:10px}
+button.mic.on{background:linear-gradient(180deg,var(--btn-top) 0%,var(--btn-mid) 55%,var(--btn-bot) 100%);border-color:var(--btn-line);color:var(--btn-ink);box-shadow:0 2px 0 var(--accent-dark)}
+button.mic.wait{opacity:.7;border-style:dashed;box-shadow:none}
+.vtime{display:inline-block;margin-left:6px;font-variant-numeric:tabular-nums;font-weight:600}
+button.spk.vref{font-size:15px;padding:6px 14px;min-height:44px;font-weight:600}
+button.small-btn.vplay{background:var(--gold-soft);border-color:var(--gold);color:var(--gold-ink)}
+.vstat{margin-top:10px;font-size:14px;line-height:1.45;color:var(--muted)}
+.vstat.warn{color:var(--orange-ink)}
+.vstat.live{color:var(--accent-ink);font-weight:600}
+.vdot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--accent);margin-right:7px;vertical-align:0;animation:micBlink 1s steps(2,start) infinite}
+@keyframes micBlink{to{visibility:hidden}}
+.vcmp{margin-top:12px;padding:10px 12px;border:1px dashed var(--line);border-radius:10px;background:var(--card2)}
+.vheard{font-size:14px;color:var(--muted)}
+.vheard .zh{font-family:var(--kai);font-size:20px;color:var(--zh-ink);margin-left:4px}
+.vpct{margin-top:4px;font-size:15px;font-weight:800}
+.vpct.good{color:var(--green-ink)}
+.vpct.mid{color:var(--orange-ink)}
+.vpct.low{color:var(--red-ink)}
+.vok{color:var(--green)}
+.vmiss{color:var(--red);background:var(--red-soft);border-radius:4px;text-decoration:underline wavy var(--red-line);text-underline-offset:.18em}
+.vzh{margin-top:10px;font-size:22px;line-height:1.5;font-family:var(--kai)}
+.vnext{margin-top:12px;display:flex;justify-content:flex-end}
+/* ---------- thẻ Dịch câu (Việt → Trung): ô gõ giấy viền mực, chip từ khóa vàng kim nét đứt, nhãn đậm ---------- */
+.tag.trans{background:var(--gold-soft);border-color:var(--gold);color:var(--gold-ink)}
+.meaning.front.trvi{font-size:25px;line-height:1.4;margin:22px 0 6px}
+.trkeys{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin:10px 0 4px}
+.trklab{width:100%;text-align:center;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--gold-ink)}
+.trk{display:inline-flex;align-items:baseline;gap:6px;padding:3px 10px;border-radius:8px;border:1px dashed var(--gold);background:var(--gold-soft);font-size:14px;line-height:1.5;font-weight:600;color:var(--text)}
+.trk b{font-family:var(--kai);font-weight:400;font-size:20px;color:var(--accent-ink)}
+.trkeys button.trhint{min-height:44px;padding:4px 12px;font-size:14px;font-weight:700}
+.trform{margin:14px 0 4px}
+.trin{display:block;width:100%;min-height:54px;font-family:var(--kai);font-size:24px;line-height:1.3;color:var(--text);background:var(--card);
+  border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;box-shadow:inset 0 1px 3px rgba(var(--sh),.08)}
+.trin:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(179,38,30,.18)}
+.trin::placeholder{font-family:var(--sans);font-size:15px;color:var(--placeholder)}
+.trres{text-align:left;margin-top:14px}
+.trrow{display:flex;flex-wrap:wrap;align-items:center;gap:2px 10px;padding:4px 0}
+.trlab{flex:none;width:5.8em;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.trzh{flex:1;min-width:0;font-family:var(--kai);font-size:24px;line-height:1.45;color:var(--zh-ink);word-break:break-all}
+.trpy{color:var(--pinyin);font-size:15px;margin-top:2px}
+.trnote{margin-top:8px;font-size:13.5px;line-height:1.45;font-style:italic;color:var(--muted)}
+@media (max-width:400px){.trlab{width:100%}}
+/* nhại bài khóa */
+.shbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 10px;padding:8px 0 10px;border-bottom:1px dashed var(--line)}
+.shbar .muted{flex:1;min-width:12em}
+.tline.shpick{cursor:pointer;opacity:.7}
+.tline.shpick:hover{opacity:1;background:var(--hover-bg)}
+.tline.shcur{background:var(--gold-soft);outline:1.5px solid var(--gold)}
+.tline{scroll-margin-top:66px}html.insess .tline{scroll-margin-top:0}
+.vbox.shctl{text-align:left;margin-top:8px}
+.vbox.shctl .vctl{justify-content:flex-start;gap:8px}
+.vbox.shctl .vstat,.vbox.shctl .vcmp{text-align:left}
+.setting .snote{display:block;margin-top:2px;font-size:12.5px;line-height:1.4;color:var(--muted);font-weight:400}
+@media (max-width:400px){button.mic{min-width:0;width:100%}.vctl button.mic.sm{width:auto}}
+/* ---------- phiên chia 3 khúc: 3 đoạn thanh vàng kim trên dải đỏ son, nhãn đậm; khúc đang học sáng + viền vàng ---------- */
+.blks{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:8px 0 6px}
+.blk{min-width:0;display:flex;flex-direction:column;gap:3px}
+.blk .bl{font-size:12.5px;line-height:1.6;font-weight:700;color:var(--bar-muted);opacity:.72;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.blk .bt{display:block;height:8px;border-radius:999px;background:rgba(255,240,228,.22);overflow:hidden}
+.blk .bf{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,#E2B04A,#FFE39A);transition:width .5s linear}
+.blk.done .bl{opacity:1}
+.blk.done .bl::before{content:"✓ "}
+.blk.done .bf{background:rgba(255,240,228,.55)}
+.blk.on .bl{opacity:1;color:var(--bar-ink);font-weight:800}
+.blk.on .bt{box-shadow:0 0 0 1.5px rgba(255,227,154,.85)}
+.blk.next .bl{opacity:1;color:#FFE39A;animation:blkBlink 1.2s ease-in-out infinite}
+@keyframes blkBlink{50%{opacity:.4}}
+.bar-sub{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.bar-sub #counts{flex:1;min-width:0}
+.bar button.blknext{flex:none;min-height:44px;padding:4px 12px;font-size:14px;font-weight:700}
+/* thẻ chuyển khúc + màn chọn khúc 3: 3 chấm (đỏ son = đang ở, vàng kim = xong), lựa chọn là thẻ giấy viền mực */
+.blkdots{display:flex;justify-content:center;gap:10px;margin:6px 0 12px}
+.blkdots i{width:11px;height:11px;border-radius:50%;border:1.5px solid var(--line);background:var(--card)}
+.blkdots i.done{background:var(--gold);border-color:var(--gold)}
+.blkdots i.on{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.blkno{text-align:center;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--gold-ink)}
+.blkgate{padding-top:22px}
+.blkgate h1{margin:10px 0 4px;font-size:28px}
+.blkgate .blkdesc{font-size:16.5px;margin:6px 0 2px}
+.blkopts{display:grid;gap:10px;margin:14px 0 8px}
+button.blkopt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:12px 14px;min-height:78px;border-radius:12px;
+  background:var(--card);border:1.5px solid var(--line);box-shadow:0 2px 0 rgba(var(--sh),.12)}
+button.blkopt:hover{border-color:var(--accent);background:var(--hover-bg)}
+.blkopt .boi{flex:none;font-size:22px;width:44px;height:44px;display:grid;place-content:center;border-radius:50%;background:var(--gold-soft);border:1px solid var(--gold)}
+.blkopt .bot{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.blkopt b{font-size:17px;font-weight:800;color:var(--accent-ink)}
+.blkopt small{font-size:14px;line-height:1.4;color:var(--muted)}
+.blkopt small .zh{font-size:17px;color:var(--zh-ink)}
+.blkopt kbd{flex:none}
+.blkdone{margin-top:8px}
+@media (max-width:600px){.blkopt kbd{display:none}}
+/* thanh nhỏ dính trên màn bài/đề khi phiên đang chạy (khúc 3): dải đỏ son như thanh phiên, đồng hồ đậm, vạch vàng kim */
+.smini{position:fixed;top:0;left:0;right:0;z-index:8;padding-top:env(safe-area-inset-top);background:linear-gradient(180deg,var(--bar-top),var(--bar-bot));
+  box-shadow:inset 0 -1px 0 rgba(255,214,190,.18),0 8px 16px -12px rgba(90,15,10,.7)}
+.smin{max-width:720px;margin:0 auto;padding:3px 16px;min-height:50px;display:flex;align-items:center;gap:10px}
+.smlab{flex:1;min-width:0;font-size:14px;font-weight:700;color:var(--bar-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.smclock{flex:none;font-family:var(--serif);font-weight:700;font-size:19px;font-variant-numeric:lining-nums tabular-nums;color:var(--bar-ink)}
+.smini button.smback{flex:none;min-height:44px;padding:4px 14px;font-size:14px;font-weight:800;background:var(--card);color:var(--accent-ink);border:1px solid transparent;box-shadow:0 2px 0 rgba(90,15,10,.35)}
+.smini button.smback:hover{background:var(--gold-soft);border-color:var(--gold)}
+.smtrack{height:3px;background:rgba(255,240,228,.22)}
+.smtrack i{display:block;height:100%;width:0;background:linear-gradient(90deg,#E2B04A,#FFE39A);transition:width .5s linear}
+.smini.done .smlab{color:#FFE39A}
+html.insess{scroll-padding-top:130px}
+html.insess body{padding-top:calc(53px + env(safe-area-inset-top))}
+html.insess .bar,html.insess .ptabs.lstabs{top:calc(53px + env(safe-area-inset-top))}
+@media (max-width:420px){.smname{display:none}.smlab{letter-spacing:.06em}}
 @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 </style>
 <script>/* chọn giao diện TRƯỚC khi vẽ (tránh nháy): bật đúng 1 khối style. settings.theme: "dem" (mặc định) | "giay" | "system";
@@ -947,6 +1205,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
 <body>
 <div id="app"></div>
 <div id="toast" hidden></div>
+<div id="sesMini" class="smini" hidden></div>
 <audio id="examAudio" preload="metadata" hidden></audio>
 
 <script src="decks/chao-hoi.js"></script>
@@ -977,6 +1236,19 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   var REFILL_EARLY = 10;
   var MIN_CARDS_FOR_STREAK = 5;
   var NEW_OPTIONS = [5, 10, 15, 20];
+  // Trần lượt ôn mỗi ngày (settings.reviewCap): 0 = không giới hạn. Mặc định 60.
+  var REVIEW_CAP_OPTIONS = [30, 60, 100, 0];
+  var REVIEW_CAP_DEFAULT = 60;
+  var DAILY_KEEP = 120; // giữ số lượt ôn của ~120 ngày gần nhất (db.daily)
+  // Thẻ "Dịch câu" (Việt → Trung): chen 1 thẻ sau mỗi TRANS_EVERY thẻ thường, tối đa TRANS_MAX thẻ khác nhau / phiên.
+  var TRANS_EVERY = 6;
+  var TRANS_MAX = 8;
+  var TRANS_KEYS = 4; // số từ khóa gợi ý tối đa trên thẻ dịch
+  // Phiên chia 3 khúc (settings.sessionBlocks, mặc định bật; tắt = phiên trộn như cũ). Mỗi khúc 15 phút:
+  // 0 "Thẻ" (thẻ từ) · 1 "Nói & dịch" (thẻ nói xen thẻ dịch) · 2 "Nghe & đọc" (nhại 1 bài khóa / làm tiếp 1 phần đề).
+  var BLOCK_SEC = 15 * 60;
+  var BLOCKS = [["Thẻ", "Thẻ từ: từ mới + ôn"], ["Nói & dịch", "🗣 Thẻ nói xen ✍ dịch câu"], ["Nghe & đọc", "🎙 Nhại 1 bài khóa hoặc 📝 làm tiếp 1 phần đề"]];
+  var TALK_RELEARN_GAP = 3; // khúc 2: thẻ nói vừa Quên quay lại sau ~3 thẻ nói (xen thẻ dịch → ~6 thẻ)
 
   var app = document.getElementById("app");
   var toastEl = document.getElementById("toast");
@@ -1106,7 +1378,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       (Array.isArray(deck.phrases) ? deck.phrases : []).forEach(function (p, i) {
         if (!p || !p.zh) return;
         var id = deck.id + ":p:" + i;
-        var it = { id: id, deckId: deck.id, deck: deck, kind: "phrase", data: p };
+        var it = { id: id, deckId: deck.id, deck: deck, kind: "phrase", data: p, idx: i };
         ITEMS.push(it); ITEM_BY_ID[id] = it;
       });
     });
@@ -1118,9 +1390,22 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     return {
       cards: {},
       sessions: [],
-      settings: { newPerSession: 10, drawPad: true, autoSpeak: true, theme: "dem", selectedDecks: DECKS.map(function (d) { return d.id; }), enabledLessons: [] }
+      daily: {}, // { "YYYY-MM-DD": { reviews: n } } — số lượt ôn đã làm trong ngày (để áp trần ôn, reload không mất)
+      settings: { newPerSession: 10, drawPad: true, autoSpeak: true, theme: "dem", selectedDecks: DECKS.map(function (d) { return d.id; }), enabledLessons: [], reviewCap: REVIEW_CAP_DEFAULT,
+        speechScore: true, // chấm phát âm bằng nhận giọng nói (chỉ có tác dụng khi trình duyệt hỗ trợ)
+        sessionBlocks: true } // phiên 45 phút chia 3 khúc (Thẻ · Nói & dịch · Nghe & đọc)
     };
   }
+  function normalizeDaily(o) {
+    var out = {};
+    if (!o || typeof o !== "object") return out;
+    Object.keys(o).filter(function (k) { return /^\d{4}-\d{2}-\d{2}$/.test(k); }).sort().slice(-DAILY_KEEP).forEach(function (k) {
+      var r = o[k] && typeof o[k] === "object" ? Math.max(0, Math.floor(num(o[k].reviews, 0))) : 0;
+      if (r > 0) out[k] = { reviews: r };
+    });
+    return out;
+  }
+  function capVal(x) { x = Number(x); return REVIEW_CAP_OPTIONS.indexOf(x) >= 0 ? x : null; }
   function num(x, d) { x = Number(x); return isFinite(x) ? x : d; }
   function normalizeCard(c) {
     if (!c || typeof c !== "object") return null;
@@ -1141,11 +1426,15 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       });
     }
     if (Array.isArray(obj.sessions)) base.sessions = obj.sessions.filter(function (s) { return s && typeof s === "object"; });
+    base.daily = normalizeDaily(obj.daily);
     var s = obj.settings;
     if (s && typeof s === "object") {
       if (NEW_OPTIONS.indexOf(Number(s.newPerSession)) >= 0) base.settings.newPerSession = Number(s.newPerSession);
+      if (capVal(s.reviewCap) != null) base.settings.reviewCap = capVal(s.reviewCap);
       if (typeof s.drawPad === "boolean") base.settings.drawPad = s.drawPad;
       if (typeof s.autoSpeak === "boolean") base.settings.autoSpeak = s.autoSpeak;
+      if (typeof s.speechScore === "boolean") base.settings.speechScore = s.speechScore;
+      if (typeof s.sessionBlocks === "boolean") base.settings.sessionBlocks = s.sessionBlocks;
       if (themeVal(s.theme)) base.settings.theme = themeVal(s.theme);
       if (Array.isArray(s.selectedDecks)) base.settings.selectedDecks = s.selectedDecks.slice();
       if (Array.isArray(s.enabledLessons)) {
@@ -1198,6 +1487,21 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function cardState(id) { var c = db.cards[id]; return c && c.state ? c.state : "new"; }
   function isNewItem(it) { return cardState(it.id) === "new"; }
   function isDue(id, now) { var c = db.cards[id]; return !!c && c.state !== "new" && c.due <= now; }
+
+  // ---------- trần ôn mỗi ngày ----------
+  function reviewCap() { var c = capVal(db.settings.reviewCap); return c == null ? REVIEW_CAP_DEFAULT : c; }
+  function reviewsOn(key) { var d = db.daily && db.daily[key]; return d ? Number(d.reviews) || 0 : 0; }
+  function reviewsToday() { return reviewsOn(dateKey(new Date())); }
+  // Số lượt ôn còn được làm hôm nay (Infinity = không giới hạn).
+  function reviewRoom() { var c = reviewCap(); return c > 0 ? Math.max(0, c - reviewsToday()) : Infinity; }
+  function capReached() { return reviewRoom() <= 0; }
+  function countReview() {
+    if (!db.daily || typeof db.daily !== "object") db.daily = {};
+    var k = dateKey(new Date());
+    db.daily[k] = { reviews: reviewsOn(k) + 1 };
+    var keys = Object.keys(db.daily).sort();
+    if (keys.length > DAILY_KEEP) keys.slice(0, keys.length - DAILY_KEEP).forEach(function (x) { delete db.daily[x]; });
+  }
 
   function selectedDecks() {
     var sel = db.settings.selectedDecks;
@@ -1264,6 +1568,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function speak(text) {
     if (!text || !window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") return;
     if (!zhVoice) pickVoice();
+    recPlayerStop();
     if (reading) stopReading();
     try {
       window.speechSynthesis.cancel();
@@ -1304,6 +1609,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function readAll(key, lines) {
     if (reading && reading.key === key) { stopReading(); return; }
     stopReading();
+    recPlayerStop();
     if (!window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") { toast("Trình duyệt không hỗ trợ đọc"); return; }
     if (!lines.length) return;
     if (!zhVoice) pickVoice();
@@ -1325,6 +1631,288 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     };
     updateReadUi();
     play(0);
+  }
+
+  // ---------- nói: ghi âm + nhận giọng (thẻ nói trong phiên, nhại bài khóa) ----------
+  // Chỉ 1 bản ghi tại một thời điểm (REC). Bản ghi chỉ giữ trong bộ nhớ (blob URL), không lưu localStorage.
+  // owner = "card:<id thẻ>" (phiên học) | "ln:<id bài>:<ti>-<li>" (nhại bài khóa). Đổi thẻ / đổi câu / rời màn = recRelease().
+  var REC_MAX_MS = 30000;
+  var REC = { token: 0, owner: "", state: "idle" }; // state: idle | starting | recording | stopping | done | error
+  var micDenied = false; // người dùng đã từ chối quyền mic trong lần mở trang này
+  function micSupported() {
+    return !!(navigator.mediaDevices && typeof navigator.mediaDevices.getUserMedia === "function" && typeof window.MediaRecorder === "function");
+  }
+  function srCtor() { return window.SpeechRecognition || window.webkitSpeechRecognition || null; }
+  function scoringOn() { return !!srCtor() && db.settings.speechScore !== false; }
+  function stopTracks(stream) {
+    try { if (stream) stream.getTracks().forEach(function (t) { t.stop(); }); } catch (e) { /* bỏ qua */ }
+  }
+  function recIsLive() { return REC.state === "starting" || REC.state === "recording"; }
+  function recRelease() {
+    REC.token++;
+    clearInterval(REC.tick);
+    try { if (REC.recorder && REC.recorder.state !== "inactive") REC.recorder.stop(); } catch (e) { /* bỏ qua */ }
+    stopTracks(REC.stream);
+    try { if (REC.sr) REC.sr.abort(); } catch (e) { /* bỏ qua */ }
+    if (REC.player) { try { REC.player.pause(); REC.player.removeAttribute("src"); REC.player.load(); } catch (e) { /* bỏ qua */ } }
+    if (REC.url) { try { URL.revokeObjectURL(REC.url); } catch (e) { /* bỏ qua */ } }
+    REC = { token: REC.token, owner: "", state: "idle", player: REC.player };
+  }
+  // Dừng "Nghe lại mình" đang phát (giữ src để bấm lại vẫn phát được) — trước khi phát mẫu / đọc cả bài.
+  function recPlayerStop() { if (typeof REC !== "undefined" && REC && REC.player) { try { REC.player.pause(); } catch (e) { /* bỏ qua */ } } }
+  function micErrMsg(e) {
+    var n = e && e.name;
+    if (n === "NotAllowedError" || n === "SecurityError" || n === "PermissionDeniedError") { micDenied = true; return "Mic bị chặn (cho phép mic trong cài đặt trình duyệt)"; }
+    if (n === "NotFoundError" || n === "DevicesNotFoundError" || n === "OverconstrainedError") return "Không thấy mic";
+    if (n === "NotReadableError" || n === "TrackStartError") return "Mic đang bị app khác dùng";
+    return "Không ghi âm được";
+  }
+  function srErrMsg(code) {
+    if (code === "not-allowed" || code === "service-not-allowed") return "trình duyệt chặn nhận giọng";
+    if (code === "network") return "cần mạng để chấm";
+    if (code === "audio-capture") return "mic đang bận, không chấm được";
+    if (code === "language-not-supported") return "không nhận được tiếng Trung";
+    return "nhận giọng lỗi (" + code + ")";
+  }
+  function recFail(tok, e) {
+    if (tok !== REC.token) return;
+    var owner = REC.owner;
+    recRelease();
+    REC.owner = owner; REC.state = "error"; REC.err = micErrMsg(e);
+    refreshVoice();
+  }
+  function startRecognition(tok) {
+    REC.heard = ""; REC.srDone = false; REC.srErr = ""; REC.srOn = false;
+    if (!scoringOn()) return;
+    var C = srCtor(), r;
+    try { r = new C(); } catch (e) { REC.srOn = true; REC.srDone = true; REC.srErr = "nhận giọng lỗi"; return; }
+    r.lang = "zh-CN"; r.continuous = true; r.interimResults = true; r.maxAlternatives = 1;
+    r.onresult = function (ev) {
+      if (tok !== REC.token) return;
+      var fin = "", tmp = "", rs = ev.results || [];
+      for (var i = 0; i < rs.length; i++) {
+        var t = rs[i] && rs[i][0] ? String(rs[i][0].transcript || "") : "";
+        if (rs[i].isFinal) fin += t; else tmp += t;
+      }
+      REC.heard = fin + tmp;
+      if (REC.state !== "recording") refreshVoice(); // đang ghi thì không hiện chữ (khỏi lộ đáp án ở mặt trước)
+    };
+    r.onerror = function (ev) {
+      if (tok !== REC.token) return;
+      var c = ev && ev.error;
+      if (c && c !== "aborted" && c !== "no-speech") REC.srErr = srErrMsg(c);
+    };
+    r.onend = function () {
+      if (tok !== REC.token) return;
+      REC.srDone = true; REC.sr = null;
+      if (REC.state !== "recording") refreshVoice();
+    };
+    REC.sr = r; REC.srOn = true;
+    try { r.start(); } catch (e) { REC.sr = null; REC.srDone = true; REC.srErr = "nhận giọng lỗi"; }
+  }
+  function recStart(owner) {
+    recRelease();
+    stopReading();
+    try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* bỏ qua */ }
+    REC.owner = owner;
+    if (!micSupported()) { REC.state = "error"; REC.err = "Trình duyệt này không ghi âm được"; refreshVoice(); return; }
+    var tok = REC.token;
+    REC.state = "starting"; refreshVoice();
+    var p;
+    try { p = navigator.mediaDevices.getUserMedia({ audio: true }); } catch (e) { p = Promise.reject(e); }
+    Promise.resolve(p).then(function (stream) {
+      if (tok !== REC.token) { stopTracks(stream); return; }
+      micDenied = false;
+      var mr;
+      try { mr = new MediaRecorder(stream); } catch (e) { stopTracks(stream); recFail(tok, e); return; }
+      REC.stream = stream; REC.recorder = mr; REC.chunks = [];
+      mr.ondataavailable = function (e) { if (tok === REC.token && e.data && e.data.size) REC.chunks.push(e.data); };
+      mr.onstop = function () {
+        if (tok !== REC.token) return;
+        var selfStop = REC.state === "recording"; // recorder tự dừng (mic rút / mất quyền / Bluetooth ngắt), không qua recStop
+        stopTracks(REC.stream); REC.stream = null; clearInterval(REC.tick);
+        var ch = REC.chunks || [];
+        if (ch.length) {
+          try { REC.url = URL.createObjectURL(new Blob(ch, { type: ch[0].type || mr.mimeType || "audio/webm" })); } catch (e) { REC.url = ""; }
+        }
+        REC.chunks = []; REC.recorder = null;
+        REC.dur = Math.max(1, Math.round((Date.now() - REC.startAt) / 1000));
+        REC.state = "done";
+        if (selfStop) srFinish(tok);
+        refreshVoice();
+      };
+      mr.onerror = function (e) { recFail(tok, e && e.error); };
+      mr.start();
+      REC.state = "recording"; REC.startAt = Date.now();
+      startRecognition(tok);
+      REC.tick = setInterval(function () {
+        if (tok !== REC.token || REC.state !== "recording") return;
+        var ms = Date.now() - REC.startAt, el = byId("vtime");
+        if (el) el.textContent = fmtClock(Math.floor(ms / 1000));
+        if (ms >= REC_MAX_MS) recStop();
+      }, 250);
+      refreshVoice();
+    }).catch(function (e) { recFail(tok, e); });
+  }
+  // Kết thúc nhận giọng sau khi ghi xong (bấm Dừng, hết 30 giây, hay recorder tự dừng vì mic mất).
+  function srFinish(tok) {
+    try { if (REC.sr) REC.sr.stop(); } catch (e) { /* bỏ qua */ }
+    // Máy chủ nhận giọng chậm / mất mạng: tối đa 6 giây rồi thôi chờ.
+    setTimeout(function () {
+      if (tok !== REC.token || REC.srDone) return;
+      try { if (REC.sr) REC.sr.abort(); } catch (e) { /* bỏ qua */ }
+      REC.srDone = true; REC.sr = null; if (!REC.heard && !REC.srErr) REC.srErr = "máy chủ nhận giọng không trả lời";
+      refreshVoice();
+    }, 6000);
+  }
+  function recStop() {
+    if (REC.state === "starting") { var o = REC.owner; recRelease(); REC.owner = o; refreshVoice(); return; }
+    if (REC.state !== "recording") return;
+    var tok = REC.token;
+    REC.state = "stopping";
+    try { if (REC.recorder && REC.recorder.state !== "inactive") REC.recorder.stop(); } catch (e) { /* bỏ qua */ }
+    srFinish(tok);
+    refreshVoice();
+  }
+  function recToggle(owner) {
+    if (REC.owner === owner && recIsLive()) recStop(); else recStart(owner);
+  }
+  function recPlay() {
+    if (!REC.url) return;
+    try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* bỏ qua */ }
+    stopReading();
+    try {
+      if (!REC.player) REC.player = new Audio();
+      REC.player.src = REC.url;
+      var pr = REC.player.play();
+      if (pr && pr.catch) pr.catch(function () { toast("Không phát được bản ghi"); });
+    } catch (e) { toast("Không phát được bản ghi"); }
+  }
+  // Dừng hết khi tab ẩn: ghi âm dừng (giữ bản đã ghi), nghe lại / đọc mẫu dừng.
+  function voicePause() {
+    if (recIsLive()) recStop();
+    if (REC.player) { try { REC.player.pause(); } catch (e) { /* bỏ qua */ } }
+    stopReading();
+    try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* bỏ qua */ }
+  }
+  // Bản ghi còn thuộc màn đang hiện không (thẻ đang mở / câu đang nhại)?
+  function voiceAlive() {
+    if (!REC.owner) return true;
+    if (REC.owner.indexOf("card:") === 0) return view === "session" && !!session && !!session.current && REC.owner === "card:" + session.current.id;
+    return view === "lesson" && !!lesson && lesson.tab === "texts" && !!lesson.shadow && REC.owner === shadowOwner();
+  }
+  function voiceSweep() { if (REC.owner && !voiceAlive()) recRelease(); }
+
+  // So câu nói với câu mẫu: bỏ dấu câu / khoảng trắng, so theo dãy con chung dài nhất trên từng "token":
+  // mỗi chữ là 1 token, riêng một dãy số (15 / 十五 / 一五) là 1 token mang giá trị số chuẩn ("15"),
+  // để câu mẫu viết chữ số mà app nghe ra chữ Hán (hoặc ngược lại) vẫn khớp.
+  var CN_DIGITS = "零一二三四五六七八九";
+  var CN_NUM_RE = /[零〇一二两三四五六七八九十百千万]/, CN_UNITS = { "十": 10, "百": 100, "千": 1000 };
+  function cnDigit(ch) { return ch === "〇" ? 0 : ch === "两" ? 2 : CN_DIGITS.indexOf(ch); }
+  function stripZeros(d) { var x = d.replace(/^0+/, ""); return x || "0"; }
+  function cnNumKey(str) {
+    var i, ch;
+    if (!/[十百千万]/.test(str)) { // đọc từng chữ số: 三零二 → 302, 二零二四 → 2024
+      var d = "";
+      for (i = 0; i < str.length; i++) d += cnDigit(str.charAt(i));
+      return stripZeros(d);
+    }
+    var total = 0, section = 0, num = 0;
+    for (i = 0; i < str.length; i++) {
+      ch = str.charAt(i);
+      if (CN_UNITS[ch]) { section += (num || 1) * CN_UNITS[ch]; num = 0; } // 十 đứng đầu = 10
+      else if (ch === "万") { total += (section + num || 1) * 10000; section = 0; num = 0; }
+      else if (ch === "零" || ch === "〇") { /* bỏ qua */ }
+      else num = cnDigit(ch);
+    }
+    return String(total + section + num);
+  }
+  // [{ key, idx: [chỉ số ký tự gốc] }]; ký tự bị normSent bỏ (dấu câu, khoảng trắng) không thành token.
+  function speechTokens(s) {
+    var str = String(s == null ? "" : s), out = [], i = 0, ch, idx, run;
+    while (i < str.length) {
+      ch = str.charAt(i);
+      if (normSent(ch) === "") { i++; continue; }
+      if (/[0-9]/.test(ch) || CN_NUM_RE.test(ch)) {
+        var digit = /[0-9]/.test(ch), re = digit ? /[0-9]/ : CN_NUM_RE;
+        run = ""; idx = [];
+        while (i < str.length && re.test(str.charAt(i))) { run += str.charAt(i); idx.push(i); i++; }
+        out.push({ key: "#" + (digit ? stripZeros(run) : cnNumKey(run)), idx: idx });
+        continue;
+      }
+      out.push({ key: ch.toLowerCase(), idx: [i] });
+      i++;
+    }
+    return out;
+  }
+  function normSpeech(s) { return speechTokens(s).map(function (t) { return t.key; }).join(""); }
+  function compareSpeech(target, heard) {
+    var tt = speechTokens(target), hh = speechTokens(heard), n = tt.length, m = hh.length, i, j;
+    var t = tt.map(function (x) { return x.key; }), h = hh.map(function (x) { return x.key; });
+    var dp = [];
+    for (i = 0; i <= n; i++) { dp.push([]); for (j = 0; j <= m; j++) dp[i].push(0); }
+    for (i = n - 1; i >= 0; i--) for (j = m - 1; j >= 0; j--) dp[i][j] = t[i] === h[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    var ok = [], okH = [], hit = 0;
+    for (i = 0; i < n; i++) ok.push(false);
+    for (j = 0; j < m; j++) okH.push(false);
+    i = 0; j = 0;
+    while (i < n && j < m) {
+      if (t[i] === h[j]) { ok[i] = true; okH[j] = true; hit++; i++; j++; }
+      else if (dp[i + 1][j] >= dp[i][j + 1]) i++; else j++;
+    }
+    // ok: token câu mẫu nào được nói/gõ ra; okH: token nào của câu nghe/gõ khớp câu mẫu (chữ thừa = false, tô đỏ).
+    // %: chữ thiếu và chữ thừa đều bị trừ — hit / (số token câu mẫu + số token thừa).
+    var den = n + (m - hit);
+    return { ok: ok, okH: okH, toks: tt, toksH: hh, pct: den ? Math.round(hit / den * 100) : 0 };
+  }
+  // Tô từng chữ theo kết quả so (cmp.ok, chỉ số theo token của chính chuỗi này): đúng (vok) / thiếu-thừa (vmiss);
+  // dấu câu để nguyên; 1 token số (二十, 15) tô cả mấy chữ của nó.
+  function markedZhHtml(target, cmp) {
+    var str = String(target || ""), charOk = {};
+    if (cmp) speechTokens(str).forEach(function (tk, k) { tk.idx.forEach(function (ci) { charOk[ci] = !!cmp.ok[k]; }); });
+    return str.split("").map(function (ch, ci) {
+      if (!cmp || !(ci in charOk)) return esc(ch);
+      return '<span class="' + (charOk[ci] ? "vok" : "vmiss") + '">' + esc(ch) + '</span>';
+    }).join("");
+  }
+  // Kết quả so sánh của bản ghi hiện tại (null nếu chưa có gì để so).
+  function voiceCmp(owner, target) {
+    if (REC.owner !== owner || !REC.srOn || REC.state === "recording" || REC.state === "starting") return null;
+    if (!REC.heard) return null;
+    return compareSpeech(target, REC.heard);
+  }
+  function micBtnHtml(owner, idleLabel, small) {
+    if (!micSupported()) return "";
+    var st = REC.owner === owner ? REC.state : "idle", c = "mic" + (small ? " sm" : "");
+    if (st === "recording") return '<button class="' + c + ' on" data-action="v-rec">⏹ Dừng <span id="vtime" class="vtime">' + fmtClock(Math.floor((Date.now() - REC.startAt) / 1000)) + '</span></button>';
+    if (st === "starting") return '<button class="' + c + ' wait" data-action="v-rec">Đang mở mic…</button>';
+    if (st === "stopping") return '<button class="' + c + ' wait" disabled>Đang xử lý…</button>';
+    return '<button class="' + c + '" data-action="v-rec">🎙 ' + (st === "done" ? "Ghi lại" : idleLabel) + '</button>';
+  }
+  function playBtnHtml(owner) {
+    return REC.owner === owner && REC.url && REC.state === "done" ? '<button class="small-btn vplay" data-action="v-play">▶ Nghe lại mình</button>' : "";
+  }
+  // Dòng trạng thái + kết quả chấm. showCmp = được phép hiện "app nghe được" (mặt sau thẻ / câu nhại).
+  function voiceStatusHtml(owner, target, showCmp) {
+    var mine = REC.owner === owner, st = mine ? REC.state : "idle", out = "";
+    var say = '<span class="vsay">' + (owner.indexOf("card:") === 0 && !showCmp ? "cứ nói to rồi lật" : "cứ nói to theo mẫu") + '</span>';
+    if (!micSupported()) return '<div class="vstat">Trình duyệt này không ghi âm được — ' + say + '</div>';
+    if (st === "error") return '<div class="vstat warn">' + esc(REC.err || "Không ghi âm được") + ' — ' + say + '</div>';
+    if (st === "idle") return micDenied ? '<div class="vstat warn">Mic đang bị chặn — ' + say + '</div>' : "";
+    if (st === "starting") return '<div class="vstat">Cho phép dùng mic nếu trình duyệt hỏi</div>';
+    if (st === "recording") return '<div class="vstat live"><i class="vdot"></i>Đang ghi' + (REC.srOn ? " · app đang nghe" : "") + ' — nói xong bấm Dừng</div>';
+    if (st === "stopping") return '<div class="vstat">Đang xử lý…</div>';
+    // done
+    if (!REC.url) out += '<div class="vstat warn">Không lấy được bản ghi</div>';
+    if (!showCmp) return out + '<div class="vstat">Đã ghi ' + (REC.dur || 1) + ' giây' + (REC.srOn ? " — lật để so với câu mẫu" : "") + '</div>';
+    if (!REC.srOn) return out + (scoringOn() || !srCtor() ? "" : '<div class="vstat">Chấm phát âm đang tắt (Cài đặt)</div>');
+    if (!REC.heard) {
+      if (!REC.srDone) return out + '<div class="vstat">Đang chấm…</div>';
+      return out + '<div class="vstat warn">' + (REC.srErr ? "Không chấm được: " + esc(REC.srErr) : "App không nghe ra chữ nào — nói to, rõ hơn chút") + '</div>';
+    }
+    var c = compareSpeech(target, REC.heard), lv = c.pct >= 85 ? "good" : c.pct >= 50 ? "mid" : "low";
+    return out + '<div class="vcmp"><div class="vheard">App nghe được: <span class="zh">' + markedZhHtml(REC.heard, { ok: c.okH }) + '</span></div>' +
+      '<div class="vpct ' + lv + '">Khớp ' + c.pct + '%' + (REC.srDone ? "" : " …") + '</div></div>';
   }
 
   // ---------- thống kê ----------
@@ -1356,7 +1944,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function learnedCount() {
     return Object.keys(db.cards).filter(function (k) {
       var p = k.split(":")[0];
-      return db.cards[k].state !== "new" && (ITEM_BY_ID[k] || LESSON_META[p]);
+      return db.cards[k].state !== "new" && !isTransId(k) && (ITEM_BY_ID[k] || LESSON_META[p]);
     }).length;
   }
 
@@ -1404,10 +1992,15 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var cl = cd ? deckNewOrder(cd) : [];
     return alt(cl, alt(less, base));
   }
+  // Thẻ đến hạn, xếp theo thứ tự tốt cho trí nhớ: interval ngắn (dễ quên nhất) trước, cùng interval thì hạn sớm trước.
+  // Có trần ôn thì phiên chỉ lấy phần đầu danh sách; phần dư giữ nguyên due (để mấy hôm tới, không bị coi là quên).
   function dueItems(decks, now) {
     var ids = {}; decks.forEach(function (d) { ids[d.id] = true; });
     return ITEMS.filter(function (it) { return ids[it.deckId] && isDue(it.id, now); })
-      .sort(function (a, b) { return db.cards[a.id].due - db.cards[b.id].due; });
+      .sort(function (a, b) {
+        var ca = db.cards[a.id], cb = db.cards[b.id];
+        return ca.interval !== cb.interval ? ca.interval - cb.interval : ca.due - cb.due;
+      });
   }
   function interleave(reviews, news) {
     var out = [], r = 0, n = 0;
@@ -1418,10 +2011,96 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     return out;
   }
   function modeOf(it) {
+    if (it.kind === "trans") return "trans";
     if (it.kind === "phrase") return "phrase";
     var c = db.cards[it.id];
     if (!c || c.state === "new") return "new";
     return c.reps % 2 === 0 ? "recog" : "recall";
+  }
+
+  // ---------- thẻ Dịch câu (Việt → Trung, tự chấm) ----------
+  // Nguồn: câu ví dụ của từ đã học (thẻ từ state "review") + mẫu câu đã học, trong các bộ đang chọn.
+  // Tiến độ lưu ở db.cards bằng id riêng, không đụng id cũ: "<deckId>:t:<hanzi>:<i>" (câu ví dụ thứ i của từ),
+  // "<deckId>:tp:<i>" (mẫu câu thứ i). Không vào ITEMS (không thành "từ mới", không tính vào trần ôn).
+  function isTransId(k) { return /:tp?:/.test(k); }
+  function transItems(decks) {
+    var ids = {}, out = [];
+    decks.forEach(function (d) { ids[d.id] = true; });
+    ITEMS.forEach(function (it) {
+      if (!ids[it.deckId]) return;
+      if (it.kind === "word") {
+        (Array.isArray(it.data.examples) ? it.data.examples : []).forEach(function (ex, i) {
+          if (!ex || !ex.zh || !ex.vi) return;
+          out.push({ id: it.deckId + ":t:" + it.data.hanzi + ":" + i, deckId: it.deckId, deck: it.deck, kind: "trans", data: ex, src: it });
+        });
+      } else if (it.kind === "phrase" && it.data.vi && it.idx != null) {
+        out.push({ id: it.deckId + ":tp:" + it.idx, deckId: it.deckId, deck: it.deck, kind: "trans", data: it.data, src: it });
+      }
+    });
+    return out;
+  }
+  // Thẻ dịch kế tiếp: thẻ dịch đến hạn trước; không có thì câu mới của từ đã nhớ ≥ 1 ngày (ngẫu nhiên, mỗi từ 1 câu / phiên).
+  function nextTrans() {
+    var now = Date.now(), due = [], fresh = [];
+    transItems(session.decks).forEach(function (t) {
+      if (session.transSeen[t.id]) return;
+      var c = db.cards[t.id];
+      if (c && c.state !== "new") { if (c.due <= now) due.push(t); return; }
+      var sc = db.cards[t.src.id];
+      if (!sc || sc.state !== "review" || !(sc.interval >= 1) || session.transWords[t.src.id]) return;
+      fresh.push(t);
+    });
+    if (due.length) return due.sort(function (a, b) { return db.cards[a.id].due - db.cards[b.id].due; })[0];
+    return fresh.length ? fresh[Math.floor(Math.random() * fresh.length)] : null;
+  }
+  // Gọi ở nextCard khi còn thẻ thường phía sau: đủ TRANS_EVERY thẻ thường thì chen 1 thẻ dịch (lượt làm lại trước).
+  function pickTrans() {
+    if (!session.transSeen) { session.transSeen = {}; session.transWords = {}; session.transRetry = []; session.transShown = 0; session.sinceTrans = 0; }
+    if (session.sinceTrans < TRANS_EVERY) return null;
+    var t = session.transRetry.shift() || null;
+    if (!t && session.transShown < TRANS_MAX) {
+      t = nextTrans();
+      if (t) { session.transShown++; session.transSeen[t.id] = true; session.transWords[t.src.id] = true; }
+    }
+    if (t) session.sinceTrans = 0;
+    return t;
+  }
+  // Từ khóa đã học có trong câu (để gợi ý: hiện nghĩa, chữ Hán ẩn tới khi bấm "Gợi ý").
+  var TRANS_STOP = "的了是我你他她它们吗呢吧啊在有不也都和很这那个一";
+  function shortMeaning(m) {
+    m = String(m || "").split(/[;；(（]/)[0].trim();
+    return m.length > 28 ? m.slice(0, 27) + "…" : m;
+  }
+  function inSentence(hanzi, zh) {
+    var parts = String(hanzi).split(/…+|\.{3,}/).filter(Boolean);
+    return parts.length > 0 && parts.every(function (p) { return zh.indexOf(p) >= 0; });
+  }
+  function transKeys(it) {
+    if (it.keys) return it.keys;
+    var zh = String(it.data.zh || ""), seen = {}, cands = [];
+    var add = function (w) {
+      if (!w || !w.hanzi || !w.meaning || seen[w.hanzi] || !inSentence(w.hanzi, zh)) return;
+      seen[w.hanzi] = true; cands.push(w);
+    };
+    if (it.src.kind === "word") add(it.src.data);
+    var src = cands.splice(0, cands.length); // từ gốc của câu (nếu có trong câu) luôn đứng đầu
+    ITEMS.forEach(function (x) {
+      if (x.kind !== "word" || cardState(x.id) === "new") return;
+      var h = String(x.data.hanzi || "");
+      if (h.length === 1 && TRANS_STOP.indexOf(h) >= 0) return;
+      add(x.data);
+    });
+    cands.sort(function (a, b) { return b.hanzi.length - a.hanzi.length; });
+    var picked = src.slice();
+    cands.forEach(function (w) {
+      if (picked.length >= TRANS_KEYS) return;
+      // bỏ từ nằm gọn trong từ đã chọn (đã có 菜单 thì thôi 菜)
+      if (picked.some(function (p) { return p.hanzi.indexOf(w.hanzi) >= 0 || w.hanzi.indexOf(p.hanzi) >= 0; })) return;
+      picked.push(w);
+    });
+    picked.sort(function (a, b) { return zh.indexOf(a.hanzi.split(/…+|\.{3,}/)[0]) - zh.indexOf(b.hanzi.split(/…+|\.{3,}/)[0]); });
+    it.keys = picked;
+    return picked;
   }
 
   // ---------- phiên học ----------
@@ -1432,15 +2111,35 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var decks = selectedDecks();
     if (!decks.length) { toast("Chọn ít nhất 1 chủ đề đã"); return; }
     if (session && session.timerId) clearInterval(session.timerId);
+    recRelease();
     var now = Date.now();
+    var blocks = db.settings.sessionBlocks !== false;
     var pool = buildNewPool(decks);
+    var isWord = function (it) { return it.kind === "word"; };
+    var notWord = function (it) { return it.kind !== "word"; };
+    // Chia khúc: khúc 1 chỉ thẻ từ; mẫu câu (đến hạn + chưa học) để dành cho khúc 2 "Nói & dịch".
+    var phrasePool = blocks ? pool.filter(notWord) : [];
+    if (blocks) pool = pool.filter(isWord);
     var firstNew = pool.splice(0, db.settings.newPerSession);
+    var allDue = dueItems(decks, now), room = reviewRoom(), due = allDue.slice(0, room);
+    // Chia khúc: cắt trần riêng cho từ (khúc 1) và mẫu câu (khúc 2) để câu đến hạn không bị từ chiếm hết suất.
+    // Không vượt trần: lượt ôn chỉ đếm lúc chấm, chạm trần thì capHit tự bỏ lượt ôn còn lại ở queue lẫn talk.
+    var dueW = blocks ? allDue.filter(isWord).slice(0, room) : due;
+    var dueP = blocks ? allDue.filter(notWord).slice(0, room) : [];
     session = {
       startedAt: now, elapsed: 0, timerId: null, decks: decks,
-      queue: interleave(dueItems(decks, now), firstNew), newPool: pool,
+      queue: interleave(dueW, firstNew), newPool: pool,
       current: null, flipped: false, hint: false, keepPad: false,
-      shown45: false, doneCount: 0, touched: {}, spokenFor: ""
+      shown45: false, doneCount: 0, touched: {}, spokenFor: "",
+      relearn: {}, // thẻ đang quay lại trong phiên (từ mới vừa hiểu / thẻ vừa Quên) — lượt này không tính là lượt ôn
+      // thẻ Dịch câu: đã ra (id), từ gốc đã dùng, lượt làm lại ("Chưa được"), số thẻ đã ra, số thẻ thường từ thẻ dịch trước
+      transSeen: {}, transWords: {}, transRetry: [], transShown: 0, sinceTrans: 0, trTyped: "",
+      // chia khúc: khúc đang ở (0-2), thẻ chuyển tiếp đang hiện (số khúc sắp vào | null), hàng thẻ nói khúc 2,
+      // mẫu câu chưa học để nạp thêm, lượt dịch làm lại khúc 2 [{it, at}], lượt xen nói/dịch, câu nhại/câu đề đã làm (khúc 3)
+      blocks: blocks, block: 0, gate: null, gateWhy: "", pendNote: false,
+      talk: dueP, phrasePool: phrasePool, talkRetry: [], talkTurn: 0, lines: {}
     };
+    if (room <= 0 && allDue.length) toast("Đủ " + reviewCap() + " lượt ôn hôm nay — giờ học từ mới");
     view = "session";
     syncHistory();
     app.innerHTML = sessionShellHtml();
@@ -1453,33 +2152,228 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     syncElapsed();
     var clock = byId("clock"); if (clock) clock.textContent = fmtClock(session.elapsed) + " / 45:00";
     var prog = byId("prog"); if (prog) prog.style.width = Math.min(100, session.elapsed / TARGET_SEC * 100) + "%";
+    if (session.blocks) blkTick();
     if (session.elapsed >= TARGET_SEC && !session.shown45) {
       session.shown45 = true;
       var b = byId("banner45"); if (b) b.hidden = false;
+      // Đang đứng ở màn chọn khúc 3: vẽ lại 1 lần để hiện nút Kết thúc (màn này không có gì đang dở).
+      if (view === "session" && session.blocks && !session.current && session.gate == null) renderCard();
       toast("Đủ 45 phút rồi 🎉 học tiếp thì cứ tiếp");
     }
+    // Đang ở màn bài/đề (khúc 3): đồng hồ vẫn chạy, lưu phút định kỳ.
+    if (view !== "session" && session.elapsed % 30 === 0) recordSession();
+    updateMini();
   }
   function requeue(it) {
-    session.queue.splice(Math.min(RELEARN_GAP, session.queue.length), 0, it);
+    if (!session.relearn) session.relearn = {};
+    session.relearn[it.id] = true;
+    if (session.blocks && it.kind === "phrase") session.talk.splice(Math.min(TALK_RELEARN_GAP, session.talk.length), 0, it);
+    else session.queue.splice(Math.min(RELEARN_GAP, session.queue.length), 0, it);
   }
+
+  // ---------- phiên chia 3 khúc ----------
+  // Khúc theo đồng hồ chỉ tăng, không lùi: bấm "Sang khúc sau" sớm thì tới mốc giờ cũng không kéo về.
+  function timeBlock(sec) { return Math.min(BLOCKS.length - 1, Math.floor(sec / BLOCK_SEC)); }
+  // Vào khúc b: hiện thẻ chuyển tiếp (gate) — thẻ đang dở đã xong trước đó (chỉ gọi lúc chọn thẻ kế tiếp).
+  function blkEnter(b, why) {
+    session.block = b; session.gate = b; session.gateWhy = why || ""; session.pendNote = false;
+    session.current = null;
+  }
+  function blkGo() {
+    if (!session || session.gate == null) return;
+    session.gate = null;
+    nextCard();
+  }
+  // Nút "Sang khúc sau": bỏ thẻ đang hiện (chưa chấm thì không đổi gì trong SRS), vào thẳng khúc sau.
+  function blkSkip() {
+    if (!session || !session.blocks || session.block >= BLOCKS.length - 1) return;
+    session.block++; session.gate = null; session.pendNote = false;
+    toast("Khúc " + (session.block + 1) + " · " + BLOCKS[session.block][0]);
+    nextCard();
+  }
+  // Khúc 2: thẻ nói (đến hạn → vừa Quên → mẫu câu chưa học, nạp từng 5) xen kẽ 1-1 thẻ dịch câu.
+  function talkPhrase() {
+    if (!session.talk.length) {
+      // Câu đến hạn (chưa chấm trong phiên, còn suất ôn) trước, hết mới tới câu chưa học.
+      var room = reviewRoom();
+      var dp = room > 0 ? dueItems(session.decks, Date.now()).filter(function (it) {
+        return it.kind !== "word" && !session.touched[it.id];
+      }).slice(0, Math.min(REFILL_NEW, room)) : [];
+      session.talk = dp.length ? dp : session.phrasePool.splice(0, REFILL_NEW);
+    }
+    return session.talk.shift() || null;
+  }
+  function talkTrans() {
+    var r = session.talkRetry;
+    if (r.length && r[0].at <= session.transShown) return r.shift().it; // câu "Chưa được": quay lại sau 2 câu dịch khác
+    var t = nextTrans();
+    if (t) { session.transShown++; session.transSeen[t.id] = true; session.transWords[t.src.id] = true; return t; }
+    return r.length ? r.shift().it : null;
+  }
+  function blkTalkNext() {
+    var order = session.talkTurn % 2 ? [talkTrans, talkPhrase] : [talkPhrase, talkTrans];
+    session.talkTurn++;
+    return order[0]() || order[1]();
+  }
+  function blkNext() {
+    syncElapsed();
+    session.current = null;
+    if (session.gate != null) return;
+    var tb = timeBlock(session.elapsed);
+    if (tb > session.block) { blkEnter(tb, ""); return; }
+    if (session.block === 0) {
+      if (!session.queue.length) refillQueue();
+      session.current = session.queue.shift() || null;
+      if (!session.current) blkEnter(1, "Hết thẻ từ");
+    } else if (session.block === 1) {
+      session.current = blkTalkNext();
+      if (!session.current) blkEnter(2, "Hết thẻ nói & dịch");
+    }
+  }
+  function blkTick() {
+    var tb = timeBlock(session.elapsed);
+    // Tới mốc giờ giữa thẻ: không cắt ngang, báo trước; chấm xong thẻ này mới chuyển.
+    if (tb > session.block && session.gate == null && session.current && !session.pendNote && view === "session") {
+      session.pendNote = true;
+      toast("Hết giờ khúc " + (session.block + 1) + " — xong thẻ này là sang khúc " + (tb + 1));
+    }
+    updateBlkBar();
+  }
+  function blkSegsHtml() {
+    return BLOCKS.map(function (b) {
+      return '<div class="blk"><span class="bl">' + esc(b[0]) + '</span><span class="bt"><i class="bf"></i></span></div>';
+    }).join("");
+  }
+  function updateBlkBar() {
+    var el = byId("blks");
+    if (!el || !session) return;
+    var tb = timeBlock(session.elapsed), segs = el.children;
+    for (var i = 0; i < segs.length; i++) {
+      segs[i].className = "blk" + (i < session.block ? " done" : i === session.block ? " on" : "") + (i === tb && tb > session.block ? " next" : "");
+      var f = segs[i].querySelector(".bf");
+      if (f) f.style.width = Math.round(Math.max(0, Math.min(1, (session.elapsed - i * BLOCK_SEC) / BLOCK_SEC)) * 100) + "%";
+    }
+    var nb = byId("blkNext"); if (nb) nb.hidden = session.block >= BLOCKS.length - 1;
+  }
+  // Khúc 3: gợi ý 1 bài khóa để nhại — bài đang học (ưu tiên HSK 3-4), không có thì bài cấp 3-4 đang xem ở Giáo trình.
+  // Mỗi lần mở đổi sang bài kế tiếp trong danh sách (UI.blkLesson = bài mở lần trước) cho đỡ lặp.
+  function blkLessonPick() {
+    var core = function (l) { return LS_CORE_LEVELS.indexOf(Number(l.level)) >= 0; };
+    var has = function (l) { return l.texts == null || Number(l.texts) > 0; };
+    var on = LESSON_INDEX.filter(function (l) { return lessonOn(l.id) && has(l); });
+    var cands = on.filter(core).concat(on.filter(function (l) { return !core(l); })), studying = cands.length > 0;
+    if (!studying) {
+      var lv = curLessonLevel();
+      cands = LESSON_INDEX.filter(function (l) { return Number(l.level) === lv && core(l) && has(l); });
+      if (!cands.length) cands = LESSON_INDEX.filter(function (l) { return core(l) && has(l); });
+      if (!cands.length) cands = LESSON_INDEX.filter(has);
+    }
+    if (!cands.length) return null;
+    var i = cands.map(function (l) { return l.id; }).indexOf(UI.blkLesson);
+    return { l: cands[(i + 1) % cands.length], studying: studying };
+  }
+  // Đề đang làm dở (đầu tiên), không có thì đề đầu tiên chưa xong; kèm tên phần đầu tiên còn câu chưa làm.
+  function blkExamPick() {
+    if (!EXAM_INDEX.length) return null;
+    var info = EXAM_INDEX.map(function (e) { var s = exStats(e.id); return { e: e, done: s.done, total: Number(e.total) || 100 }; });
+    var x = info.filter(function (o) { return o.done > 0 && o.done < o.total; })[0] || info.filter(function (o) { return o.done < o.total; })[0] || info[0];
+    var c = x.e.counts, ans = (EXDB[x.e.id] || { ans: {} }).ans, n = 1;
+    if (c && typeof c === "object") {
+      var ks = Object.keys(c);
+      for (var k = 0; k < ks.length; k++) {
+        var cnt = Number(c[ks[k]]) || 0, left = 0;
+        for (var j = 0; j < cnt; j++) if (!ans[n + j]) left++;
+        if (left) { x.part = PART_TABS[ks[k]] || ks[k]; x.left = left; break; }
+        n += cnt;
+      }
+    }
+    return x;
+  }
+  var lessonOpts = null; // { id }: bài mở từ khúc 3 → vào thẳng tab Bài khóa, bật Nhại theo
+  var examResume = null; // id đề mở từ khúc 3 → nhảy tới câu đầu tiên chưa làm
+  function blkOpenLesson() {
+    var p = blkLessonPick();
+    if (!p || !session) return;
+    UI.blkLesson = p.l.id; saveUi();
+    lessonOpts = { id: p.l.id };
+    openLesson(p.l.id);
+  }
+  function blkOpenExam() {
+    var p = blkExamPick();
+    if (!p || !session) return;
+    examResume = p.e.id;
+    openExam(p.e.id);
+  }
+  // Ghi 1 câu nhại / câu đề / bài đọc làm trong phiên (đếm 1 lần mỗi câu) → lưu vào dòng phiên (rec.lines).
+  function sessNote(key) {
+    if (!session || !key) return;
+    if (!session.lines) session.lines = {};
+    if (session.lines[key]) return;
+    session.lines[key] = true;
+    recordSession();
+  }
+  // "Về phiên" (thanh nhỏ trên màn bài/đề, Esc): quay lại màn phiên, đồng hồ không dừng.
+  function sessBack() {
+    if (!session) return;
+    stopExamMedia(); stopReading(); recRelease();
+    examPending = null; lessonPending = null; lessonOpts = null; examResume = null;
+    if (view === "session") return;
+    if (backTo("#session")) return;
+    view = "session"; render();
+  }
+  // Thanh nhỏ dính trên (ngoài #app) khi phiên đang chạy mà đang ở màn bài/đề.
+  var miniEl = byId("sesMini");
+  function updateMini() {
+    if (!miniEl) return;
+    var on = !!session && view !== "session";
+    document.documentElement.classList.toggle("insess", on);
+    if (!on) { miniEl.hidden = true; return; }
+    if (miniEl.hidden || !byId("smClock")) {
+      miniEl.innerHTML = '<div class="smin"><span id="smLab" class="smlab"></span><span id="smClock" class="smclock"></span>' +
+        '<button class="small-btn smback" data-action="blk-back">Về phiên</button></div><div class="smtrack"><i id="smFill"></i></div>';
+      miniEl.hidden = false;
+    }
+    var done = session.elapsed >= TARGET_SEC;
+    byId("smLab").innerHTML = done ? "Đủ 45 phút" : session.blocks ? "Khúc " + (session.block + 1) + '<span class="smname"> · ' + esc(BLOCKS[session.block][0]) + "</span>" : "Phiên 45 phút";
+    byId("smClock").textContent = fmtClock(session.elapsed) + " / 45:00";
+    byId("smFill").style.width = Math.min(100, session.elapsed / TARGET_SEC * 100) + "%";
+    miniEl.classList.toggle("done", done);
+  }
+  if (miniEl) miniEl.addEventListener("click", function (e) {
+    var el = e.target.closest ? e.target.closest("[data-action]") : null;
+    if (el && el.getAttribute("data-action") === "blk-back") { e.preventDefault(); sessBack(); }
+  });
   function refillQueue() {
     syncElapsed();
     if (session.elapsed >= TARGET_SEC) return;
     var more = session.newPool.splice(0, REFILL_NEW);
     if (more.length) { session.queue = session.queue.concat(more); return; }
+    // Hết từ mới → ôn sớm; ôn sớm cũng là lượt ôn nên chịu trần ôn của ngày.
+    var room = reviewRoom();
+    // Chia khúc: chừa chỗ cho các lượt ôn mẫu câu còn chờ ở khúc 2 (cùng điều kiện với keepQ lúc chạm trần, đảo lại).
+    if (session.blocks && session.talk) room -= session.talk.filter(function (q) { return !isNewItem(q) && !(session.relearn && session.relearn[q.id]); }).length;
+    if (room <= 0) return;
     var ids = {}; session.decks.forEach(function (d) { ids[d.id] = true; });
-    var early = ITEMS.filter(function (it) { return ids[it.deckId] && cardState(it.id) !== "new"; })
+    var early = ITEMS.filter(function (it) { return ids[it.deckId] && cardState(it.id) !== "new" && (!session.blocks || it.kind === "word"); })
+      .filter(function (it) { return !session.blocks || !session.touched[it.id]; }) // chia khúc: thẻ vừa chấm trong phiên thì thôi, không ôn lại ngay
       .sort(function (a, b) {
         var ta = session.touched[a.id] ? 1 : 0, tb = session.touched[b.id] ? 1 : 0;
         return ta !== tb ? ta - tb : db.cards[a.id].due - db.cards[b.id].due;
       })
-      .slice(0, REFILL_EARLY);
+      .slice(0, Math.min(REFILL_EARLY, room));
     session.queue = session.queue.concat(early);
   }
   function nextCard() {
-    session.flipped = false; session.hint = false; session.keepPad = false;
+    recRelease(); // bản ghi của thẻ nói cũ bỏ đi, thẻ mới ghi lại từ đầu
+    session.flipped = false; session.hint = false; session.keepPad = false; session.trTyped = "";
+    if (session.blocks) { blkNext(); renderCard(); return; }
     if (!session.queue.length) refillQueue();
-    session.current = session.queue.shift() || null;
+    var tr = session.queue.length ? pickTrans() : null;
+    if (tr) session.current = tr;
+    else {
+      session.current = session.queue.shift() || null;
+      if (session.current) session.sinceTrans = (session.sinceTrans || 0) + 1;
+    }
     renderCard();
   }
   // Ghi phiên ngay khi học (không chờ bấm Kết thúc): reload / đóng tab giữa chừng vẫn tính phút + thẻ + streak.
@@ -1487,8 +2381,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function recordSession() {
     if (!session) return;
     syncElapsed();
-    var n = Object.keys(session.touched).length;
-    if (!n) return;
+    var n = Object.keys(session.touched).length, nl = session.lines ? Object.keys(session.lines).length : 0;
+    if (!n && !nl) return;
     if (!session.rec) {
       session.rec = { date: dateKey(new Date()), minutes: 0, cards: 0, startedAt: session.startedAt };
       db.sessions.push(session.rec);
@@ -1496,6 +2390,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     }
     session.rec.minutes = Math.round(session.elapsed / 60);
     session.rec.cards = n;
+    if (nl) session.rec.lines = nl; // trường mới (tùy chọn): số câu nhại / câu đề / bài đọc ở khúc 3 — dòng phiên cũ không có = 0
     saveDb();
   }
   function markTouched(it) { session.doneCount++; session.touched[it.id] = true; recordSession(); }
@@ -1509,6 +2404,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   }
   function flip() {
     if (!session.current || session.flipped || modeOf(session.current) === "new") return;
+    if (recIsLive() && REC.owner === "card:" + session.current.id) recStop(); // lật khi đang ghi = dừng ghi rồi so
+    var ti = byId("trInput"); if (ti) session.trTyped = ti.value; // thẻ Dịch câu: "Kiểm tra" = lật, giữ câu đã gõ
     session.flipped = true; session.keepPad = true;
     renderCard();
   }
@@ -1520,10 +2417,38 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function gradeCurrent(grade) {
     var it = session.current;
     if (!it || !session.flipped) return;
-    if (modeOf(it) === "phrase" && grade !== 1 && grade !== 3) return;
+    if ((modeOf(it) === "phrase" || modeOf(it) === "trans") && grade !== 1 && grade !== 3) return;
+    if (it.kind === "trans") {
+      // Thẻ dịch: SRS riêng (Chưa được = Quên, Được = Nhớ), không tính vào trần ôn; Chưa được → làm lại ở lượt dịch sau.
+      applyGrade(it.id, grade);
+      markTouched(it);
+      if (grade === 1) {
+        if (session.blocks) session.talkRetry.push({ it: it, at: session.transShown + 2 });
+        else session.transRetry.push(it);
+      }
+      nextCard();
+      return;
+    }
+    // Lượt ôn = chấm một thẻ đã học từ trước (không tính mẫu câu mới gặp lần đầu) và không phải lượt quay lại
+    // trong phiên (từ mới vừa hiểu / thẻ vừa Quên).
+    var isReview = !isNewItem(it) && !(session.relearn && session.relearn[it.id]);
+    if (session.relearn && grade !== 1) delete session.relearn[it.id];
+    var capHit = false;
+    if (isReview) {
+      var before = reviewRoom();
+      countReview(); // applyGrade → saveDb() lưu luôn
+      capHit = before > 0 && reviewRoom() <= 0;
+    }
     applyGrade(it.id, grade);
     markTouched(it);
     if (grade === 1) requeue(it);
+    if (capHit) {
+      // Đạt trần: bỏ các lượt ôn còn trong hàng đợi (nếu có), giữ từ mới + thẻ đang quay lại.
+      var keepQ = function (q) { return isNewItem(q) || (session.relearn && session.relearn[q.id]); };
+      session.queue = session.queue.filter(keepQ);
+      if (session.talk) session.talk = session.talk.filter(keepQ);
+      toast("Đủ " + reviewCap() + " lượt ôn hôm nay — phần còn lại để mấy hôm tới");
+    }
     nextCard();
   }
   function endSession(force) {
@@ -1536,14 +2461,16 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   // Lưu lần cuối + dừng đồng hồ + bỏ phiên (dùng chung cho Kết thúc và nút Back của điện thoại).
   function closeSession() {
     if (!session) return;
+    recRelease();
     recordSession();
     clearInterval(session.timerId); session.timerId = null;
     var r = session.rec || { minutes: 0, cards: 0 };
     session = null;
-    toast("Đã lưu phiên: " + r.minutes + " phút, " + r.cards + " thẻ");
+    updateMini();
+    toast("Đã lưu phiên: " + r.minutes + " phút, " + r.cards + " thẻ" + (r.lines ? ", " + r.lines + " câu" : ""));
   }
   window.addEventListener("pagehide", recordSession);
-  document.addEventListener("visibilitychange", function () { if (document.hidden) recordSession(); });
+  document.addEventListener("visibilitychange", function () { if (document.hidden) { recordSession(); voicePause(); } });
   function escapeSession() {
     if (!session) return;
     syncElapsed();
@@ -1646,7 +2573,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   // ---------- backup ----------
   function exportBackup() {
     try {
-      var data = { cards: db.cards, sessions: db.sessions, settings: db.settings, exams: EXDB, custom: CUSTOM };
+      var data = { cards: db.cards, sessions: db.sessions, settings: db.settings, daily: db.daily, exams: EXDB, custom: CUSTOM };
       var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a");
@@ -1672,6 +2599,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       seen[k] = true; return true;
     }).sort(function (x, y) { return String(x.date) < String(y.date) ? -1 : String(x.date) > String(y.date) ? 1 : 0; });
     if (out.sessions.length > 400) out.sessions = out.sessions.slice(-400);
+    // Lượt ôn theo ngày: lấy số lớn hơn của hai bên (cùng một ngày học ở 1 máy thì không cộng trùng).
+    var dl = {};
+    [out.daily, inc.daily].forEach(function (src) {
+      Object.keys(src || {}).forEach(function (k) { dl[k] = { reviews: Math.max(dl[k] ? dl[k].reviews : 0, Number(src[k].reviews) || 0) }; });
+    });
+    out.daily = normalizeDaily(dl);
     return { db: out, added: added, updated: updated };
   }
   function importBackupFile(file) {
@@ -1694,8 +2627,11 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       var fs = obj.settings && typeof obj.settings === "object" ? obj.settings : null, selFromFile = false;
       if (fs) {
         if (NEW_OPTIONS.indexOf(Number(fs.newPerSession)) >= 0) db.settings.newPerSession = Number(fs.newPerSession);
+        if (capVal(fs.reviewCap) != null) db.settings.reviewCap = capVal(fs.reviewCap); // backup cũ không có → giữ cài đặt máy này
         if (typeof fs.drawPad === "boolean") db.settings.drawPad = fs.drawPad;
         if (typeof fs.autoSpeak === "boolean") db.settings.autoSpeak = fs.autoSpeak;
+        if (typeof fs.speechScore === "boolean") db.settings.speechScore = fs.speechScore;
+        if (typeof fs.sessionBlocks === "boolean") db.settings.sessionBlocks = fs.sessionBlocks; // backup cũ không có → giữ cài đặt máy này
         if (themeVal(fs.theme)) { db.settings.theme = themeVal(fs.theme); applyTheme(); }
         if (wasEmpty && Array.isArray(fs.selectedDecks)) {
           db.settings.selectedDecks = fs.selectedDecks.filter(function (id, i, a) { return typeof id === "string" && a.indexOf(id) === i; });
@@ -1844,12 +2780,17 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (!flat.length) { toast("Đề " + id + " không có câu nào"); view = "exams"; render(); return; }
     var prog = exProg(id), pos = 0;
     if (prog.last) flat.forEach(function (f, k) { if (parts[f.p].items[f.i].n === prog.last) pos = k; });
+    // Mở từ khúc 3 của phiên: nhảy tới câu đầu tiên chưa làm (đúng phần chưa xong).
+    var resume = examResume === id; examResume = null;
+    if (resume) {
+      for (var k = 0; k < flat.length; k++) { if (!prog.ans[parts[flat[k].p].items[flat[k].i].n]) { pos = k; break; } }
+    }
     var keepFree = exam && exam.id === id ? exam.free : {};
     exam = { id: id, data: data, parts: parts, flat: flat, pos: pos, showScript: false, order: "", build: [], free: keepFree, freeShown: {}, padFor: null };
     var fresh = setupAudio();
     view = "exam"; render();
     // Làm tiếp đề (audio vừa nạp mới): tua tới đoạn của câu đang dở thay vì phát lại từ đầu file.
-    if (fresh && pos > 0) seekToItem(false);
+    if ((fresh || resume) && pos > 0) seekToItem(false);
   }
   // Trả về true khi vừa nạp file audio mới.
   function setupAudio() {
@@ -1986,6 +2927,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       else ok = String(pick).toUpperCase() === String(it.answer).toUpperCase();
     }
     prog.ans[it.n] = { pick: pick, ok: ok }; prog.last = it.n; saveExdb();
+    sessNote("ex:" + exam.id + ":" + it.n); // đang trong phiên (khúc 3): tính 1 câu đề
     renderExam(true);
   }
   function optionKeys(it, type) {
@@ -2020,6 +2962,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function examSelf(ok) {
     var it = curItem(), prog = exProg(exam.id);
     prog.ans[it.n] = { pick: exam.free[it.n] || "", ok: ok }; prog.last = it.n; saveExdb();
+    sessNote("ex:" + exam.id + ":" + it.n);
     renderExam(true);
   }
   function examRedoQ() {
@@ -2314,7 +3257,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var pt = app.querySelector(".ptabs"), on = pt && pt.querySelector(".on");
     if (on && pt.scrollWidth > pt.clientWidth) {
       var pr = pt.getBoundingClientRect(), or = on.getBoundingClientRect();
-      pt.scrollLeft += (or.left - pr.left) - (pt.clientWidth - or.width) / 2;
+      // Chỉ cuộn khi tab đang chọn bị khuất (đang thấy rồi thì để yên, khỏi đẩy tab khác ra ngoài).
+      if (or.left < pr.left + 16 || or.right > pr.right - 16) pt.scrollLeft += (or.left - pr.left) - (pt.clientWidth - or.width) / 2;
     }
   }
   function renderExam(keepScroll) {
@@ -2334,11 +3278,16 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     window.scrollTo(0, keepScroll ? y : 0);
   }
   function examKey(e) {
+    if (e.defaultPrevented) return; // phím đã được listener trước (phiên) xử lý, có thể vừa đổi màn
     var t = e.target;
     var tag = (t && t.tagName || "").toLowerCase();
     if (tag === "input" || tag === "select" || tag === "textarea" || (t && t.isContentEditable)) return;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
     var key = e.key;
+    // Đang trong phiên 45 phút (khúc 3): Esc = Về phiên (đồng hồ vẫn chạy).
+    if (session && key === "Escape" && !e.repeat && (view === "exams" || view === "exam-loading" || view === "exam")) {
+      e.preventDefault(); sessBack(); return;
+    }
     // Danh sách đề / đang tải: Esc về trang chủ (giống màn Giáo trình).
     if ((view === "exams" || view === "exam-loading") && key === "Escape" && !e.repeat) {
       e.preventDefault(); examPending = null; view = "home"; render(); return;
@@ -2400,10 +3349,23 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
 
   function lsArr(x) { return Array.isArray(x) ? x : []; }
   function lessonOn(id) { return db.settings.enabledLessons.indexOf(id) >= 0; }
-  function lessonLevels() {
+  function allLessonLevels() {
     var out = [];
     LESSON_INDEX.forEach(function (l) { var v = Number(l.level) || 0; if (out.indexOf(v) < 0) out.push(v); });
     return out.sort(function (a, b) { return a - b; });
+  }
+  // Tab cấp đang hiện: mặc định chỉ HSK 3, 4 (đúng trình độ); "Hiện cấp khác" (UI.lsAllLevels) mở các cấp còn lại.
+  // Chỉ ẩn tab — bài đang học ở cấp bị ẩn vẫn ở trong phiên, mở được từ trang chủ.
+  var LS_CORE_LEVELS = [3, 4];
+  function lessonLevels() {
+    var all = allLessonLevels();
+    if (UI.lsAllLevels === true) return all;
+    var core = all.filter(function (v) { return LS_CORE_LEVELS.indexOf(v) >= 0; });
+    return core.length ? core : all;
+  }
+  function hiddenLessonLevels() {
+    var shown = lessonLevels();
+    return allLessonLevels().filter(function (v) { return shown.indexOf(v) < 0; });
   }
   function curLessonLevel() {
     var lv = lessonLevels();
@@ -2414,7 +3376,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function lessonLearned(id) {
     var pre = id + ":", n = 0;
     Object.keys(db.cards).forEach(function (k) {
-      if (k.indexOf(pre) === 0 && k.indexOf(pre + "p:") !== 0 && db.cards[k].state !== "new") n++;
+      if (k.indexOf(pre) === 0 && k.indexOf(pre + "p:") !== 0 && !isTransId(k) && db.cards[k].state !== "new") n++;
     });
     return n;
   }
@@ -2432,6 +3394,11 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var tabs = lessonLevels().map(function (v) {
       return '<button data-action="ls-level" data-level="' + v + '"' + (v === lv ? ' class="on"' : "") + '>HSK ' + v + '</button>';
     }).join("");
+    var hid = hiddenLessonLevels(), more = "";
+    // Nút bật/tắt cấp nằm riêng dưới hàng tab (không nằm trong hàng cuộn ngang, khỏi bị đẩy ra ngoài màn).
+    if (hid.length) more = '<button class="lvmore" data-action="ls-more" title="Hiện HSK ' + hid.join(", ") + '">＋ Hiện cấp khác</button>';
+    else if (UI.lsAllLevels === true && allLessonLevels().some(function (v) { return LS_CORE_LEVELS.indexOf(v) < 0; }))
+      more = '<button class="lvmore" data-action="ls-more" title="Chỉ hiện HSK 3, 4">− Ẩn cấp khác</button>';
     var rows = LESSON_INDEX.filter(function (l) { return Number(l.level) === lv; }).map(function (l) {
       var on = lessonOn(l.id), words = Number(l.words) || 0, learned = lessonLearned(l.id);
       return '<li data-action="ls-open" data-id="' + esc(l.id) + '" style="cursor:pointer"><span class="emoji" style="font-size:28px;width:36px;text-align:center;flex:none">' + esc(l.emoji || "📘") + '</span>' +
@@ -2445,7 +3412,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     return '<div class="wrap">' +
       '<div class="row-between"><h1>Giáo trình HSK</h1><button class="small-btn" data-action="home">← Trang chủ</button></div>' +
       '<p class="muted small">Mở bài để xem từ mới, ngữ pháp, bài khóa. Bấm <b>＋ Đưa bài này vào phiên 45 phút</b> để học từ của bài bằng thẻ.</p>' +
-      '<div class="ptabs">' + tabs + '</div>' +
+      '<div class="ptabs">' + tabs + '</div>' + (more ? '<div class="lvrow">' + more + '</div>' : "") +
       '<section class="box"><ul class="exlist">' + (rows || '<li class="muted">Chưa có bài nào ở cấp này.</li>') + '</ul></section>' +
       hintHtml('<kbd>Esc</kbd> về trang chủ') + '</div>';
   }
@@ -2467,13 +3434,29 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var L = lessonData(id);
     if (!L) return;
     var same = lesson && lesson.id === id;
-    lesson = { id: id, data: L, tab: same ? lesson.tab : "words", open: same ? lesson.open : {}, quiz: same ? lesson.quiz : {} };
+    lesson = { id: id, data: L, tab: same ? lesson.tab : "words", open: same ? lesson.open : {}, quiz: same ? lesson.quiz : {}, shadow: same ? lesson.shadow : null };
     if (!lsArr(L.quiz).length && lesson.tab === "quiz") lesson.tab = "words";
+    // Mở từ khúc 3 của phiên: vào thẳng tab Bài khóa, bật Nhại theo ở câu đầu (giữ câu đang nhại nếu mở lại cùng bài).
+    var fromBlk = !!(lessonOpts && lessonOpts.id === id);
+    if (fromBlk) {
+      lesson.tab = "texts";
+      if (!lesson.shadow) { var sl = shadowLines(); if (sl.length) lesson.shadow = { ti: sl[0].ti, li: sl[0].li }; }
+    }
+    lessonOpts = null;
     var lv = Number(L.level || (LESSON_META[id] || {}).level);
     if (lv) { UI.lsLevel = lv; saveUi(); }
     // Bài đang học mà lúc khởi động chưa nạp kịp → giờ đã có dữ liệu, dựng lại thẻ.
     if (lessonOn(id) && !DECKS.some(function (d) { return d.id === id; })) rebuildItems();
     view = "lesson"; render();
+    if (fromBlk) { // cuộn tới hàng tab (dưới thanh phiên nhỏ) để thấy ngay câu đang nhại
+      var tb = app.querySelector(".lstabs");
+      if (tb) {
+        tb.style.position = "static";
+        var y = tb.getBoundingClientRect().top + (window.scrollY || window.pageYOffset || 0) - (miniEl && !miniEl.hidden ? miniEl.offsetHeight : 0) - 4;
+        tb.style.position = "";
+        window.scrollTo(0, Math.max(0, y));
+      }
+    }
   }
   function lessonTabs() {
     var L = lesson.data;
@@ -2481,7 +3464,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   }
   function setLessonTab(tab) {
     if (!lesson || lesson.tab === tab) return;
-    stopReading();
+    stopReading(); recRelease();
     lesson.tab = tab; renderLesson("tab");
   }
   function toggleLessonStudy() {
@@ -2542,19 +3525,25 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function lsTextsHtml(L) {
     var ts = lsArr(L.texts).filter(function (t) { return t && lsArr(t.lines).length; });
     if (!ts.length) return '<p class="muted">Bài này chưa có bài khóa.</p>';
-    var py = UI.lsPy !== false, vi = UI.lsVi !== false;
+    var py = UI.lsPy !== false, vi = UI.lsVi !== false, sh = lesson.shadow;
     var tools = '<div class="row-between" style="margin-bottom:8px"><span class="muted small">Hiện:</span><span>' +
       '<button class="small-btn' + (py ? " primary" : "") + '" data-action="ls-py">Pinyin</button> ' +
-      '<button class="small-btn' + (vi ? " primary" : "") + '" data-action="ls-vi">Dịch</button></span></div>';
+      '<button class="small-btn' + (vi ? " primary" : "") + '" data-action="ls-vi">Dịch</button></span></div>' +
+      '<div class="shbar' + (sh ? " on" : "") + '"><button class="small-btn shtoggle' + (sh ? " primary" : "") + '" data-action="sh-toggle">' +
+        (sh ? "✕ Tắt nhại theo" : "🎙 Nhại theo") + '</button>' +
+        '<span class="muted small">' + (sh ? "Bấm câu nào để luyện câu đó" : "Luyện nói từng câu: nghe mẫu → nói theo → so sánh") + '</span></div>';
     return tools + ts.map(function (t, ti) {
       var on = !!reading && reading.key === String(ti);
       var lines = lsArr(t.lines).map(function (ln, li) {
         if (!ln || !ln.zh) return "";
-        return '<div class="tline" id="tl-' + ti + '-' + li + '">' +
+        var cur = !!sh && sh.ti === ti && sh.li === li;
+        return '<div class="tline' + (sh ? (cur ? " shcur" : " shpick") : "") + '" id="tl-' + ti + '-' + li + '"' +
+            (sh && !cur ? ' data-action="sh-pick" data-t="' + ti + '" data-l="' + li + '"' : "") + '>' +
           (ln.speaker ? '<span class="spkr zh">' + esc(ln.speaker) + '</span>' : "") +
           '<div class="tb"><div class="tzh zh">' + esc(ln.zh) + ' ' + speakBtn(ln.zh, true) + '</div>' +
           (py && ln.pinyin ? '<div class="ex-py">' + esc(ln.pinyin) + '</div>' : "") +
-          (vi && ln.vi ? '<div class="ex-vi">' + esc(ln.vi) + '</div>' : "") + '</div></div>';
+          (vi && ln.vi ? '<div class="ex-vi">' + esc(ln.vi) + '</div>' : "") +
+          (cur ? '<div id="vbox" class="vbox shctl" data-action="noop">' + shadowInner() + '</div>' : "") + '</div></div>';
       }).join("");
       return '<div class="gp"><div class="row-between"><div>' +
           (t.title_zh ? '<div class="zh" style="font-size:21px;font-weight:700">' + esc(t.title_zh) + '</div>' : "") +
@@ -2638,12 +3627,70 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     lsArr(t.lines).forEach(function (ln, li) { if (ln && ln.zh) lines.push({ text: ln.zh, elId: "tl-" + ti + "-" + li }); });
     readAll(String(ti), lines);
   }
+  // ---------- nhại theo bài khóa: từng câu ▶ nghe mẫu → 🎙 nói theo → so sánh → Câu tiếp ----------
+  // lesson.shadow = { ti, li } (ti: thứ tự trong các bài khóa có dòng, li: chỉ số dòng gốc) | null. Chỉ nằm trong bộ nhớ.
+  function shadowLines() {
+    var out = [];
+    lsArr(lesson.data.texts).filter(function (x) { return x && lsArr(x.lines).length; }).forEach(function (t, ti) {
+      lsArr(t.lines).forEach(function (ln, li) { if (ln && ln.zh) out.push({ ti: ti, li: li, ln: ln }); });
+    });
+    return out;
+  }
+  function shadowCur() {
+    if (!lesson || !lesson.shadow) return null;
+    var s = lesson.shadow;
+    return shadowLines().filter(function (x) { return x.ti === s.ti && x.li === s.li; })[0] || null;
+  }
+  function shadowOwner() { return lesson && lesson.shadow ? "ln:" + lesson.id + ":" + lesson.shadow.ti + "-" + lesson.shadow.li : ""; }
+  function shadowInner() {
+    var c = shadowCur();
+    if (!c) return "";
+    var owner = shadowOwner(), zh = c.ln.zh, cmp = voiceCmp(owner, zh);
+    return '<div class="vctl">' +
+        '<button class="spk vref" data-action="speak" data-text="' + esc(zh) + '" title="Nghe câu mẫu">▶ Nghe mẫu</button>' +
+        micBtnHtml(owner, "Nói theo", true) + playBtnHtml(owner) + '</div>' +
+      (cmp ? '<div class="vzh zh">' + markedZhHtml(zh, cmp) + '</div>' : "") +
+      voiceStatusHtml(owner, zh, true) +
+      '<div class="vnext"><button class="small-btn primary" data-action="sh-next">Câu tiếp →</button></div>';
+  }
+  function shadowGo(ti, li, say) {
+    if (!lesson) return;
+    recRelease(); stopReading();
+    lesson.shadow = { ti: ti, li: li };
+    renderLesson(true);
+    var el = byId("tl-" + ti + "-" + li);
+    if (el) { try { el.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (e) { /* bỏ qua */ } }
+    var c = shadowCur();
+    if (say && c && db.settings.autoSpeak) speak(c.ln.zh);
+  }
+  function shadowToggle() {
+    if (!lesson) return;
+    if (lesson.shadow) { recRelease(); lesson.shadow = null; renderLesson(true); return; }
+    var all = shadowLines();
+    if (!all.length) return;
+    shadowGo(all[0].ti, all[0].li, false);
+  }
+  function shadowNext() {
+    var all = shadowLines(), s = lesson && lesson.shadow;
+    if (!s) return;
+    for (var i = 0; i < all.length; i++) {
+      if (all[i].ti === s.ti && all[i].li === s.li) {
+        if (i + 1 < all.length) shadowGo(all[i + 1].ti, all[i + 1].li, true);
+        else toast("Hết bài khóa rồi 🎉 bấm câu nào để luyện lại");
+        return;
+      }
+    }
+    if (all.length) shadowGo(all[0].ti, all[0].li, true);
+  }
   function lessonKey(e) {
-    if (view !== "lesson" && view !== "lessons") return;
+    if (e.defaultPrevented) return; // phím đã được listener trước (phiên / màn đề) xử lý
+    if (view !== "lesson" && view !== "lessons" && view !== "lesson-loading") return;
     var t = e.target;
     var tag = (t && t.tagName || "").toLowerCase();
     if (tag === "input" || tag === "select" || tag === "textarea" || (t && t.isContentEditable)) return;
     if (e.ctrlKey || e.metaKey || e.altKey || e.repeat) return;
+    if (e.key === "Escape" && session) { e.preventDefault(); sessBack(); return; } // đang trong phiên: Về phiên
+    if (view === "lesson-loading") return;
     if (e.key === "Escape") {
       e.preventDefault();
       if (view === "lesson") { stopReading(); lessonPending = null; if (backTo("#lessons")) return; view = "lessons"; } else view = "home";
@@ -2659,9 +3706,15 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function homeHtml() {
     var now = Date.now();
     var sel = selectedDecks();
-    var due = dueCount(sel, now);
-    var newAvail = Math.min(db.settings.newPerSession, buildNewPool(sel).length);
+    var dueAll = dueCount(sel, now);
+    var due = Math.min(dueAll, reviewRoom()); // số sẽ ôn hôm nay (đã áp trần)
+    var dueLater = dueAll - due;
     var s = db.settings;
+    var newAvail = Math.min(s.newPerSession, buildNewPool(sel).filter(function (it) { return s.sessionBlocks === false || it.kind === "word"; }).length);
+    var capOpts = REVIEW_CAP_OPTIONS.map(function (n) {
+      return '<option value="' + n + '"' + (n === reviewCap() ? " selected" : "") + '>' + (n ? n + " lượt" : "Không giới hạn") + '</option>';
+    }).join("");
+    var dueNote = dueLater > 0 ? '<div class="smore">' + (due ? "" : "đã ôn đủ · ") + 'còn ' + dueLater + ' để mấy hôm tới</div>' : "";
     var lsMissing = s.enabledLessons.filter(function (id) { return !DECKS.some(function (d) { return d.id === id; }); }).length;
     var deckRow = function (d) {
       var c = deckCounts(d, now);
@@ -2683,7 +3736,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     return '<div class="wrap">' +
       '<header><h1>Học tiếng Trung</h1><p class="muted">HSK 3 → 4 · nói chuyện · đi chơi</p></header>' +
       '<section class="stats3">' +
-        '<div class="stat"><b>' + due + '</b><span>đến hạn</span></div>' +
+        '<div class="stat"><b>' + due + '</b><span>đến hạn</span>' + dueNote + '</div>' +
         '<div class="stat"><b>' + streak() + '</b><span>ngày liên tiếp</span></div>' +
         '<div class="stat"><b>' + learnedCount() + '</b><span>thẻ đã gặp</span></div>' +
       '</section>' +
@@ -2699,8 +3752,14 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       examHomeBox() +
       '<section class="box"><h2>Cài đặt</h2>' +
         '<label class="setting"><span>Từ mới mỗi phiên</span><select data-setting="newPerSession">' + newOpts + '</select></label>' +
+        '<label class="setting"><span>Ôn tối đa / ngày</span><select data-setting="reviewCap">' + capOpts + '</select></label>' +
+        '<label class="setting"><span>Chia phiên 3 khúc<small class="snote">Thẻ → Nói &amp; dịch → Nghe &amp; đọc, mỗi khúc 15 phút. Tắt = trộn mọi loại thẻ như cũ.</small></span>' +
+          '<input type="checkbox" data-setting="sessionBlocks"' + (s.sessionBlocks !== false ? " checked" : "") + '></label>' +
         '<label class="setting"><span>Bảng viết tay khi ôn nghĩa → chữ</span><input type="checkbox" data-setting="drawPad"' + (s.drawPad ? " checked" : "") + '></label>' +
         '<label class="setting"><span>Tự phát âm khi hiện chữ</span><input type="checkbox" data-setting="autoSpeak"' + (s.autoSpeak ? " checked" : "") + '></label>' +
+        '<label class="setting"><span>Chấm phát âm bằng nhận giọng nói<small class="snote">' +
+          (srCtor() ? "Thẻ nói & nhại bài khóa. Chrome gửi giọng lên máy chủ Google để nhận dạng, cần mạng." : "Trình duyệt này không có nhận giọng nói (dùng Chrome / Edge).") +
+          '</small></span><input type="checkbox" data-setting="speechScore"' + (srCtor() && s.speechScore !== false ? " checked" : "") + (srCtor() ? "" : " disabled") + '></label>' +
         '<label class="setting"><span>Giao diện</span><select data-setting="theme">' + themeOpts + '</select></label>' +
       '</section>' +
       '<section class="actions-row">' +
@@ -2709,7 +3768,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         '<button data-action="import">⬆ Nhập backup</button>' +
         '<input type="file" id="importFile" accept="application/json,.json" hidden>' +
       '</section>' +
-      '<p class="muted small center">Phím tắt trong phiên: <kbd>Space</kbd> lật / nhớ · <kbd>1-4</kbd> chấm · <kbd>Enter</kbd> đã hiểu · <kbd>Esc</kbd> thoát</p>' +
+      '<p class="muted small center">Phím tắt trong phiên: <kbd>Space</kbd> lật / nhớ · <kbd>1-4</kbd> chấm · <kbd>Enter</kbd> đã hiểu · <kbd>R</kbd> ghi âm (thẻ nói) · <kbd>Esc</kbd> thoát</p>' +
       '</div>';
   }
 
@@ -2730,8 +3789,22 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     }).join("");
     var sess = db.sessions.slice(-14).reverse();
     var sessRows = sess.length ? sess.map(function (s) {
-      return '<tr><td>' + esc(fmtDate(s.date)) + '</td><td class="num">' + esc(s.minutes) + ' phút</td><td class="num">' + esc(s.cards) + ' thẻ</td></tr>';
+      return '<tr><td>' + esc(fmtDate(s.date)) + '</td><td class="num">' + esc(s.minutes) + ' phút</td><td class="num">' + esc(s.cards) + ' thẻ' + (Number(s.lines) > 0 ? ' · ' + esc(s.lines) + ' câu' : "") + '</td></tr>';
     }).join("") : '<tr><td colspan="3" class="muted">Chưa có phiên nào. Bấm Học 45 phút đi.</td></tr>';
+    // Lượt ôn 14 ngày gần nhất (db.daily), thanh ngắn tỉ lệ theo trần ôn / ngày nhiều nhất.
+    var cap = reviewCap(), days = [], dd = new Date(), mx = 0;
+    for (var di = 0; di < 14; di++) {
+      var k = dateKey(dd), v = reviewsOn(k);
+      days.push({ k: k, v: v }); if (v > mx) mx = v;
+      dd.setDate(dd.getDate() - 1);
+    }
+    var scale = Math.max(mx, cap || 0, 1);
+    var dayRows = mx ? days.map(function (d, i) {
+      var full = cap > 0 && d.v >= cap;
+      return '<tr><td>' + (i === 0 ? "Hôm nay" : esc(fmtDate(d.k))) + '</td>' +
+        '<td class="rvcell"><span class="rvbar"><i' + (full ? ' class="full"' : "") + ' style="width:' + Math.round(d.v / scale * 100) + '%"></i></span></td>' +
+        '<td class="num">' + d.v + '</td></tr>';
+    }).join("") : '<tr><td colspan="3" class="muted">Chưa có lượt ôn nào.</td></tr>';
     return '<div class="wrap">' +
       '<div class="row-between"><h1>Thống kê</h1><button class="small-btn" data-action="home">← Trang chủ</button></div>' +
       '<section class="stats3">' +
@@ -2741,17 +3814,23 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       '</section>' +
       '<section class="box"><h2>Theo chủ đề</h2><table><thead><tr><th>Chủ đề</th><th class="num">Mới</th><th class="num">Đang học</th><th class="num">Ôn</th></tr></thead>' +
         '<tbody>' + rows + '<tr><th>Tổng</th><th class="num">' + totals["new"] + '</th><th class="num">' + totals.learning + '</th><th class="num">' + totals.review + '</th></tr></tbody></table></section>' +
+      '<section class="box"><div class="row-between"><h2>Lượt ôn mỗi ngày</h2><span class="muted small">' + (cap ? "trần " + cap + "/ngày" : "không giới hạn") + '</span></div>' +
+        '<table class="rvtable"><tbody>' + dayRows + '</tbody></table></section>' +
       '<section class="box"><h2>14 phiên gần nhất</h2><table><tbody>' + sessRows + '</tbody></table></section>' +
       '</div>';
   }
 
   // ---------- HTML: phiên học ----------
   function sessionShellHtml() {
+    var blk = !!(session && session.blocks);
     return '<div class="wrap">' +
-      '<div class="bar">' +
+      '<div class="bar' + (blk ? " blkbar" : "") + '">' +
         '<div class="bar-top"><span id="clock" class="clock">00:00 / 45:00</span><button class="small-btn" data-action="end">Kết thúc</button></div>' +
-        '<div class="track"><div id="prog" class="fill"></div></div>' +
-        '<div id="counts" class="muted small"></div>' +
+        (blk ? '<div id="blks" class="blks">' + blkSegsHtml() + '</div>' +
+            '<div class="bar-sub"><div id="counts" class="muted small"></div>' +
+            '<button id="blkNext" class="small-btn blknext" data-action="blk-next"' + (session.block >= BLOCKS.length - 1 ? " hidden" : "") + '>Sang khúc sau ›</button></div>'
+          : '<div class="track"><div id="prog" class="fill"></div></div>' +
+            '<div id="counts" class="muted small"></div>') +
         '<div id="banner45" class="banner"' + (session && session.shown45 ? "" : " hidden") + '>Đủ 45 phút rồi 🎉 muốn chơi tiếp thì cứ tiếp</div>' +
       '</div>' +
       '<div id="cardArea"></div>' +
@@ -2808,12 +3887,14 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       '<button class="g3" data-action="grade" data-grade="3">Nhớ<small>3 · ' + intervalLabel(c, 3) + '</small></button>' +
       '</div>' + hintHtml('<kbd>1</kbd> Quên · <kbd>3</kbd> / <kbd>Space</kbd> Nhớ');
   }
-  function flipBtnHtml() {
+  function flipBtnHtml(extraHint) {
     return '<div class="actions dock"><button class="primary big" data-action="flip">Lật</button></div>' +
-      hintHtml('<kbd>Space</kbd> / <kbd>Enter</kbd> lật · <kbd>Esc</kbd> thoát');
+      hintHtml((extraHint || "") + '<kbd>Space</kbd> / <kbd>Enter</kbd> lật · <kbd>Esc</kbd> thoát');
   }
-  function padHtml() {
+  function padHtml(wide) {
     if (!db.settings.drawPad) return "";
+    if (wide) return '<div class="pad-wrap"><canvas id="pad" class="pad wide" width="660" height="220"></canvas>' +
+      '<button class="small-btn" data-action="clear-pad">Xóa bảng</button></div>';
     return '<div class="pad-wrap"><canvas id="pad" class="pad" width="240" height="240"></canvas>' +
       '<button class="small-btn" data-action="clear-pad">Xóa</button></div>';
   }
@@ -2867,22 +3948,77 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   }
   function phraseHtml(it) {
     var p = it.data;
-    var head = tagRow(it, "Mẫu câu", "phrase") +
+    // Thẻ nói: mặt trước = tình huống + câu Việt, tự nói to (ghi âm nếu có mic); mặt sau = câu mẫu tô đúng/thiếu.
+    var head = tagRow(it, "🗣 Thẻ nói", "phrase") +
       (p.when ? '<div class="when">' + esc(p.when) + '</div>' : "") +
       '<div class="meaning front">' + esc(p.vi) + '</div>';
     if (!session.flipped) {
-      return '<div class="card">' + head + '<p class="muted center">Tiếng Trung nói sao?</p>' + flipBtnHtml() + '</div>';
+      return '<div class="card">' + head + '<p class="say">Nói to câu tiếng Trung</p>' +
+        '<div id="vbox" class="vbox">' + phraseVoiceInner(it) + '</div>' +
+        flipBtnHtml(micSupported() ? '<kbd>R</kbd> ghi âm / dừng · ' : "") + '</div>';
     }
     return '<div class="card">' + head +
-      '<div class="hanzi mid zh">' + esc(p.zh) + '</div>' +
-      '<div class="pinyin">' + esc(p.pinyin) + '</div>' +
-      '<div class="center" style="margin-top:8px">' + speakBtn(p.zh) + '</div>' +
+      '<div id="vbox" class="vbox back">' + phraseVoiceInner(it) + '</div>' +
       grades2Html(it) + '</div>';
+  }
+  // Thẻ Dịch câu: mặt trước = câu Việt + từ khóa đã học (nghĩa; chữ Hán sau "Gợi ý") + ô gõ + bảng viết tay;
+  // mặt sau (Kiểm tra) = câu đã gõ tô đúng/sai, câu mẫu tô đúng/thiếu + pinyin + 🔊, % khớp, tự chấm Chưa được / Được.
+  function transHtml(it) {
+    var d = it.data, keys = transKeys(it), open = session.hint || session.flipped;
+    var head = tagRow(it, "✍ Dịch câu", "trans") +
+      (d.when ? '<div class="when">' + esc(d.when) + '</div>' : "") +
+      '<div class="meaning front trvi">' + esc(d.vi) + '</div>';
+    var kh = !keys.length ? "" : '<div class="trkeys"><span class="trklab">Từ đã học</span>' + keys.map(function (k) {
+      return '<span class="trk">' + (open ? '<b class="zh">' + esc(k.hanzi) + '</b>' : "") + esc(shortMeaning(k.meaning)) + '</span>';
+    }).join("") + (open ? "" : '<button class="small-btn trhint" data-action="hint">Gợi ý chữ Hán</button>') + '</div>';
+    if (!session.flipped) {
+      return '<div class="card trcard">' + head + '<p class="say">Viết câu này bằng tiếng Trung</p>' + kh +
+        '<form id="trForm" class="trform" action="#" autocomplete="off"><input id="trInput" class="trin zh" type="text" lang="zh-CN" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"' +
+        ' aria-label="Gõ câu tiếng Trung" placeholder="Gõ chữ Hán vào đây…" value="' + esc(session.trTyped || "") + '"></form>' +
+        padHtml(true) +
+        '<div class="actions dock"><button class="primary big" data-action="flip">Kiểm tra</button></div>' +
+        hintHtml('<kbd>Enter</kbd> kiểm tra · <kbd>Esc</kbd> thoát') + '</div>';
+    }
+    var typed = String(session.trTyped || "").trim(), cmp = typed && normSpeech(typed) ? compareSpeech(d.zh, typed) : null;
+    var lv = cmp ? (cmp.pct >= 85 ? "good" : cmp.pct >= 50 ? "mid" : "low") : "";
+    var c = cardOf(it.id);
+    return '<div class="card trcard">' + head + kh +
+      '<div class="vcmp trres">' +
+        (cmp ? '<div class="trrow"><span class="trlab">Bạn viết</span><span class="trzh zh">' + markedZhHtml(typed, { ok: cmp.okH }) + '</span></div>' : "") +
+        '<div class="trrow"><span class="trlab">Câu mẫu</span><span class="trzh zh">' + markedZhHtml(d.zh, cmp) + '</span>' + speakBtn(d.zh, true) + '</div>' +
+        (d.pinyin ? '<div class="trpy">' + esc(d.pinyin) + '</div>' : "") +
+        (cmp ? '<div class="vpct ' + lv + '">Khớp ' + cmp.pct + '%</div>' : "") +
+        '<div class="trnote">' + (cmp ? "Câu khác mẫu vẫn có thể đúng — tự chấm" : "So chữ viết tay (hoặc câu trong đầu) với câu mẫu rồi tự chấm") + '</div>' +
+      '</div>' +
+      padHtml(true) +
+      '<div class="grades two dock">' +
+        '<button class="g1" data-action="grade" data-grade="1">Chưa được<small>1 · ' + intervalLabel(c, 1) + '</small></button>' +
+        '<button class="g3" data-action="grade" data-grade="3">Được<small>3 · ' + intervalLabel(c, 3) + '</small></button>' +
+      '</div>' + hintHtml('<kbd>1</kbd> Chưa được · <kbd>3</kbd> / <kbd>Space</kbd> Được') + '</div>';
+  }
+  function refBtnHtml(text) {
+    return '<button class="spk vref" data-action="speak" data-text="' + esc(text) + '" title="Nghe câu mẫu">🔊 Mẫu</button>';
+  }
+  function phraseVoiceInner(it) {
+    var p = it.data, owner = "card:" + it.id;
+    if (!session.flipped) return '<div class="vctl">' + micBtnHtml(owner, "Ghi âm") + '</div>' + voiceStatusHtml(owner, p.zh, false);
+    return '<div class="hanzi mid zh">' + markedZhHtml(p.zh, voiceCmp(owner, p.zh)) + '</div>' +
+      '<div class="pinyin">' + esc(p.pinyin) + '</div>' +
+      '<div class="vctl">' + refBtnHtml(p.zh) + playBtnHtml(owner) + micBtnHtml(owner, "Nói thử", true) + '</div>' +
+      voiceStatusHtml(owner, p.zh, true);
+  }
+  // Vẽ lại riêng khối #vbox (không vẽ lại cả thẻ / cả bài → không nhảy cuộn, không mất trạng thái khác).
+  function refreshVoice() {
+    var el = byId("vbox");
+    if (!el) return;
+    if (view === "session" && session && session.current && session.current.kind === "phrase") el.innerHTML = phraseVoiceInner(session.current);
+    else if (view === "lesson" && lesson && lesson.shadow) el.innerHTML = shadowInner();
   }
   function doneHtml() {
     var minutes = Math.round(session.elapsed / 60);
     return '<div class="card center"><div class="big-emoji">🏁</div><h1>Hết bài hôm nay</h1>' +
       '<p class="muted">' + session.doneCount + ' lượt · ' + Object.keys(session.touched).length + ' thẻ · ' + minutes + ' phút. Ngon.</p>' +
+      (capReached() && session.elapsed < TARGET_SEC ? '<p class="muted small capdone">Đủ ' + reviewCap() + ' lượt ôn hôm nay và hết từ mới. Thẻ còn lại để mấy hôm tới — giờ có thể mở Giáo trình hoặc Luyện đề.</p>' : "") +
       '<div class="actions"><button class="primary big" data-action="end-force">Kết thúc</button></div>' +
       hintHtml('<kbd>Enter</kbd> kết thúc') + '</div>';
   }
@@ -2892,9 +4028,49 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       '<div class="actions"><button class="primary big" data-action="end-force">Về trang chủ</button></div></div>';
   }
 
+  // Thẻ chuyển khúc: "Khúc 2 · Nói & dịch" + 3 chấm tiến độ + nút Bắt đầu.
+  function blkDotsHtml(b) {
+    return '<div class="blkdots">' + BLOCKS.map(function (x, i) { return '<i class="' + (i < b ? "done" : i === b ? "on" : "") + '"></i>'; }).join("") + '</div>';
+  }
+  function gateHtml() {
+    var b = session.gate, until = fmtClock((b + 1) * BLOCK_SEC);
+    return '<div class="card center blkgate">' + blkDotsHtml(b) +
+      '<div class="blkno">Khúc ' + (b + 1) + ' / ' + BLOCKS.length + (session.gateWhy ? ' · ' + esc(session.gateWhy) : "") + '</div>' +
+      '<h1>' + esc(BLOCKS[b][0]) + '</h1>' +
+      '<p class="muted blkdesc">' + esc(BLOCKS[b][1]) + '</p>' +
+      '<p class="muted small">Tới ' + until + '</p>' +
+      '<div class="actions dock"><button class="primary big" data-action="blk-go">Bắt đầu</button></div>' +
+      hintHtml('<kbd>Enter</kbd> / <kbd>Space</kbd> bắt đầu · <kbd>Esc</kbd> thoát') + '</div>';
+  }
+  // Khúc 3: màn chọn nhanh — nhại 1 bài khóa hoặc làm tiếp 1 phần đề (đồng hồ phiên vẫn chạy ở màn bài/đề).
+  function readHtml() {
+    var lp = blkLessonPick(), ep = blkExamPick(), nl = Object.keys(session.lines || {}).length;
+    var lsub = !lp ? "Chưa có giáo trình" :
+      "HSK " + esc(lp.l.level) + " · B" + esc(lp.l.lesson) + ' · <span class="zh">' + esc(lp.l.title_zh) + '</span>' + (lp.studying ? " · đang học" : " · gợi ý");
+    var esub = !ep ? "Chưa có đề" :
+      esc(ep.e.title || ep.e.id) + (ep.part ? " · " + esc(ep.part) + " · còn " + ep.left + " câu" : " · làm lại từ đầu");
+    var done45 = session.elapsed >= TARGET_SEC;
+    return '<div class="card blkread">' + blkDotsHtml(2) +
+      '<div class="blkno">Khúc 3 / 3 · ' + esc(BLOCKS[2][0]) + '</div>' +
+      '<p class="muted small center">Chọn 1 việc. Đồng hồ phiên vẫn chạy, xong bấm <b>Về phiên</b> ở thanh trên.</p>' +
+      '<div class="blkopts">' +
+        '<button class="blkopt" data-action="blk-lesson"' + (lp ? "" : " disabled") + '><span class="boi">🎙</span><span class="bot"><b>Nhại 1 bài khóa</b><small>' + lsub + '</small></span><kbd>1</kbd></button>' +
+        '<button class="blkopt" data-action="blk-exam"' + (ep ? "" : " disabled") + '><span class="boi">📝</span><span class="bot"><b>Làm tiếp 1 phần đề</b><small>' + esub + '</small></span><kbd>2</kbd></button>' +
+      '</div>' +
+      '<p class="muted small center blkdone">Phiên này: ' + Object.keys(session.touched).length + ' thẻ' + (nl ? " · " + nl + " câu nhại/đề" : "") + '</p>' +
+      (done45 ? '<div class="actions dock"><button class="primary big" data-action="end-force">Kết thúc</button></div>' : "") +
+      hintHtml('<kbd>1</kbd> nhại bài · <kbd>2</kbd> làm đề' + (done45 ? " · <kbd>Enter</kbd> kết thúc" : "") + ' · <kbd>Esc</kbd> thoát') + '</div>';
+  }
   function updateCounts() {
     var el = byId("counts");
     if (!el || !session) return;
+    if (session.blocks && session.block > 0) {
+      var nl = Object.keys(session.lines || {}).length;
+      el.textContent = session.block === 1
+        ? "Đã làm " + session.doneCount + (session.talk.length ? " · ôn nói còn " + session.talk.length : "") + " · đã dịch " + session.transShown + " câu"
+        : "Đã làm " + Object.keys(session.touched).length + " thẻ" + (nl ? " · " + nl + " câu nhại/đề" : "");
+      return;
+    }
     var due = 0, fresh = 0;
     session.queue.forEach(function (it) { if (isNewItem(it)) fresh++; else due++; });
     el.textContent = "Đã làm " + session.doneCount + " · còn ôn " + due + " · từ mới còn " + fresh;
@@ -2908,19 +4084,27 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var html;
     if (!it) {
       syncElapsed();
-      html = session.elapsed >= TARGET_SEC ? doneHtml() : emptyHtml();
+      if (session.blocks) html = session.gate != null ? gateHtml() : readHtml();
+      else html = session.elapsed >= TARGET_SEC || capReached() ? doneHtml() : emptyHtml();
     } else {
       var mode = modeOf(it);
       html = mode === "new" ? newWordHtml(it)
         : mode === "recog" ? recogHtml(it)
         : mode === "recall" ? recallHtml(it)
+        : mode === "trans" ? transHtml(it)
         : phraseHtml(it);
     }
     area.innerHTML = html;
     updateCounts();
+    updateBlkBar();
     var pad = byId("pad");
     if (pad) { drawGrid(pad); restorePad(pad, snap); }
     if (!session.keepPad) window.scrollTo(0, 0);
+    // Thẻ dịch trên máy có chuột: con trỏ vào ô gõ luôn (điện thoại thì không — để chọn gõ hay viết tay).
+    var ti = byId("trInput");
+    if (ti && window.matchMedia && window.matchMedia("(pointer: fine)").matches) {
+      try { ti.focus({ preventScroll: true }); var L = ti.value.length; ti.setSelectionRange(L, L); } catch (e) { /* bỏ qua */ }
+    }
     autoSpeak(it);
   }
   function autoSpeak(it) {
@@ -2931,12 +4115,21 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var key = it.id + ":" + (session.flipped ? "back" : "front");
     if (session.spokenFor === key) return;
     session.spokenFor = key;
-    speak(it.kind === "phrase" ? it.data.zh : it.data.hanzi);
+    speak(it.kind === "word" ? it.data.hanzi : it.data.zh);
   }
 
   // ---------- render chung ----------
+  var lastView = "";
+  // Màn được mở từ khúc 3 của phiên (phiên vẫn chạy, thanh nhỏ "Về phiên" ở trên). Sang màn khác (trang chủ, thống kê) = kết thúc phiên như cũ.
+  var AWAY_VIEWS = { lesson: 1, "lesson-loading": 1, lessons: 1, exam: 1, "exam-loading": 1, exams: 1 };
   function render() {
+    if (session && view !== "session" && !AWAY_VIEWS[view]) closeSession();
+    updateMini();
     if (view !== "lesson" && reading) stopReading();
+    voiceSweep(); // rời thẻ / câu đang ghi → bỏ bản ghi, tắt mic
+    // Đổi màn: dừng giọng đọc còn dở (giọng máy của màn cũ không đọc đè sang màn mới).
+    if (lastView && lastView !== view) { try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* bỏ qua */ } }
+    lastView = view;
     if (view === "stats") app.innerHTML = statsHtml();
     else if (view === "session") { app.innerHTML = sessionShellHtml(); renderCard(); tick(); }
     else if (view === "exams" && EXAM_INDEX.length) app.innerHTML = examsHtml();
@@ -3007,10 +4200,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       if (view === "exam" && h !== routeOf()) stopExamMedia();
       if (view === "lesson") stopReading();
       if (view === "session" && h !== "#session") closeSession();
-      if (h === "#session" && session) { render(); return; }
+      if (h === "#session" && session) { view = "session"; render(); return; } // Back từ màn bài/đề (khúc 3) về phiên
       routeTo(h);
     } finally { fromPop = false; }
   });
+  // Đổi hash (Back/Forward, sửa link): bản ghi không còn thuộc màn đang hiện thì bỏ, tắt mic.
+  window.addEventListener("hashchange", voiceSweep);
   function missingDecksHtml() {
     return '<div class="wrap"><div class="warn"><h1>Thiếu file bài học</h1>' +
       '<p>Không thấy dữ liệu nào trong <code>window.DECKS</code>. Kiểm tra thư mục <code>decks/</code> nằm cạnh <code>index.html</code> và có đủ 12 file <code>.js</code>.</p>' +
@@ -3038,7 +4233,14 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       case "import": { var f = byId("importFile"); if (f) { f.value = ""; f.click(); } break; }
       case "select-all": setSelectedDecks(keepUnloadedLessons(DECKS.map(function (d) { return d.id; }))); break;
       case "select-none": setSelectedDecks([]); break;
-      case "speak": speak(el.getAttribute("data-text")); break;
+      case "speak": if (recIsLive()) recStop(); speak(el.getAttribute("data-text")); break; // đang ghi mà bấm nghe mẫu: dừng ghi trước, khỏi thu giọng máy
+      case "v-rec": {
+        var vo = view === "session" && session && session.current ? "card:" + session.current.id : view === "lesson" ? shadowOwner() : "";
+        if (vo) recToggle(vo);
+        if (view === "lesson") sessNote(vo); // đang trong phiên (khúc 3): tính 1 câu nhại
+        break;
+      }
+      case "v-play": recPlay(); break;
       case "understood": understood(); break;
       case "flip": flip(); break;
       case "hint": showHint(); break;
@@ -3046,9 +4248,15 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       case "grade": gradeCurrent(Number(el.getAttribute("data-grade"))); break;
       case "end": endSession(false); break;
       case "end-force": endSession(true); break;
+      // phiên chia khúc
+      case "blk-go": blkGo(); break;
+      case "blk-next": blkSkip(); break;
+      case "blk-lesson": blkOpenLesson(); break;
+      case "blk-exam": blkOpenExam(); break;
+      case "blk-back": sessBack(); break;
       // luyện đề
       case "exams": if (view === "exam") leaveExam(); else { examPending = null; if (!backTo("#exams")) { view = "exams"; render(); } } break;
-      case "ex-open": openExam(el.getAttribute("data-id")); break;
+      case "ex-open": examResume = null; openExam(el.getAttribute("data-id")); break;
       case "ex-part": examPart(Number(el.getAttribute("data-part"))); break;
       case "ex-go": examGoN(Number(el.getAttribute("data-n")), true); break;
       case "ex-prev": examMove(-1); break;
@@ -3082,7 +4290,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       // giáo trình
       case "lessons": lessonPending = null; if (view === "lesson") stopReading(); if (!backTo("#lessons")) { view = "lessons"; render(); } break;
       case "ls-level": UI.lsLevel = Number(el.getAttribute("data-level")); saveUi(); render(); break;
-      case "ls-open": openLesson(el.getAttribute("data-id")); break;
+      case "ls-more": UI.lsAllLevels = UI.lsAllLevels !== true; saveUi(); render(); break;
+      case "ls-open": lessonOpts = null; openLesson(el.getAttribute("data-id")); break;
       case "ls-tab": setLessonTab(el.getAttribute("data-tab")); break;
       case "ls-toggle": toggleLessonStudy(); break;
       case "ls-word": {
@@ -3101,7 +4310,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       }
       case "ls-py": UI.lsPy = UI.lsPy === false; saveUi(); renderLesson(true); break;
       case "ls-vi": UI.lsVi = UI.lsVi === false; saveUi(); renderLesson(true); break;
-      case "ls-read": lessonReadAll(Number(el.getAttribute("data-t"))); break;
+      case "ls-read": if (recIsLive()) recStop(); lessonReadAll(Number(el.getAttribute("data-t"))); sessNote("rd:" + lesson.id + ":" + el.getAttribute("data-t")); break;
+      case "sh-toggle": shadowToggle(); break;
+      case "sh-pick": shadowGo(Number(el.getAttribute("data-t")), Number(el.getAttribute("data-l")), false); break;
+      case "sh-next": sessNote(shadowOwner()); shadowNext(); break;
       case "ls-quiz": {
         var qi = Number(el.getAttribute("data-i"));
         if (lesson.quiz[qi] == null) { lesson.quiz[qi] = el.getAttribute("data-v") === "T"; renderLesson(true); }
@@ -3132,8 +4344,11 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var key = t.getAttribute("data-setting");
     if (!key) return;
     if (key === "newPerSession") db.settings.newPerSession = Number(t.value) || 10;
+    else if (key === "reviewCap") { var cv = capVal(t.value); db.settings.reviewCap = cv == null ? REVIEW_CAP_DEFAULT : cv; }
     else if (key === "drawPad") db.settings.drawPad = !!t.checked;
     else if (key === "autoSpeak") db.settings.autoSpeak = !!t.checked;
+    else if (key === "speechScore") db.settings.speechScore = !!t.checked;
+    else if (key === "sessionBlocks") db.settings.sessionBlocks = !!t.checked;
     else if (key === "theme") { db.settings.theme = themeVal(t.value) || "dem"; applyTheme(); }
     saveDb(); render();
   });
@@ -3142,6 +4357,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (!t) return;
     if (t.id === "auSeek" && audioEl) { seekHold = true; audioEl.currentTime = Number(t.value) || 0; return; }
     if (t.id === "exFree" && exam) exam.free[t.getAttribute("data-n")] = t.value;
+    if (t.id === "trInput" && session) session.trTyped = t.value;
+  });
+  // Ô gõ thẻ Dịch câu nằm trong form: phím "Xong/Enter" của bàn phím điện thoại (có máy không gửi keydown Enter) = Kiểm tra.
+  app.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (e.target && e.target.id === "trForm" && view === "session" && session) flip();
   });
   // Listener gắn 1 lần trên #app (delegation) nên đổi thẻ / vẽ lại canvas không rò listener.
   if (window.PointerEvent) {
@@ -3162,6 +4383,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   document.addEventListener("keydown", function (e) {
     if (view !== "session" || !session) return;
     var t = e.target;
+    // Ô gõ của thẻ Dịch câu: Enter = Kiểm tra (trừ lúc bộ gõ Trung đang ghép chữ), Esc = rời ô; phím khác (Space…) gõ bình thường.
+    if (t && t.id === "trInput") {
+      if (e.key === "Enter" && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); if (!e.repeat) flip(); }
+      else if (e.key === "Escape") { e.preventDefault(); t.blur(); }
+      return;
+    }
     var tag = (t && t.tagName || "").toLowerCase();
     if (tag === "input" || tag === "select" || tag === "textarea" || (t && t.isContentEditable)) return;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -3174,13 +4401,23 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     }
     // Giữ phím sẽ auto-repeat: chặn để Space giữ lâu không vừa lật vừa chấm Nhớ.
     if (e.repeat) { e.preventDefault(); return; }
-    if (key === "Escape") { e.preventDefault(); escapeSession(); return; }
+    // Phím đã xử lý ở đây mà làm đổi màn (Esc, chuyển khúc, mở bài/đề) thì chặn luôn, không để examKey/lessonKey
+    // (gắn sau, cùng document) xử lý lại phím đó ở màn mới.
+    if (key === "Escape") { e.preventDefault(); e.stopImmediatePropagation(); escapeSession(); return; }
     var it = session.current;
     if (!it) {
+      if (session.blocks && session.gate != null) { if (key === "Enter" || isSpace) { e.stopImmediatePropagation(); blkGo(); } return; } // thẻ chuyển khúc
+      if (session.blocks) { // khúc 3: màn chọn
+        if (key === "1") { e.preventDefault(); e.stopImmediatePropagation(); blkOpenLesson(); }
+        else if (key === "2") { e.preventDefault(); e.stopImmediatePropagation(); blkOpenExam(); }
+        else if (key === "Enter" && session.elapsed >= TARGET_SEC) endSession(true);
+        return;
+      }
       if (key === "Enter") endSession(true);
       return;
     }
     var mode = modeOf(it);
+    if ((key === "r" || key === "R") && mode === "phrase" && micSupported()) { e.preventDefault(); recToggle("card:" + it.id); return; }
     if (isSpace) {
       if (mode === "new") return;
       if (!session.flipped) flip(); else gradeCurrent(3);

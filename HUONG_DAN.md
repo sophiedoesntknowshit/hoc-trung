@@ -15,6 +15,28 @@
 - `Enter` — Đã hiểu (từ mới) hoặc lật thẻ
 - `Esc` — thoát về trang chủ (có hỏi lại)
 
+**Trần ôn mỗi ngày:** Cài đặt → **Ôn tối đa / ngày** (30 / 60 / 100 / Không giới hạn, mặc định 60). Mỗi ngày chỉ ôn tối đa chừng ấy lượt; thẻ dễ quên (khoảng cách ngắn) được ôn trước. Thẻ dư không bị tính là quên, chỉ để mấy hôm tới. Ô **đến hạn** ở trang chủ là số sẽ ôn hôm nay, dòng nhỏ bên dưới là số để dành. Đủ trần thì phiên chuyển sang từ mới. Lượt quay lại của thẻ vừa Quên và từ mới không tính. Số lượt ôn từng ngày xem ở **📊 Thống kê**, và nằm trong Xuất/Nhập backup (key `daily` trong `hoctrung.v1`).
+
+**Thẻ nói + nhại bài khóa:**
+- Mẫu câu trong phiên giờ là **🗣 Thẻ nói**: đọc tình huống + câu Việt, tự **nói to câu tiếng Trung**. Bấm **🎙 Ghi âm** (hoặc phím `R`) → nói → **⏹ Dừng** → **Lật**. Mặt sau có câu mẫu (chữ xanh = app nghe đúng, chữ đỏ gạch sóng = thiếu/sai), dòng "App nghe được: …", % khớp, **🔊 Mẫu**, **▶ Nghe lại mình**, **🎙 Ghi lại**. Chấm **Quên / Nhớ** như cũ.
+- Màn bài → tab **Bài khóa** → **🎙 Nhại theo**: mỗi câu **▶ Nghe mẫu** → **🎙 Nói theo** → xem so sánh, **▶ Nghe lại mình** → **Câu tiếp →**. Bấm câu khác để nhảy tới câu đó.
+- Bản ghi chỉ nằm trong bộ nhớ, sang thẻ/câu khác, đổi màn hoặc ẩn tab là dừng và bỏ. Không lưu vào máy, không vào backup.
+- Không có mic, chặn quyền mic, hoặc trình duyệt không ghi âm được thì thẻ vẫn dùng bình thường: cứ nói to rồi lật.
+- Cài đặt → **Chấm phát âm bằng nhận giọng nói** (mặc định bật, chỉ có trên Chrome/Edge). Lưu ý: nhận giọng của Chrome **gửi âm thanh lên máy chủ Google** để nhận dạng và **cần mạng**. Không muốn thì tắt, vẫn ghi âm và nghe lại được. % khớp chỉ để tham khảo (máy nghe sai đồng âm…), không ảnh hưởng chấm thẻ. Nói/gõ thừa chữ cũng bị trừ % (chữ thừa tô đỏ ở dòng "App nghe được" / "Bạn viết"). Số viết kiểu nào cũng khớp: `15` = `十五` = `一五`, `302` = `三百零二` = `三零二`.
+
+**Thẻ dịch câu (Việt → Trung):**
+- Trong phiên, cứ khoảng **6 thẻ** lại có 1 thẻ **✍ Dịch câu**, tối đa **8 thẻ/phiên**. Chỉ có khi đã có từ nhớ được ít nhất 1 ngày. Câu lấy từ câu ví dụ của từ đã học và mẫu câu đã học, trong các bộ đang chọn.
+- Mặt trước: câu tiếng Việt và các **từ đã học** có trong câu (chỉ hiện nghĩa, bấm **Gợi ý chữ Hán** mới hiện chữ). Gõ câu tiếng Trung vào ô (bàn phím/bộ gõ Trung), hoặc viết tay lên bảng → **Kiểm tra** (`Enter` trong ô gõ; khi đang ghép chữ thì Enter chỉ chốt chữ). Trong ô gõ, `Space` gõ bình thường, `Esc` thoát khỏi ô.
+- Mặt sau: câu mẫu + pinyin + 🔊. Nếu có gõ thì app so từng chữ: xanh = khớp, đỏ = thiếu/sai, kèm % khớp. Câu khác mẫu vẫn có thể đúng, nên bạn tự chấm **Chưa được** (`1`) / **Được** (`3`/`Space`). Chưa được thì câu đó quay lại ở lượt dịch sau.
+- Mỗi câu có lịch ôn riêng, không đụng thẻ từ cũ (id `<bộ>:t:<chữ Hán>:<số câu>`, mẫu câu là `<bộ>:tp:<số>` trong `hoctrung.v1`, có trong Xuất/Nhập backup). Thẻ dịch **không** tính vào trần ôn mỗi ngày và không tính vào "thẻ đã gặp". Muốn đổi nhịp thì sửa `TRANS_EVERY` / `TRANS_MAX` trong `index.html`.
+
+**Phiên 45 phút chia 3 khúc** (Cài đặt → **Chia phiên 3 khúc**, mặc định bật; tắt thì phiên trộn mọi loại thẻ như cũ):
+- **Khúc 1 · Thẻ** (00:00–15:00): chỉ thẻ từ (từ mới + ôn).
+- **Khúc 2 · Nói & dịch** (15:00–30:00): 🗣 thẻ nói xen kẽ ✍ thẻ dịch câu. Khúc 2 ưu tiên câu đến hạn trước rồi mới tới câu mới (hết mẫu câu đến hạn thì app lấy thêm mẫu câu chưa học trong các bộ đang chọn). Khúc 1 ôn sớm luôn chừa suất trần ôn cho các câu đến hạn của khúc 2, và không ôn lại thẻ vừa chấm trong phiên. Dịch "Chưa được" thì câu đó quay lại sau 2 câu dịch khác.
+- **Khúc 3 · Nghe & đọc** (30:00–45:00): chọn **Nhại 1 bài khóa** (`1`) hoặc **Làm tiếp 1 phần đề** (`2`). Bài khóa ưu tiên bài đang học (HSK 3-4 trước), không có thì gợi ý bài HSK 3-4; mỗi lần mở thì đổi sang bài kế tiếp. Đề: đề đang làm dở, nhảy thẳng tới câu đầu tiên chưa làm. Ở màn bài/đề có thanh nhỏ trên cùng: đồng hồ phiên vẫn chạy, bấm **Về phiên** (hoặc `Esc`, nút Back) để quay lại. Bấm **Trang chủ** ở đó thì kết thúc và lưu phiên. Phím `1`/`2` ở màn khúc 3 chỉ mở bài/đề, không bị tính thành phím chọn tab hay chọn đáp án ở màn mới. Đang đứng ở màn khúc 3 lúc đủ 45:00 thì nút **Kết thúc** hiện ngay.
+- Thanh trên của phiên có 3 đoạn (khúc đang học sáng lên) và nút **Sang khúc sau ›** để bỏ qua khúc. Tới mốc giờ thì app làm nốt thẻ đang dở rồi mới hiện thẻ **Khúc 2 · Nói & dịch** → **Bắt đầu**. Hết thẻ sớm thì cũng tự sang khúc sau.
+- Số câu nhại / câu đề làm trong phiên được lưu thêm vào dòng phiên (trường `lines`, xem ở 📊 Thống kê). Đổi độ dài khúc thì sửa `BLOCK_SEC` trong `index.html`.
+
 **Thêm từ:** sửa file trong `decks/` (mỗi file một chủ đề, mở bằng Notepad/VS Code). Chữ Hán trùng giữa 2 chủ đề vẫn là 2 thẻ riêng.
 
 ## Mất tài khoản công ty / đổi máy — làm sao học tiếp
@@ -47,7 +69,7 @@ Lưu ý: repo Public nghĩa là ai cũng xem được → chỉ up app, **không
 
 ## Giáo trình HSK chuẩn
 
-**Mở:** trang chủ → khối **📘 Giáo trình HSK chuẩn** → **Mở giáo trình** → chọn tab cấp (HSK 1…6, nhớ cấp mở lần trước) → chọn bài. Mỗi bài ghi số từ, số điểm ngữ pháp, số từ đã học; nhãn **Đang học** = bài đã đưa vào phiên.
+**Mở:** trang chủ → khối **📘 Giáo trình HSK chuẩn** → **Mở giáo trình** → chọn tab cấp (mặc định chỉ hiện HSK 3 và 4; bấm **＋ Hiện cấp khác** để mở HSK 1, 2, 5, 6, app nhớ lựa chọn và cấp mở lần trước) → chọn bài. Bài đang học ở cấp bị ẩn vẫn ở trong phiên như thường. Mỗi bài ghi số từ, số điểm ngữ pháp, số từ đã học; nhãn **Đang học** = bài đã đưa vào phiên.
 
 **Trong bài có 4 tab:**
 - **Từ mới** — chữ, pinyin, Hán Việt, nghĩa, loại từ. Bấm một từ để xem chiết tự, 2 ví dụ, ghi chú (🔊 nghe từ/câu). Nhãn **bổ sung** = từ AI thêm vì slide là ảnh, nên kiểm lại.
