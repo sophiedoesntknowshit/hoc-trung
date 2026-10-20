@@ -1,0 +1,2 @@
+pinyin.js: dựng từ CC-CEDICT (MDBG, https://cc-cedict.org) — Creative Commons Attribution-ShareAlike 4.0.
+hanviet.js: âm Hán Việt từ dữ liệu đã soát của app; chữ còn thiếu lấy từ trường kVietnamese của Unicode Unihan Database (https://www.unicode.org/charts/unihan.html) — Unicode License v3.

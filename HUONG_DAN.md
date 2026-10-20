@@ -102,6 +102,34 @@ Lưu ý: repo Public nghĩa là ai cũng xem được → chỉ up app, **không
 
 **Thêm bài:** bỏ file `lessons/gt-<cấp>-<bài>.js` vào thư mục, rồi chạy `node tools/build_lesson_index.js` để cập nhật danh sách. Không có `lessons/index.js` thì phần giáo trình tự ẩn.
 
+## 🗺 Bản đồ chủ đề
+
+**Mở:** trang chủ → khối **🗺 Bản đồ chủ đề** → **Mở bản đồ**. Mỗi chủ đề gồm **Cốt lõi** (32 từ trong danh sách Chủ đề ở trang chủ, vẫn tick như cũ) + 3–4 nhánh, mỗi nhánh 3 cấp. Bấm tên chủ đề để mở/thu; mỗi ô cấp ghi 🔒 khóa / % nhớ / ⭐ xong, viền xanh = đang học.
+
+**Luật mở:** "nhớ" = thẻ đã ôn và lần ôn kế cách ≥ 3 ngày. Cấp 1 mọi nhánh mở khi Cốt lõi ≥ 80% nhớ; cấp 2 khi cấp 1 ≥ 80%; cấp 3 khi cấp 2 ≥ 80%. Ô khóa vẫn bấm vào xem trước được, có nút **🔓 Mở sớm**. Cấp **đang học** đạt 80% → cấp kế tự mở và tự vào phiên (hiện thông báo); bỏ ra thì không bị thêm lại.
+
+**Trong cấp:** mục tiêu, từ mới (bấm từ xem chiết tự + ví dụ, 🔊), mẫu câu (🔊). **➕ Đưa cấp này vào phiên 45 phút** → từ + mẫu câu thành bộ thẻ trong nhóm **Bản đồ đang học** ở trang chủ; từ của cấp được ưu tiên như bài giáo trình, không bị lọc cấp HSK; mẫu câu ra ở khúc Nói & dịch. **✓ Đang học — bỏ ra** không xóa tiến độ. Cấp đang học, cấp mở sớm đi theo **Xuất/Nhập backup**. `Esc` về bản đồ / trang chủ.
+
+**Thêm/sửa dữ liệu:** file `map/<id-chủ-đề>.js` (id trùng tên deck trong `decks/`), rồi chạy `node tools/build_map_index.js` để cập nhật `map/index.js`. Không có chủ đề nào trong `map/index.js` thì khối bản đồ tự ẩn.
+
+**✨ AI soạn thêm (cần lưu khóa + bật AI):** cuối mỗi nhánh có nút **✨ Soạn cấp tiếp bằng AI** (cấp 4, 5…); cuối mỗi chủ đề có ô **✨ Nhánh mới** — gõ tình huống tự chọn (vd. "đi taxi từ sân bay") rồi **Soạn**. Mỗi lần AI soạn 1 cấp: 12–15 từ không trùng từ đã có trong app, 5–6 mẫu câu, 1 cảnh đóng vai. Pinyin và Hán Việt app tự tra lại bằng từ điển, chiết tự để trống. Cấp AI có nhãn **✨ AI**, học / đưa vào phiên / mở khóa 80% như cấp thường, và **đi theo backup**. Cài đặt **Tự soạn cấp mới bằng AI khi gần xong nhánh** (mặc định bật): cấp cuối của nhánh đang học đạt 80% → AI tự soạn cấp tiếp, mỗi cấp 1 lần, tối đa 5 gói/ngày, xong báo một dòng.
+
+## 🎭 Đóng vai hội thoại (cần AI)
+
+**Mở:** trong màn cấp bản đồ bấm **🎭 Đóng vai: …**, hoặc ở khúc 3 của phiên 45 phút chọn **🎭 Đóng vai 1 tình huống** (phím `3`; lấy cấp đang học có đóng vai, chưa học cấp nào thì cấp đã mở; đồng hồ phiên vẫn chạy, xong bấm **Về phiên**). Chưa có khóa / AI đang tắt thì màn đóng vai giải thích và có nút **⚙ Mở Cài đặt AI**.
+
+**Trong màn:** đầu màn là tình huống, vai AI / vai bạn, 3 mục tiêu (☐ → ☑ khi đạt). Tin của AI: chữ Hán to, 🔊, nút **Pinyin** (tra bằng từ điển, tải lần đầu ~3 MB) và **Dịch**; bật/tắt ở 1 tin thì các tin sau theo. Bạn gõ tiếng Trung hoặc bấm **🎙 Nói** (chữ app nghe được điền vào ô, sửa rồi **Gửi**; bấm Gửi lúc đang nói thì tự gửi khi nhận xong chữ). **💡 Gợi ý**: AI đưa 1 câu mẫu (+ pinyin, nghĩa), **Dùng câu này** để điền vào ô. Dưới mỗi câu của bạn có nhận xét nhỏ: ✅ ổn, hoặc 💡 cách nói tự nhiên hơn + 🔊. AI lỗi giữa chừng: hội thoại giữ nguyên, bấm **↻ Thử lại** hoặc **Sửa câu**.
+
+**Kết thúc:** tối đa 10 lượt nói, hoặc AI thấy cảnh đã xong → **Xem tổng kết**: mục tiêu đạt, tối đa 5 câu sửa đáng nhớ (🔊), từ khóa chưa dùng. **+ Ôn**: câu sửa thành thẻ nói / thẻ dịch, từ chưa có trong app thành thẻ từ — đều vào bộ **🔗 Từ mở rộng** (đi theo backup); từ đã học thì đến hạn ôn ngay. **🔁 Chơi lại** bắt đầu lại từ câu mở đầu. Hội thoại chỉ giữ trong lúc mở trang (rời màn rồi quay lại thì đi tiếp, tải lại trang là mất). Mỗi lượt nói / gợi ý = 1 lượt gọi AI, cộng vào chi phí tháng ở Cài đặt.
+
+## 🔗 Mở rộng từ trên thẻ
+
+Thẻ **Từ mới** và mặt sau thẻ từ (sau khi lật) có nút **🔗 Mở rộng (N)**: từ cùng loại, trái nghĩa, hay đi kèm, cụm từ — mỗi từ có pinyin, Hán Việt, nghĩa, 🔊, bấm vào xem chiết tự + ví dụ. **+ Học** (từng từ) / **+ Học cả nhóm** đưa từ vào bộ **🔗 Từ mở rộng** (tự tick, từ mới được ưu tiên như bộ 📝, học từ phiên sau; đi theo backup). Từ đã có ở chủ đề / cấp bản đồ thì ghi **📚 đã có ở …**. Thẻ không có sẵn dữ liệu mở rộng (từ giáo trình, cấp bản đồ, từ trong đề…) hoặc muốn thêm: **✨ Mở rộng bằng AI** / **✨ Thêm bằng AI** (khi AI bật) — kết quả lưu trên máy để lần sau khỏi gọi lại.
+
+## Nguồn dữ liệu từ điển
+
+Cách đọc pinyin lấy từ **CC-CEDICT** (giấy phép CC BY-SA 4.0, cc-cedict.org); âm Hán Việt từ **Unicode Unihan** (Unicode License). Chi tiết trong `dict/LICENSES.txt`. Từ điển (~3 MB) chỉ tải khi AI soạn, khi bật Pinyin / xin Gợi ý / + Ôn trong 🎭 Đóng vai; pinyin câu tra theo từ dài nhất, không tính biến điệu (一, 不, thanh 3).
+
 ## Luyện đề HSK4
 
 **Mở:** trang chủ → khối **📝 Luyện đề HSK4** → **Vào luyện đề** → chọn đề. Nhãn cạnh tên đề: 🎧 có audio · ✅ đáp án gốc · 🤖 đáp án do AI giải · ⚠️ đáp án gốc thiếu một phần.
