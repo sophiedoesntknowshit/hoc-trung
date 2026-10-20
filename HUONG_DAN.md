@@ -40,11 +40,27 @@
 - Thanh trên của phiên có 3 đoạn (khúc đang học sáng lên) và nút **Sang khúc sau ›** để bỏ qua khúc. Tới mốc giờ thì app làm nốt thẻ đang dở rồi mới hiện thẻ **Khúc 2 · Nói & dịch** → **Bắt đầu**. Hết thẻ sớm thì cũng tự sang khúc sau.
 - Số câu nhại / câu đề làm trong phiên được lưu thêm vào dòng phiên (trường `lines`, xem ở 📊 Thống kê). Đổi độ dài khúc thì sửa `BLOCK_SEC` trong `index.html`.
 
+**Kiểm tra bài cũ đầu buổi** (Cài đặt → **Kiểm tra bài cũ đầu buổi**: Tắt / 5 / **8** (mặc định) / 10 câu, có trong Xuất/Nhập backup):
+- Bấm **Học 45 phút** → trước khúc 1 hiện **Bài cũ 1/8**. Chỉ có khi đã có phiên **trước hôm nay** có chấm thẻ, và **mỗi ngày 1 lần** (hôm nay đã làm thì phiên sau thôi). Tính vào 45 phút, thanh trên có thêm đoạn nhỏ **Bài cũ**. Nút **Bỏ qua** để vào thẳng phiên.
+- Câu lấy từ thẻ từ / mẫu câu đã chấm vào ngày của 1–2 phiên gần nhất trước hôm nay (ngày phiên trước đó chỉ tính nếu cách phiên gần nhất ≤ 2 ngày; thẻ hay Quên / Khó ra trước, thẻ của ngày gần nhất ưu tiên), mỗi từ 1 câu ví dụ, không lặp.
+- Hai chiều xen kẽ: **Trung → Việt** (câu chữ Hán, 🔊, **Gợi ý pinyin**; gõ nghĩa hoặc **🎙 Nói tiếng Việt**) và **Việt → Trung** (gõ, **🎙 Nói tiếng Trung** hoặc viết tay). Nói xong thì chữ app nghe được điền vào ô, sửa được rồi **Kiểm tra**. Có AI thì AI chấm theo nghĩa (gõ không dấu cũng được); không có AI thì hiện câu mẫu để tự chấm. Luôn tự bấm **Sai** (`1`) / **Đúng** (`3`/`Space`).
+- **Sai** → thẻ của từ đó tới hạn ngay + ease −0.15 + khoảng ôn hạ còn tối đa 1 ngày (chấm lại **Nhớ** không làm lịch dài thêm), và ra **đầu khúc 1** hôm nay (mẫu câu: đầu khúc 2). Bài cũ làm quá 15 phút thì vẫn ôn hết các từ vừa Sai rồi mới sang khúc sau. Lượt chấm lại thẻ đó **không tính vào trần ôn mỗi ngày**. **Đúng** → không đổi gì.
+- Cuối phần này có màn **Đúng X/N** + danh sách câu sai (chữ Hán, 🔊, pinyin, nghĩa) → **Vào khúc 1** (đã quá giờ khúc 1 và không có câu sai thì là **Vào khúc 2/3**). Kết quả lưu vào dòng phiên (trường `warmup`, xem ở 📊 Thống kê).
+
+**AI chấm bài (OpenAI, tùy chọn — dùng trên điện thoại):**
+- Cài đặt → **AI chấm bài** → dán **Khóa OpenAI** → **Lưu** → **Thử khóa** (báo OK hoặc lỗi). Chọn model: **gpt-6-luna** (mặc định, chấm kỹ) hoặc **gpt-5-nano** (rẻ hơn theo token nhưng hay chấm sai; tính ra mỗi lượt chấm tốn gần bằng luna). Thử khóa chỉ cập nhật dòng kết quả, không xóa khóa đang dán dở. Công tắc **Dùng AI chấm** để tạm tắt. Dòng "Tháng này: N lượt · ~$X" là chi phí ước tính.
+- **✍ Dịch câu:** gõ câu rồi **Kiểm tra** → nút thành "Đang chấm…" (bấm **Bỏ qua AI** để lật luôn; kết quả về muộn vẫn hiện). Mặt sau có ✅ Đúng / 🟡 Gần đúng / ❌ Sai + điểm, lỗi từng đoạn, **Cách nói tự nhiên hơn**, **Cũng nói được** (đều có 🔊), ghi chú. AI chấm theo nghĩa, không bắt khớp từng chữ với câu mẫu. Viết tay (không gõ) thì không gọi AI.
+- **🗣 Thẻ nói:** ghi âm → lật → câu "App nghe được" được gửi AI chấm (khoan dung lỗi nhận giọng như chữ đồng âm). Ghi lại thì chấm lại.
+- **Kiểm tra bài cũ:** AI chấm cả hai chiều (Trung → Việt: đúng ý chưa, ý còn thiếu, bản dịch tự nhiên).
+- AI chỉ **gợi ý** nút chấm (viền sáng), bạn vẫn tự bấm. Pinyin luôn lấy từ dữ liệu app, không lấy của AI.
+- AI lỗi (khóa sai, hết credit, khóa không dùng được model → gợi ý đổi model, OpenAI trục trặc, mất mạng, chậm quá 25 giây) → hiện 1 dòng lý do, chấm như cũ. Kết quả AI về thì trang tự cuộn để thấy khung chấm (không bị thanh nút đáy che, cả màn ngang).
+- **Khóa chỉ lưu trên máy này** (localStorage `hoctrung.ai.v1`), **không** vào Xuất backup, không lên GitHub, sau khi lưu chỉ hiện dạng `sk-…abcd`. Đổi máy/điện thoại thì dán lại. Câu trả lời của bạn được gửi sang OpenAI. Nên đặt trần chi tiêu (limit) trong trang OpenAI. Sửa giá/model trong `AI_MODELS` của `index.html`.
+
 **Thêm từ:** sửa file trong `decks/` (mỗi file một chủ đề, mở bằng Notepad/VS Code). Chữ Hán trùng giữa 2 chủ đề vẫn là 2 thẻ riêng.
 
 ## Mất tài khoản công ty / đổi máy — làm sao học tiếp
 
-App này không cần tài khoản, không cần mạng, không gọi API nào. Chỉ cần 2 thứ: **thư mục `app`** và **file backup tiến độ**. Cất cả hai trên Google Drive cá nhân là đủ.
+App này không cần tài khoản, không cần mạng, không gọi API nào (trừ khi bạn tự bật **AI chấm bài** — khóa OpenAI không nằm trong backup, sang máy mới phải dán lại). Chỉ cần 2 thứ: **thư mục `app`** và **file backup tiến độ**. Cất cả hai trên Google Drive cá nhân là đủ.
 
 **Sang máy mới:**
 1. Vào Google Drive cá nhân → tải file zip về → giải nén.

@@ -337,7 +337,11 @@ header p{text-shadow:0 0 4px var(--bg),0 0 10px var(--bg),0 0 18px var(--bg)}
 .grades small{font-weight:500;font-size:11px;color:var(--muted);letter-spacing:0;white-space:nowrap}
 @media (max-width:600px),(max-height:500px){.dock{position:sticky;bottom:0;z-index:4;background:linear-gradient(180deg,rgba(14,8,8,.9),#0e0808 40%);
     -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);margin:16px -16px 0;padding:10px 16px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--border);box-shadow:0 -12px 22px -14px rgba(0,0,0,.9)} .hint{display:none}
-  .card{border-radius:20px;box-shadow:inset 0 1px 0 rgba(224,53,43,.55),0 30px 60px -30px rgba(0,0,0,.95)}}
+  .card{border-radius:20px;box-shadow:inset 0 1px 0 rgba(224,53,43,.55),0 30px 60px -30px rgba(0,0,0,.95)}
+  html:has(.dock){scroll-padding-bottom:calc(96px + env(safe-area-inset-bottom))}}
+/* màn ngang: dock mỏng hơn để ô gõ / kết quả AI không nằm sau dock */
+@media (max-height:500px) and (min-width:601px){.dock{padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom));margin-top:10px}
+  .dock button.primary.big{min-height:46px} .grades.dock button{min-height:52px}}
 .g1{background:var(--red-soft);border-color:var(--red-line);border-top-color:var(--red);color:var(--red-ink)}
 .g2{background:var(--orange-soft);border-color:var(--orange-line);border-top-color:var(--orange);color:var(--orange-ink)}
 .g3{background:var(--green-soft);border-color:var(--green-line);border-top-color:var(--green);color:var(--green-ink)}
@@ -687,6 +691,84 @@ html.insess .bar,html.insess .ptabs.lstabs{top:calc(53px + env(safe-area-inset-t
 @media (max-width:520px){.hskgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:400px){.hskchip{padding:6px 9px;gap:7px}.hskchip .hn{letter-spacing:.02em}}
 @media (max-width:350px){.hskgrid{grid-template-columns:1fr}}
+/* ---------- AI chấm bài: khung kính tối viền mảnh, vạch trái theo kết quả (Đúng xanh / Gần đúng cam / Sai hồng), nhãn in hoa mảnh giãn rộng ---------- */
+.aibox{margin-top:12px;padding:12px 14px;border:1px solid var(--line);border-left-width:3px;border-radius:14px;background:rgba(255,238,228,.03);text-align:left}
+.aibox.v-dung{border-left-color:var(--green);box-shadow:0 0 22px -14px rgba(92,214,154,.7)}
+.aibox.v-gan-dung{border-left-color:var(--orange)}
+.aibox.v-sai{border-left-color:var(--red);box-shadow:0 0 22px -14px rgba(255,123,152,.6)}
+.aibox.wait{border-style:dashed;border-left-width:1px}
+.aihead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px}
+.aiverd{display:inline-flex;align-items:baseline;gap:10px;font-size:16px;font-weight:500;letter-spacing:.06em}
+.v-dung .aiverd{color:var(--green-ink)}.v-gan-dung .aiverd{color:var(--orange-ink)}.v-sai .aiverd{color:var(--red-ink)}
+.aiscore{font-family:var(--thin);font-weight:300;font-size:21px;font-variant-numeric:lining-nums tabular-nums;letter-spacing:.04em}
+.aiscore::after{content:"/100";font-size:11px;opacity:.65;margin-left:2px}
+.aitag{font-size:9.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--faint);white-space:nowrap}
+.aiwait{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--accent-ink);animation:aiPulse 1.2s ease-in-out infinite}
+@keyframes aiPulse{50%{opacity:.4}}
+.aichk{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.aichk span{font-size:11px;line-height:1.6;padding:0 10px;border-radius:999px;border:1px solid var(--line);letter-spacing:.08em}
+.aichk .ok{color:var(--green-ink);border-color:var(--green-line)}.aichk .no{color:var(--red-ink);border-color:var(--red-line)}
+.aiiss{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.aiiss li{font-size:14px;line-height:1.55;color:var(--text);padding-left:10px;border-left:1px solid var(--line-strong)}
+.aiiss b.zh{font-weight:400;font-size:19px;color:var(--red-ink);margin-right:8px}
+.airow{margin-top:10px}
+.ailab{font-size:10px;text-transform:uppercase;letter-spacing:.2em;color:var(--faint);margin-bottom:2px}
+.aizh{display:flex;align-items:center;gap:8px;padding:2px 0}
+.aizh .zh{flex:1;min-width:0;font-size:21px;line-height:1.45;color:var(--zh-ink);word-break:break-all}
+.ainote{margin-top:10px;font-size:14px;line-height:1.55;color:var(--muted)}
+.aisugtxt{margin-top:8px;font-size:11px;letter-spacing:.06em;color:var(--faint)}
+.aisugtxt b{font-weight:500;color:var(--accent-soft-ink)}
+.ailine{margin-top:10px;font-size:13.5px;line-height:1.45;text-align:left}
+.ailine.warn{color:var(--orange-ink)}
+.grades button.aisug{box-shadow:0 0 0 2px currentColor,0 0 22px -6px currentColor}
+.actions.aiwaitrow{display:flex;align-items:center;gap:10px}
+.actions.aiwaitrow button.big{flex:1;min-width:0}
+.actions.aiwaitrow button.big{letter-spacing:.12em;text-indent:.12em;padding-left:12px;padding-right:12px}
+.actions.aiwaitrow button.big:disabled{opacity:.8}
+.actions.aiwaitrow button.small-btn{flex:none;min-height:52px;font-size:12px;text-transform:uppercase;letter-spacing:.12em}
+/* cài đặt AI chấm bài */
+.setting.aiset{flex-direction:column;align-items:stretch;gap:9px}
+.setting.aiset span{flex:none}
+.aikeylab{font-size:14px;color:var(--muted)}
+.aimask{margin-left:6px;font-size:12px;letter-spacing:.06em;color:var(--faint)}
+.aikey{display:flex;gap:8px}
+.aikey input{flex:1;min-width:0;min-height:44px;font:inherit;font-size:16px;color:var(--text);background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.aikey input:focus{outline:none;border-color:var(--glow-hot);box-shadow:0 0 0 3px rgba(224,53,43,.25)}
+.aikey input::placeholder{color:var(--placeholder);font-size:13px}
+.aikey button{flex:none}
+.aibtns{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.aitest{font-size:13px;line-height:1.4}.aitest.ok{color:var(--green-ink)}.aitest.err{color:var(--orange-ink)}
+.aisub{display:flex;align-items:center;gap:12px;min-height:44px}
+.setting.aiset .aisub > span{flex:1;min-width:0}
+.aisub select{max-width:64%;min-width:0;text-overflow:ellipsis}
+@media (max-width:520px){.aimodel{flex-wrap:wrap;gap:4px 12px}.aimodel select{flex:1 1 100%;max-width:none}}
+.aicost{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-soft-ink);font-variant-numeric:tabular-nums}
+/* ---------- kiểm tra bài cũ đầu buổi: đoạn "Bài cũ" nhỏ trước 3 khúc, câu Trung to có quầng đỏ, ô gõ nghĩa Việt, tổng kết ---------- */
+.blks.wu{grid-template-columns:.62fr repeat(3,1fr)}
+.tag.warm{background:var(--accent-soft);border-color:var(--accent-soft-line);color:var(--accent-soft-ink)}
+.wuhead{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.wuhead .tags{margin-bottom:6px}
+button.wuskip{flex:none;font-size:11px;text-transform:uppercase;letter-spacing:.14em}
+.wuzh{text-align:center;font-size:clamp(26px,7.4vw,34px);line-height:1.45;margin:18px 0 8px;color:var(--zh-ink);word-break:break-all;text-shadow:0 0 18px rgba(255,90,70,.35)}
+.wutools{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center}
+.wutools .small-btn{font-size:11px;text-transform:uppercase;letter-spacing:.14em}
+.pinyin.wupy{font-size:18px;margin-top:8px}
+.trin.wuvi{font-family:var(--sans);font-size:18px}
+.wvbox{margin-top:6px}
+.wuvitx{flex:1;min-width:0;font-size:17px;line-height:1.5;color:var(--text)}
+.wucard .trlab{width:auto;min-width:6.6em;white-space:nowrap}
+@media (max-width:400px){.wucard .trlab{width:100%}}
+.aivi{font-size:15.5px;line-height:1.5;color:var(--text)}
+.wusum{padding-top:22px}
+.wuscore{text-align:center;margin:10px 0 2px;font-family:var(--thin);font-weight:300;font-size:20px;letter-spacing:.16em;text-transform:uppercase;color:var(--text)}
+.wuscore b{font-weight:300;font-size:48px;letter-spacing:.02em;color:#fff6ec;text-shadow:0 0 18px rgba(255,90,70,.55);margin:0 2px 0 8px}
+.wubad{list-style:none;margin:14px 0 0;padding:0;text-align:left}
+.wubad li{padding:10px 0;border-top:1px solid var(--border)}
+.wupy2{color:var(--pinyin);font-size:15px;letter-spacing:.04em}
+.wuvi2{color:var(--muted);font-size:15px;line-height:1.45}
+.wuw{margin-top:4px;font-size:13px;letter-spacing:.03em;color:var(--faint)}
+.wuw b.zh{font-weight:400;font-size:17px;letter-spacing:0;color:var(--accent-ink);margin:0 4px}
+.wustat{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
 </style>
 <style id="theme-giay" media="not all">
@@ -905,7 +987,11 @@ input[type=range]{accent-color:var(--accent)}
 .grades small{font-weight:600;font-size:12px;color:var(--muted)}
 /* điện thoại (dọc lẫn xoay ngang): hàng nút Lật / Đã hiểu / chấm điểm dính đáy màn hình, khỏi phải cuộn (-16px = padding ngang của .card) */
 @media (max-width:600px),(max-height:500px){.dock{position:sticky;bottom:0;z-index:4;background:var(--card);margin:16px -16px 0;padding:10px 16px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--border);box-shadow:0 -8px 14px -10px rgba(var(--sh),.3)} .hint{display:none}
-  .card{box-shadow:var(--shadow);border-top:3px solid var(--accent)}}
+  .card{box-shadow:var(--shadow);border-top:3px solid var(--accent)}
+  html:has(.dock){scroll-padding-bottom:calc(96px + env(safe-area-inset-bottom))}}
+/* màn ngang: dock mỏng hơn để ô gõ / kết quả AI không nằm sau dock */
+@media (max-height:500px) and (min-width:601px){.dock{padding-top:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom));margin-top:10px}
+  .dock button.primary.big{min-height:46px} .grades.dock button{min-height:52px}}
 .g1{background:var(--red-soft);border-color:var(--red-line);border-top-color:var(--red);color:var(--red-ink)}
 .g2{background:var(--orange-soft);border-color:var(--orange-line);border-top-color:var(--orange);color:var(--orange-ink)}
 .g3{background:var(--green-soft);border-color:var(--green-line);border-top-color:var(--green);color:var(--green-ink)}
@@ -1228,6 +1314,83 @@ html.insess .bar,html.insess .ptabs.lstabs{top:calc(53px + env(safe-area-inset-t
 @media (max-width:560px){.hskgrid{grid-template-columns:repeat(2,minmax(0,1fr))}} /* chữ Giấy to hơn: 3 cột ở 521–550px cắt "HSK 2–5" */
 @media (max-width:400px){.hskchip{padding:6px 9px;gap:7px}.hskchip .hl{font-size:14px}.hskchip .hn{font-size:12px}}
 @media (max-width:350px){.hskgrid{grid-template-columns:1fr}}
+/* ---------- AI chấm bài: khung giấy nét đứt, vạch trái theo kết quả, nhãn đậm ---------- */
+.aibox{margin-top:12px;padding:12px 14px;border:1px dashed var(--line);border-left:4px solid var(--line);border-radius:10px;background:var(--card2);text-align:left}
+.aibox.v-dung{border-left-color:var(--green)}
+.aibox.v-gan-dung{border-left-color:var(--orange)}
+.aibox.v-sai{border-left-color:var(--red)}
+.aibox.wait{border-left-width:1px;border-left-style:dashed}
+.aihead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px}
+.aiverd{display:inline-flex;align-items:baseline;gap:10px;font-size:17px;font-weight:800}
+.v-dung .aiverd{color:var(--green-ink)}.v-gan-dung .aiverd{color:var(--orange-ink)}.v-sai .aiverd{color:var(--red-ink)}
+.aiscore{font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+.aiscore::after{content:"/100";font-size:12px;font-weight:600;opacity:.7;margin-left:1px}
+.aitag{font-size:12px;font-weight:700;color:var(--gold-ink);background:var(--gold-soft);border:1px solid var(--gold);border-radius:999px;padding:0 8px;white-space:nowrap}
+.aiwait{font-size:14px;font-weight:700;color:var(--accent-ink);animation:aiPulse 1.2s ease-in-out infinite}
+@keyframes aiPulse{50%{opacity:.45}}
+.aichk{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.aichk span{font-size:12.5px;font-weight:700;line-height:1.6;padding:0 9px;border-radius:999px;border:1px solid var(--border)}
+.aichk .ok{color:var(--green-ink);background:var(--green-soft);border-color:var(--green-line)}.aichk .no{color:var(--red-ink);background:var(--red-soft);border-color:var(--red-line)}
+.aiiss{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:6px}
+.aiiss li{font-size:15px;line-height:1.5;color:var(--text);padding-left:10px;border-left:3px solid var(--red-line)}
+.aiiss b.zh{font-weight:400;font-size:20px;color:var(--red-ink);margin-right:8px}
+.airow{margin-top:10px}
+.ailab{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:2px}
+.aizh{display:flex;align-items:center;gap:8px;padding:2px 0}
+.aizh .zh{flex:1;min-width:0;font-size:22px;line-height:1.45;color:var(--zh-ink);word-break:break-all}
+.ainote{margin-top:10px;font-size:15px;line-height:1.5;color:var(--text)}
+.aisugtxt{margin-top:8px;font-size:13px;font-style:italic;color:var(--muted)}
+.aisugtxt b{font-style:normal;color:var(--accent-ink)}
+.ailine{margin-top:10px;font-size:14px;line-height:1.45;text-align:left}
+.ailine.warn{color:var(--orange-ink)}
+.grades button.aisug{box-shadow:0 0 0 2.5px currentColor,0 4px 12px -4px rgba(var(--sh),.35)}
+.actions.aiwaitrow{display:flex;align-items:center;gap:10px}
+.actions.aiwaitrow button.big{flex:1;min-width:0}
+.actions.aiwaitrow button.big:disabled{opacity:.8}
+.actions.aiwaitrow button.small-btn{flex:none;min-height:52px;font-weight:700}
+/* cài đặt AI chấm bài */
+.setting.aiset{flex-direction:column;align-items:stretch;gap:9px}
+.setting.aiset span{flex:none}
+.aikeylab{font-size:15px;font-weight:700;color:var(--text)}
+.aimask{margin-left:6px;font-size:13px;font-weight:600;color:var(--muted)}
+.aikey{display:flex;gap:8px}
+.aikey input{flex:1;min-width:0;min-height:44px;font:inherit;font-size:16px;color:var(--text);background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:8px 12px;box-shadow:inset 0 1px 3px rgba(var(--sh),.08)}
+.aikey input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(179,38,30,.18)}
+.aikey input::placeholder{color:var(--placeholder);font-size:14px}
+.aikey button{flex:none}
+.aibtns{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.aitest{font-size:14px;font-weight:600;line-height:1.4}.aitest.ok{color:var(--green-ink)}.aitest.err{color:var(--orange-ink)}
+.aisub{display:flex;align-items:center;gap:12px;min-height:44px}
+.setting.aiset .aisub > span{flex:1;min-width:0}
+.aisub select{max-width:64%;min-width:0;text-overflow:ellipsis}
+@media (max-width:520px){.aimodel{flex-wrap:wrap;gap:4px 12px}.aimodel select{flex:1 1 100%;max-width:none}}
+.aicost{font-size:14px;font-weight:700;color:var(--gold-ink);font-variant-numeric:tabular-nums}
+/* ---------- kiểm tra bài cũ đầu buổi: đoạn "Bài cũ" nhỏ trước 3 khúc, nhãn vàng kim, chữ đậm trên giấy ---------- */
+.blks.wu{grid-template-columns:.62fr repeat(3,1fr)}
+.tag.warm{background:var(--gold-soft);border-color:var(--gold);color:var(--gold-ink)}
+.wuhead{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.wuhead .tags{margin-bottom:6px}
+button.wuskip{flex:none;font-size:14px;font-weight:700}
+.wuzh{text-align:center;font-family:var(--kai);font-size:clamp(26px,7.4vw,34px);line-height:1.45;margin:16px 0 8px;color:var(--zh-ink);word-break:break-all}
+.wutools{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center}
+.wutools .small-btn{font-size:14px;font-weight:700}
+.pinyin.wupy{font-size:19px;margin-top:8px}
+.trin.wuvi{font-family:var(--sans);font-size:19px}
+.wvbox{margin-top:6px}
+.wuvitx{flex:1;min-width:0;font-size:17px;line-height:1.45;font-weight:600;color:var(--text)}
+.wucard .trlab{width:auto;min-width:5.8em;white-space:nowrap}
+@media (max-width:400px){.wucard .trlab{width:100%}}
+.aivi{font-size:16px;line-height:1.45;color:var(--text)}
+.wusum{padding-top:20px}
+.wuscore{text-align:center;margin:10px 0 2px;font-size:22px;font-weight:700;color:var(--text)}
+.wuscore b{font-family:var(--serif);font-size:46px;font-weight:800;color:var(--accent);margin:0 2px 0 6px}
+.wubad{list-style:none;margin:14px 0 0;padding:0;text-align:left}
+.wubad li{padding:10px 0;border-top:1px dashed var(--line)}
+.wupy2{color:var(--pinyin);font-size:15px}
+.wuvi2{color:var(--text);font-size:15.5px;line-height:1.45}
+.wuw{margin-top:4px;font-size:13px;font-weight:700;color:var(--muted)}
+.wuw b.zh{font-weight:400;font-size:18px;color:var(--accent-ink);margin:0 4px}
+.wustat{display:block;font-size:13px;color:var(--muted)}
 @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 </style>
 <script>/* chọn giao diện TRƯỚC khi vẽ (tránh nháy): bật đúng 1 khối style. settings.theme: "dem" (mặc định) | "giay" | "system";
@@ -1284,6 +1447,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   var BLOCKS = [["Thẻ", "Thẻ từ: từ mới + ôn"], ["Nói & dịch", "🗣 Thẻ nói xen ✍ dịch câu"], ["Nghe & đọc", "🎙 Nhại 1 bài khóa hoặc 📝 làm tiếp 1 phần đề"]];
   var TALK_RELEARN_GAP = 3; // khúc 2: thẻ nói vừa Quên quay lại sau ~3 thẻ nói (xen thẻ dịch → ~6 thẻ)
   var HSK_ALL = [0, 1, 2, 3, 4, 5, 6]; // cấp HSK của từ mới (settings.hskLevels); 0 = ngoài HSK (khẩu ngữ)
+  // Kiểm tra bài cũ đầu buổi (settings.warmup): số câu, 0 = tắt. Mặc định 8.
+  var WARM_OPTIONS = [0, 5, 8, 10];
+  var WARM_DEFAULT = 8;
 
   var app = document.getElementById("app");
   var toastEl = document.getElementById("toast");
@@ -1428,8 +1594,15 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       daily: {}, // { "YYYY-MM-DD": { reviews: n } } — số lượt ôn đã làm trong ngày (để áp trần ôn, reload không mất)
       settings: { newPerSession: 10, drawPad: true, autoSpeak: true, theme: "dem", selectedDecks: DECKS.map(function (d) { return d.id; }), enabledLessons: [], reviewCap: REVIEW_CAP_DEFAULT,
         speechScore: true, // chấm phát âm bằng nhận giọng nói (chỉ có tác dụng khi trình duyệt hỗ trợ)
-        sessionBlocks: true } // phiên 45 phút chia 3 khúc (Thẻ · Nói & dịch · Nghe & đọc)
+        sessionBlocks: true, // phiên 45 phút chia 3 khúc (Thẻ · Nói & dịch · Nghe & đọc)
+        warmup: WARM_DEFAULT } // kiểm tra bài cũ đầu buổi: số câu (0 = tắt)
     };
+  }
+  // Số câu kiểm tra bài cũ hợp lệ hoặc null. Chỉ nhận số / chuỗi số không rỗng (null, "", false → Number() = 0 = "Tắt", không nhận).
+  function warmVal(x) {
+    if (typeof x !== "number" && !(typeof x === "string" && x.trim() !== "")) return null;
+    x = Number(x);
+    return WARM_OPTIONS.indexOf(x) >= 0 ? x : null;
   }
   function normalizeDaily(o) {
     var out = {};
@@ -1470,6 +1643,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       if (typeof s.autoSpeak === "boolean") base.settings.autoSpeak = s.autoSpeak;
       if (typeof s.speechScore === "boolean") base.settings.speechScore = s.speechScore;
       if (typeof s.sessionBlocks === "boolean") base.settings.sessionBlocks = s.sessionBlocks;
+      if (warmVal(s.warmup) != null) base.settings.warmup = warmVal(s.warmup); // dữ liệu cũ không có → mặc định 8
       if (hskVal(s.hskLevels)) base.settings.hskLevels = hskVal(s.hskLevels); // thiếu / sai = mọi cấp (không ghi trường)
       if (themeVal(s.theme)) base.settings.theme = themeVal(s.theme);
       if (Array.isArray(s.selectedDecks)) base.settings.selectedDecks = s.selectedDecks.slice();
@@ -1738,7 +1912,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (code === "not-allowed" || code === "service-not-allowed") return "trình duyệt chặn nhận giọng";
     if (code === "network") return "cần mạng để chấm";
     if (code === "audio-capture") return "mic đang bận, không chấm được";
-    if (code === "language-not-supported") return "không nhận được tiếng Trung";
+    if (code === "language-not-supported") return "không nhận được " + (/^vi/i.test(REC.lang || "") ? "tiếng Việt" : "tiếng Trung");
     return "nhận giọng lỗi (" + code + ")";
   }
   function recFail(tok, e) {
@@ -1753,7 +1927,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (!scoringOn()) return;
     var C = srCtor(), r;
     try { r = new C(); } catch (e) { REC.srOn = true; REC.srDone = true; REC.srErr = "nhận giọng lỗi"; return; }
-    r.lang = "zh-CN"; r.continuous = true; r.interimResults = true; r.maxAlternatives = 1;
+    r.lang = REC.lang || "zh-CN"; r.continuous = true; r.interimResults = true; r.maxAlternatives = 1;
     r.onresult = function (ev) {
       if (tok !== REC.token) return;
       var fin = "", tmp = "", rs = ev.results || [];
@@ -1777,11 +1951,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     REC.sr = r; REC.srOn = true;
     try { r.start(); } catch (e) { REC.sr = null; REC.srDone = true; REC.srErr = "nhận giọng lỗi"; }
   }
-  function recStart(owner) {
+  // lang = ngôn ngữ nhận giọng (mặc định zh-CN; kiểm tra bài cũ chiều Trung → Việt dùng vi-VN).
+  function recStart(owner, lang) {
     recRelease();
     stopReading();
     try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* bỏ qua */ }
-    REC.owner = owner;
+    REC.owner = owner; REC.lang = lang || "zh-CN";
     if (!micSupported()) { REC.state = "error"; REC.err = "Trình duyệt này không ghi âm được"; refreshVoice(); return; }
     var tok = REC.token;
     REC.state = "starting"; refreshVoice();
@@ -1841,8 +2016,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     srFinish(tok);
     refreshVoice();
   }
-  function recToggle(owner) {
-    if (REC.owner === owner && recIsLive()) recStop(); else recStart(owner);
+  function recToggle(owner, lang) {
+    if (REC.owner === owner && recIsLive()) recStop(); else recStart(owner, lang);
   }
   function recPlay() {
     if (!REC.url) return;
@@ -1866,6 +2041,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function voiceAlive() {
     if (!REC.owner) return true;
     if (REC.owner.indexOf("card:") === 0) return view === "session" && !!session && !!session.current && REC.owner === "card:" + session.current.id;
+    if (REC.owner.indexOf("wu:") === 0) return view === "session" && warmActive() && REC.owner === warmOwner(); // kiểm tra bài cũ: đúng câu đang hỏi
     return view === "lesson" && !!lesson && lesson.tab === "texts" && !!lesson.shadow && REC.owner === shadowOwner();
   }
   function voiceSweep() { if (REC.owner && !voiceAlive()) recRelease(); }
@@ -1980,6 +2156,387 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var c = compareSpeech(target, REC.heard), lv = c.pct >= 85 ? "good" : c.pct >= 50 ? "mid" : "low";
     return out + '<div class="vcmp"><div class="vheard">App nghe được: <span class="zh">' + markedZhHtml(REC.heard, { ok: c.okH }) + '</span></div>' +
       '<div class="vpct ' + lv + '">Khớp ' + c.pct + '%' + (REC.srDone ? "" : " …") + '</div></div>';
+  }
+
+  // ---------- AI chấm bài (OpenAI, gọi thẳng từ trình duyệt) ----------
+  // localStorage "hoctrung.ai.v1" = { key, model, enabled, usage: { "YYYY-MM": { calls, inTok, outTok, usd } } }.
+  // Khóa chỉ nằm ở đây: KHÔNG vào Xuất backup, không console.log, không vào URL/hash, không hiện đầy đủ ra màn hình
+  // (sau khi lưu, ô nhập để trống, chỉ hiện dạng sk-…abcd). Model / enabled / usage cũng không backup.
+  // Mọi chỗ dùng AI đều có đường lui: AI lỗi / chưa có khóa → chấm như cũ (so chữ + tự chấm).
+  var AI_KEY = "hoctrung.ai.v1";
+  var AI_URL = "https://api.openai.com/v1/chat/completions";
+  var AI_TIMEOUT_MS = 25000;
+  // Giá USD / 1 triệu token (để ước tính chi phí); effort = reasoning_effort nhẹ nhất mà model nhận.
+  var AI_MODELS = {
+    "gpt-6-luna": { label: "gpt-6-luna · chấm kỹ (mặc định)", inP: 0.10, outP: 0.50, effort: "none" },
+    "gpt-5-nano": { label: "gpt-5-nano · rẻ hơn, hay chấm sai", inP: 0.05, outP: 0.40, effort: "minimal" }
+  };
+  var AI_DEFAULT = "gpt-6-luna";
+  var AI_NO_EFFORT = {}; // model → true khi API đã trả 400 vì reasoning_effort (lần mở trang này gửi không có nó)
+  function aiNormalize(o) {
+    o = o && typeof o === "object" ? o : {};
+    var key = typeof o.key === "string" ? o.key.trim() : "", usage = {};
+    if (o.usage && typeof o.usage === "object") Object.keys(o.usage).filter(function (k) { return /^\d{4}-\d{2}$/.test(k); }).sort().slice(-12).forEach(function (k) {
+      var u = o.usage[k] || {};
+      usage[k] = { calls: num(u.calls, 0), inTok: num(u.inTok, 0), outTok: num(u.outTok, 0), usd: num(u.usd, 0) };
+    });
+    return { key: key, model: AI_MODELS[o.model] ? o.model : AI_DEFAULT, enabled: !!key && o.enabled !== false, usage: usage };
+  }
+  function aiRead() { // null = không đọc được localStorage (giữ bản trong bộ nhớ)
+    try { return aiNormalize(JSON.parse(localStorage.getItem(AI_KEY) || "null")); } catch (e) { return null; }
+  }
+  var AI = aiRead() || aiNormalize(null);
+  function aiSave() {
+    try { localStorage.setItem(AI_KEY, JSON.stringify(AI)); return true; } catch (e) { toast("Không lưu được cài đặt AI trên máy này"); return false; }
+  }
+  function aiOn() { return !!AI.key && AI.enabled !== false; }
+  function aiModel() { return AI_MODELS[AI.model] ? AI.model : AI_DEFAULT; }
+  function aiMask(k) { k = String(k || ""); return k.length > 10 ? k.slice(0, 3) + "…" + k.slice(-4) : "…"; }
+  function monthKey() { return dateKey(new Date()).slice(0, 7); }
+  function aiMonth() { return AI.usage[monthKey()] || { calls: 0, inTok: 0, outTok: 0, usd: 0 }; }
+  function fmtUsd(x) { x = Number(x) || 0; return "$" + (x === 0 ? "0" : x < 0.1 ? x.toFixed(4) : x.toFixed(2)); }
+  function aiCostText() { var m = aiMonth(); return "Tháng này: " + m.calls + " lượt · ~" + fmtUsd(m.usd); }
+  function aiAddUsage(model, u) {
+    var fresh = aiRead(); if (fresh) AI = fresh; // tab khác có thể vừa cộng lượt
+    var p = AI_MODELS[model] || AI_MODELS[AI_DEFAULT], mk = monthKey();
+    var it = num(u && u.prompt_tokens, 0), ot = num(u && u.completion_tokens, 0);
+    var m = AI.usage[mk] || (AI.usage[mk] = { calls: 0, inTok: 0, outTok: 0, usd: 0 });
+    m.calls++; m.inTok += it; m.outTok += ot; m.usd += (it * p.inP + ot * p.outP) / 1e6;
+    var ks = Object.keys(AI.usage).sort();
+    if (ks.length > 12) ks.slice(0, ks.length - 12).forEach(function (k) { delete AI.usage[k]; });
+    aiSave();
+    var el = byId("aiCost"); if (el) el.textContent = aiCostText();
+  }
+  function aiErrMsg(status, err, model) {
+    err = err || {}; var code = String(err.code || ""), msg = String(err.message || "");
+    if (status === 401) return "Khóa sai hoặc đã bị thu hồi";
+    if (status === 429) return "Hết credit hoặc vượt giới hạn — kiểm tra tài khoản OpenAI";
+    if (status === 404 || code === "model_not_found" || (status === 403 && /model/i.test(msg)))
+      return "Khóa này không dùng được model " + (model || "") + (model ? " — đổi sang " + (model === AI_DEFAULT ? "gpt-5-nano" : AI_DEFAULT) + " ở mục Model" : "");
+    if (status === 403) return "Khóa không có quyền gọi AI (mã 403)";
+    if (status >= 500) return "OpenAI đang trục trặc — thử lại sau";
+    return "AI lỗi (mã " + status + ")";
+  }
+  // Prompt hệ thống theo tác vụ. Phần sau (gói chủ đề…) thêm tác vụ mới vào đây hoặc truyền thẳng { name, system }.
+  var AI_GRADE_RULES =
+    "You are a fair Mandarin Chinese examiner for a Vietnamese learner at HSK 3-4 level whose goal is everyday conversation.\n" +
+    "Judge whether the learner's Chinese (learner_zh) correctly expresses the Vietnamese sentence (vi). Grade by MEANING, GRAMMAR and NATURALNESS.\n" +
+    "Do NOT require a word-for-word match with reference_zh: it is only one possible answer. Any other correct, natural phrasing with the same meaning is \"dung\".\n" +
+    "\"gan-dung\" = meaning mostly right but with a grammar mistake, unnatural wording, wrong measure word/particle, or a nuance shift (e.g. 不太好 is milder than Vietnamese \"buồn\").\n" +
+    "\"sai\" = wrong meaning, a key idea missing, or grammar so broken a native speaker would misunderstand.\n" +
+    "score: integer 0-100 consistent with verdict (dung >= 85, gan-dung 50-84, sai < 50). meaning_ok / grammar_ok: booleans.\n" +
+    "issues: one item per real problem; part = the exact problematic Chinese fragment copied from learner_zh (or the missing word), explain_vi = short explanation in Vietnamese. Empty array if nothing is wrong. Explicitly point out nuance differences.\n" +
+    "better_zh: the most natural way a native speaker would say the Vietnamese sentence, staying close to its meaning.\n" +
+    "alternatives_zh: 2-3 other correct ways to say it, each different from better_zh.\n" +
+    "note_vi: 1-2 short, direct sentences in Vietnamese (no greetings, no praise padding).\n" +
+    "All Chinese in Simplified characters only — never write pinyin or romanization anywhere. All explanations in Vietnamese. Do not invent facts; if unsure, say so briefly.";
+  var AI_TASKS = {
+    trans: { name: "cham_dich_cau", maxTokens: 1800, system: AI_GRADE_RULES + "\nThe learner TYPED learner_zh (translation exercise). learned_words are vocabulary they have studied (hints, not requirements)." },
+    speak: { name: "cham_the_noi", maxTokens: 1800, system: AI_GRADE_RULES + "\nThe learner SPOKE the sentence aloud; learner_zh is an automatic speech-recognition transcript. It may contain recognition errors: " +
+      "homophones or near-homophones (wrong character, same sound), missing punctuation, digits vs Chinese numerals, a dropped particle. Be tolerant of such recognition errors: " +
+      "if a character is wrong but sounds the same or very close, assume the learner said it correctly and do not penalize it or list it as an issue. " +
+      "Only penalize when the meaning is clearly wrong or an idea is missing. situation describes when this sentence is used." },
+    ping: { name: "thu_khoa", maxTokens: 300, system: "Reply with JSON {\"ok\": true}." },
+    // Kiểm tra bài cũ, chiều Trung → Việt: người học đọc câu zh rồi gõ / nói nghĩa tiếng Việt (schema AI_WARM_VI_SCHEMA).
+    warmVi: { name: "cham_hieu_cau", maxTokens: 1200, system:
+      "You are a fair examiner for a Vietnamese learner of Mandarin Chinese (HSK 3-4 level) whose goal is everyday conversation.\n" +
+      "The learner read the Chinese sentence (zh) and wrote what it means in Vietnamese (learner_vi). Judge ONLY whether learner_vi conveys the meaning of zh.\n" +
+      "reference_vi is one acceptable translation, not the only one: any wording with the same meaning is \"dung\".\n" +
+      "learner_vi may be typed without Vietnamese diacritics, contain typos, or be a speech-recognition transcript with recognition errors: tolerate all of these, never penalize them.\n" +
+      "\"gan-dung\" = the main idea is right but a detail or nuance is missing or slightly off (a time word, degree, negation strength, a secondary object).\n" +
+      "\"sai\" = the main meaning is wrong, a key idea is missing, who-does-what is reversed, or the answer is empty, unrelated or not Vietnamese.\n" +
+      "score: integer 0-100 consistent with verdict (dung >= 85, gan-dung 50-84, sai < 50). meaning_ok: true if the core meaning is right.\n" +
+      "missing_vi: in Vietnamese, the idea(s) the learner missed or misunderstood, naming the Chinese word responsible (characters only); empty string if nothing is missing.\n" +
+      "note_vi: 1 short, direct sentence in Vietnamese about the key word or grammar point (no greetings, no praise padding).\n" +
+      "correct_vi: a natural Vietnamese translation of zh.\n" +
+      "Explanations in Vietnamese only. Never write pinyin or romanization." }
+  };
+  var AI_GRADE_SCHEMA = {
+    type: "object", additionalProperties: false,
+    required: ["verdict", "score", "meaning_ok", "grammar_ok", "issues", "better_zh", "alternatives_zh", "note_vi"],
+    properties: {
+      verdict: { type: "string", enum: ["dung", "gan-dung", "sai"] },
+      score: { type: "integer", description: "0-100" },
+      meaning_ok: { type: "boolean" },
+      grammar_ok: { type: "boolean" },
+      issues: { type: "array", items: { type: "object", additionalProperties: false, required: ["part", "explain_vi"],
+        properties: { part: { type: "string" }, explain_vi: { type: "string" } } } },
+      better_zh: { type: "string" },
+      alternatives_zh: { type: "array", items: { type: "string" } },
+      note_vi: { type: "string" }
+    }
+  };
+  var AI_PING_SCHEMA = { type: "object", additionalProperties: false, required: ["ok"], properties: { ok: { type: "boolean" } } };
+  var AI_WARM_VI_SCHEMA = {
+    type: "object", additionalProperties: false,
+    required: ["verdict", "score", "meaning_ok", "missing_vi", "note_vi", "correct_vi"],
+    properties: {
+      verdict: { type: "string", enum: ["dung", "gan-dung", "sai"] },
+      score: { type: "integer", description: "0-100" },
+      meaning_ok: { type: "boolean" },
+      missing_vi: { type: "string" },
+      note_vi: { type: "string" },
+      correct_vi: { type: "string" }
+    }
+  };
+  // Gọi 1 lượt chat.completions có json_schema. Không bao giờ reject: { ok: true, data, model } | { ok: false, reason, status? }.
+  // task = tên trong AI_TASKS hoặc { name, system, maxTokens }; payload = object (gửi dạng JSON) hoặc chuỗi; schema = JSON schema (strict).
+  function aiCall(task, payload, schema) {
+    var t = typeof task === "string" ? AI_TASKS[task] : task;
+    if (!t || !t.system) return Promise.resolve({ ok: false, reason: "AI lỗi (tác vụ lạ)" });
+    if (!AI.key) return Promise.resolve({ ok: false, reason: "Chưa có khóa OpenAI (Cài đặt)" });
+    if (typeof fetch !== "function") return Promise.resolve({ ok: false, reason: "Trình duyệt này không gọi AI được" });
+    if (navigator.onLine === false) return Promise.resolve({ ok: false, reason: "Không có mạng" });
+    var model = aiModel(), key = AI.key, effort = AI_MODELS[model].effort;
+    var base = {
+      model: model,
+      messages: [{ role: "system", content: t.system }, { role: "user", content: typeof payload === "string" ? payload : JSON.stringify(payload) }],
+      max_completion_tokens: t.maxTokens || 1500
+    };
+    if (schema) base.response_format = { type: "json_schema", json_schema: { name: t.name || "ket_qua", strict: true, schema: schema } };
+    var once = function (withEffort) {
+      var body = {}; Object.keys(base).forEach(function (k) { body[k] = base[k]; });
+      if (withEffort && effort) body.reasoning_effort = effort;
+      var ctl = typeof AbortController === "function" ? new AbortController() : null, timedOut = false, timer = null;
+      var timeout = new Promise(function (res, rej) {
+        timer = setTimeout(function () { timedOut = true; try { if (ctl) ctl.abort(); } catch (e) { /* bỏ qua */ } rej({ timeout: true }); }, AI_TIMEOUT_MS);
+      });
+      var req = fetch(AI_URL, {
+        method: "POST", cache: "no-store", credentials: "omit", referrerPolicy: "no-referrer",
+        headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
+        body: JSON.stringify(body), signal: ctl ? ctl.signal : undefined
+      }).then(function (res) { return res.text().then(function (txt) { return { status: res.status, ok: res.ok, txt: txt }; }); });
+      return Promise.race([req, timeout]).then(function (r) { clearTimeout(timer); return r; },
+        function (e) { clearTimeout(timer); throw timedOut || (e && (e.timeout || e.name === "AbortError")) ? { timeout: true } : { net: true }; });
+    };
+    var run = function (withEffort) {
+      return once(withEffort).then(function (r) {
+        var j = null;
+        try { j = JSON.parse(r.txt); } catch (e) { j = null; }
+        if (!r.ok) {
+          var err = (j && j.error) || {};
+          if (r.status === 400 && withEffort && (err.param === "reasoning_effort" || /reasoning/i.test(String(err.message || "")))) {
+            AI_NO_EFFORT[model] = true;
+            return run(false);
+          }
+          return { ok: false, status: r.status, reason: aiErrMsg(r.status, err, model) };
+        }
+        if (j && j.usage) aiAddUsage(model, j.usage);
+        var ch = j && Array.isArray(j.choices) ? j.choices[0] : null, msg = ch && ch.message;
+        if (msg && msg.refusal) return { ok: false, reason: "AI từ chối chấm câu này" };
+        var content = msg && typeof msg.content === "string" ? msg.content : "";
+        if (!schema) return { ok: true, data: content, model: model };
+        var data = null;
+        try { data = JSON.parse(content); } catch (e) { data = null; }
+        if (!data || typeof data !== "object") return { ok: false, reason: ch && ch.finish_reason === "length" ? "AI trả lời bị cắt ngang" : "AI trả lời sai định dạng" };
+        return { ok: true, data: data, model: model };
+      });
+    };
+    return run(!AI_NO_EFFORT[model]).catch(function (e) {
+      return { ok: false, reason: e && e.timeout ? "AI phản hồi chậm quá" : e && e.net ? "Không có mạng" : "AI lỗi (không đọc được trả lời)" };
+    });
+  }
+  // Làm sạch kết quả chấm (AI có thể trả thiếu / lệch): null = không dùng được.
+  var AI_PY_RE = /\s*[（(][^)）]*[A-Za-zāáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜü][^)）]*[)）]/g; // "(wǒ hěn lèi)" lẫn trong câu chữ Hán → bỏ
+  function aiZh(s) { return String(s == null ? "" : s).replace(AI_PY_RE, "").trim().slice(0, 120); }
+  function aiTxt(s, max) { return String(s == null ? "" : s).trim().slice(0, max || 400); }
+  function aiGradeClean(d) {
+    if (!d || typeof d !== "object") return null;
+    var sc = Math.round(Number(d.score));
+    sc = isFinite(sc) ? Math.max(0, Math.min(100, sc)) : null;
+    var v = ["dung", "gan-dung", "sai"].indexOf(d.verdict) >= 0 ? d.verdict : sc == null ? null : sc >= 85 ? "dung" : sc >= 50 ? "gan-dung" : "sai";
+    if (!v) return null;
+    var issues = (Array.isArray(d.issues) ? d.issues : []).filter(function (x) { return x && (x.part || x.explain_vi); }).slice(0, 5)
+      .map(function (x) { return { part: aiZh(x.part), explain: aiTxt(x.explain_vi, 300) }; });
+    var better = aiZh(d.better_zh), seen = {}, alts = [];
+    if (better) seen[normSent(better)] = true;
+    (Array.isArray(d.alternatives_zh) ? d.alternatives_zh : []).forEach(function (a) {
+      a = aiZh(a); var k = normSent(a);
+      if (a && k && !seen[k] && alts.length < 3) { seen[k] = true; alts.push(a); }
+    });
+    return { verdict: v, score: sc, meaningOk: d.meaning_ok !== false, grammarOk: d.grammar_ok !== false, issues: issues,
+      better: better, alts: alts, note: aiTxt(d.note_vi, 400) };
+  }
+  var AI_VERDICT = { "dung": ["✅", "Đúng"], "gan-dung": ["🟡", "Gần đúng"], "sai": ["❌", "Sai"] };
+  // Grade gợi ý theo verdict: đúng / gần đúng → Được (3), sai → Chưa được (1). 0 = không gợi ý.
+  function aiSugGrade(st) { return st && st.state === "done" && st.res ? (st.res.verdict === "sai" ? 1 : 3) : 0; }
+  // Khối kết quả AI (thẻ dịch / thẻ nói). st = { state: wait|done|fail, res, reason, model }; mine = câu người học (ẩn "tự nhiên hơn" nếu trùng).
+  function aiBoxHtml(st, mine, okLabel) {
+    if (!st) return "";
+    var tag = '<span class="aitag">AI chấm · ' + esc(st.model || aiModel()) + '</span>';
+    if (st.state === "wait") return '<div class="aibox wait"><div class="aihead"><span class="aiwait">Đang chấm…</span>' + tag + '</div></div>';
+    if (st.state !== "done" || !st.res) return '<div class="ailine warn">AI không chấm được: ' + esc(st.reason || "lỗi") + ' — tự chấm như cũ</div>';
+    var r = st.res, vd = AI_VERDICT[r.verdict], sug = aiSugGrade(st);
+    var line = function (zh) { return '<div class="aizh"><span class="zh">' + esc(zh) + '</span>' + speakBtn(zh, true) + '</div>'; };
+    var same = r.better && mine && normSent(r.better) === normSent(mine);
+    return '<div class="aibox v-' + r.verdict + '">' +
+      '<div class="aihead"><span class="aiverd">' + vd[0] + ' ' + vd[1] + (r.score != null ? '<b class="aiscore">' + r.score + '</b>' : "") + '</span>' + tag + '</div>' +
+      '<div class="aichk"><span class="' + (r.meaningOk ? "ok" : "no") + '">Nghĩa ' + (r.meaningOk ? "✓" : "✗") + '</span>' +
+        '<span class="' + (r.grammarOk ? "ok" : "no") + '">Ngữ pháp ' + (r.grammarOk ? "✓" : "✗") + '</span></div>' +
+      (r.issues.length ? '<ul class="aiiss">' + r.issues.map(function (x) {
+        return '<li>' + (x.part ? '<b class="zh">' + esc(x.part) + '</b>' : "") + '<span>' + esc(x.explain) + '</span></li>';
+      }).join("") + '</ul>' : "") +
+      (r.better && !same ? '<div class="airow"><div class="ailab">Cách nói tự nhiên hơn</div>' + line(r.better) + '</div>' : "") +
+      (r.alts.length ? '<div class="airow"><div class="ailab">Cũng nói được</div>' + r.alts.map(line).join("") + '</div>' : "") +
+      (r.note ? '<div class="ainote">' + esc(r.note) + '</div>' : "") +
+      '<div class="aisugtxt">AI gợi ý: <b>' + esc(sug === 1 ? okLabel[0] : okLabel[1]) + '</b> — bạn bấm để xác nhận</div>' +
+      '</div>';
+  }
+  // Áp kết quả aiCall vào st (dùng chung thẻ dịch / thẻ nói).
+  function aiApply(st, r) {
+    var res = r && r.ok ? aiGradeClean(r.data) : null;
+    if (res) { st.state = "done"; st.res = res; st.model = r.model; }
+    else { st.state = "fail"; st.reason = r && !r.ok ? r.reason : "AI trả lời sai định dạng"; }
+  }
+  // Tô nút chấm được AI gợi ý (không vẽ lại cả thẻ).
+  function aiMarkGrade(st) {
+    var g = aiSugGrade(st);
+    Array.prototype.forEach.call(document.querySelectorAll("#cardArea .grades [data-grade]"), function (b) {
+      b.classList.toggle("aisug", g > 0 && Number(b.getAttribute("data-grade")) === g);
+    });
+  }
+  // Kết quả AI về → cuộn khung kết quả vào khoảng giữa thanh .bar và thanh nút dính đáy (.dock).
+  // Mặc định: thẻ nói (#vbox); thẻ dịch / bài cũ truyền "#cardArea .aibox, #cardArea .ailine".
+  var AI_BOX_SEL = "#cardArea .aibox, #cardArea .ailine";
+  // Mép trên (theo khung nhìn) của thanh nút dính đáy; dock dính: ngay sau khi vẽ lại, vị trí "dính" có thể chưa cập nhật → tính theo chiều cao.
+  function dockTop(dock) {
+    var bot = innerHeight;
+    if (!dock) return bot;
+    bot = Math.min(bot, dock.getBoundingClientRect().top);
+    if (getComputedStyle(dock).position === "sticky") bot = Math.min(bot, innerHeight - dock.offsetHeight);
+    return bot;
+  }
+  function aiReveal(sel, again) {
+    var el = document.querySelector(sel || "#vbox .aibox, #vbox .ailine"); if (!el) return;
+    // Chữ Hán trong khung có thể làm khung cao thêm khi font tải xong → canh lại 1 lần sau đó (khi cuộn mượt đã xong).
+    if (!again && document.fonts && document.fonts.ready) document.fonts.ready.then(function () {
+      setTimeout(function () { if (el.isConnected) aiReveal(sel, true); }, 450);
+    });
+    var bar = document.querySelector("#app .bar"), dock = document.querySelector("#cardArea .dock");
+    var top = bar ? Math.max(0, bar.getBoundingClientRect().bottom) : 0, bot = dockTop(dock);
+    var r = el.getBoundingClientRect();
+    if (r.top >= top && r.bottom <= bot) return;          // đã thấy trọn khung thì thôi
+    var dy = r.bottom - bot + 12;                          // đẩy đáy khung lên trên mép dock
+    if (r.top - dy < top + 8) dy = r.top - top - 8;        // khung cao hơn khoảng trống → canh mép trên khung ngay dưới .bar
+    try { window.scrollBy({ top: dy, behavior: "smooth" }); } catch (e) { window.scrollBy(0, dy); }
+  }
+  // Thẻ Dịch câu: bấm Kiểm tra có chữ gõ + AI bật → chờ AI ("Đang chấm…", vẫn Bỏ qua được) rồi mới lật. true = đã giao cho AI.
+  function aiTransStart(it) {
+    var typed = String(session.trTyped || "").trim();
+    if (!aiOn() || !typed || !normSpeech(typed)) return false;
+    var st = { id: it.id, state: "wait", typed: typed, model: aiModel() };
+    session.aiTr = st;
+    var d = it.data;
+    aiCall("trans", {
+      vi: d.vi, situation: d.when || "", reference_zh: d.zh,
+      learned_words: transKeys(it).map(function (k) { return k.hanzi + " = " + shortMeaning(k.meaning); }),
+      learner_zh: typed
+    }, AI_GRADE_SCHEMA).then(function (r) {
+      aiApply(st, r);
+      if (!session || session.aiTr !== st || !session.current || session.current.id !== st.id) return;
+      session.flipped = true; session.keepPad = true;
+      renderCard(); aiReveal(AI_BOX_SEL);
+    });
+    session.keepPad = true;
+    renderCard();
+    return true;
+  }
+  function aiTransSkip() {
+    var st = session && session.aiTr;
+    if (!st || st.state !== "wait" || session.flipped) return;
+    st.skipped = true; // kết quả về muộn vẫn hiện nếu còn ở thẻ này
+    session.flipped = true; session.keepPad = true;
+    renderCard();
+  }
+  // Thẻ nói: sau khi lật, có câu app nghe được (nhận giọng xong) + AI bật → gửi chấm. Mỗi bản ghi chấm 1 lần.
+  function aiSpkKey() { return REC.token + "|" + REC.heard; }
+  function aiSpkCur(it) {
+    var st = session && session.aiSpk;
+    return st && st.id === it.id && REC.owner === "card:" + it.id && st.key === aiSpkKey() ? st : null;
+  }
+  function aiSpkCheck() {
+    if (view !== "session" || !session || !session.flipped || !aiOn()) return;
+    var it = session.current;
+    if (!it || it.kind !== "phrase" || REC.owner !== "card:" + it.id || REC.state !== "done" || !REC.srDone) return;
+    var heard = String(REC.heard || "").trim();
+    if (!heard || !normSpeech(heard)) return;
+    var key = aiSpkKey();
+    if (session.aiSpk && session.aiSpk.id === it.id && session.aiSpk.key === key) return;
+    var st = { id: it.id, key: key, state: "wait", model: aiModel() };
+    session.aiSpk = st;
+    var p = it.data;
+    aiCall("speak", { vi: p.vi, situation: p.when || "", reference_zh: p.zh, learner_zh: heard }, AI_GRADE_SCHEMA).then(function (r) {
+      aiApply(st, r);
+      if (!session || session.aiSpk !== st) return;
+      refreshVoice(); aiMarkGrade(st); aiReveal();
+    });
+    refreshVoice();
+  }
+  // Cài đặt → AI chấm bài. aiUi.test = { state: wait|ok|err, msg } (chỉ trong bộ nhớ).
+  var aiUi = { test: null };
+  // Ruột .aibtns (Thử khóa / Xóa khóa / kết quả thử) — vẽ lại riêng phần này để không xóa khóa đang dán dở trong #aiKeyIn.
+  function aiBtnsHtml() {
+    var has = !!AI.key, t = aiUi.test;
+    return '<button class="small-btn" data-action="ai-test"' + (has && !(t && t.state === "wait") ? "" : " disabled") + '>' + (t && t.state === "wait" ? "Đang thử…" : "Thử khóa") + '</button>' +
+      '<button class="small-btn" data-action="ai-clear"' + (has ? "" : " disabled") + '>Xóa khóa</button>' +
+      (t && t.state !== "wait" ? '<span class="aitest ' + (t.state === "ok" ? "ok" : "err") + '">' + esc(t.msg) + '</span>' : "");
+  }
+  function aiRefreshTest() {
+    if (view !== "home") return;
+    var box = document.querySelector(".aiset .aibtns");
+    if (box) box.innerHTML = aiBtnsHtml(); else renderKeepScroll(".aiset");
+  }
+  function aiSettingHtml() {
+    var has = !!AI.key, t = aiUi.test;
+    var modelOpts = Object.keys(AI_MODELS).map(function (k) {
+      return '<option value="' + k + '"' + (k === aiModel() ? " selected" : "") + '>' + esc(AI_MODELS[k].label) + '</option>';
+    }).join("");
+    return '<div class="setting aiset">' +
+      '<span class="aititle">AI chấm bài<small class="snote">Chấm ✍ Dịch câu (câu gõ) và 🗣 Thẻ nói (câu app nghe được) theo nghĩa, không bắt khớp từng chữ. Lỗi / không có khóa thì chấm như cũ.</small></span>' +
+      '<label class="aikeylab" for="aiKeyIn">Khóa OpenAI' + (has ? ' <span class="aimask">đã lưu ' + esc(aiMask(AI.key)) + '</span>' : "") + '</label>' +
+      '<div class="aikey"><input id="aiKeyIn" type="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="done" data-lpignore="true" data-1p-ignore' +
+        ' placeholder="' + (has ? "Dán khóa mới để đổi" : "Dán khóa sk-… vào đây") + '">' +
+        '<button class="small-btn primary" data-action="ai-save">Lưu</button></div>' +
+      '<div class="aibtns">' + aiBtnsHtml() + '</div>' +
+      '<label class="aisub aimodel"><span>Model</span><select data-ai="model">' + modelOpts + '</select></label>' +
+      '<label class="aisub"><span>Dùng AI chấm' + (has ? "" : '<small class="snote">Lưu khóa trước đã</small>') + '</span>' +
+        '<input type="checkbox" data-ai="enabled"' + (aiOn() ? " checked" : "") + (has ? "" : " disabled") + '></label>' +
+      '<div id="aiCost" class="aicost">' + esc(aiCostText()) + '</div>' +
+      '<small class="snote">Khóa chỉ lưu trên máy này — không đi theo backup, không lên GitHub. Câu trả lời của bạn được gửi sang OpenAI để chấm. Nên đặt trần chi tiêu (limit) trên trang OpenAI.</small>' +
+      '</div>';
+  }
+  function aiSaveKey() {
+    var inp = byId("aiKeyIn"), v = inp ? String(inp.value || "").trim() : "";
+    if (!v) { toast("Dán khóa vào ô trước đã"); return false; }
+    if (!/^[\x21-\x7e]{20,300}$/.test(v)) { toast("Khóa không hợp lệ (dán lại, không có dấu cách)"); return false; }
+    if (inp) inp.value = "";
+    var fresh = aiRead(); if (fresh) AI = fresh;
+    AI.key = v; AI.enabled = true;
+    if (!aiSave()) return false;
+    aiUi.test = null;
+    toast("Đã lưu khóa (chỉ trên máy này)");
+    renderKeepScroll(".aiset");
+    return true;
+  }
+  function aiClearKey() {
+    if (!AI.key || !confirm("Xóa khóa OpenAI khỏi máy này?")) return;
+    AI.key = ""; AI.enabled = false; aiSave();
+    aiUi.test = null;
+    toast("Đã xóa khóa");
+    renderKeepScroll(".aiset");
+  }
+  function aiTestKey() {
+    var inp = byId("aiKeyIn");
+    if (inp && String(inp.value || "").trim() && !aiSaveKey()) return; // vừa dán khóa mới mà chưa Lưu: lưu rồi thử
+    if (!AI.key || (aiUi.test && aiUi.test.state === "wait")) return;
+    var t = aiUi.test = { state: "wait" };
+    aiRefreshTest();
+    aiCall("ping", "ok?", AI_PING_SCHEMA).then(function (r) {
+      if (aiUi.test !== t) return;
+      t.state = r.ok ? "ok" : "err";
+      t.msg = r.ok ? "Khóa dùng được ✓ (" + r.model + ")" : r.reason;
+      aiRefreshTest();
+    });
   }
 
   // ---------- thống kê ----------
@@ -2209,13 +2766,15 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       // chia khúc: khúc đang ở (0-2), thẻ chuyển tiếp đang hiện (số khúc sắp vào | null), hàng thẻ nói khúc 2,
       // mẫu câu chưa học để nạp thêm, lượt dịch làm lại khúc 2 [{it, at}], lượt xen nói/dịch, câu nhại/câu đề đã làm (khúc 3)
       blocks: blocks, block: 0, gate: null, gateWhy: "", pendNote: false,
-      talk: dueP, phrasePool: phrasePool, talkRetry: [], talkTurn: 0, lines: {}
+      talk: dueP, phrasePool: phrasePool, talkRetry: [], talkTurn: 0, lines: {},
+      // kiểm tra bài cũ đầu buổi (null = không có), thẻ bị kéo ôn sớm vì trả lời sai (lượt chấm lại không tính trần ôn)
+      warm: warmStart(), warmPull: {}
     };
     if (room <= 0 && allDue.length) toast("Đủ " + reviewCap() + " lượt ôn hôm nay — giờ học từ mới");
     view = "session";
     syncHistory();
     app.innerHTML = sessionShellHtml();
-    nextCard();
+    if (session.warm) renderCard(); else nextCard();
     session.timerId = setInterval(tick, 1000);
   }
   function syncElapsed() { session.elapsed = Math.floor((Date.now() - session.startedAt) / 1000); }
@@ -2229,7 +2788,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       session.shown45 = true;
       var b = byId("banner45"); if (b) b.hidden = false;
       // Đang đứng ở màn chọn khúc 3: vẽ lại 1 lần để hiện nút Kết thúc (màn này không có gì đang dở).
-      if (view === "session" && session.blocks && !session.current && session.gate == null) renderCard();
+      if (view === "session" && session.blocks && !session.current && session.gate == null && !warmActive()) renderCard();
       toast("Đủ 45 phút rồi 🎉 học tiếp thì cứ tiếp");
     }
     // Đang ở màn bài/đề (khúc 3): đồng hồ vẫn chạy, lưu phút định kỳ.
@@ -2258,7 +2817,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   }
   // Nút "Sang khúc sau": bỏ thẻ đang hiện (chưa chấm thì không đổi gì trong SRS), vào thẳng khúc sau.
   function blkSkip() {
-    if (!session || !session.blocks || session.block >= BLOCKS.length - 1) return;
+    if (!session || !session.blocks || session.block >= BLOCKS.length - 1 || warmActive()) return;
     session.block++; session.gate = null; session.pendNote = false;
     toast("Khúc " + (session.block + 1) + " · " + BLOCKS[session.block][0]);
     nextCard();
@@ -2287,12 +2846,26 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     session.talkTurn++;
     return order[0]() || order[1]();
   }
+  // Vị trí trong queue của từ bị kéo ôn vì Sai ở bài cũ mà chưa chấm trong phiên (chỉ khúc 1); -1 = không còn.
+  function blkWarmLeft() {
+    if (!session.blocks || session.block !== 0 || !session.warmPull) return -1;
+    for (var i = 0; i < session.queue.length; i++) {
+      var x = session.queue[i];
+      if (session.warmPull[x.id] && !session.touched[x.id]) return i;
+    }
+    return -1;
+  }
   function blkNext() {
     syncElapsed();
     session.current = null;
     if (session.gate != null) return;
     var tb = timeBlock(session.elapsed);
-    if (tb > session.block) { blkEnter(tb, ""); return; }
+    if (tb > session.block) {
+      // Bài cũ ăn hết giờ khúc 1: vẫn ôn nốt các từ vừa Sai (đã hứa "ôn lại ngay trong phiên này") rồi mới sang khúc sau
+      var wi = blkWarmLeft();
+      if (wi >= 0) { session.current = session.queue.splice(wi, 1)[0]; return; }
+      blkEnter(tb, ""); return;
+    }
     if (session.block === 0) {
       if (!session.queue.length) refillQueue();
       session.current = session.queue.shift() || null;
@@ -2311,21 +2884,29 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     }
     updateBlkBar();
   }
+  // Có kiểm tra bài cũ: thêm 1 đoạn nhỏ "Bài cũ" đứng trước 3 khúc (thanh đầy theo số câu đã làm, không theo giờ).
   function blkSegsHtml() {
-    return BLOCKS.map(function (b) {
-      return '<div class="blk"><span class="bl">' + esc(b[0]) + '</span><span class="bt"><i class="bf"></i></span></div>';
-    }).join("");
+    return (session && session.warm ? '<div class="blk warm"><span class="bl">Bài cũ</span><span class="bt"><i class="bf"></i></span></div>' : "") +
+      BLOCKS.map(function (b, i) {
+        return '<div class="blk" data-b="' + i + '"><span class="bl">' + esc(b[0]) + '</span><span class="bt"><i class="bf"></i></span></div>';
+      }).join("");
   }
   function updateBlkBar() {
     var el = byId("blks");
     if (!el || !session) return;
-    var tb = timeBlock(session.elapsed), segs = el.children;
+    var tb = timeBlock(session.elapsed), segs = el.querySelectorAll(".blk[data-b]"), wa = warmActive();
     for (var i = 0; i < segs.length; i++) {
-      segs[i].className = "blk" + (i < session.block ? " done" : i === session.block ? " on" : "") + (i === tb && tb > session.block ? " next" : "");
+      segs[i].className = "blk" + (i < session.block ? " done" : i === session.block && !wa ? " on" : "") + (i === tb && tb > session.block ? " next" : "");
       var f = segs[i].querySelector(".bf");
       if (f) f.style.width = Math.round(Math.max(0, Math.min(1, (session.elapsed - i * BLOCK_SEC) / BLOCK_SEC)) * 100) + "%";
     }
-    var nb = byId("blkNext"); if (nb) nb.hidden = session.block >= BLOCKS.length - 1;
+    var ws = el.querySelector(".blk.warm"), w = session.warm;
+    if (ws && w) {
+      ws.className = "blk warm" + (wa ? " on" : " done");
+      var wf = ws.querySelector(".bf");
+      if (wf) wf.style.width = Math.round((wa && w.phase !== "sum" ? w.i / Math.max(1, w.qs.length) : 1) * 100) + "%";
+    }
+    var nb = byId("blkNext"); if (nb) nb.hidden = session.block >= BLOCKS.length - 1 || wa;
   }
   // Khúc 3: gợi ý 1 bài khóa để nhại — bài đang học (ưu tiên HSK 3-4), không có thì bài cấp 3-4 đang xem ở Giáo trình.
   // Mỗi lần mở đổi sang bài kế tiếp trong danh sách (UI.blkLesson = bài mở lần trước) cho đỡ lặp.
@@ -2423,7 +3004,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     // Hết từ mới → ôn sớm; ôn sớm cũng là lượt ôn nên chịu trần ôn của ngày.
     var room = reviewRoom();
     // Chia khúc: chừa chỗ cho các lượt ôn mẫu câu còn chờ ở khúc 2 (cùng điều kiện với keepQ lúc chạm trần, đảo lại).
-    if (session.blocks && session.talk) room -= session.talk.filter(function (q) { return !isNewItem(q) && !(session.relearn && session.relearn[q.id]); }).length;
+    if (session.blocks && session.talk) room -= session.talk.filter(function (q) { return !isNewItem(q) && !(session.relearn && session.relearn[q.id]) && !(session.warmPull && session.warmPull[q.id]); }).length;
     if (room <= 0) return;
     var ids = {}; session.decks.forEach(function (d) { ids[d.id] = true; });
     var early = ITEMS.filter(function (it) { return ids[it.deckId] && cardState(it.id) !== "new" && (!session.blocks || it.kind === "word"); })
@@ -2438,6 +3019,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function nextCard() {
     recRelease(); // bản ghi của thẻ nói cũ bỏ đi, thẻ mới ghi lại từ đầu
     session.flipped = false; session.hint = false; session.keepPad = false; session.trTyped = "";
+    session.aiTr = null; session.aiSpk = null; // kết quả AI của thẻ cũ (về muộn thì bỏ)
     if (session.blocks) { blkNext(); renderCard(); return; }
     if (!session.queue.length) refillQueue();
     var tr = session.queue.length ? pickTrans() : null;
@@ -2454,7 +3036,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (!session) return;
     syncElapsed();
     var n = Object.keys(session.touched).length, nl = session.lines ? Object.keys(session.lines).length : 0;
-    if (!n && !nl) return;
+    var w = session.warm, wn = w ? w.graded : 0;
+    if (!n && !nl && !wn) return;
     if (!session.rec) {
       session.rec = { date: dateKey(new Date()), minutes: 0, cards: 0, startedAt: session.startedAt };
       db.sessions.push(session.rec);
@@ -2463,6 +3046,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     session.rec.minutes = Math.round(session.elapsed / 60);
     session.rec.cards = n;
     if (nl) session.rec.lines = nl; // trường mới (tùy chọn): số câu nhại / câu đề / bài đọc ở khúc 3 — dòng phiên cũ không có = 0
+    if (wn) session.rec.warmup = { n: wn, ok: w.ok }; // trường mới (tùy chọn): kiểm tra bài cũ đầu buổi — số câu đã chấm / số câu đúng
     saveDb();
   }
   function markTouched(it) { session.doneCount++; session.touched[it.id] = true; recordSession(); }
@@ -2476,8 +3060,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   }
   function flip() {
     if (!session.current || session.flipped || modeOf(session.current) === "new") return;
+    if (session.aiTr && session.aiTr.state === "wait") return; // đang chờ AI chấm thẻ dịch: dùng "Bỏ qua AI"
     if (recIsLive() && REC.owner === "card:" + session.current.id) recStop(); // lật khi đang ghi = dừng ghi rồi so
     var ti = byId("trInput"); if (ti) session.trTyped = ti.value; // thẻ Dịch câu: "Kiểm tra" = lật, giữ câu đã gõ
+    if (session.current.kind === "trans" && aiTransStart(session.current)) return; // AI bật + có chữ gõ: chờ AI rồi mới lật
     session.flipped = true; session.keepPad = true;
     renderCard();
   }
@@ -2503,7 +3089,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     }
     // Lượt ôn = chấm một thẻ đã học từ trước (không tính mẫu câu mới gặp lần đầu) và không phải lượt quay lại
     // trong phiên (từ mới vừa hiểu / thẻ vừa Quên).
-    var isReview = !isNewItem(it) && !(session.relearn && session.relearn[it.id]);
+    // Thẻ bị kéo ôn sớm vì sai ở phần kiểm tra bài cũ: lượt chấm lại này cũng không tính (đã ra ngoài trần ôn).
+    var pulled = !!(session.warmPull && session.warmPull[it.id]);
+    var isReview = !isNewItem(it) && !(session.relearn && session.relearn[it.id]) && !pulled;
+    if (pulled) delete session.warmPull[it.id];
     if (session.relearn && grade !== 1) delete session.relearn[it.id];
     var capHit = false;
     if (isReview) {
@@ -2516,7 +3105,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (grade === 1) requeue(it);
     if (capHit) {
       // Đạt trần: bỏ các lượt ôn còn trong hàng đợi (nếu có), giữ từ mới + thẻ đang quay lại.
-      var keepQ = function (q) { return isNewItem(q) || (session.relearn && session.relearn[q.id]); };
+      var keepQ = function (q) { return isNewItem(q) || (session.relearn && session.relearn[q.id]) || (session.warmPull && session.warmPull[q.id]); };
       session.queue = session.queue.filter(keepQ);
       if (session.talk) session.talk = session.talk.filter(keepQ);
       toast("Đủ " + reviewCap() + " lượt ôn hôm nay — phần còn lại để mấy hôm tới");
@@ -2539,7 +3128,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var r = session.rec || { minutes: 0, cards: 0 };
     session = null;
     updateMini();
-    toast("Đã lưu phiên: " + r.minutes + " phút, " + r.cards + " thẻ" + (r.lines ? ", " + r.lines + " câu" : ""));
+    toast("Đã lưu phiên: " + r.minutes + " phút, " + r.cards + " thẻ" + (r.lines ? ", " + r.lines + " câu" : "") +
+      (r.warmup ? ", bài cũ " + r.warmup.ok + "/" + r.warmup.n : ""));
   }
   window.addEventListener("pagehide", recordSession);
   document.addEventListener("visibilitychange", function () { if (document.hidden) { recordSession(); voicePause(); } });
@@ -2548,6 +3138,342 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     syncElapsed();
     if (session.elapsed >= TARGET_SEC) { if (confirm("Kết thúc phiên và về trang chủ?")) endSession(true); }
     else endSession(false);
+  }
+
+  // ---------- kiểm tra bài cũ đầu buổi (khởi động) ----------
+  // Bấm "Học 45 phút" khi: settings.warmup ≠ 0, có phiên TRƯỚC HÔM NAY đã chấm thẻ, hôm nay chưa làm phần này (mỗi ngày 1 lần).
+  // Trước khúc 1 hỏi N câu: câu ví dụ của thẻ TỪ (hoặc chính MẪU CÂU) đã chấm vào ngày của 1-2 phiên gần nhất trước hôm nay
+  // (dựa vào card.last; ngày trước đó chỉ tính nếu cách ≤ 2 ngày); thẻ yếu trước, trong đó thẻ ngày gần nhất trước (đang học lại / ease thấp / quên nhiều), còn lại ngẫu nhiên; không lặp từ, không lặp câu.
+  // Hai chiều xen kẽ: Trung → Việt (gõ / nói tiếng Việt) · Việt → Trung (gõ / nói tiếng Trung / viết tay).
+  // AI chấm nếu bật và có chữ; không thì hiện đáp án mẫu để tự chấm. Người học luôn bấm Sai / Đúng để xác nhận.
+  // Sai → thẻ đó (id cũ): due = bây giờ, ease −0.15 (min 1.3), interval tối đa 1, đưa lên đầu hàng của phiên này (từ: khúc 1; mẫu câu: khúc 2
+  // nếu chia khúc). Lượt chấm lại thẻ đó KHÔNG tính vào trần ôn ngày và không bị bỏ khi chạm trần (session.warmPull).
+  // Đúng → không đổi gì. Tính vào 45 phút (đồng hồ chạy). Kết quả lưu ở dòng phiên: rec.warmup = { n, ok }.
+  function warmN() { var v = warmVal(db.settings.warmup); return v == null ? WARM_DEFAULT : v; }
+  function warmActive() { return !!(session && session.warm && !session.warm.over); }
+  function warmOwner() { return session && session.warm ? "wu:" + session.warm.i : ""; }
+  function warmMicOk() { return micSupported() && scoringOn(); } // mic ở đây chỉ để nhận chữ → cần nhận giọng nói
+  function warmCur() { var w = session && session.warm; return w && !w.over && w.phase === "q" ? w.qs[w.i] || null : null; }
+  // Ngày (YYYY-MM-DD) của 1-2 phiên gần nhất trước hôm nay có chấm thẻ; ngày trước đó chỉ tính nếu cách ≤ 2 ngày. Ngày mới nhất ở cuối.
+  function warmDays() {
+    var today = dateKey(new Date()), out = [];
+    var rows = db.sessions.filter(function (s) {
+      return s && Number(s.cards) > 0 && /^\d{4}-\d{2}-\d{2}$/.test(String(s.date)) && String(s.date) < today;
+    }).sort(function (a, b) {
+      var da = String(a.date), dbb = String(b.date);
+      return da !== dbb ? (da < dbb ? -1 : 1) : (Number(a.startedAt) || 0) - (Number(b.startedAt) || 0);
+    }).slice(-2);
+    if (!rows.length) return out;
+    var t1 = Date.parse(String(rows[rows.length - 1].date)); // "YYYY-MM-DD" parse theo UTC → hiệu số là số ngày chẵn
+    rows.forEach(function (s) {
+      var d = String(s.date);
+      if (out.indexOf(d) < 0 && t1 - Date.parse(d) <= 2 * 864e5) out.push(d);
+    });
+    return out;
+  }
+  function warmDoneToday() {
+    var k = dateKey(new Date());
+    return db.sessions.some(function (s) { return s && s.date === k && s.warmup && Number(s.warmup.n) > 0; });
+  }
+  // 1 câu hỏi từ 1 thẻ: từ → 1 câu ví dụ ngẫu nhiên (có zh + vi); mẫu câu → chính nó.
+  function warmQuestion(it) {
+    var d = it.data;
+    if (it.kind === "phrase") return d.zh && d.vi ? { it: it, zh: String(d.zh), vi: String(d.vi), py: String(d.pinyin || ""), when: String(d.when || ""), word: null } : null;
+    var exs = (Array.isArray(d.examples) ? d.examples : []).filter(function (ex) { return ex && ex.zh && ex.vi; });
+    if (!exs.length) return null;
+    var ex = exs[Math.floor(Math.random() * exs.length)];
+    return { it: it, zh: String(ex.zh), vi: String(ex.vi), py: String(ex.pinyin || ""), when: "", word: d };
+  }
+  function warmPick(n) {
+    var days = warmDays(), cands = [];
+    if (!days.length || n <= 0) return [];
+    var lastDay = days[days.length - 1];
+    Object.keys(db.cards).forEach(function (id) {
+      var it = ITEM_BY_ID[id], c = db.cards[id];
+      if (!it || (it.kind !== "word" && it.kind !== "phrase") || !c || c.state === "new" || !(c.last > 0)) return;
+      var dk = dateKey(new Date(c.last));
+      if (days.indexOf(dk) < 0) return;
+      // Độ yếu: đang học lại (vừa Quên) + ease dưới 2.5 (Khó / Quên) + số lần quên.
+      var weak = (c.state === "learning" ? 3 : 0) + Math.max(0, (2.5 - c.ease) * 4) + Math.min(3, c.lapses);
+      cands.push({ it: it, weak: weak, r: Math.random(), recent: dk === lastDay });
+    });
+    // Nhóm yếu trước; trong mỗi nhóm thẻ của ngày gần nhất trước, rồi mới theo độ yếu / ngẫu nhiên.
+    cands.sort(function (a, b) {
+      if ((a.weak > 0) !== (b.weak > 0)) return a.weak > 0 ? -1 : 1;
+      if (a.recent !== b.recent) return a.recent ? -1 : 1;
+      return a.weak > 0 ? (b.weak + b.r) - (a.weak + a.r) : a.r - b.r;
+    });
+    var out = [], seen = {};
+    cands.forEach(function (x) {
+      if (out.length >= n) return;
+      var wk = x.it.kind === "word" ? "w:" + x.it.data.hanzi : "";
+      if (wk && seen[wk]) return;
+      var q = warmQuestion(x.it), sk = q ? "s:" + normSent(q.zh) : "";
+      if (!q || seen[sk]) return;
+      if (wk) seen[wk] = true;
+      seen[sk] = true;
+      out.push(q);
+    });
+    for (var i = out.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = out[i]; out[i] = out[j]; out[j] = t; }
+    out.forEach(function (q, k) {
+      q.dir = k % 2 ? "vz" : "zv"; // zv = Trung → Việt, vz = Việt → Trung
+      q.phase = "ask"; q.typed = ""; q.heard = ""; q.hint = false; q.ai = null; q.ok = null; q.fromVoice = false; q.checkAfter = false;
+    });
+    return out;
+  }
+  function warmStart() {
+    var n = warmN();
+    if (!n || warmDoneToday()) return null;
+    var qs = warmPick(n);
+    // phase: "q" đang hỏi | "sum" tổng kết; posQ / posT = chỗ chèn thẻ bị kéo ôn tiếp theo trong queue / talk (giữ thứ tự câu)
+    return qs.length ? { qs: qs, i: 0, phase: "q", graded: 0, ok: 0, over: false, posQ: 0, posT: 0 } : null;
+  }
+  // Câu sai → kéo thẻ đó ôn sớm và đưa vào phiên này.
+  function warmPullCard(it) {
+    var c = db.cards[it.id], w = session.warm;
+    if (!c) return;
+    // hạ cả interval: lượt chấm lại trong phiên không được nhân khoảng ôn cũ (vừa Sai mà bấm Nhớ thì khoảng ôn không dài thêm)
+    c.due = Date.now(); c.ease = Math.max(1.3, round2(c.ease - 0.15)); c.interval = Math.min(c.interval, 1);
+    saveDb();
+    if (!session.warmPull) session.warmPull = {};
+    session.warmPull[it.id] = true;
+    var notIt = function (x) { return x.id !== it.id; };
+    session.queue = session.queue.filter(notIt);
+    if (session.talk) session.talk = session.talk.filter(notIt);
+    if (session.blocks && it.kind === "phrase") session.talk.splice(Math.min(w.posT++, session.talk.length), 0, it);
+    else session.queue.splice(Math.min(w.posQ++, session.queue.length), 0, it);
+  }
+  function warmCheck() {
+    var q = warmCur();
+    if (!q || q.phase !== "ask") return;
+    var inp = byId("wuInput"); if (inp && !inp.readOnly) q.typed = inp.value;
+    // Đang ghi / đang nhận chữ: dừng ghi, chờ chữ về (điền vào ô) rồi tự kiểm tra.
+    var mine = REC.owner === warmOwner();
+    if (mine && REC.state === "starting") recStop();
+    else if (mine && (REC.state === "recording" || REC.state === "stopping" || (REC.state === "done" && REC.srOn && !REC.srDone))) {
+      q.checkAfter = true;
+      if (REC.state === "recording") recStop(); else refreshVoice();
+      return;
+    }
+    q.checkAfter = false;
+    var typed = String(q.typed || "").trim();
+    q.fromVoice = !!q.heard && typed === q.heard;
+    var has = q.dir === "zv" ? !!normSent(typed) : !!normSpeech(typed);
+    recRelease(); // trả lời xong: tắt mic
+    session.keepPad = true;
+    if (has && aiOn()) { warmAiStart(q, typed); return; }
+    q.phase = "show";
+    renderCard();
+  }
+  // Làm sạch kết quả chấm chiều Trung → Việt: null = không dùng được.
+  function aiViClean(d) {
+    if (!d || typeof d !== "object") return null;
+    var sc = Math.round(Number(d.score));
+    sc = isFinite(sc) ? Math.max(0, Math.min(100, sc)) : null;
+    var v = ["dung", "gan-dung", "sai"].indexOf(d.verdict) >= 0 ? d.verdict : sc == null ? null : sc >= 85 ? "dung" : sc >= 50 ? "gan-dung" : "sai";
+    if (!v) return null;
+    return { verdict: v, score: sc, meaningOk: d.meaning_ok !== false, missing: aiTxt(d.missing_vi, 300), note: aiTxt(d.note_vi, 400), correct: aiTxt(d.correct_vi, 300) };
+  }
+  function warmAiStart(q, typed) {
+    var st = { state: "wait", model: aiModel() };
+    q.ai = st; q.phase = "wait";
+    var req = q.dir === "zv"
+      ? aiCall("warmVi", { zh: q.zh, reference_vi: q.vi, learner_vi: typed }, AI_WARM_VI_SCHEMA)
+      : aiCall(q.fromVoice ? "speak" : "trans", {
+          vi: q.vi, situation: q.when || "", reference_zh: q.zh,
+          learned_words: q.word ? [q.word.hanzi + " = " + shortMeaning(q.word.meaning)] : [],
+          learner_zh: typed
+        }, AI_GRADE_SCHEMA);
+    req.then(function (r) {
+      if (q.dir === "zv") {
+        var res = r && r.ok ? aiViClean(r.data) : null;
+        if (res) { st.state = "done"; st.res = res; st.model = r.model; }
+        else { st.state = "fail"; st.reason = r && !r.ok ? r.reason : "AI trả lời sai định dạng"; }
+      } else aiApply(st, r);
+      // Kết quả về muộn (đã Bỏ qua AI) vẫn hiện nếu còn ở câu này và chưa chấm.
+      if (q.ai !== st || warmCur() !== q || q.ok != null) return;
+      q.phase = "show"; session.keepPad = true;
+      renderCard(); aiReveal(AI_BOX_SEL);
+    });
+    renderCard();
+  }
+  function warmSkipAi() {
+    var q = warmCur();
+    if (!q || q.phase !== "wait") return;
+    q.phase = "show"; session.keepPad = true;
+    renderCard();
+  }
+  function warmHint() {
+    var q = warmCur();
+    if (!q || q.hint || q.phase !== "ask") return;
+    var inp = byId("wuInput"); if (inp && !inp.readOnly) q.typed = inp.value;
+    q.hint = true; session.keepPad = true;
+    renderCard();
+  }
+  function warmGrade(ok) {
+    var w = session && session.warm, q = warmCur();
+    if (!q || q.phase !== "show" || q.ok != null) return;
+    q.ok = !!ok; w.graded++;
+    if (ok) w.ok++; else warmPullCard(q.it);
+    recRelease();
+    w.i++;
+    if (w.i >= w.qs.length) w.phase = "sum";
+    session.keepPad = false;
+    recordSession();
+    renderCard();
+  }
+  function warmSkip() {
+    if (!warmActive()) return;
+    if (session.warm.phase !== "sum") toast("Bỏ qua kiểm tra bài cũ");
+    warmEnd();
+  }
+  function warmEnd() {
+    if (!warmActive()) return;
+    session.warm.over = true;
+    recordSession();
+    nextCard(); // tắt mic, vào khúc 1 (hoặc phiên trộn)
+  }
+  function warmRecToggle() {
+    var q = warmCur();
+    if (!q || q.phase !== "ask" || !warmMicOk()) return;
+    q.checkAfter = false;
+    recToggle(warmOwner(), q.dir === "zv" ? "vi-VN" : "zh-CN");
+  }
+  function warmVoiceInner(q) {
+    var owner = warmOwner(), st = REC.owner === owner ? REC.state : "idle", zv = q.dir === "zv", s = "";
+    if (st === "error") s = '<div class="vstat warn">' + esc(REC.err || "Không ghi âm được") + ' — gõ vào ô</div>';
+    else if (st === "starting") s = '<div class="vstat">Cho phép dùng mic nếu trình duyệt hỏi</div>';
+    else if (st === "recording") s = '<div class="vstat live"><i class="vdot"></i>Đang nghe ' + (zv ? "tiếng Việt" : "tiếng Trung") + ' — nói xong bấm Dừng</div>';
+    else if (st === "stopping" || (st === "done" && !REC.srDone)) s = '<div class="vstat">Đang nhận chữ…</div>';
+    else if (st === "done" && !REC.heard) s = '<div class="vstat warn">' + (REC.srErr ? "Không nhận được chữ: " + esc(REC.srErr) : "App không nghe ra chữ nào — nói to, rõ hơn") + '</div>';
+    else if (st === "done") s = '<div class="vstat">Đã điền chữ app nghe được — sửa nếu sai rồi Kiểm tra</div>';
+    else if (micDenied) s = '<div class="vstat warn">Mic đang bị chặn — gõ vào ô</div>';
+    return '<div class="vctl">' + micBtnHtml(owner, zv ? "Nói tiếng Việt" : "Nói tiếng Trung", true) + (zv ? "" : playBtnHtml(owner)) + '</div>' + s;
+  }
+  // Gọi từ refreshVoice: nhận giọng xong → điền chữ vào ô (sửa được); bấm Kiểm tra lúc đang ghi → tự kiểm tra khi chữ về.
+  function warmVoiceRefresh() {
+    var q = warmCur();
+    if (!q || q.phase !== "ask") return;
+    if (REC.owner === warmOwner() && REC.state === "done" && REC.srDone) {
+      var k = REC.token + "|" + REC.heard;
+      if (q.srKey !== k) {
+        q.srKey = k;
+        var heard = String(REC.heard || "").trim();
+        if (heard) {
+          q.heard = heard; q.typed = heard;
+          var inp = byId("wuInput"); if (inp) inp.value = heard;
+        }
+        if (q.checkAfter) { q.checkAfter = false; warmCheck(); return; }
+      }
+    }
+    var el = byId("wvbox");
+    if (el) el.innerHTML = warmVoiceInner(q);
+  }
+  // Tự đọc câu Trung: chiều Trung → Việt lúc hiện câu, chiều Việt → Trung lúc hiện đáp án (mỗi mặt 1 lần).
+  function warmAutoSpeak() {
+    var q = warmCur();
+    if (!q || !db.settings.autoSpeak) return;
+    var side = q.dir === "zv" ? "front" : q.phase === "show" ? "back" : "";
+    if (!side) return;
+    var key = "wu:" + session.warm.i + ":" + side;
+    if (session.spokenFor === key) return;
+    session.spokenFor = key;
+    speak(q.zh);
+  }
+  function warmKey(e, key, isSpace) {
+    var w = session.warm;
+    if (w.phase === "sum") { if (key === "Enter" || isSpace) warmEnd(); return; }
+    var q = warmCur();
+    if (!q) return;
+    if (q.phase === "ask") {
+      if (key === "Enter") warmCheck();
+      else if ((key === "r" || key === "R") && warmMicOk()) { e.preventDefault(); warmRecToggle(); }
+    } else if (q.phase === "show") {
+      if (key === "1") { e.preventDefault(); warmGrade(false); }
+      else if (key === "3" || isSpace) { e.preventDefault(); warmGrade(true); }
+    }
+  }
+  // Khối kết quả AI chiều Trung → Việt (chờ / lỗi dùng chung aiBoxHtml).
+  function warmViBoxHtml(st) {
+    if (!st || st.state !== "done" || !st.res) return aiBoxHtml(st);
+    var r = st.res, vd = AI_VERDICT[r.verdict], sug = aiSugGrade(st);
+    return '<div class="aibox v-' + r.verdict + '">' +
+      '<div class="aihead"><span class="aiverd">' + vd[0] + ' ' + vd[1] + (r.score != null ? '<b class="aiscore">' + r.score + '</b>' : "") + '</span>' +
+        '<span class="aitag">AI chấm · ' + esc(st.model || aiModel()) + '</span></div>' +
+      '<div class="aichk"><span class="' + (r.meaningOk ? "ok" : "no") + '">Nghĩa ' + (r.meaningOk ? "✓" : "✗") + '</span></div>' +
+      (r.missing ? '<div class="airow"><div class="ailab">Còn thiếu / hiểu sai</div><div class="aivi">' + esc(r.missing) + '</div></div>' : "") +
+      (r.correct ? '<div class="airow"><div class="ailab">Dịch tự nhiên</div><div class="aivi">' + esc(r.correct) + '</div></div>' : "") +
+      (r.note ? '<div class="ainote">' + esc(r.note) + '</div>' : "") +
+      '<div class="aisugtxt">AI gợi ý: <b>' + (sug === 1 ? "Sai" : "Đúng") + '</b> — bạn bấm để xác nhận</div></div>';
+  }
+  function warmHtml() {
+    var w = session.warm;
+    if (w.phase === "sum") return warmSumHtml();
+    var q = w.qs[w.i], zv = q.dir === "zv", waiting = q.phase === "wait", typed = String(q.typed || "").trim();
+    var head = '<div class="wuhead"><div class="tags"><span class="tag warm">Bài cũ ' + (w.i + 1) + '/' + w.qs.length + '</span>' +
+        '<span class="tag">' + (zv ? "Trung → Việt" : "Việt → Trung") + '</span></div>' +
+      '<button class="small-btn wuskip" data-action="wu-skip">Bỏ qua</button></div>';
+    var zhBlock = function (withPy) {
+      return '<div class="wuzh zh">' + esc(q.zh) + '</div>' +
+        '<div class="wutools">' + speakBtn(q.zh) + (!withPy && q.py ? '<button class="small-btn" data-action="wu-hint">Gợi ý pinyin</button>' : "") + '</div>' +
+        (withPy && q.py ? '<div class="pinyin wupy">' + esc(q.py) + '</div>' : "");
+    };
+    var viBlock = (q.when ? '<div class="when">' + esc(q.when) + '</div>' : "") + '<div class="meaning front trvi">' + esc(q.vi) + '</div>';
+    if (q.phase !== "show") {
+      var form = '<form id="wuForm" class="trform" action="#" autocomplete="off"><input id="wuInput" class="trin' + (zv ? " wuvi" : " zh") + '" type="text"' +
+        ' lang="' + (zv ? "vi" : "zh-CN") + '" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"' +
+        ' aria-label="' + (zv ? "Gõ nghĩa tiếng Việt" : "Gõ câu tiếng Trung") + '" placeholder="' + (zv ? "Gõ nghĩa tiếng Việt…" : "Gõ chữ Hán vào đây…") + '"' +
+        ' value="' + esc(q.typed || "") + '"' + (waiting ? " readonly" : "") + '></form>';
+      var mic = warmMicOk() && !waiting ? '<div id="wvbox" class="vbox wvbox">' + warmVoiceInner(q) + '</div>' : "";
+      return '<div class="card wucard">' + head +
+        (zv ? zhBlock(q.hint) + '<p class="say">Câu này nghĩa là gì?</p>' : viBlock + '<p class="say">Nói hoặc viết bằng tiếng Trung</p>') +
+        form + mic + (zv ? "" : padHtml(true)) +
+        (waiting
+          ? '<div class="actions dock aiwaitrow"><button class="primary big" disabled>Đang chấm…</button><button class="small-btn" data-action="wu-skip-ai">Bỏ qua AI</button></div>'
+          : '<div class="actions dock"><button class="primary big" data-action="wu-check">Kiểm tra</button></div>') +
+        hintHtml('<kbd>Enter</kbd> kiểm tra' + (warmMicOk() ? " · <kbd>R</kbd> nói" : "") + ' · <kbd>Esc</kbd> thoát') + '</div>';
+    }
+    var sug = aiSugGrade(q.ai), body;
+    if (zv) {
+      body = zhBlock(true) + warmViBoxHtml(q.ai) +
+        '<div class="vcmp trres">' +
+          (typed ? '<div class="trrow"><span class="trlab">' + (q.fromVoice ? "Bạn nói" : "Bạn hiểu") + '</span><span class="wuvitx">' + esc(typed) + '</span></div>' : "") +
+          '<div class="trrow"><span class="trlab">Dịch mẫu</span><span class="wuvitx">' + esc(q.vi) + '</span></div>' +
+          '<div class="trnote">' + (sug ? "AI chấm theo nghĩa — bạn vẫn bấm xác nhận" : "Khác chữ mà đúng ý vẫn là Đúng — tự chấm") + '</div>' +
+        '</div>';
+    } else {
+      var cmp = typed && normSpeech(typed) ? compareSpeech(q.zh, typed) : null;
+      var lv = cmp ? (cmp.pct >= 85 ? "good" : cmp.pct >= 50 ? "mid" : "low") : "";
+      body = viBlock + aiBoxHtml(q.ai, typed, ["Sai", "Đúng"]) +
+        '<div class="vcmp trres">' +
+          (cmp ? '<div class="trrow"><span class="trlab">' + (q.fromVoice ? "Bạn nói" : "Bạn viết") + '</span><span class="trzh zh">' + markedZhHtml(typed, { ok: cmp.okH }) + '</span></div>' : "") +
+          '<div class="trrow"><span class="trlab">Câu mẫu</span><span class="trzh zh">' + markedZhHtml(q.zh, cmp) + '</span>' + speakBtn(q.zh, true) + '</div>' +
+          (q.py ? '<div class="trpy">' + esc(q.py) + '</div>' : "") +
+          (cmp ? '<div class="vpct ' + lv + '">Khớp ' + cmp.pct + '%</div>' : "") +
+          '<div class="trnote">' + (sug ? "AI chấm theo nghĩa — bạn vẫn bấm xác nhận" : cmp ? "Câu khác mẫu vẫn có thể đúng — tự chấm" : "So chữ viết tay (hoặc câu trong đầu) với câu mẫu rồi tự chấm") + '</div>' +
+        '</div>' + padHtml(true);
+    }
+    return '<div class="card wucard">' + head + body +
+      '<div class="grades two dock">' +
+        '<button class="g1' + (sug === 1 ? " aisug" : "") + '" data-action="wu-grade" data-ok="0">Sai<small>1 · ôn lại ngay</small></button>' +
+        '<button class="g3' + (sug === 3 ? " aisug" : "") + '" data-action="wu-grade" data-ok="1">Đúng<small>3 · giữ lịch</small></button>' +
+      '</div>' + hintHtml('<kbd>1</kbd> Sai · <kbd>3</kbd> / <kbd>Space</kbd> Đúng') + '</div>';
+  }
+  function warmSumHtml() {
+    var w = session.warm, bad = w.qs.filter(function (q) { return q.ok === false; }), go = "Vào phiên";
+    if (session.blocks) { syncElapsed(); var tb0 = timeBlock(session.elapsed); go = "Vào khúc " + (tb0 === 0 || blkWarmLeft() >= 0 ? 1 : tb0 + 1); }
+    return '<div class="card wusum">' +
+      '<div class="blkno">Kiểm tra bài cũ</div>' +
+      '<div class="wuscore">Đúng <b>' + w.ok + '</b>/' + w.graded + '</div>' +
+      '<p class="muted small center">' + (bad.length ? bad.length + " câu sai — từ của các câu này ra ôn lại ngay trong phiên này" : "Đúng hết 🎉") + '</p>' +
+      (bad.length ? '<ul class="wubad">' + bad.map(function (q) {
+        return '<li><div class="aizh"><span class="zh">' + esc(q.zh) + '</span>' + speakBtn(q.zh, true) + '</div>' +
+          (q.py ? '<div class="wupy2">' + esc(q.py) + '</div>' : "") +
+          '<div class="wuvi2">' + esc(q.vi) + '</div>' +
+          (q.word ? '<div class="wuw">Ôn lại: <b class="zh">' + esc(q.word.hanzi) + '</b> ' + esc(shortMeaning(q.word.meaning)) + '</div>' : "") + '</li>';
+      }).join("") + '</ul>' : "") +
+      '<div class="actions dock"><button class="primary big" data-action="wu-end">' + go + '</button></div>' +
+      hintHtml('<kbd>Enter</kbd> ' + go.toLowerCase()) + '</div>';
   }
 
   // ---------- bảng viết tay ----------
@@ -2704,6 +3630,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         if (typeof fs.autoSpeak === "boolean") db.settings.autoSpeak = fs.autoSpeak;
         if (typeof fs.speechScore === "boolean") db.settings.speechScore = fs.speechScore;
         if (typeof fs.sessionBlocks === "boolean") db.settings.sessionBlocks = fs.sessionBlocks; // backup cũ không có → giữ cài đặt máy này
+        if (warmVal(fs.warmup) != null) db.settings.warmup = warmVal(fs.warmup); // backup cũ không có → giữ cài đặt máy này
         if (hskVal(fs.hskLevels)) db.settings.hskLevels = hskVal(fs.hskLevels); // backup cũ không có → giữ cài đặt máy này
         if (themeVal(fs.theme)) { db.settings.theme = themeVal(fs.theme); applyTheme(); }
         if (wasEmpty && Array.isArray(fs.selectedDecks)) {
@@ -3851,11 +4778,16 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         hskSettingHtml() +
         '<label class="setting"><span>Chia phiên 3 khúc<small class="snote">Thẻ → Nói &amp; dịch → Nghe &amp; đọc, mỗi khúc 15 phút. Tắt = trộn mọi loại thẻ như cũ.</small></span>' +
           '<input type="checkbox" data-setting="sessionBlocks"' + (s.sessionBlocks !== false ? " checked" : "") + '></label>' +
+        '<label class="setting"><span>Kiểm tra bài cũ đầu buổi<small class="snote">Câu ví dụ của từ học 1–2 buổi trước, Trung ↔ Việt, mỗi ngày 1 lần. AI chấm nếu bật. Câu sai → từ đó ra ôn lại ngay.</small></span>' +
+          '<select data-setting="warmup">' + WARM_OPTIONS.map(function (n) {
+            return '<option value="' + n + '"' + (n === warmN() ? " selected" : "") + '>' + (n ? n + " câu" : "Tắt") + '</option>';
+          }).join("") + '</select></label>' +
         '<label class="setting"><span>Bảng viết tay khi ôn nghĩa → chữ</span><input type="checkbox" data-setting="drawPad"' + (s.drawPad ? " checked" : "") + '></label>' +
         '<label class="setting"><span>Tự phát âm khi hiện chữ</span><input type="checkbox" data-setting="autoSpeak"' + (s.autoSpeak ? " checked" : "") + '></label>' +
         '<label class="setting"><span>Chấm phát âm bằng nhận giọng nói<small class="snote">' +
           (srCtor() ? "Thẻ nói & nhại bài khóa. Chrome gửi giọng lên máy chủ Google để nhận dạng, cần mạng." : "Trình duyệt này không có nhận giọng nói (dùng Chrome / Edge).") +
           '</small></span><input type="checkbox" data-setting="speechScore"' + (srCtor() && s.speechScore !== false ? " checked" : "") + (srCtor() ? "" : " disabled") + '></label>' +
+        aiSettingHtml() +
         '<label class="setting"><span>Giao diện</span><select data-setting="theme">' + themeOpts + '</select></label>' +
       '</section>' +
       '<section class="actions-row">' +
@@ -3885,7 +4817,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     }).join("");
     var sess = db.sessions.slice(-14).reverse();
     var sessRows = sess.length ? sess.map(function (s) {
-      return '<tr><td>' + esc(fmtDate(s.date)) + '</td><td class="num">' + esc(s.minutes) + ' phút</td><td class="num">' + esc(s.cards) + ' thẻ' + (Number(s.lines) > 0 ? ' · ' + esc(s.lines) + ' câu' : "") + '</td></tr>';
+      var wu = s.warmup && typeof s.warmup === "object" && Number(s.warmup.n) > 0 ? s.warmup : null; // kiểm tra bài cũ (dòng phiên cũ không có)
+      return '<tr><td>' + esc(fmtDate(s.date)) + '</td><td class="num">' + esc(s.minutes) + ' phút</td><td class="num">' + esc(s.cards) + ' thẻ' + (Number(s.lines) > 0 ? ' · ' + esc(s.lines) + ' câu' : "") +
+        (wu ? '<span class="wustat">bài cũ ' + esc(Number(wu.ok) || 0) + '/' + esc(Number(wu.n)) + '</span>' : "") + '</td></tr>';
     }).join("") : '<tr><td colspan="3" class="muted">Chưa có phiên nào. Bấm Học 45 phút đi.</td></tr>';
     // Lượt ôn 14 ngày gần nhất (db.daily), thanh ngắn tỉ lệ theo trần ôn / ngày nhiều nhất.
     var cap = reviewCap(), days = [], dd = new Date(), mx = 0;
@@ -3922,9 +4856,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     return '<div class="wrap">' +
       '<div class="bar' + (blk ? " blkbar" : "") + '">' +
         '<div class="bar-top"><span id="clock" class="clock">00:00 / 45:00</span><button class="small-btn" data-action="end">Kết thúc</button></div>' +
-        (blk ? '<div id="blks" class="blks">' + blkSegsHtml() + '</div>' +
+        (blk ? '<div id="blks" class="blks' + (session.warm ? " wu" : "") + '">' + blkSegsHtml() + '</div>' +
             '<div class="bar-sub"><div id="counts" class="muted small"></div>' +
-            '<button id="blkNext" class="small-btn blknext" data-action="blk-next"' + (session.block >= BLOCKS.length - 1 ? " hidden" : "") + '>Sang khúc sau ›</button></div>'
+            '<button id="blkNext" class="small-btn blknext" data-action="blk-next"' + (session.block >= BLOCKS.length - 1 || warmActive() ? " hidden" : "") + '>Sang khúc sau ›</button></div>'
           : '<div class="track"><div id="prog" class="fill"></div></div>' +
             '<div id="counts" class="muted small"></div>') +
         '<div id="banner45" class="banner"' + (session && session.shown45 ? "" : " hidden") + '>Đủ 45 phút rồi 🎉 muốn chơi tiếp thì cứ tiếp</div>' +
@@ -3977,10 +4911,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       '</div>' + hintHtml('<kbd>1-4</kbd> chấm · <kbd>Space</kbd> = Nhớ');
   }
   function grades2Html(it) {
-    var c = cardOf(it.id);
+    var c = cardOf(it.id), sug = it.kind === "phrase" ? aiSugGrade(aiSpkCur(it)) : 0;
     return '<div class="grades two dock">' +
-      '<button class="g1" data-action="grade" data-grade="1">Quên<small>1 · ' + intervalLabel(c, 1) + '</small></button>' +
-      '<button class="g3" data-action="grade" data-grade="3">Nhớ<small>3 · ' + intervalLabel(c, 3) + '</small></button>' +
+      '<button class="g1' + (sug === 1 ? " aisug" : "") + '" data-action="grade" data-grade="1">Quên<small>1 · ' + intervalLabel(c, 1) + '</small></button>' +
+      '<button class="g3' + (sug === 3 ? " aisug" : "") + '" data-action="grade" data-grade="3">Nhớ<small>3 · ' + intervalLabel(c, 3) + '</small></button>' +
       '</div>' + hintHtml('<kbd>1</kbd> Quên · <kbd>3</kbd> / <kbd>Space</kbd> Nhớ');
   }
   function flipBtnHtml(extraHint) {
@@ -4061,6 +4995,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   // mặt sau (Kiểm tra) = câu đã gõ tô đúng/sai, câu mẫu tô đúng/thiếu + pinyin + 🔊, % khớp, tự chấm Chưa được / Được.
   function transHtml(it) {
     var d = it.data, keys = transKeys(it), open = session.hint || session.flipped;
+    var ai = session.aiTr && session.aiTr.id === it.id ? session.aiTr : null, waiting = !session.flipped && ai && ai.state === "wait";
     var head = tagRow(it, "✍ Dịch câu", "trans") +
       (d.when ? '<div class="when">' + esc(d.when) + '</div>' : "") +
       '<div class="meaning front trvi">' + esc(d.vi) + '</div>';
@@ -4070,26 +5005,29 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (!session.flipped) {
       return '<div class="card trcard">' + head + '<p class="say">Viết câu này bằng tiếng Trung</p>' + kh +
         '<form id="trForm" class="trform" action="#" autocomplete="off"><input id="trInput" class="trin zh" type="text" lang="zh-CN" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"' +
-        ' aria-label="Gõ câu tiếng Trung" placeholder="Gõ chữ Hán vào đây…" value="' + esc(session.trTyped || "") + '"></form>' +
+        ' aria-label="Gõ câu tiếng Trung" placeholder="Gõ chữ Hán vào đây…" value="' + esc(session.trTyped || "") + '"' + (waiting ? " readonly" : "") + '></form>' +
         padHtml(true) +
-        '<div class="actions dock"><button class="primary big" data-action="flip">Kiểm tra</button></div>' +
+        (waiting
+          ? '<div class="actions dock aiwaitrow"><button class="primary big" disabled>Đang chấm…</button><button class="small-btn" data-action="ai-skip">Bỏ qua AI</button></div>'
+          : '<div class="actions dock"><button class="primary big" data-action="flip">Kiểm tra</button></div>') +
         hintHtml('<kbd>Enter</kbd> kiểm tra · <kbd>Esc</kbd> thoát') + '</div>';
     }
     var typed = String(session.trTyped || "").trim(), cmp = typed && normSpeech(typed) ? compareSpeech(d.zh, typed) : null;
     var lv = cmp ? (cmp.pct >= 85 ? "good" : cmp.pct >= 50 ? "mid" : "low") : "";
-    var c = cardOf(it.id);
+    var c = cardOf(it.id), sug = aiSugGrade(ai);
     return '<div class="card trcard">' + head + kh +
+      aiBoxHtml(ai, typed, ["Chưa được", "Được"]) + // kết quả AI lên trước (điện thoại: thấy ngay), so chữ cũ ở dưới
       '<div class="vcmp trres">' +
         (cmp ? '<div class="trrow"><span class="trlab">Bạn viết</span><span class="trzh zh">' + markedZhHtml(typed, { ok: cmp.okH }) + '</span></div>' : "") +
         '<div class="trrow"><span class="trlab">Câu mẫu</span><span class="trzh zh">' + markedZhHtml(d.zh, cmp) + '</span>' + speakBtn(d.zh, true) + '</div>' +
         (d.pinyin ? '<div class="trpy">' + esc(d.pinyin) + '</div>' : "") +
         (cmp ? '<div class="vpct ' + lv + '">Khớp ' + cmp.pct + '%</div>' : "") +
-        '<div class="trnote">' + (cmp ? "Câu khác mẫu vẫn có thể đúng — tự chấm" : "So chữ viết tay (hoặc câu trong đầu) với câu mẫu rồi tự chấm") + '</div>' +
+        '<div class="trnote">' + (sug ? "AI chấm theo nghĩa — bạn vẫn bấm xác nhận" : cmp ? "Câu khác mẫu vẫn có thể đúng — tự chấm" : "So chữ viết tay (hoặc câu trong đầu) với câu mẫu rồi tự chấm") + '</div>' +
       '</div>' +
       padHtml(true) +
       '<div class="grades two dock">' +
-        '<button class="g1" data-action="grade" data-grade="1">Chưa được<small>1 · ' + intervalLabel(c, 1) + '</small></button>' +
-        '<button class="g3" data-action="grade" data-grade="3">Được<small>3 · ' + intervalLabel(c, 3) + '</small></button>' +
+        '<button class="g1' + (sug === 1 ? " aisug" : "") + '" data-action="grade" data-grade="1">Chưa được<small>1 · ' + intervalLabel(c, 1) + '</small></button>' +
+        '<button class="g3' + (sug === 3 ? " aisug" : "") + '" data-action="grade" data-grade="3">Được<small>3 · ' + intervalLabel(c, 3) + '</small></button>' +
       '</div>' + hintHtml('<kbd>1</kbd> Chưa được · <kbd>3</kbd> / <kbd>Space</kbd> Được') + '</div>';
   }
   function refBtnHtml(text) {
@@ -4101,14 +5039,19 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     return '<div class="hanzi mid zh">' + markedZhHtml(p.zh, voiceCmp(owner, p.zh)) + '</div>' +
       '<div class="pinyin">' + esc(p.pinyin) + '</div>' +
       '<div class="vctl">' + refBtnHtml(p.zh) + playBtnHtml(owner) + micBtnHtml(owner, "Nói thử", true) + '</div>' +
-      voiceStatusHtml(owner, p.zh, true);
+      voiceStatusHtml(owner, p.zh, true) +
+      aiBoxHtml(aiSpkCur(it), REC.heard, ["Quên", "Nhớ"]);
   }
   // Vẽ lại riêng khối #vbox (không vẽ lại cả thẻ / cả bài → không nhảy cuộn, không mất trạng thái khác).
   function refreshVoice() {
+    if (view === "session" && warmActive()) { warmVoiceRefresh(); return; }
     var el = byId("vbox");
     if (!el) return;
-    if (view === "session" && session && session.current && session.current.kind === "phrase") el.innerHTML = phraseVoiceInner(session.current);
-    else if (view === "lesson" && lesson && lesson.shadow) el.innerHTML = shadowInner();
+    if (view === "session" && session && session.current && session.current.kind === "phrase") {
+      el.innerHTML = phraseVoiceInner(session.current);
+      aiMarkGrade(aiSpkCur(session.current)); // thu lại / ghi lại → bỏ tô gợi ý cũ
+      aiSpkCheck();
+    } else if (view === "lesson" && lesson && lesson.shadow) el.innerHTML = shadowInner();
   }
   function doneHtml() {
     var minutes = Math.round(session.elapsed / 60);
@@ -4160,6 +5103,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function updateCounts() {
     var el = byId("counts");
     if (!el || !session) return;
+    if (warmActive()) {
+      var w = session.warm;
+      el.textContent = w.phase === "sum" ? "Kiểm tra bài cũ · xong" :
+        "Kiểm tra bài cũ · câu " + (w.i + 1) + "/" + w.qs.length + (w.graded ? " · đúng " + w.ok + "/" + w.graded : "");
+      return;
+    }
     if (session.blocks && session.block > 0) {
       var nl = Object.keys(session.lines || {}).length;
       el.textContent = session.block === 1
@@ -4178,7 +5127,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     PAD.drawing = false; PAD.pointerId = null; PAD.canvas = null;
     var it = session.current;
     var html;
-    if (!it) {
+    if (warmActive()) html = warmHtml(); // kiểm tra bài cũ đầu buổi (trước khúc 1)
+    else if (!it) {
       syncElapsed();
       if (session.blocks) html = session.gate != null ? gateHtml() : readHtml();
       else html = session.elapsed >= TARGET_SEC || capReached() ? doneHtml() : emptyHtml();
@@ -4195,13 +5145,22 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     updateBlkBar();
     var pad = byId("pad");
     if (pad) { drawGrid(pad); restorePad(pad, snap); }
-    if (!session.keepPad) window.scrollTo(0, 0);
+    var ti = byId("trInput") || byId("wuInput");
+    if (!session.keepPad) {
+      window.scrollTo(0, 0);
+      // Màn ngang (thấp): ô gõ thường nằm dưới thanh nút dính đáy → cuộn vừa đủ để thấy ô (scroll-padding-bottom chừa chỗ dock).
+      if (ti && window.matchMedia && window.matchMedia("(max-height:500px)").matches) {
+        var dk = document.querySelector("#cardArea .dock"), tr = ti.getBoundingClientRect();
+        if (dk && tr.bottom > dockTop(dk)) { try { ti.scrollIntoView({ block: "nearest" }); } catch (e) { /* bỏ qua */ } }
+      }
+    }
     // Thẻ dịch trên máy có chuột: con trỏ vào ô gõ luôn (điện thoại thì không — để chọn gõ hay viết tay).
-    var ti = byId("trInput");
-    if (ti && window.matchMedia && window.matchMedia("(pointer: fine)").matches) {
+    if (ti && !ti.readOnly && window.matchMedia && window.matchMedia("(pointer: fine)").matches) {
       try { ti.focus({ preventScroll: true }); var L = ti.value.length; ti.setSelectionRange(L, L); } catch (e) { /* bỏ qua */ }
     }
+    if (warmActive()) { warmAutoSpeak(); return; }
     autoSpeak(it);
+    if (it && it.kind === "phrase") aiSpkCheck(); // lật thẻ nói đã có câu nghe được → gửi AI chấm
   }
   function autoSpeak(it) {
     if (!it || !db.settings.autoSpeak) return;
@@ -4346,7 +5305,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         renderKeepScroll(".hskset .hskgrid", document.activeElement === el ? 'input[data-hsk="1"]' : null); break;
       case "speak": if (recIsLive()) recStop(); speak(el.getAttribute("data-text")); break; // đang ghi mà bấm nghe mẫu: dừng ghi trước, khỏi thu giọng máy
       case "v-rec": {
-        var vo = view === "session" && session && session.current ? "card:" + session.current.id : view === "lesson" ? shadowOwner() : "";
+        if (view === "session" && warmActive()) { warmRecToggle(); break; } // kiểm tra bài cũ: nói = nhận chữ vào ô
+        var vo =view === "session" && session && session.current ? "card:" + session.current.id : view === "lesson" ? shadowOwner() : "";
         if (vo) recToggle(vo);
         if (view === "lesson") sessNote(vo); // đang trong phiên (khúc 3): tính 1 câu nhại
         break;
@@ -4357,6 +5317,18 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       case "hint": showHint(); break;
       case "clear-pad": clearPad(); break;
       case "grade": gradeCurrent(Number(el.getAttribute("data-grade"))); break;
+      case "ai-skip": aiTransSkip(); break;
+      // kiểm tra bài cũ đầu buổi
+      case "wu-check": warmCheck(); break;
+      case "wu-hint": warmHint(); break;
+      case "wu-skip-ai": warmSkipAi(); break;
+      case "wu-grade": warmGrade(el.getAttribute("data-ok") === "1"); break;
+      case "wu-skip": warmSkip(); break;
+      case "wu-end": warmEnd(); break;
+      // AI chấm bài (Cài đặt)
+      case "ai-save": aiSaveKey(); break;
+      case "ai-test": aiTestKey(); break;
+      case "ai-clear": aiClearKey(); break;
       case "end": endSession(false); break;
       case "end-force": endSession(true); break;
       // phiên chia khúc
@@ -4463,6 +5435,15 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       saveDb(); renderKeepScroll(hsel, document.activeElement === t ? hsel : null);
       return;
     }
+    // AI chấm bài: lưu ở "hoctrung.ai.v1" (không vào db.settings → không đi theo backup)
+    var aiAttr = t.getAttribute("data-ai");
+    if (aiAttr) {
+      var fresh = aiRead(); if (fresh) AI = fresh;
+      if (aiAttr === "model") AI.model = AI_MODELS[t.value] ? t.value : AI_DEFAULT;
+      else if (aiAttr === "enabled") AI.enabled = !!AI.key && !!t.checked;
+      aiSave(); renderKeepScroll(".aiset");
+      return;
+    }
     var key = t.getAttribute("data-setting");
     if (!key) return;
     if (key === "newPerSession") db.settings.newPerSession = Number(t.value) || 10;
@@ -4471,6 +5452,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     else if (key === "autoSpeak") db.settings.autoSpeak = !!t.checked;
     else if (key === "speechScore") db.settings.speechScore = !!t.checked;
     else if (key === "sessionBlocks") db.settings.sessionBlocks = !!t.checked;
+    else if (key === "warmup") { var wv = warmVal(t.value); db.settings.warmup = wv == null ? WARM_DEFAULT : wv; }
     else if (key === "theme") { db.settings.theme = themeVal(t.value) || "dem"; applyTheme(); }
     saveDb(); render();
   });
@@ -4480,11 +5462,17 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (t.id === "auSeek" && audioEl) { seekHold = true; audioEl.currentTime = Number(t.value) || 0; return; }
     if (t.id === "exFree" && exam) exam.free[t.getAttribute("data-n")] = t.value;
     if (t.id === "trInput" && session) session.trTyped = t.value;
+    if (t.id === "wuInput") { var wq = warmCur(); if (wq) wq.typed = t.value; }
+  });
+  // Ô khóa OpenAI (không nằm trong form để trình duyệt khỏi đòi lưu như mật khẩu): Enter = Lưu.
+  app.addEventListener("keydown", function (e) {
+    if (e.target && e.target.id === "aiKeyIn" && e.key === "Enter" && !e.isComposing) { e.preventDefault(); aiSaveKey(); }
   });
   // Ô gõ thẻ Dịch câu nằm trong form: phím "Xong/Enter" của bàn phím điện thoại (có máy không gửi keydown Enter) = Kiểm tra.
   app.addEventListener("submit", function (e) {
     e.preventDefault();
     if (e.target && e.target.id === "trForm" && view === "session" && session) flip();
+    if (e.target && e.target.id === "wuForm" && view === "session" && session) warmCheck();
   });
   // Listener gắn 1 lần trên #app (delegation) nên đổi thẻ / vẽ lại canvas không rò listener.
   if (window.PointerEvent) {
@@ -4506,8 +5494,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (view !== "session" || !session) return;
     var t = e.target;
     // Ô gõ của thẻ Dịch câu: Enter = Kiểm tra (trừ lúc bộ gõ Trung đang ghép chữ), Esc = rời ô; phím khác (Space…) gõ bình thường.
-    if (t && t.id === "trInput") {
-      if (e.key === "Enter" && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); if (!e.repeat) flip(); }
+    if (t && (t.id === "trInput" || t.id === "wuInput")) {
+      if (e.key === "Enter" && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); if (!e.repeat) { if (t.id === "wuInput") warmCheck(); else flip(); } }
       else if (e.key === "Escape") { e.preventDefault(); t.blur(); }
       return;
     }
@@ -4526,6 +5514,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     // Phím đã xử lý ở đây mà làm đổi màn (Esc, chuyển khúc, mở bài/đề) thì chặn luôn, không để examKey/lessonKey
     // (gắn sau, cùng document) xử lý lại phím đó ở màn mới.
     if (key === "Escape") { e.preventDefault(); e.stopImmediatePropagation(); escapeSession(); return; }
+    if (warmActive()) { warmKey(e, key, isSpace); return; } // kiểm tra bài cũ đầu buổi
     var it = session.current;
     if (!it) {
       if (session.blocks && session.gate != null) { if (key === "Enter" || isSpace) { e.stopImmediatePropagation(); blkGo(); } return; } // thẻ chuyển khúc
