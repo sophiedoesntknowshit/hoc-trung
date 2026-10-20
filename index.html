@@ -670,6 +670,23 @@ html.insess{scroll-padding-top:130px}
 html.insess body{padding-top:calc(53px + env(safe-area-inset-top))}
 html.insess .bar,html.insess .ptabs.lstabs{top:calc(53px + env(safe-area-inset-top))}
 @media (max-width:420px){.smname{display:none}.smlab{letter-spacing:.06em}}
+/* ---------- cài đặt "Cấp HSK của từ mới": ô tick dạng viên viền đỏ mảnh, đang chọn = nền đỏ nhạt phát sáng ---------- */
+.setting.hskset{flex-direction:column;align-items:stretch;gap:10px;border-top:1px solid var(--border)}
+.hskhead{display:flex;align-items:baseline;gap:12px}
+.hskhead button.link{flex:none;font-size:12px;text-transform:uppercase;letter-spacing:.14em}
+.hskhead button.link:disabled:hover{background:none}
+.hskgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.hskchip{display:flex;align-items:center;gap:9px;min-width:0;min-height:46px;padding:6px 12px;border:1px solid var(--line);border-radius:12px;background:rgba(255,238,228,.02);cursor:pointer;transition:background-color .15s,border-color .15s,box-shadow .15s}
+.hskchip:hover{background:var(--hover-tint);border-color:var(--line-strong)}
+.hskchip.on{background:var(--accent-soft);border-color:var(--accent-soft-line);box-shadow:0 0 14px -8px rgba(224,53,43,.9)}
+.hskchip.wide{grid-column:1/-1}
+.hskchip .hl{flex:1;min-width:0;font-weight:500;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hskchip .hn{flex:none;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);font-variant-numeric:tabular-nums}
+.hskchip.on .hn{color:var(--accent-soft-ink)}
+.decks .counts .hskoff{display:block;margin-top:2px;font-size:10px;line-height:1.4;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+@media (max-width:520px){.hskgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:400px){.hskchip{padding:6px 9px;gap:7px}.hskchip .hn{letter-spacing:.02em}}
+@media (max-width:350px){.hskgrid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important}}
 </style>
 <style id="theme-giay" media="not all">
@@ -1194,6 +1211,23 @@ html.insess{scroll-padding-top:130px}
 html.insess body{padding-top:calc(53px + env(safe-area-inset-top))}
 html.insess .bar,html.insess .ptabs.lstabs{top:calc(53px + env(safe-area-inset-top))}
 @media (max-width:420px){.smname{display:none}.smlab{letter-spacing:.06em}}
+/* ---------- cài đặt "Cấp HSK của từ mới": ô tick dạng thẻ giấy viền mực, đang chọn = nền son nhạt viền son ---------- */
+.setting.hskset{flex-direction:column;align-items:stretch;gap:10px;border-top:1px dashed var(--border)}
+.hskhead{display:flex;align-items:baseline;gap:12px}
+.hskhead button.link{flex:none}
+.hskhead button.link:disabled:hover{background:none}
+.hskgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.hskchip{display:flex;align-items:center;gap:9px;min-width:0;min-height:46px;padding:6px 12px;border:1.5px solid var(--border);border-radius:10px;background:var(--card);cursor:pointer}
+.hskchip:hover{background:var(--hover-bg);border-color:var(--line)}
+.hskchip.on{background:var(--accent-soft);border-color:var(--accent-soft-line)}
+.hskchip.wide{grid-column:1/-1}
+.hskchip .hl{flex:1;min-width:0;font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hskchip .hn{flex:none;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.hskchip.on .hn{color:var(--accent-soft-ink)}
+.decks .counts .hskoff{display:block;margin-top:1px;font-size:12px;line-height:1.35;color:var(--muted)}
+@media (max-width:560px){.hskgrid{grid-template-columns:repeat(2,minmax(0,1fr))}} /* chữ Giấy to hơn: 3 cột ở 521–550px cắt "HSK 2–5" */
+@media (max-width:400px){.hskchip{padding:6px 9px;gap:7px}.hskchip .hl{font-size:14px}.hskchip .hn{font-size:12px}}
+@media (max-width:350px){.hskgrid{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}}
 </style>
 <script>/* chọn giao diện TRƯỚC khi vẽ (tránh nháy): bật đúng 1 khối style. settings.theme: "dem" (mặc định) | "giay" | "system";
@@ -1249,6 +1283,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   var BLOCK_SEC = 15 * 60;
   var BLOCKS = [["Thẻ", "Thẻ từ: từ mới + ôn"], ["Nói & dịch", "🗣 Thẻ nói xen ✍ dịch câu"], ["Nghe & đọc", "🎙 Nhại 1 bài khóa hoặc 📝 làm tiếp 1 phần đề"]];
   var TALK_RELEARN_GAP = 3; // khúc 2: thẻ nói vừa Quên quay lại sau ~3 thẻ nói (xen thẻ dịch → ~6 thẻ)
+  var HSK_ALL = [0, 1, 2, 3, 4, 5, 6]; // cấp HSK của từ mới (settings.hskLevels); 0 = ngoài HSK (khẩu ngữ)
 
   var app = document.getElementById("app");
   var toastEl = document.getElementById("toast");
@@ -1435,6 +1470,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       if (typeof s.autoSpeak === "boolean") base.settings.autoSpeak = s.autoSpeak;
       if (typeof s.speechScore === "boolean") base.settings.speechScore = s.speechScore;
       if (typeof s.sessionBlocks === "boolean") base.settings.sessionBlocks = s.sessionBlocks;
+      if (hskVal(s.hskLevels)) base.settings.hskLevels = hskVal(s.hskLevels); // thiếu / sai = mọi cấp (không ghi trường)
       if (themeVal(s.theme)) base.settings.theme = themeVal(s.theme);
       if (Array.isArray(s.selectedDecks)) base.settings.selectedDecks = s.selectedDecks.slice();
       if (Array.isArray(s.enabledLessons)) {
@@ -1506,6 +1542,37 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function selectedDecks() {
     var sel = db.settings.selectedDecks;
     return DECKS.filter(function (d) { return sel.indexOf(d.id) >= 0; });
+  }
+
+  // ---------- lọc cấp HSK của từ mới (settings.hskLevels) ----------
+  // Chỉ lọc TỪ MỚI (thẻ từ chưa học) của 12 chủ đề trong decks/. Thẻ đã học, bài giáo trình, bộ 📝, mẫu câu, thẻ dịch: không lọc.
+  // Thiếu trường (dữ liệu / backup cũ) = mọi cấp. 0 = ngoài HSK (khẩu ngữ).
+  // (HSK_ALL khai báo ở phần hằng số — normalizeDb dùng tới lúc nạp db)
+  var BASE_DECK_IDS = {};
+  BASE_DECKS.forEach(function (d) { BASE_DECK_IDS[d.id] = true; });
+  function wordLevel(w) { var n = Math.floor(Number(w && w.hsk)); return n >= 1 && n <= 6 ? n : 0; }
+  // Mảng cấp hợp lệ (không trùng, xếp tăng) hoặc null nếu không dùng được (rỗng / sai kiểu).
+  function hskVal(a) {
+    if (!Array.isArray(a)) return null;
+    // Chỉ nhận số / chuỗi số không rỗng: null, "", false, " " bị bỏ qua (Number() của chúng = 0, sẽ thành "Ngoài HSK").
+    var out = HSK_ALL.filter(function (n) { return a.some(function (x) { return (typeof x === "number" || (typeof x === "string" && x.trim() !== "")) && Number(x) === n; }); });
+    return out.length ? out : null;
+  }
+  function hskLevels() { return hskVal(db.settings.hskLevels) || HSK_ALL; }
+  function hskActive() { return hskLevels().length < HSK_ALL.length; }
+  // Từ mới bị bộ lọc giấu (chỉ xét thẻ từ của 12 chủ đề; gọi kèm điều kiện "chưa học").
+  function hskHidden(it) {
+    return it.kind === "word" && !!BASE_DECK_IDS[it.deckId] && hskLevels().indexOf(wordLevel(it.data)) < 0;
+  }
+  // Số từ chủ đề theo cấp (đếm từ dữ liệu): [cấp] -> { all, fresh }.
+  function hskStats() {
+    var r = {}; HSK_ALL.forEach(function (n) { r[n] = { all: 0, fresh: 0 }; });
+    ITEMS.forEach(function (it) {
+      if (it.kind !== "word" || !BASE_DECK_IDS[it.deckId]) return;
+      var x = r[wordLevel(it.data)]; x.all++;
+      if (isNewItem(it)) x.fresh++;
+    });
+    return r;
   }
 
   // ---------- SRS (SM-2 rút gọn) ----------
@@ -1926,11 +1993,16 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     return n;
   }
   function deckCounts(deck, now) {
-    var r = { fresh: 0, learning: 0, due: 0, review: 0 };
+    // hidden: từ mới bị bộ lọc cấp HSK giấu (không tính vào fresh); freshWords: từ mới còn lại sau lọc.
+    var r = { fresh: 0, learning: 0, due: 0, review: 0, hidden: 0, freshWords: 0 };
     ITEMS.forEach(function (it) {
       if (it.deckId !== deck.id) return;
       var c = db.cards[it.id];
-      if (!c || c.state === "new") { r.fresh++; return; }
+      if (!c || c.state === "new") {
+        if (hskHidden(it)) { r.hidden++; return; }
+        r.fresh++; if (it.kind === "word") r.freshWords++;
+        return;
+      }
       if (c.state === "learning") r.learning++; else r.review++;
       if (c.due <= now) r.due++;
     });
@@ -1952,7 +2024,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function deckNewOrder(deck) {
     var words = [], phrases = [];
     ITEMS.forEach(function (it) {
-      if (it.deckId !== deck.id || !isNewItem(it)) return;
+      if (it.deckId !== deck.id || !isNewItem(it) || hskHidden(it)) return;
       (it.kind === "word" ? words : phrases).push(it);
     });
     var out = [], wi = 0, pi = 0;
@@ -2632,6 +2704,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         if (typeof fs.autoSpeak === "boolean") db.settings.autoSpeak = fs.autoSpeak;
         if (typeof fs.speechScore === "boolean") db.settings.speechScore = fs.speechScore;
         if (typeof fs.sessionBlocks === "boolean") db.settings.sessionBlocks = fs.sessionBlocks; // backup cũ không có → giữ cài đặt máy này
+        if (hskVal(fs.hskLevels)) db.settings.hskLevels = hskVal(fs.hskLevels); // backup cũ không có → giữ cài đặt máy này
         if (themeVal(fs.theme)) { db.settings.theme = themeVal(fs.theme); applyTheme(); }
         if (wasEmpty && Array.isArray(fs.selectedDecks)) {
           db.settings.selectedDecks = fs.selectedDecks.filter(function (id, i, a) { return typeof id === "string" && a.indexOf(id) === i; });
@@ -3703,6 +3776,20 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   }
 
   // ---------- HTML: trang chủ ----------
+  // Cài đặt "Cấp HSK của từ mới": ô tick từng cấp (số từ chủ đề đếm từ dữ liệu) + nút "Tất cả".
+  function hskSettingHtml() {
+    var lv = hskLevels(), st = hskStats(), all = !hskActive();
+    var chip = function (n) {
+      var on = lv.indexOf(n) >= 0, x = st[n];
+      return '<label class="hskchip' + (on ? " on" : "") + (n === 0 ? " wide" : "") + '" title="' + x.fresh + ' từ chưa học">' +
+        '<input type="checkbox" data-hsk="' + n + '"' + (on ? " checked" : "") + '>' +
+        '<b class="hl">' + (n ? "HSK " + n : "Ngoài HSK (khẩu ngữ)") + '</b><small class="hn">' + x.all + ' từ</small></label>';
+    };
+    return '<div class="setting hskset"><div class="hskhead"><span>Cấp HSK của từ mới<small class="snote">' +
+        'Chỉ lọc từ mới của 12 chủ đề. Từ đã học vẫn ôn bình thường; bài giáo trình, 📝&nbsp;Từ trong đề, thẻ nói, thẻ dịch không bị lọc.</small></span>' +
+        '<button class="link" data-action="hsk-all"' + (all ? " disabled" : "") + '>Tất cả</button></div>' +
+      '<div class="hskgrid">' + [1, 2, 3, 4, 5, 6, 0].map(chip).join("") + '</div></div>';
+  }
   function homeHtml() {
     var now = Date.now();
     var sel = selectedDecks();
@@ -3710,7 +3797,13 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var due = Math.min(dueAll, reviewRoom()); // số sẽ ôn hôm nay (đã áp trần)
     var dueLater = dueAll - due;
     var s = db.settings;
-    var newAvail = Math.min(s.newPerSession, buildNewPool(sel).filter(function (it) { return s.sessionBlocks === false || it.kind === "word"; }).length);
+    // Đếm đúng phần phiên sẽ lấy. Chia khúc: chỉ từ. Không chia: phần đầu hàng (từ + mẫu câu) — tách 2 loại vì mẫu câu không bị lọc cấp HSK.
+    var newAvail, newPhr = 0;
+    if (s.sessionBlocks === false) {
+      var first = buildNewPool(sel).slice(0, s.newPerSession);
+      newAvail = first.filter(function (it) { return it.kind === "word"; }).length;
+      newPhr = first.length - newAvail;
+    } else newAvail = Math.min(s.newPerSession, buildNewPool(sel).filter(function (it) { return it.kind === "word"; }).length);
     var capOpts = REVIEW_CAP_OPTIONS.map(function (n) {
       return '<option value="' + n + '"' + (n === reviewCap() ? " selected" : "") + '>' + (n ? n + " lượt" : "Không giới hạn") + '</option>';
     }).join("");
@@ -3722,7 +3815,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       return '<li' + (d.lesson ? ' class="lsdeck"' : "") + '><label><input type="checkbox" data-deck="' + esc(d.id) + '"' + checked + '>' +
         '<span class="emoji">' + esc(d.emoji || "📘") + '</span>' +
         '<span class="dtitle zh">' + esc(d.title || d.id) + '</span>' +
-        '<span class="counts">mới ' + c.fresh + ' · học ' + c.learning + ' · hạn ' + c.due + '</span></label>' +
+        '<span class="counts">mới ' + c.fresh + ' · học ' + c.learning + ' · hạn ' + c.due +
+          (c.hidden ? '<small class="hskoff" title="Từ mới ngoài cấp HSK đang chọn (Cài đặt → Cấp HSK của từ mới)">' +
+            (c.freshWords ? 'ẩn ' + c.hidden + ' từ (theo cấp HSK)' : '0 từ mới theo cấp HSK · ẩn ' + c.hidden) + '</small>' : "") + '</span></label>' +
         (d.lesson ? '<button class="link" data-action="ls-open" data-id="' + esc(d.id) + '" title="Mở bài">Mở</button>' : "") + '</li>';
     };
     var deckRows = DECKS.filter(function (d) { return !d.lesson; }).map(deckRow).join("");
@@ -3741,7 +3836,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         '<div class="stat"><b>' + learnedCount() + '</b><span>thẻ đã gặp</span></div>' +
       '</section>' +
       '<button class="primary big" data-action="start">Học 45 phút</button>' +
-      '<p class="muted small center">Phiên này: ' + due + ' thẻ ôn + ' + newAvail + ' từ mới · ' + sel.length + '/' + DECKS.length + ' bộ thẻ' +
+      '<p class="muted small center">Phiên này: ' + due + ' thẻ ôn + ' + newAvail + ' từ mới' + (hskActive() ? ' (theo cấp HSK)' : "") + (newPhr ? ' + ' + newPhr + ' mẫu câu' : "") + ' · ' + sel.length + '/' + DECKS.length + ' bộ thẻ' +
         (lsMissing ? ' · ⚠️ ' + lsMissing + ' bài giáo trình chưa tải được' : "") + '</p>' +
       '<section class="box"><div class="row-between"><h2>Chủ đề</h2><span>' +
         '<button class="link" data-action="select-all">Chọn hết</button><span class="muted">·</span>' +
@@ -3753,6 +3848,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       '<section class="box"><h2>Cài đặt</h2>' +
         '<label class="setting"><span>Từ mới mỗi phiên</span><select data-setting="newPerSession">' + newOpts + '</select></label>' +
         '<label class="setting"><span>Ôn tối đa / ngày</span><select data-setting="reviewCap">' + capOpts + '</select></label>' +
+        hskSettingHtml() +
         '<label class="setting"><span>Chia phiên 3 khúc<small class="snote">Thẻ → Nói &amp; dịch → Nghe &amp; đọc, mỗi khúc 15 phút. Tắt = trộn mọi loại thẻ như cũ.</small></span>' +
           '<input type="checkbox" data-setting="sessionBlocks"' + (s.sessionBlocks !== false ? " checked" : "") + '></label>' +
         '<label class="setting"><span>Bảng viết tay khi ôn nghĩa → chữ</span><input type="checkbox" data-setting="drawPad"' + (s.drawPad ? " checked" : "") + '></label>' +
@@ -4144,6 +4240,18 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     syncHistory();
     window.scrollTo(0, 0);
   }
+  // Vẽ lại màn hiện tại nhưng giữ chỗ cuộn (tick nhiều ô cài đặt liền nhau không bị nhảy lên đầu trang).
+  // Vẽ lại mà giữ chỗ: anchorSel = control vừa chạm, giữ đứng yên trên màn hình (dòng phía trên đổi cao thấp
+  // cũng không làm trang nhảy); focusSel = ô trả focus bàn phím về sau khi vẽ (Tab tiếp theo không nhảy lên đầu trang).
+  function renderKeepScroll(anchorSel, focusSel) {
+    var y = window.pageYOffset || 0;
+    var a = anchorSel ? document.querySelector(anchorSel) : null, t0 = a ? a.getBoundingClientRect().top : null;
+    render(); window.scrollTo(0, y);
+    var b = anchorSel ? document.querySelector(anchorSel) : null;
+    if (b && t0 != null) { var d = b.getBoundingClientRect().top - t0; if (d) window.scrollBy(0, d); }
+    var f = focusSel ? document.querySelector(focusSel) : null;
+    if (f) { try { f.focus({ preventScroll: true }); } catch (e) { f.focus(); } }
+  }
 
   // ---------- định tuyến bằng hash: nút Back của điện thoại quay về màn trước ----------
   // Hash không gửi lên server (GitHub Pages không 404), ?t= giữ nguyên.
@@ -4233,6 +4341,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       case "import": { var f = byId("importFile"); if (f) { f.value = ""; f.click(); } break; }
       case "select-all": setSelectedDecks(keepUnloadedLessons(DECKS.map(function (d) { return d.id; }))); break;
       case "select-none": setSelectedDecks([]); break;
+      case "hsk-all": // nút bị disabled sau khi bấm: focus (nếu đang ở nút) chuyển sang ô HSK 1
+        db.settings.hskLevels = HSK_ALL.slice(); saveDb();
+        renderKeepScroll(".hskset .hskgrid", document.activeElement === el ? 'input[data-hsk="1"]' : null); break;
       case "speak": if (recIsLive()) recStop(); speak(el.getAttribute("data-text")); break; // đang ghi mà bấm nghe mẫu: dừng ghi trước, khỏi thu giọng máy
       case "v-rec": {
         var vo = view === "session" && session && session.current ? "card:" + session.current.id : view === "lesson" ? shadowOwner() : "";
@@ -4339,6 +4450,17 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       var ids = db.settings.selectedDecks.filter(function (id) { return id !== deckId; });
       if (t.checked) ids.push(deckId);
       setSelectedDecks(keepUnloadedLessons(ids));
+      return;
+    }
+    // Cấp HSK của từ mới: phiên đang chạy giữ hàng từ mới đã nạp lúc bắt đầu, bộ lọc mới áp từ phiên sau.
+    var hskAttr = t.getAttribute("data-hsk");
+    if (hskAttr != null) {
+      var n = Number(hskAttr), lv = hskLevels().filter(function (x) { return x !== n; });
+      if (t.checked) lv.push(n);
+      if (!hskVal(lv)) { t.checked = true; toast("Giữ ít nhất 1 cấp HSK"); return; }
+      db.settings.hskLevels = hskVal(lv);
+      var hsel = 'input[data-hsk="' + n + '"]';
+      saveDb(); renderKeepScroll(hsel, document.activeElement === t ? hsel : null);
       return;
     }
     var key = t.getAttribute("data-setting");

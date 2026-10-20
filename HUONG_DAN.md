@@ -17,6 +17,9 @@
 
 **Trần ôn mỗi ngày:** Cài đặt → **Ôn tối đa / ngày** (30 / 60 / 100 / Không giới hạn, mặc định 60). Mỗi ngày chỉ ôn tối đa chừng ấy lượt; thẻ dễ quên (khoảng cách ngắn) được ôn trước. Thẻ dư không bị tính là quên, chỉ để mấy hôm tới. Ô **đến hạn** ở trang chủ là số sẽ ôn hôm nay, dòng nhỏ bên dưới là số để dành. Đủ trần thì phiên chuyển sang từ mới. Lượt quay lại của thẻ vừa Quên và từ mới không tính. Số lượt ôn từng ngày xem ở **📊 Thống kê**, và nằm trong Xuất/Nhập backup (key `daily` trong `hoctrung.v1`).
 
+**Cấp HSK của từ mới:** Cài đặt → **Cấp HSK của từ mới** → tick các cấp muốn học (HSK 1–6, **Ngoài HSK (khẩu ngữ)**; mỗi ô ghi số từ chủ đề ở cấp đó). Nút **Tất cả** để chọn lại hết; phải giữ ít nhất 1 cấp. Chỉ lọc **từ mới của 12 chủ đề**. Từ đã học vẫn ôn bình thường; bài giáo trình, 📝 Từ trong đề, thẻ nói, thẻ dịch không bị lọc.
+- Trang chủ: số "mới" của từng chủ đề và dòng "Phiên này" đếm theo bộ lọc; chủ đề có từ bị ẩn ghi thêm "ẩn N từ (theo cấp HSK)". Đổi bộ lọc thì áp từ phiên sau. Lựa chọn lưu ở `settings.hskLevels`, có trong Xuất/Nhập backup (backup cũ không có trường này = học mọi cấp như trước).
+
 **Thẻ nói + nhại bài khóa:**
 - Mẫu câu trong phiên giờ là **🗣 Thẻ nói**: đọc tình huống + câu Việt, tự **nói to câu tiếng Trung**. Bấm **🎙 Ghi âm** (hoặc phím `R`) → nói → **⏹ Dừng** → **Lật**. Mặt sau có câu mẫu (chữ xanh = app nghe đúng, chữ đỏ gạch sóng = thiếu/sai), dòng "App nghe được: …", % khớp, **🔊 Mẫu**, **▶ Nghe lại mình**, **🎙 Ghi lại**. Chấm **Quên / Nhớ** như cũ.
 - Màn bài → tab **Bài khóa** → **🎙 Nhại theo**: mỗi câu **▶ Nghe mẫu** → **🎙 Nói theo** → xem so sánh, **▶ Nghe lại mình** → **Câu tiếp →**. Bấm câu khác để nhảy tới câu đó.
