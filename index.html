@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#160807">
 <title>Học tiếng Trung</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-180.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="学中文">
 <style id="fonts">
 /* font nhúng dùng chung cho cả 2 giao diện: tiêu đề = Playfair Display ("Playfair", thường + nghiêng); chữ Việt = Be Vietnam Pro ("BeVN" 300/400/600);
    chữ Hán + pinyin = LXGW WenKai ("WenKai", 1 độ đậm — Be Vietnam Pro thiếu dấu thanh 3 ǎ ǐ ǒ ǔ ǚ) */
@@ -361,6 +368,31 @@ button.item:hover{background:var(--hover)}
 .stname{display:block;overflow:hidden}
 
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none !important;transition:none !important;scroll-behavior:auto !important}}
+/* ==== [P] app cài được: thanh "Có bản mới", mục Sao lưu (giữ dữ liệu / xuất lần cuối / cài app), nhắc ở Trang Học ==== */
+.swbar{position:fixed;left:16px;right:16px;margin-inline:auto;width:fit-content;max-width:min(560px,calc(100% - 32px));bottom:calc(24px + env(safe-area-inset-bottom));z-index:39;
+  display:flex;align-items:center;gap:6px;background:var(--toast-bg);color:var(--toast-ink);padding:0 4px 0 14px;border-radius:var(--r);border-left:3px solid var(--zhu);font-size:15px;
+  box-shadow:0 12px 30px -12px var(--toast-shadow)}
+.swbar[hidden],html.insess .swbar,body:has(.wrap.sess) .swbar,body:has(.rpdock) .swbar{display:none} /* đóng vai: thanh nhập dính đáy, ẩn như trong phiên */
+body:has(.tabbar) .swbar{bottom:calc(var(--tabh) + 14px + env(safe-area-inset-bottom))}
+/* thanh đang hiện: chừa chỗ cuối trang để hàng cuối (link, nút) không bị che khi cuộn hết */
+body:has(.swbar:not([hidden])) .wrap:not(.sess):not(.rpwrap){padding-bottom:calc(112px + env(safe-area-inset-bottom))}
+body:has(.tabbar):has(.swbar:not([hidden])) .wrap:not(.sess):not(.rpwrap){padding-bottom:calc(var(--tabh) + 104px + env(safe-area-inset-bottom))}
+body:has(.swbar:not([hidden])) #toast{transform:translateY(-58px)}
+html.insess body #toast,body:has(.wrap.sess) #toast{transform:none}
+.swbar button{background:none;border:0;color:var(--toast-ink);min-height:44px;padding:0 12px;font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--zhu-line)}
+.swbar button:hover{background:none;text-decoration-color:currentColor}
+.swbar button.swx{min-width:44px;padding:0;text-decoration:none;opacity:.75;display:inline-flex;align-items:center;justify-content:center}
+.swbar button.swx:hover{opacity:1}
+.pwabox{margin-top:14px}
+.pwabox .setting{gap:12px}
+.pwabox .setting b{font-weight:600}
+.pwabox .pwamk{flex:none;display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--ink3)}
+.pwabox .pwamk.ok{color:var(--green-ink)}
+.pwabox .pwamk.due{color:var(--orange-ink)}
+.pwabox .snote.due{color:var(--orange-ink)}
+.pwabox .small-btn{flex:none}
+.hnotes .pwanote .link{min-height:44px;margin:-12px 0;padding:0 2px;font-size:13px;vertical-align:baseline}
+/* ==== [/P] ==== */
 /* ==== [S1] thẻ học, phiên 45 phút, kiểm tra bài cũ ==== */
 /* --- khung phiên: thanh dính trên + vùng thẻ; trên điện thoại thẻ giãn hết chiều cao để hàng nút (.dock) nằm sát đáy ---
    (html .wrap.sess: thắng html.tabbed .wrap còn sót khi startSession vẽ phiên mà không gọi addTabBar) */
@@ -393,6 +425,7 @@ html .wrap.sess{padding-top:0}
 .bar-sub{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0 12px;min-height:22px}
 .bcount{flex:1 1 0;min-width:0;font-size:12.5px;line-height:1.45;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bcount em{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink2);margin-right:8px}
+@media (max-width:400px){.blkbar .bcount{white-space:normal}} /* khúc 2 đủ cả "đặt" lẫn "nghe": xuống dòng, không cắt mất số */
 .bar button.blknext{position:relative;flex:none;min-height:28px;margin-left:auto;padding:0;font-size:13.5px}
 .bar button.blknext::before{content:"";position:absolute;inset:-8px -6px}
 .banner{margin-top:2px;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--zhu-ink)}
@@ -768,6 +801,63 @@ html.insess .bar{top:var(--smh)}
   .sdone .dstats > div{padding:8px 4px 6px}
   .sdone .dnote{margin-top:8px}
 }
+
+/* --- từ cứng đầu: nhãn nhỏ cạnh loại thẻ, ghi chú trên bảng viết, khối Mẹo nhớ (kẻ trên, nhãn serif nghiêng son, chiết tự lồng dưới) --- */
+.sdone .dnote,.lclist .lcn{font-variant-numeric:lining-nums}
+.cmeta .ckind .tag.lch{margin-left:8px;padding:0 7px;vertical-align:2px;font-family:var(--sans);font-style:normal;font-size:11.5px;line-height:1.5;
+  color:var(--orange-ink);border-color:var(--orange-line);background:var(--orange-soft)}
+.lcnote{margin:18px 0 0;text-align:center;font-family:var(--serif);font-style:italic;font-size:15px;line-height:1.4;color:var(--orange-ink)}
+.lcnote + .pad-wrap{margin-top:10px}
+.mnemo{margin:22px 0 0;padding:14px 0 0;border-top:1px solid var(--rule);text-align:left}
+.mnemo .mnhead{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--zhu-ink)}
+.mnemo .mntx{margin:4px 0 0;font-size:15.5px;line-height:1.6;color:var(--ink)}
+.mnemo .mnsrc{margin:4px 0 0;font-size:12.5px;line-height:1.45;color:var(--ink3)}
+.mnemo .mnsrc .aiwait{font-size:13.5px}
+.mnemo .ailine{margin-top:6px}
+.mnemo button.mnretry{min-height:44px;padding:0 2px;font-size:14px}
+.mnemo button.mnretry .ic{margin-right:4px}
+.mnemo .chiettu{margin:10px 0 0;padding:0;border-top:0}
+.mnemo .chiettu .label{font-size:14px;color:var(--ink3)}
+
+/* --- thẻ Nghe: nút loa tròn to (tự đọc; bị chặn → nền son nhạt "Bấm để nghe"), đọc chậm dạng link; câu Trung mặt sau Khải to --- */
+.lsplay{display:flex;flex-direction:column;align-items:center;margin:26px 0 0}
+button.lsbig{flex-direction:column;gap:6px;width:128px;height:128px;min-height:128px;padding:0;border-radius:50%;border:1px solid var(--zhu-line);color:var(--zhu-ink);background:transparent}
+button.lsbig .ic{width:44px;height:44px;stroke-width:1.4}
+button.lsbig:hover{background:var(--zhu-soft);border-color:var(--zhu-ink)}
+.lsbl{font-size:13px;line-height:1.2;color:var(--ink2)}
+button.lsbig.need{background:var(--zhu-soft2);border:2px solid var(--zhu-ink)}
+button.lsbig.need .lsbl{font-weight:600;font-size:14px;color:var(--zhu-ink)}
+.lsplay button.lsslow{margin-top:6px;font-size:14px}
+.lsnote{margin:2px 0 0;text-align:center;font-size:13px;line-height:1.45;color:var(--orange-ink)}
+.lscard .say{margin-top:14px}
+.rcyou .rczh,.rcsub b.rczh{font-family:var(--kai);font-weight:400;font-synthesis:none;font-size:21px;color:var(--ink-zh)}
+.rcsub b.rczh{font-size:17px}
+.hrzh{margin:22px 0 2px;text-align:center;font-size:clamp(26px,7.6vw,34px);line-height:1.45;color:var(--ink-zh);word-break:break-all;text-wrap:balance}
+.hrzh button.spk.sm{margin-left:4px;vertical-align:-4px}
+.pinyin.hrpy{margin-top:4px;font-size:17px;line-height:1.45}
+.hrvi{margin:8px 0 0;text-align:center;font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.4;color:var(--ink);text-wrap:balance}
+.hrw{margin:8px 0 0;text-align:center;font-size:12.5px;line-height:1.45;color:var(--ink3)}
+.hrw b.zh{margin:0 3px;font-weight:400;font-size:17px;color:var(--zhu-ink)}
+.hrw + .aibox,.hrw + .ailine{margin-top:14px}
+@media (max-height:500px){
+  .lsplay{margin-top:8px;flex-direction:row;justify-content:center;gap:14px}
+  button.lsbig{flex-direction:row;width:auto;height:auto;min-height:52px;padding:6px 20px;border-radius:999px}
+  button.lsbig .ic{width:26px;height:26px}
+  .lsplay button.lsslow{margin-top:0}
+  .lsnote{flex-basis:100%}
+  .hrzh{margin-top:8px}
+}
+
+/* --- màn #leech: hàng mục lục (chữ Hán son · nghĩa serif + pinyin nhỏ · số lần quên serif · loa) --- */
+.lcwrap .lede b{color:var(--ink);font-weight:500}
+.lcwrap button.lcgo{margin-top:18px}
+.lcsub{margin:6px 0 0;text-align:center;font-size:12.5px;line-height:1.45;color:var(--ink3)}
+.lclist .lcrow{gap:12px}
+.lclist .lcz{flex:none;min-width:42px;max-width:40%;font-size:28px;line-height:1.15;color:var(--zhu-ink);overflow-wrap:anywhere}
+.lclist .lcpy{font-family:var(--py);font-size:13.5px;color:var(--ink2)}
+.lclist .lcn{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.lclist .lcn small{margin:0;font-family:var(--sans);font-size:11px}
+.lclist .lcrow > .spk{flex:none;margin-right:-6px}
 /* ==== [/S1] ==== */
 /* ==== [S2] bản đồ chủ đề, cấp, mở rộng ==== */
 /* ---- Bản đồ (#map): mục lục sách. Chủ đề = hàng chữ Hán son + tên serif + dòng phụ + %; chủ đề mở = đầu chương lớn ---- */
@@ -1678,6 +1768,116 @@ button.rpadd{flex:none;min-height:44px;padding:4px 14px;font-size:14px}
 .rplog .rpchat{margin:0 0 12px}
 @media (max-width:360px){.rphead h1.rpt{font-size:27px}.rpzh{font-size:21px}.rpsn{font-size:56px}.rpkw{grid-template-columns:72px minmax(0,1fr) auto auto;gap:0 8px}.rpkh{font-size:27px}.rpkh.l3{font-size:22px}.rpkh.l4{font-size:17px}}
 /* ==== [/S5] ==== */
+/* ==== [S6] dịch tin nhắn ==== */
+/* thanh tab 6 mục: chữ 10px, không xuống dòng (vừa 360px) */
+.tabbar .tab span{font-size:10px}
+/* ô nhập: khối nổi duy nhất của màn; tự giãn bằng JS */
+.dichform{margin-top:18px}
+textarea.dichin{display:block;width:100%;min-height:120px;resize:none;padding:12px 14px;font-size:16.5px;line-height:1.55;overflow-y:auto}
+textarea.dichin[readonly]{color:var(--ink2)}
+.dichbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px}
+.dichdir{flex:1;min-width:0;display:flex;align-items:center;gap:6px;font-size:13px;line-height:1.4;color:var(--ink3)}
+.dichdir .ic{flex:none;color:var(--zhu-ink)}
+button.dichgo{flex:none;min-width:120px;padding:10px 26px}
+.dichpriv{display:flex;align-items:flex-start;gap:7px;margin:10px 0 0;font-size:12.5px;line-height:1.45;color:var(--ink3)}
+.dichpriv .ic{flex:none;width:14px;height:14px;margin-top:2px}
+.dichform .hint{margin-top:6px;text-align:left}
+.dnoai{margin-top:12px;font-size:14.5px;line-height:1.55;color:var(--ink)}
+.dnoai b{display:block;margin-bottom:2px;font-family:var(--serif);font-weight:500;font-size:18px}
+.dbtns{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:14px}
+.dicherr{display:flex;align-items:flex-start;gap:8px;margin-top:16px;padding:2px 0 2px 12px;border-left:2px solid var(--orange-line);font-size:14px;line-height:1.5;color:var(--orange-ink)}
+.dicherr .ic{flex:none;margin-top:2px}
+.dwait{display:flex;align-items:center;gap:8px;margin-top:22px;font-family:var(--serif);font-style:italic;font-size:16px;color:var(--ink2);animation:breathe 1.6s ease-in-out infinite}
+.dwait .ic{color:var(--zhu-ink)}
+/* kết quả: chữ Hán to + pinyin từ điển + loa / Chép; tiếng Việt serif */
+.dichres{margin-top:28px}
+.dlab{margin:14px 0 4px;font-family:var(--serif);font-style:italic;font-size:14px;color:var(--zhu-ink)}
+.dichres h2 + .dlab{margin-top:4px}
+.dsrc{margin:4px 0 12px;padding:0 0 0 12px;border-left:2px solid var(--rule2);font-size:14.5px;line-height:1.5;color:var(--ink2);white-space:pre-wrap;overflow-wrap:anywhere}
+.dzh{font-size:30px;line-height:1.35;color:var(--ink-zh);white-space:pre-wrap;overflow-wrap:anywhere}
+.dzh.l2{font-size:24px}
+.dzh.l3{font-size:20px;line-height:1.5}
+.dpy{margin-top:4px;font-size:16px;line-height:1.45;color:var(--ink2);overflow-wrap:anywhere}
+.dpy.faint{font-family:var(--sans);font-size:12.5px;color:var(--ink3)}
+.dact{display:flex;align-items:center;gap:10px;margin-top:8px}
+button.dcopy{gap:6px}
+button.dcopy .ic{width:16px;height:16px;color:var(--zhu-ink)}
+.dvi{font-family:var(--serif);font-size:21px;line-height:1.4;color:var(--ink);white-space:pre-wrap;overflow-wrap:anywhere}
+.dalt{margin-top:16px;padding-top:2px;border-top:1px solid var(--rule)}
+.dalt .dzh{font-size:22px}
+.dalt .dzh.l3{font-size:18px}
+.dnote{margin-top:16px;padding-top:2px;border-top:1px solid var(--rule)}
+.dnote p{margin:0;font-size:14.5px;line-height:1.55;color:var(--ink)}
+.dnone{margin:14px 0 0;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink2)}
+/* từ mới: hàng mục lục — chữ Hán son | pinyin + nghĩa + vì sao | loa | nút */
+.dwh{margin-top:26px}
+.dkw{display:grid;grid-template-columns:76px minmax(0,1fr) auto auto;grid-template-areas:"h m s b";align-items:center;gap:0 10px;min-height:64px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.dkh{grid-area:h;min-width:0;font-size:30px;line-height:1.1;color:var(--zhu-ink);overflow-wrap:anywhere}
+.dkh.l3{font-size:24px}
+.dkh.l4{font-size:18px}
+.dkh.l5{font-size:14px} /* 5 chữ trở lên: vẫn 1 dòng trong cột 76px */
+.dkm{grid-area:m;min-width:0;display:flex;flex-direction:column;font-size:14px;line-height:1.4;color:var(--ink2)}
+.dkm .py{font-size:16px;color:var(--ink)}
+.dmean{color:var(--ink)}
+.dmean i{font-style:normal;color:var(--ink3);font-size:12.5px}
+.dkm small{margin-top:2px;font-size:12.5px;line-height:1.4;color:var(--ink3)}
+.dst{margin-top:3px;font-style:normal;font-size:12.5px;color:var(--ink3)}
+.dst.ok{color:var(--green-ink)}
+.dkw > .spk{grid-area:s}
+button.dadd{grid-area:b;min-width:56px;padding:4px 10px;font-size:14px}
+.dwnote{margin:12px 0 0;font-size:12.5px;line-height:1.5;color:var(--ink3)}
+.dwnote b{font-weight:500;color:var(--ink2)}
+/* lịch sử: hàng gọn 1 dòng, bấm mở bản dịch */
+.dhist{list-style:none;margin:0;padding:0}
+.dhi{border-bottom:1px solid var(--rule)}
+button.dhb{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"s i" "t i";align-items:center;gap:2px 10px;width:100%;min-height:60px;padding:10px 0;
+  border:0;border-radius:0;background:none;text-align:left;color:var(--ink)}
+button.dhb:hover{background:none}
+.dhs{grid-area:s;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:15px;line-height:1.4}
+.dhs.zh{font-size:17px}
+.dhb small{grid-area:t;font-size:12px;color:var(--ink3)}
+.dhb .ic{grid-area:i;color:var(--ink3)}
+.dho{padding:0 0 14px}
+.dho .dzh{font-size:22px}
+.dho .dzh.l3{font-size:18px}
+.dho .dvi{font-size:18px}
+.dhnote{margin:8px 0 0;font-size:13px;line-height:1.5;color:var(--ink3)}
+/* nhập đoạn chat cũ */
+.dimp .hl{font-size:36px}
+.dimptx{min-height:160px}
+.dsteps{margin:0 0 12px;font-size:14px;line-height:1.55;color:var(--ink2)}
+.dconvq{display:block;width:100%;margin:16px 0 4px}
+.dconv.off .it b{color:var(--ink2)}
+.dstat{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--rule)}
+.dstat > div{display:flex;flex-direction:column;padding:6px 0 12px}
+.dstat > div + div{padding-left:12px;border-left:1px solid var(--rule)}
+.dstat b{font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.1;color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
+.dstat small{font-size:12.5px;line-height:1.35;color:var(--ink3)}
+.dcost{margin:12px 0 0;font-size:14px;line-height:1.55;color:var(--ink2)}
+.dcost b{font-weight:500;color:var(--ink)}
+.dprev{margin-top:12px;padding-left:12px;border-left:2px solid var(--rule2);font-size:16px;line-height:1.6;color:var(--ink2)}
+.dprev > div{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.dprev .faint{font-family:var(--sans)}
+.dprog{height:4px;margin:6px 0 12px;background:var(--rule)}
+.dprog span{display:block;height:100%;background:var(--zhu);transition:width .3s}
+.dprogt{margin:0;font-size:14.5px;color:var(--ink2)}
+.dprogt b{font-family:var(--serif);font-weight:500;color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
+.dpickh{margin-top:20px}
+.dpickh span{display:flex;flex:none}
+.dpick{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:0 8px;border-bottom:1px solid var(--rule)}
+.dpick label{display:grid;grid-template-columns:22px 76px minmax(0,1fr);align-items:center;gap:0 12px;min-height:64px;padding:10px 0;cursor:pointer}
+.dpick .dkm small.zh{font-size:15px;color:var(--ink2)}
+.dpick .dkh,.dpick .dkm{grid-area:auto}
+.dimpbar{position:sticky;bottom:calc(var(--tabh) + env(safe-area-inset-bottom));z-index:4;margin:18px -20px 0;padding:10px 20px;
+  background:var(--bg-glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--rule)}
+.dimpbar button.primary.big{margin:0}
+.ddone{margin:0;font-family:var(--serif);font-size:19px;line-height:1.45;color:var(--ink)}
+.ddone b{font-weight:500;color:var(--zhu-ink)}
+@media (max-width:360px){.dzh{font-size:27px}.dzh.l2{font-size:22px}.dkw{grid-template-columns:64px minmax(0,1fr) auto auto;gap:0 8px}.dkh{font-size:27px}.dkh.l3{font-size:21px}.dkh.l4{font-size:16px}.dkh.l5{font-size:12px}
+  .dpick label{grid-template-columns:22px 64px minmax(0,1fr);gap:0 10px}.dstat b{font-size:27px}button.dichgo{min-width:104px}}
+@media (max-height:500px){.dimpbar{bottom:calc(var(--tabh) + env(safe-area-inset-bottom))}textarea.dichin{min-height:88px}}
+@media (prefers-reduced-motion:reduce){.dwait{animation:none}.dprog span{transition:none}}
+/* ==== [/S6] ==== */
 </style>
 <script>/* chọn giao diện TRƯỚC khi vẽ (tránh nháy): bật đúng 1 khối style. settings.theme: "dem" (mặc định) | "giay" | "system";
    giá trị cũ: "dark"/"auto" → dem, "light" → giay */(function(){var t;try{var s=JSON.parse(localStorage.getItem("hoctrung.v1")||"{}").settings;t=s&&s.theme}catch(e){}
@@ -1776,6 +1976,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (d.lesson) return "课";
     if (d.id === CUSTOM_DECK_ID) return "考";
     if (d.id === EXP_DECK_ID) return "扩";
+    if (d.id === MSG_DECK_ID) return "信"; // [F4] Từ tin nhắn
     return topicGlyph(d.id);
   }
   function deckTitle(d) { return String((d && (d.title || d.id)) || "").replace(/\s*\u2728/g, ""); } // \u2728 = dấu lấp lánh của bộ AI soạn, không hiện
@@ -1790,9 +1991,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       (act ? '<button class="small-btn" data-action="' + act + '">' + ico("back") + ' ' + label + '</button>' : "") + '</div></div>';
   }
   // Thanh tab dưới đáy (màn cấp 1): chữ Hán làm biểu tượng. Ẩn trong phiên 45 phút (html.insess) và ở màn sâu (thẻ, đề, bài, cấp, đóng vai).
-  var TAB_OF = { home: "home", map: "map", exams: "exams", lessons: "lessons", me: "me", stats: "me" };
+  var TAB_OF = { home: "home", dich: "dich", map: "map", exams: "exams", lessons: "lessons", me: "me", stats: "me" };
   function tabBarHtml(cur) {
     var tabs = [["home", "学", "Học"]];
+    tabs.push(["dich", "译", "Dịch"]); // [F4] tab Dịch tin nhắn
     if (MAP_INDEX.length) tabs.push(["map", "图", "Bản đồ"]);
     if (EXAM_INDEX.length) tabs.push(["exams", "考", "Luyện đề"]);
     if (LESSON_INDEX.length) tabs.push(["lessons", "书", "Giáo trình"]);
@@ -1909,6 +2111,71 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   var EXPP = loadExpP();
   function expPIndex(zh) { var k = normSent(zh); for (var i = 0; i < EXPP.length; i++) if (normSent(EXPP[i].zh) === k) return i; return -1; }
   function expAny() { return EXPW.length + EXPP.length > 0; }
+
+  // ---------- [F4] tab Dịch tin nhắn: lịch sử + bộ thẻ "Từ tin nhắn" (chữ đại diện 信) ----------
+  // localStorage "hoctrung.msgs.v1" = [{ at, dir: "vz" (Việt→Trung) | "zv" (Trung→Việt), src, out, alt, note }] — ~300 cặp mới nhất.
+  // localStorage "hoctrung.msgw.v1" = { words: [từ như bộ Từ mở rộng; note = vì sao đáng học, src "msg", from "msg:<at>"],
+  //   phrases: [{ zh, pinyin, vi, when, from }] } — phrases CHỈ NỐI THÊM (id thẻ "tu-tin-nhan:p|tp:<i>" theo chỉ số).
+  // Cả 2 đi theo backup (msgs, msgDeck); lúc nhập, id thẻ câu của file được đổi về chỉ số câu ở máy này.
+  var MSGS_KEY = "hoctrung.msgs.v1", MSGW_KEY = "hoctrung.msgw.v1", MSG_DECK_ID = "tu-tin-nhan", MSGS_MAX = 300;
+  function msgKey(m) { return m.at + "|" + m.src; }
+  function normalizeMsgs(arr) {
+    var out = [], seen = {};
+    (Array.isArray(arr) ? arr : []).forEach(function (m) {
+      if (!m || typeof m !== "object" || !m.src || !m.out) return;
+      var v = { at: num(m.at, 0), dir: m.dir === "zv" ? "zv" : "vz", src: aiS(m.src, 2000), out: aiS(m.out, 2000), alt: aiS(m.alt, 1000), note: aiS(m.note, 800) };
+      if (seen[msgKey(v)]) return;
+      seen[msgKey(v)] = true; out.push(v);
+    });
+    return out.sort(function (a, b) { return a.at - b.at; }).slice(-MSGS_MAX);
+  }
+  function loadMsgs() { try { return normalizeMsgs(JSON.parse(localStorage.getItem(MSGS_KEY) || "[]")); } catch (e) { return []; } }
+  function saveMsgs() {
+    try { localStorage.setItem(MSGS_KEY, JSON.stringify(MSGS)); return true; }
+    catch (e) { toast("Không lưu được tin nhắn (bộ nhớ trình duyệt đầy / bị chặn?)"); return false; }
+  }
+  var MSGS = loadMsgs();
+  function normalizeMsgW(arr) {
+    var out = [], seen = {};
+    (Array.isArray(arr) ? arr : []).forEach(function (w) {
+      var v = aiWordVal(w);
+      if (!v || seen[v.hanzi]) return;
+      seen[v.hanzi] = true;
+      v.src = "msg"; v.from = aiS(w.from, 80);
+      out.push(v);
+    });
+    return out;
+  }
+  // Từ đã bấm "Bỏ" ở Dịch tin nhắn: { hanzi: lúc bỏ } — tin sau có lại thì không tự thêm (vẫn có nút + Học). Giữ MSGW_SKIP_MAX từ gần nhất.
+  var MSGW_SKIP_MAX = 500;
+  function normalizeMsgSkip(o) {
+    var out = {};
+    if (!o || typeof o !== "object" || Array.isArray(o)) return out;
+    Object.keys(o).filter(function (h) { return hzOk(h); }).sort(function (a, b) { return num(o[b], 0) - num(o[a], 0); })
+      .slice(0, MSGW_SKIP_MAX).forEach(function (h) { out[h] = num(o[h], 0); });
+    return out;
+  }
+  function loadMsgW() {
+    try {
+      var o = JSON.parse(localStorage.getItem(MSGW_KEY) || "{}") || {};
+      return { words: normalizeMsgW(o.words), phrases: normalizeExpP(o.phrases), skip: normalizeMsgSkip(o.skip) };
+    } catch (e) { return { words: [], phrases: [], skip: {} }; }
+  }
+  function saveMsgW() {
+    try { localStorage.setItem(MSGW_KEY, JSON.stringify(MSGD)); return true; }
+    catch (e) { toast("Không lưu được từ (bộ nhớ trình duyệt đầy / bị chặn?)"); return false; }
+  }
+  var MSGD = loadMsgW();
+  function msgWHas(h) { return MSGD.words.some(function (w) { return w.hanzi === h; }); }
+  function msgPIndex(zh) { var k = normSent(zh); for (var i = 0; i < MSGD.phrases.length; i++) if (normSent(MSGD.phrases[i].zh) === k) return i; return -1; }
+  function msgAny() { return MSGD.words.length + MSGD.phrases.length > 0; }
+  function msgDeck() {
+    return {
+      id: MSG_DECK_ID, title: "Từ tin nhắn", emoji: "",
+      words: MSGD.words.map(function (w) { var o = {}; Object.keys(w).forEach(function (k) { o[k] = w[k]; }); return o; }),
+      phrases: MSGD.phrases.map(function (p) { return { zh: p.zh, pinyin: p.pinyin, vi: p.vi, when: p.when }; })
+    };
+  }
 
   // ---------- giáo trình HSK chuẩn: chỉ mục + nạp lười ----------
   var LESSON_ID_RE = /^[A-Za-z0-9_.-]+$/;
@@ -2146,7 +2413,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   var ITEMS = [];
   var ITEM_BY_ID = {};
   function rebuildItems() {
-    DECKS = BASE_DECKS.concat(lessonDecks(), mapDecks(), CUSTOM.length ? [customDeck()] : [], expAny() ? [expDeck()] : []);
+    DECKS = BASE_DECKS.concat(lessonDecks(), mapDecks(), CUSTOM.length ? [customDeck()] : [], expAny() ? [expDeck()] : [], msgAny() ? [msgDeck()] : []);
     ITEMS = []; ITEM_BY_ID = {}; KNOWN = null;
     DECKS.forEach(function (deck) {
       (Array.isArray(deck.words) ? deck.words : []).forEach(function (w) {
@@ -2218,11 +2485,16 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function normalizeCard(c) {
     if (!c || typeof c !== "object") return null;
     var st = c.state === "learning" || c.state === "review" || c.state === "new" ? c.state : "new";
-    return {
+    var o = {
       state: st, ease: Math.max(1.3, num(c.ease, 2.5)), interval: Math.max(0, num(c.interval, 0)),
       due: num(c.due, 0), reps: Math.max(0, Math.floor(num(c.reps, 0))),
       lapses: Math.max(0, Math.floor(num(c.lapses, 0))), last: num(c.last, 0)
     };
+    // trường tùy chọn của từ cứng đầu (xem leechAfterGrade): ul = số lần quên lúc hết cứng đầu, lk = số lần nhớ liền đang đếm
+    var ul = Math.floor(num(c.ul, 0)), lk = Math.floor(num(c.lk, 0));
+    if (ul > 0) o.ul = Math.min(ul, o.lapses);
+    if (lk > 0) o.lk = Math.min(lk, 9);
+    return o;
   }
   function normalizeDb(obj) {
     var base = defaultDb();
@@ -3313,9 +3585,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var runs = String(zh || "").match(/[A-Za-z0-9]{2,}/g);
     return !!(runs && py && runs.some(function (r) { return String(py).indexOf(r) < 0; }));
   }
-  function dictFixWalk(fix) { // fix(w | ex) → true nếu đã đổi; trả về { packs, expw, expp, aiexp } (true = có đổi)
-    var ch = { packs: false, expw: false, expp: false, aiexp: false };
-    var words = function (arr, k) { (arr || []).forEach(function (w) { if (fix(w, "w")) ch[k] = true; (w.examples || []).forEach(function (e) { if (fix(e, "e")) ch[k] = true; }); }); };
+  function dictFixWalk(fix) { // fix(w | ex, "w" | "e", nguồn) → true nếu đã đổi; trả về { packs, expw, expp, aiexp, msg } (true = có đổi)
+    var ch = { packs: false, expw: false, expp: false, aiexp: false, msg: false };
+    var words = function (arr, k) { (arr || []).forEach(function (w) { if (fix(w, "w", k)) ch[k] = true; (w.examples || []).forEach(function (e) { if (fix(e, "e", k)) ch[k] = true; }); }); };
     Object.keys(AIPACKS).forEach(function (k) {
       var v = AIPACKS[k], lvs = Array.isArray(v) ? v : (v && v.levels) || [];
       lvs.forEach(function (L) { words(L.words, "packs"); (L.phrases || []).forEach(function (p) { if (fix(p, "e")) ch.packs = true; }); });
@@ -3323,9 +3595,17 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     words(EXPW, "expw");
     EXPP.forEach(function (p) { if (fix(p, "e")) ch.expp = true; });
     Object.keys(AIEXP).forEach(function (h) { (AIEXP[h].groups || []).forEach(function (g) { words(g.items, "aiexp"); }); });
+    words(MSGD.words, "msg"); // Từ tin nhắn: lưu lúc từ điển chưa tải → pinyin / Hán Việt rỗng
+    MSGD.phrases.forEach(function (p) { if (fix(p, "e", "msg")) ch.msg = true; });
     return ch;
   }
+  // Từ tin nhắn thiếu pinyin (lưu lúc từ điển chưa tải): luôn nạp từ điển để điền, không theo mốc DICTFIX_VER.
+  function msgPyMissing() {
+    return MSGD.words.some(function (w) { return !w.pinyin || (w.examples || []).some(function (e) { return e.zh && !e.pinyin; }); }) ||
+      MSGD.phrases.some(function (p) { return p.zh && !p.pinyin; });
+  }
   function dictFixNeeded() {
+    if (msgPyMissing()) return true;
     var mk = ""; try { mk = localStorage.getItem(DICTFIX_KEY) || ""; } catch (e) { return false; }
     if (mk === DICTFIX_VER) return false;
     var ch = dictFixWalk(function (x, t) { return t === "w" ? String(x.hanviet || "").indexOf("?") >= 0 : pyBroken(x.zh, x.pinyin); });
@@ -3335,7 +3615,15 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (DICT.fixed || !dictOk()) return;
     DICT.fixed = true;
     try {
-      var ch = dictFixWalk(function (x, t) {
+      var ch = dictFixWalk(function (x, t, k) {
+        if (k === "msg" && x && (t === "w" ? x.hanzi : x.zh)) { // Từ tin nhắn: điền pinyin / Hán Việt còn rỗng
+          var c = false;
+          if (t === "w") {
+            if (!x.pinyin) { var py = pickPinyin(x.hanzi, ""); if (py) { x.pinyin = py; c = true; } }
+            if (!x.hanviet && x.pinyin) { var hv = hanviet(x.hanzi, x.pinyin); if (hv) { x.hanviet = hv; c = true; } }
+          } else if (!x.pinyin) { var sp = sentencePinyin(x.zh); if (sp) { x.pinyin = sp; c = true; } }
+          if (c) return true;
+        }
         if (t === "w") {
           if (String(x.hanviet || "").indexOf("?") < 0) return false;
           var v = hanviet(x.hanzi, x.pinyin);
@@ -3351,7 +3639,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       if (ch.expw) saveExpW();
       if (ch.expp) saveExpP();
       if (ch.aiexp) saveAiExp();
-      if (ch.packs || ch.expw || ch.expp) { mapBuild(); rebuildItems(); }
+      if (ch.msg) saveMsgW();
+      if (ch.packs || ch.expw || ch.expp || ch.msg) { mapBuild(); rebuildItems(); }
       try { localStorage.setItem(DICTFIX_KEY, DICTFIX_VER); } catch (e) { /* bỏ qua */ }
     } catch (e) { /* dữ liệu lạ: bỏ qua, không chặn từ điển */ }
   }
@@ -3439,7 +3728,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       if (u.sep || u.dig) { toks.push(cur); cur = []; }
     });
     if (cur.length) toks.push(cur);
-    var han = Array.from(String(hanzi || "")).filter(function (c) { return /[㐀-鿿豈-﫿]/.test(c); });
+    var han = Array.from(String(hanzi || "")).filter(function (c) { return /[\u3400-\u9fff\uf900-\ufaff]/.test(c); });
     if (toks.length !== han.length) { // cụm viết liền: thử tách theo vần
       var sp = [];
       toks.forEach(function (t) { var s = pycSplit(t); if (s) sp = sp.concat(s); else sp.push(t); });
@@ -4130,7 +4419,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   // only: lọc loại thẻ TRƯỚC khi xen lượt (chia khúc) — để mẫu câu không chiếm chỗ trong lượt ưu tiên rồi bị bỏ.
   function buildNewPool(decks, only) {
     var ord = function (d) { return deckNewOrder(d, only); };
-    var base = rrMerge(decks.filter(function (d) { return d.id !== CUSTOM_DECK_ID && d.id !== EXP_DECK_ID && !d.lesson && !d.map; }).map(ord));
+    var base = rrMerge(decks.filter(function (d) { return d.id !== CUSTOM_DECK_ID && d.id !== EXP_DECK_ID && d.id !== MSG_DECK_ID && !d.lesson && !d.map; }).map(ord));
     // Bài giáo trình đang học có lượt riêng, xen 1-1 với 12 chủ đề — nếu chỉ xếp chung vòng tròn
     // thì mỗi bài chỉ được ~1/14 số từ mới, bài 50 từ cần hàng chục phiên mới học hết.
     // Cấp bản đồ đang học đi cùng lượt này (ưu tiên như bài giáo trình, không áp lọc HSK).
@@ -4138,7 +4427,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     // Từ người học tự bấm "+ Ôn" (bộ 📝) đi trước, xen kẽ 1-1 với phần còn lại — nếu chỉ
     // xếp vòng tròn thì bộ 📝 đứng cuối, với 10 từ mới/phiên sẽ không bao giờ tới lượt.
     // Bộ 🔗 Từ mở rộng (từ người học bấm "+ Học") cùng lượt ưu tiên này, xếp vòng tròn với bộ 📝.
-    var cl = rrMerge(decks.filter(function (d) { return d.id === CUSTOM_DECK_ID || d.id === EXP_DECK_ID; }).map(ord));
+    // [F4] bộ Từ tin nhắn cũng ở lượt ưu tiên này.
+    var cl = rrMerge(decks.filter(function (d) { return d.id === CUSTOM_DECK_ID || d.id === EXP_DECK_ID || d.id === MSG_DECK_ID; }).map(ord));
     // Cùng một chữ có thể nằm ở nhiều bộ (chủ đề, cấp bản đồ, bài giáo trình, 🔗) với cardId khác nhau.
     // Không dạy lại từ mới nếu chữ đó đã học ở bộ khác, và mỗi chữ chỉ vào hàng từ mới 1 lần.
     var known = learnedHanzi(), seen = {};
@@ -4173,13 +4463,452 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     }
     return out;
   }
+  // Thẻ từ đã học: recog / recall xen kẽ theo reps; từ reps ≥ 3 và máy có giọng đọc tiếng Trung thì xoay 3 dạng recog → recall → listen.
+  // session.lsOk chụp lại mỗi lần sang thẻ (giọng đọc nạp muộn không đổi dạng thẻ đang hiện). Ôn dồn: dạng cố định theo lượt (it.cram).
   function modeOf(it) {
     if (it.kind === "trans") return "trans";
     if (it.kind === "sent") return "sent";
+    if (it.kind === "hear") return "hear";
     if (it.kind === "phrase") return "phrase";
+    if (it.cram) return it.cram;
     var c = db.cards[it.id];
     if (!c || c.state === "new") return "new";
+    if (c.reps >= 3 && session && session.lsOk) return ["recog", "recall", "listen"][c.reps % 3];
     return c.reps % 2 === 0 ? "recog" : "recall";
+  }
+
+  // ---------- từ cứng đầu (leech) ----------
+  // Thẻ từ quên ≥ 4 lần = cứng đầu. Hết cứng đầu: chấm Nhớ/Dễ 3 lần liền ở các lượt ôn cách lượt trước ≥ 3 ngày (theo ngày lịch)
+  // → card.ul = số lần quên lúc đó (chỉ thành cứng đầu lại khi quên thêm 4 lần). card.lk = số lần nhớ liền đang đếm. Quên / Khó → đếm lại.
+  var LEECH_LAPSES = 4, LEECH_STREAK = 3, LEECH_GAP_DAYS = 3;
+  function isLeechCard(c) { return !!c && c.lapses - (c.ul || 0) >= LEECH_LAPSES; }
+  function isLeech(it) { return !!it && it.kind === "word" && isLeechCard(db.cards[it.id]); }
+  // Danh sách: mỗi chữ 1 thẻ (thẻ quên nhiều nhất), quên nhiều lên trước.
+  function leechItems() {
+    var by = {};
+    ITEMS.forEach(function (it) {
+      if (!isLeech(it)) return;
+      var h = it.data.hanzi, o = by[h];
+      if (!o || db.cards[it.id].lapses > db.cards[o.id].lapses) by[h] = it;
+    });
+    return Object.keys(by).map(function (h) { return by[h]; }).sort(function (a, b) { return db.cards[b.id].lapses - db.cards[a.id].lapses; });
+  }
+  // Sau applyGrade của thẻ từ (computeGrade dựng object mới → chép lại ul / lk). old = thẻ trước khi chấm.
+  function leechAfterGrade(it, old, grade) {
+    var c = db.cards[it.id];
+    if (!c || !old) return;
+    if (old.ul) c.ul = old.ul;
+    if (!isLeechCard(old)) return;
+    var gap = old.last ? (startOfDay(Date.now()) - startOfDay(old.last)) / DAY_MS : Infinity;
+    var lk = grade <= 2 ? 0 : gap >= LEECH_GAP_DAYS ? (old.lk || 0) + 1 : (old.lk || 0);
+    if (lk >= LEECH_STREAK) { c.ul = c.lapses; toast("Hết cứng đầu: " + it.data.hanzi); }
+    else if (lk > 0) c.lk = lk;
+    saveDb();
+  }
+  // Mẹo nhớ mặt chữ (AI soạn từ chiết tự) cho từ cứng đầu: cache theo chữ Hán ở "hoctrung.mnemo.v1" { hanzi: { t, m, at } }, mỗi chữ gọi AI 1 lần.
+  // Đi theo backup: mnemoExport() / mnemoImport(obj) (người gộp nối vào exportBackup / importBackupFile).
+  var MNEMO_KEY = "hoctrung.mnemo.v1", MNEMO_MAX = 600;
+  function mnemoVal(o) {
+    var out = {};
+    if (!o || typeof o !== "object" || Array.isArray(o)) return out;
+    Object.keys(o).forEach(function (h) {
+      var x = o[h], t = x && typeof x === "object" ? aiTxt(x.t, 400) : "";
+      if (hzOk(h) && t) out[h] = { t: t, m: aiS(x.m, 40), at: num(x.at, 0) };
+    });
+    return out;
+  }
+  function loadMnemo() { try { return mnemoVal(JSON.parse(localStorage.getItem(MNEMO_KEY) || "{}")); } catch (e) { return {}; } }
+  var MNEMO = loadMnemo();
+  var MNEMO_PEND = {}; // hanzi -> { state: wait|fail, reason } (chỉ trong bộ nhớ)
+  function saveMnemo() {
+    var ks = Object.keys(MNEMO);
+    if (ks.length > MNEMO_MAX) ks.sort(function (a, b) { return MNEMO[a].at - MNEMO[b].at; }).slice(0, ks.length - MNEMO_MAX).forEach(function (h) { delete MNEMO[h]; });
+    try { localStorage.setItem(MNEMO_KEY, JSON.stringify(MNEMO)); } catch (e) { /* đầy bộ nhớ: giữ trong phiên */ }
+  }
+  function mnemoExport() { return mnemoVal(MNEMO); }
+  // Gộp: chữ chưa có thì thêm, có rồi thì giữ bản mới hơn (at). Trả về số mục thêm / thay.
+  function mnemoImport(obj) {
+    var inc = mnemoVal(obj), n = 0;
+    Object.keys(inc).forEach(function (h) { if (!MNEMO[h] || inc[h].at > MNEMO[h].at) { MNEMO[h] = inc[h]; n++; } });
+    if (n) saveMnemo();
+    return n;
+  }
+  AI_TASKS.mnemo = { name: "meo_nho_chu", maxTokens: 700, refusal: "AI từ chối soạn", system:
+    "You write ONE short memory trick (meo nho) in Vietnamese that helps a Vietnamese learner of Mandarin (HSK 3-4) remember how a Chinese word is WRITTEN and what it means.\n" +
+    "Build it ONLY from the real character decomposition given in chiettu (components and what they mean) plus the Sino-Vietnamese reading (hanviet) and the meaning. " +
+    "Every Chinese character you write must appear in hanzi or chiettu. Never invent a component, never claim a component that is not really in the character, never invent etymology or history.\n" +
+    "mnemo_vi: 1-2 short sentences, at most 45 words, Vietnamese only. Name each component you use with its character in parentheses, e.g. \"bộ Thủy (氵)\". Link the components to the meaning in a vivid but truthful picture.\n" +
+    "No pinyin or romanization, no greetings, no emoji." };
+  var AI_MNEMO_SCHEMA = { type: "object", additionalProperties: false, required: ["mnemo_vi"], properties: { mnemo_vi: { type: "string" } } };
+  // Mẹo chỉ được nêu chữ / thành phần có trong chính từ đó hoặc chiết tự sẵn có (không có chiết tự → không nhờ AI, khỏi bịa).
+  function mnemoBad(t, w) {
+    var src = String(w.hanzi || "") + String(w.chiettu || "");
+    return (String(t).match(new RegExp(CT_HAN, "g")) || []).filter(function (c) { return src.indexOf(c) < 0; });
+  }
+  function mnemoKick(it) {
+    var w = it && it.data, h = w && w.hanzi;
+    if (!h || !w.chiettu || !isLeech(it) || !aiOn() || MNEMO[h] || MNEMO_PEND[h]) return;
+    var p = MNEMO_PEND[h] = { state: "wait" };
+    aiCall("mnemo", { hanzi: h, pinyin: w.pinyin || "", hanviet: w.hanviet || "", meaning: w.meaning || "", chiettu: w.chiettu || "" }, AI_MNEMO_SCHEMA).then(function (r) {
+      var t = r && r.ok && r.data ? aiTxt(String(r.data.mnemo_vi || "").replace(AI_PY_RE, ""), 400) : "";
+      var bad = t ? mnemoBad(t, w) : [];
+      if (t && !bad.length) { MNEMO[h] = { t: t, m: r.model, at: Date.now() }; saveMnemo(); delete MNEMO_PEND[h]; }
+      else { p.state = "fail"; p.reason = bad.length ? "AI nêu thành phần không có trong chiết tự (" + bad.slice(0, 3).join(" ") + ")" : r && !r.ok ? r.reason : "AI trả lời sai định dạng"; }
+      mnemoRefresh(h);
+    });
+  }
+  function mnemoRetry() {
+    var it = session && session.current, h = it && it.data && it.data.hanzi;
+    if (!h || !MNEMO_PEND[h] || MNEMO_PEND[h].state !== "fail") return;
+    delete MNEMO_PEND[h];
+    mnemoKick(it); mnemoRefresh(h);
+  }
+  function mnemoRefresh(h) {
+    var el = byId("mnemo"), it = session && session.current;
+    if (el && it && it.data && it.data.hanzi === h) el.innerHTML = mnemoInner(it);
+  }
+  // Ruột khối Mẹo nhớ: mẹo AI (hoặc đang soạn / lỗi / AI tắt) + chiết tự sẵn có ngay dưới.
+  function mnemoInner(it) {
+    var w = it.data, h = w.hanzi, m = MNEMO[h], p = MNEMO_PEND[h], top;
+    if (m && (!w.chiettu || mnemoBad(m.t, w).length)) m = null; // mẹo cũ (trước khi chặn) không khớp chiết tự: không hiện
+    if (m) top = '<p class="mntx">' + esc(m.t) + '</p><p class="mnsrc">AI soạn từ chiết tự · ' + esc(m.m || "AI") + ' — vẫn nên đối chiếu chiết tự</p>';
+    else if (p && p.state === "wait") top = '<p class="mnsrc"><span class="aiwait">AI đang soạn mẹo nhớ…</span></p>';
+    else if (p && p.state === "fail") top = '<div class="ailine warn">' + ico("warn") + '<span>AI không soạn được: ' + esc(p.reason || "lỗi") + '</span></div>' +
+      '<button class="link mnretry" data-action="mn-retry">' + ico("retry") + 'Thử lại</button>';
+    else if (!w.chiettu) top = '<p class="mnsrc">Từ này chưa có chiết tự — chưa soạn mẹo nhớ được (AI không tự đoán thành phần chữ)</p>';
+    else if (!aiOn()) top = '<p class="mnsrc">AI đang tắt — nhớ theo chiết tự:</p>';
+    else top = "";
+    return '<div class="mnhead">Mẹo nhớ</div>' + top + chietTuHtml(w);
+  }
+  // Mặt sau thẻ từ: từ cứng đầu → khối Mẹo nhớ (chứa luôn chiết tự); từ thường → chiết tự như cũ (chiet = false: thẻ không hiện chiết tự).
+  function leechTipHtml(it, chiet) {
+    if (!isLeech(it)) return chiet ? chietTuHtml(it.data) : "";
+    return '<div id="mnemo" class="mnemo">' + mnemoInner(it) + '</div>';
+  }
+  // Thẻ Nghĩa → chữ của từ cứng đầu: bảng viết tay luôn bật; nút Lật sáng khi đã viết ≥ 1 nét (session.leechInk) hoặc bấm "Bỏ qua viết".
+  function lcNeedInk(it) {
+    var st = rcCur(it);
+    return !!it && modeOf(it) === "recall" && isLeech(it) && !session.flipped && !session.leechInk && !(st && st.step === "sent");
+  }
+  function leechPadHtml() {
+    return db.settings.drawPad ? padHtml() : '<div class="pad-wrap"><canvas id="pad" class="pad" width="240" height="240"></canvas>' +
+      '<button class="small-btn" data-action="clear-pad">' + ico("x") + 'Xóa</button></div>';
+  }
+  function lcSkipDraw() {
+    var it = session && session.current;
+    if (!it || !lcNeedInk(it)) return;
+    session.leechInk = true;
+    flip();
+  }
+  function lcInk(e) {
+    var c = e.target;
+    if (!c || c.id !== "pad" || view !== "session" || !session || session.leechInk) return;
+    session.leechInk = true;
+    var b = byId("rcFlip"); if (b) b.disabled = false;
+  }
+  app.addEventListener("pointerdown", lcInk);
+  app.addEventListener("mousedown", lcInk);
+  app.addEventListener("touchstart", lcInk, { passive: true });
+  // Ôn dồn: phiên ngắn chỉ gồm từ cứng đầu — lượt 1 Nghĩa → chữ (viết tay), lượt 2 Nhận mặt chữ. Dùng lại máy phiên (startSession đọc cramNext):
+  // không chia khúc, không bài cũ, không thẻ dịch / đặt câu / nghe câu, không mốc 45 phút, không tính trần ôn; chấm vẫn cập nhật SRS. Thoát về #leech.
+  var cramNext = null;
+  function startCram() {
+    var list = leechItems();
+    if (!list.length) { toast("Không còn từ cứng đầu nào"); return; }
+    var copy = function (m) { return function (it) { return { id: it.id, deckId: it.deckId, deck: it.deck, kind: "word", data: it.data, cram: m }; }; };
+    var decks = [];
+    list.forEach(function (it) { if (decks.indexOf(it.deck) < 0) decks.push(it.deck); });
+    cramNext = { decks: decks, queue: list.map(copy("recall")).concat(list.map(copy("recog"))), n: list.length };
+    // Mở từ #leech: thêm mục lịch sử riêng → Back / Kết thúc quay về đúng danh sách.
+    try {
+      if (location.hash === "#leech" && !fromPop) { var hs = history.state || {}; history.pushState({ d: 3, n: (Number(hs.n) || 0) + 1, p: "#leech" }, "", "#session"); }
+    } catch (e) { /* bỏ qua */ }
+    startSession();
+  }
+  // Chấm ở ôn dồn: mỗi từ chỉ cập nhật SRS 1 lần / buổi (lượt Nghĩa → chữ và lượt Nhận mặt chữ cùng id) — lượt sau chỉ ghi khi Quên
+  // (lượt trước chưa Quên). Ôn sớm (thẻ review chưa đến hạn): khoảng ôn tính theo số ngày đã trôi qua từ lần ôn trước, không nhân trọn khoảng cũ.
+  function cramEarly(c) {
+    var now = Date.now();
+    if (!c || c.state !== "review" || !(c.due > now) || !c.last) return c;
+    var gone = Math.round((startOfDay(now) - startOfDay(c.last)) / DAY_MS);
+    return Object.assign({}, c, { interval: Math.max(1, Math.min(c.interval, gone)) });
+  }
+  // Thẻ dùng để hiện số ngày trên nút chấm ở ôn dồn: lượt sau (đã chấm) → keep (nút Khó / Nhớ / Dễ không đổi lịch).
+  function cramCard(it) {
+    var c = cardOf(it.id);
+    return session.cramDone && session.cramDone[it.id] ? Object.assign({}, c, { keep: true }) : cramEarly(c);
+  }
+  function cramGrade(it, grade) {
+    var done = session.cramDone || (session.cramDone = {}), prev = done[it.id];
+    if (!prev || (grade === 1 && prev !== 1)) {
+      var old = db.cards[it.id] || null;
+      if (old) db.cards[it.id] = cramEarly(old);
+      applyGrade(it.id, grade);
+      leechAfterGrade(it, old, grade); // giữ nhãn ul / chuỗi nhớ lk (computeGrade không chép)
+      done[it.id] = grade;
+    }
+    markTouched(it);
+    if (grade === 1) requeue(it);
+    nextCard();
+  }
+  function cramLeft() { return session.queue.length + (session.current ? 1 : 0); }
+  function cramDoneHtml() {
+    var left = leechItems().length, minutes = Math.round(session.elapsed / 60);
+    return '<div class="card center sdone"><span class="seal dseal" aria-hidden="true">完</span><h1>Xong ôn dồn</h1>' +
+      '<div class="mestats dstats"><div><b>' + session.doneCount + '</b><span>lượt</span></div>' +
+        '<div><b>' + left + '</b><span>còn cứng đầu</span></div>' +
+        '<div><b>' + minutes + '</b><span>phút</span></div></div>' +
+      '<p class="dnote">' + (left < session.cram.n ? "Bớt được " + (session.cram.n - left) + " từ." : "Mai ôn tiếp nhé.") + '</p>' +
+      '<p class="dnote2">Từ cứng đầu hết nhãn khi nhớ 3 lần liền ở các lượt ôn cách nhau từ 3 ngày.</p>' +
+      '<div class="actions dock"><button class="primary big" data-action="end-force">Về danh sách</button></div>' +
+      hintHtml('<kbd>Enter</kbd> về danh sách') + '</div>';
+  }
+  // Màn #leech: danh sách từ cứng đầu (chữ Hán son · nghĩa serif + pinyin · số lần quên · loa) + nút Ôn dồn.
+  function leechHtml() {
+    var list = leechItems(), n = list.length;
+    var rows = list.map(function (it) {
+      var w = it.data, c = db.cards[it.id];
+      return '<li class="item lcrow"><span class="lcz zh" lang="zh-CN">' + esc(w.hanzi) + '</span>' +
+        '<span class="it"><b>' + esc(shortMeaning(w.meaning)) + '</b><small><span class="lcpy">' + esc(w.pinyin || "") + '</span> · ' + esc(deckTitle(it.deck) || it.deckId) +
+          (c.lk ? ' · đã nhớ ' + c.lk + '/' + LEECH_STREAK : "") + '</small></span>' +
+        '<span class="pct lcn" title="Số lần quên">' + c.lapses + '<small>lần quên</small></span>' + speakBtn(w.hanzi, true) + '</li>';
+    }).join("");
+    return '<div class="wrap lcwrap">' + mastHtml('<span lang="zh-CN">难词</span>') +
+      '<button class="backlink" data-action="home">' + ico("back") + 'Học</button>' +
+      '<h1 class="hl">Từ cứng đầu</h1>' +
+      '<p class="lede">' + (n ? '<b>' + n + '</b> từ đã quên từ ' + LEECH_LAPSES + ' lần trở lên. Nhớ hoặc Dễ ' + LEECH_STREAK + ' lần liền ở các lượt ôn cách nhau từ ' + LEECH_GAP_DAYS + ' ngày thì hết cứng đầu.'
+        : "Không còn từ nào quên từ " + LEECH_LAPSES + " lần trở lên.") + '</p>' +
+      (n ? '<button class="primary big lcgo" data-action="lc-cram">Ôn dồn ' + n + ' từ</button>' +
+        '<p class="lcsub">Viết tay từng từ (Nghĩa → chữ) rồi Nhận mặt chữ · chấm vẫn tính vào lịch ôn</p>' +
+        '<section class="box"><h2>Danh sách</h2><ul class="items lclist">' + rows + '</ul></section>'
+        : '<p class="empty-note">Danh sách trống.</p>') +
+      '</div>';
+  }
+  TAB_OF.leech = "home"; // màn #leech (con của tab Học) vẫn có thanh tab, tab Học sáng
+
+  // ---------- thẻ Nghe (cần giọng đọc tiếng Trung) ----------
+  // Nghe từ (mode "listen", thẻ từ reps ≥ 3): mặt trước chỉ loa to (tự đọc) + đọc chậm, ô "chữ Hán hoặc pinyin" + ô nghĩa (dùng lại #rcPy / #rcVi / #rcForm).
+  // Nghe câu (thẻ phụ "<deckId>:n:<hanzi>:<i>", kind "hear"): câu ví dụ thứ i của từ đã học review; nghe → gõ nghĩa Việt (dùng lại #trInput / #trForm,
+  // kết quả AI ở session.aiTr như thẻ dịch) → AI chấm theo ý (task "listen") hoặc tự so. Không vào ITEMS, không tính trần ôn (isAuxId nhận ":n:").
+  var LS_RATE = 0.9, LS_SLOW = 0.7; // tốc độ thường (như speak) · đọc chậm = 0.7 × tốc độ thường
+  var HEAR_EVERY = 7, HEAR_MAX = 5;  // phiên không chia khúc: chen 1 thẻ Nghe câu mỗi 7 thẻ thường, tối đa 5 / phiên
+  var LS = { tok: 0 };
+  function listenOk() {
+    if (!window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") return false;
+    if (!zhVoice) pickVoice();
+    return !!zhVoice;
+  }
+  function lsText(it) { return it.kind === "hear" ? it.data.zh : it.data.hanzi; }
+  // Đọc có dò: không bắt đầu được (trình duyệt điện thoại chặn tự đọc khi chưa chạm màn hình) → nút loa đổi thành "Bấm để nghe".
+  function lsSay(text, rate, auto) {
+    var tok = ++LS.tok, started = false;
+    if (!text || !window.speechSynthesis || typeof SpeechSynthesisUtterance === "undefined") { lsMark(true); return; }
+    if (!zhVoice) pickVoice();
+    recPlayerStop();
+    if (reading) stopReading();
+    try {
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(String(text));
+      u.lang = "zh-CN"; u.rate = rate || LS_RATE;
+      if (zhVoice) u.voice = zhVoice;
+      u.onstart = function () { started = true; if (tok === LS.tok) lsMark(false); };
+      u.onerror = function (e) { if (tok === LS.tok && e && (e.error === "not-allowed" || e.error === "synthesis-failed" || e.error === "voice-unavailable")) lsMark(true); };
+      window.speechSynthesis.speak(u);
+    } catch (e) { lsMark(true); return; }
+    if (auto) setTimeout(function () {
+      if (tok === LS.tok && !started && !(window.speechSynthesis && window.speechSynthesis.speaking)) lsMark(true);
+    }, 1600);
+  }
+  function lsMark(blocked) {
+    if (!session) return;
+    session.lsBlock = !!blocked;
+    var b = byId("lsBig"), l = byId("lsLab"), n = byId("lsNote");
+    if (b) { b.classList.toggle("need", !!blocked); b.setAttribute("aria-label", blocked ? "Bấm để nghe" : "Nghe lại"); }
+    if (l) l.textContent = blocked ? "Bấm để nghe" : "Nghe lại";
+    if (n) n.hidden = !blocked;
+  }
+  function lsReplay(slow) {
+    var it = session && session.current;
+    if (!it || (modeOf(it) !== "listen" && modeOf(it) !== "hear")) return;
+    if (recIsLive()) recStop();
+    lsSay(lsText(it), slow ? LS_RATE * LS_SLOW : LS_RATE, false);
+  }
+  function lsPlayHtml() {
+    var bl = !!session.lsBlock;
+    return '<div class="lsplay"><button id="lsBig" class="lsbig' + (bl ? " need" : "") + '" type="button" data-action="ls-play" aria-label="' + (bl ? "Bấm để nghe" : "Nghe lại") + '">' +
+        ico("spk") + '<span id="lsLab" class="lsbl">' + (bl ? "Bấm để nghe" : "Nghe lại") + '</span></button>' +
+      '<button class="link lsslow" type="button" data-action="ls-slow">Đọc chậm 0.7×</button>' +
+      '<p id="lsNote" class="lsnote"' + (bl ? "" : " hidden") + '>Máy chưa cho tự đọc — bấm nút loa để nghe</p></div>';
+  }
+  // Ô gõ mặt trước Nghe từ: chữ Hán hoặc pinyin + nghĩa.
+  function lsFormHtml() {
+    var py = session.rcPy || "", vi = session.rcVi || "", has = !!(py.trim() || vi.trim());
+    return '<form id="rcForm" class="rcform" action="#" autocomplete="off">' +
+        '<label class="rcf"><span class="rcfl">Chữ</span><input id="rcPy" class="rcin rcpy" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="next"' +
+          ' placeholder="Gõ chữ Hán hoặc pinyin" value="' + esc(py) + '"></label>' +
+        '<label class="rcf"><span class="rcfl">Nghĩa</span><input id="rcVi" class="rcin" type="text" lang="vi" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"' +
+          ' placeholder="nghĩa tiếng Việt" value="' + esc(vi) + '"></label>' +
+      '</form>' +
+      '<div class="actions dock"><button id="rcGo" class="primary big" type="submit" form="rcForm">' + (has ? "Kiểm tra" : "Lật") + '</button></div>' +
+      hintHtml('<kbd>Enter</kbd> kiểm tra (2 ô trống = lật) · <kbd>Esc</kbd> thoát');
+  }
+  // Kiểm tra Nghe từ: có chữ Hán → so chữ; không thì pinyin (pyCheck); nghĩa như Nhận mặt chữ. Cả 2 ô trống → false (lật, tự chấm).
+  function lsCheck(it) {
+    rcRead();
+    var st = rcState(it), t = String(session.rcPy || "").trim(), vi = String(session.rcVi || "").trim(), w = it.data;
+    st.chk = null;
+    if (!t && !vi) return false;
+    var chk = { py: null, hz: null, vi: null, typedVi: vi };
+    if (t && HAN_RE.test(t)) {
+      chk.hz = { typed: t, ok: normSent(t) === normSent(w.hanzi) };
+      // chữ đồng âm (nghe đúng âm, gõ sai mặt chữ — 鸡票 / 机票): không coi là nghe sai, gợi ý Khó. Chưa có từ điển: nạp rồi chấm lại.
+      // homo: "same" = trùng cả thanh, "bare" = trùng âm khác thanh
+      var homo = function () {
+        if (!w.pinyin || normSent(t).length !== normSent(w.hanzi).length) return "";
+        var a = pyKey(sentencePinyin(t)), b = pyKey(w.pinyin);
+        return a === b ? "same" : pyBare(a) === pyBare(b) ? "bare" : "";
+      };
+      if (!chk.hz.ok && dictOk()) chk.hz.homo = homo();
+      else if (!chk.hz.ok && DICT.state !== "err") loadDict(function (ok) {
+        var h = ok && st.chk === chk ? homo() : "";
+        if (h) { chk.hz.homo = h; if (session && session.current === it && session.flipped) rcResRefresh(it); }
+      });
+    } else if (t) chk.py = pyCheck(w.pinyin, t, w.hanzi);
+    rcViCheck(it, st, chk, vi);
+    st.chk = chk;
+    return true;
+  }
+  function lsWordHtml(it) {
+    var w = it.data, st = rcState(it);
+    var head = tagRow(it, "Nghe từ", "listen", !session.flipped);
+    if (!session.flipped) return '<div class="card lscard">' + head + lsPlayHtml() + '<p class="say">Nghe rồi gõ lại từ</p>' + lsFormHtml() + '</div>';
+    return '<div class="card">' + head + bigHanziHtml(w.hanzi) + pyRowHtml(w.pinyin, w.hanzi) +
+      (st.chk ? '<div id="rcres" class="rcres">' + rcResInner(it, st.chk) + '</div>' : "") +
+      meaningHtml(w.meaning) + hvHtml(w, true) + leechTipHtml(it, true) +
+      '<div class="examples">' + exampleHtml(pickExample(it)) + '</div>' +
+      expSlot(it) +
+      grades4Html(it, rcSug(st.chk)) + '</div>';
+  }
+  // Nguồn thẻ Nghe câu: câu ví dụ (có zh + vi) của thẻ từ trong các bộ đang học.
+  function hearItems(decks) {
+    var ids = {}, out = [];
+    decks.forEach(function (d) { ids[d.id] = true; });
+    ITEMS.forEach(function (it) {
+      if (!ids[it.deckId] || it.kind !== "word") return;
+      (Array.isArray(it.data.examples) ? it.data.examples : []).forEach(function (ex, i) {
+        if (ex && ex.zh && ex.vi) out.push({ id: it.deckId + ":n:" + it.data.hanzi + ":" + i, deckId: it.deckId, deck: it.deck, kind: "hear", data: ex, src: it, tid: it.deckId + ":t:" + it.data.hanzi + ":" + i });
+      });
+    });
+    return out;
+  }
+  // Thẻ Nghe câu kế tiếp: đến hạn trước; không có thì câu mới của từ đã nhớ ≥ 1 ngày (ngẫu nhiên, mỗi từ 1 câu / phiên, khác câu thẻ dịch vừa ra).
+  function nextHear() {
+    var now = Date.now(), due = [], fresh = [];
+    hearItems(session.decks).forEach(function (t) {
+      if (session.hearSeen[t.id] || (session.transSeen && session.transSeen[t.tid]) || zhSeen(t)) return;
+      var c = db.cards[t.id];
+      if (c && c.state !== "new") { if (c.due <= now) due.push(t); return; }
+      var sc = db.cards[t.src.id];
+      if (!sc || sc.state !== "review" || !(sc.interval >= 1) || session.hearWords[t.src.id]) return;
+      fresh.push(t);
+    });
+    if (due.length) return due.sort(function (a, b) { return db.cards[a.id].due - db.cards[b.id].due; })[0];
+    return fresh.length ? fresh[Math.floor(Math.random() * fresh.length)] : null;
+  }
+  function hearInit() { if (!session.hearSeen) { session.hearSeen = {}; session.hearWords = {}; session.hearRetry = []; session.hearShown = 0; session.sinceHear = 0; } }
+  function hearFresh() {
+    var t = nextHear();
+    if (t) { session.hearShown++; session.hearSeen[t.id] = true; session.hearWords[t.src.id] = true; zhMark(t); }
+    return t;
+  }
+  // Lượt làm lại ("Chưa được") quay lại sau ít nhất 1 câu nghe khác; không còn câu mới thì lấy luôn.
+  function hearTake(cap) {
+    var r = session.hearRetry;
+    if (r.length && r[0].at <= session.hearShown) return r.shift().it;
+    var t = session.hearShown < cap ? hearFresh() : null;
+    return t || (r.length ? r.shift().it : null);
+  }
+  // Khúc 2: lượt "nghe câu" trong vòng nói · dịch · nói · đặt câu · nghe câu.
+  function talkHear() { hearInit(); return session.lsOk ? hearTake(Infinity) : null; }
+  // Phiên không chia khúc (gọi ở nextCard khi còn thẻ thường): đủ HEAR_EVERY thẻ thường thì chen 1 thẻ.
+  function pickHear() {
+    hearInit();
+    if (!session.lsOk || session.sinceHear < HEAR_EVERY) return null;
+    var t = hearTake(HEAR_MAX);
+    if (t) session.sinceHear = 0;
+    return t;
+  }
+  AI_TASKS.listen = { name: "cham_nghe_cau", maxTokens: 1200, system:
+    "You are a fair examiner for a Vietnamese learner of Mandarin Chinese (HSK 3-4 level) whose goal is everyday conversation.\n" +
+    "The learner HEARD the Chinese sentence (zh) read aloud by a speech synthesizer, without seeing it, and wrote what it means in Vietnamese (learner_vi). Judge ONLY whether learner_vi conveys the meaning of zh.\n" +
+    "reference_vi is one acceptable translation, not the only one: any wording with the same meaning is \"dung\".\n" +
+    "learner_vi may be typed without Vietnamese diacritics or contain typos: tolerate these, never penalize them.\n" +
+    "\"gan-dung\" = the main idea is right but a detail or nuance is missing or slightly off (a time word, degree, negation strength, a secondary object).\n" +
+    "\"sai\" = the main meaning is wrong, a key idea is missing, who-does-what is reversed, or the answer is empty, unrelated or not Vietnamese.\n" +
+    "score: integer 0-100 consistent with verdict (dung >= 85, gan-dung 50-84, sai < 50). meaning_ok: true if the core meaning is right.\n" +
+    "missing_vi: in Vietnamese, the idea(s) the learner missed or misheard, naming the Chinese word responsible (characters only); empty string if nothing is missing.\n" +
+    "note_vi: 1 short, direct sentence in Vietnamese about the word that is easy to mishear or the key grammar point (no greetings, no praise padding).\n" +
+    "correct_vi: a natural Vietnamese translation of zh.\n" +
+    "Explanations in Vietnamese only. Never write pinyin or romanization." };
+  // Kiểm tra Nghe câu: AI bật + có chữ → chờ AI rồi lật (true); AI tắt → tự so (lật luôn); ô trống → lật, tự chấm.
+  function hearStart(it) {
+    var typed = String(session.trTyped || "").trim(), d = it.data;
+    if (!typed) return false;
+    if (!aiOn()) { session.aiTr = { id: it.id, state: "local", typed: typed, ok: viMatch(typed, d.vi) }; return false; }
+    var st = { id: it.id, state: "wait", typed: typed, model: aiModel() };
+    session.aiTr = st;
+    aiCall("listen", { zh: d.zh, reference_vi: d.vi, learner_vi: typed }, AI_WARM_VI_SCHEMA).then(function (r) {
+      var res = r && r.ok ? aiViClean(r.data) : null;
+      if (res) { st.state = "done"; st.res = res; st.model = r.model; }
+      else { st.state = "fail"; st.reason = r && !r.ok ? r.reason : "AI trả lời sai định dạng"; }
+      if (!session || session.aiTr !== st || !session.current || session.current.id !== st.id) return;
+      session.flipped = true; session.keepPad = true;
+      renderCard(); aiReveal(AI_BOX_SEL);
+    });
+    session.keepPad = true;
+    renderCard();
+    return true;
+  }
+  function hearSug(st) { return !st ? 0 : st.state === "local" ? (st.ok ? 3 : 0) : aiSugGrade(st); }
+  // Kết quả Nghe câu: khối AI (Đúng / Gần đúng / Sai + thiếu gì + dịch tự nhiên) hoặc tự so; luôn kèm "Bạn hiểu".
+  function hearResHtml(st, typed) {
+    var mine = typed ? '<div class="trrow"><span class="trlab">Bạn hiểu</span><span class="wuvitx">' + esc(typed) + '</span></div>' : "";
+    if (st && st.state === "done" && st.res) {
+      var r = st.res, vd = AI_VERDICT[r.verdict], sug = aiSugGrade(st);
+      return '<div class="aibox v-' + r.verdict + '">' +
+        '<div class="aihead"><span class="aiverd"><span class="aimk" aria-hidden="true">' + vd[0] + '</span>' + vd[1] + (r.score != null ? '<b class="aiscore">' + r.score + '</b>' : "") + '</span>' +
+          '<span class="aitag">AI chấm · ' + esc(st.model || aiModel()) + '</span></div>' +
+        (r.missing ? '<div class="airow"><div class="ailab">Còn thiếu / nghe nhầm</div><div class="aivi">' + esc(r.missing) + '</div></div>' : "") +
+        (r.note ? '<div class="ainote">' + esc(r.note) + '</div>' : "") +
+        '<div class="aisugtxt">AI gợi ý: <b>' + (sug === 1 ? "Chưa được" : "Được") + '</b> — bạn bấm để xác nhận</div></div>' +
+        (mine ? '<div class="vcmp trres">' + mine + '</div>' : "");
+    }
+    var note = !typed ? "Chưa gõ nghĩa — so với nghĩa ở trên rồi tự chấm"
+      : st && st.state === "local" ? (st.ok ? "Có từ khóa trùng nghĩa mẫu · tự so" : "Khác từ khóa nghĩa mẫu — có thể vẫn đúng ý, tự chấm") : "Tự so với nghĩa ở trên rồi chấm";
+    return (st && (st.state === "wait" || st.state === "fail") ? aiBoxHtml(st) : "") +
+      '<div class="vcmp trres">' + mine + '<div class="trnote">' + note + '</div></div>';
+  }
+  function hearHtml(it) {
+    var d = it.data, ai = session.aiTr && session.aiTr.id === it.id ? session.aiTr : null, waiting = !session.flipped && ai && ai.state === "wait";
+    var head = tagRow(it, "Nghe câu", "hear", !session.flipped);
+    if (!session.flipped) {
+      return '<div class="card lscard">' + head + lsPlayHtml() + '<p class="say">Nghe rồi gõ nghĩa tiếng Việt</p>' +
+        '<form id="trForm" class="trform" action="#" autocomplete="off"><input id="trInput" class="trin wuvi" type="text" lang="vi" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"' +
+        ' aria-label="Gõ nghĩa tiếng Việt" placeholder="Câu này nghĩa là gì?" value="' + esc(session.trTyped || "") + '"' + (waiting ? " readonly" : "") + '></form>' +
+        (waiting
+          ? '<div class="actions dock aiwaitrow"><button class="primary big" disabled>Đang chấm…</button><button class="small-btn" data-action="ai-skip">Bỏ qua AI</button></div>'
+          : '<div class="actions dock"><button class="primary big" data-action="flip">Kiểm tra</button></div>') +
+        hintHtml('<kbd>Enter</kbd> kiểm tra · <kbd>Esc</kbd> thoát') + '</div>';
+    }
+    var typed = String(session.trTyped || "").trim(), py = d.pinyin || (dictOk() ? sentencePinyin(d.zh) : ""), w = it.src.data, c = cardOf(it.id), sug = hearSug(ai);
+    return '<div class="card lscard">' + head +
+      '<div class="hrzh zh" lang="zh-CN">' + esc(d.zh) + speakBtn(d.zh, true) + '</div>' +
+      (py ? '<div class="pinyin hrpy">' + esc(py) + '</div>' : "") +
+      '<div class="hrvi">' + esc(d.vi) + '</div>' +
+      '<p class="hrw">Câu ví dụ của <b class="zh" lang="zh-CN">' + esc(w.hanzi) + '</b> ' + esc(shortMeaning(w.meaning)) + '</p>' +
+      hearResHtml(ai, typed) +
+      '<div class="grades two dock">' + gradeBtnHtml("g1", 1, "Chưa được", c, sug) + gradeBtnHtml("g3", 3, "Được", c, sug) + '</div>' +
+      hintHtml('<kbd>1</kbd> Chưa được · <kbd>3</kbd> / <kbd>Space</kbd> Được') + '</div>';
   }
 
   // ---------- thẻ Dịch câu (Việt → Trung, tự chấm) ----------
@@ -4187,7 +4916,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   // Tiến độ lưu ở db.cards bằng id riêng, không đụng id cũ: "<deckId>:t:<hanzi>:<i>" (câu ví dụ thứ i của từ),
   // "<deckId>:tp:<i>" (mẫu câu thứ i). Không vào ITEMS (không thành "từ mới", không tính vào trần ôn).
   // Thẻ phụ có lịch ôn riêng (thẻ dịch ":t:" / ":tp:", thẻ đặt câu ":s:"): không phải từ / mẫu câu → không tính thẻ đã gặp, % bài, bài cũ.
-  function isAuxId(k) { return /:(?:tp?|s):/.test(k); }
+  function isAuxId(k) { return /:(?:tp?|s|n):/.test(k); } // ":n:" = thẻ Nghe câu
   function transItems(decks) {
     var ids = {}, out = [];
     decks.forEach(function (d) { ids[d.id] = true; });
@@ -4204,11 +4933,15 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     });
     return out;
   }
+  // Một câu chỉ hỏi 1 lần / phiên dù nhiều từ (hay mẫu câu) dùng chung câu đó: lọc theo nội dung câu, không theo id thẻ.
+  // Lượt làm lại (transRetry / talkRetry / hearRetry) đi đường riêng, không qua đây.
+  function zhSeen(t) { return !!(session.zhSeen && t.data && t.data.zh && session.zhSeen[normSent(t.data.zh)]); }
+  function zhMark(t) { if (t && t.data && t.data.zh) (session.zhSeen || (session.zhSeen = {}))[normSent(t.data.zh)] = true; }
   // Thẻ dịch kế tiếp: thẻ dịch đến hạn trước; không có thì câu mới của từ đã nhớ ≥ 1 ngày (ngẫu nhiên, mỗi từ 1 câu / phiên).
   function nextTrans() {
     var now = Date.now(), due = [], fresh = [];
     transItems(session.decks).forEach(function (t) {
-      if (session.transSeen[t.id]) return;
+      if (session.transSeen[t.id] || (session.hearSeen && session.hearSeen[t.id.replace(":t:", ":n:")]) || zhSeen(t)) return; // câu vừa ra ở thẻ Nghe câu / thẻ dịch khác: khỏi hỏi lại
       var c = db.cards[t.id];
       if (c && c.state !== "new") { if (c.due <= now) due.push(t); return; }
       var sc = db.cards[t.src.id];
@@ -4225,7 +4958,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var t = session.transRetry.shift() || null;
     if (!t && session.transShown < TRANS_MAX) {
       t = nextTrans();
-      if (t) { session.transShown++; session.transSeen[t.id] = true; session.transWords[t.src.id] = true; }
+      if (t) { session.transShown++; session.transSeen[t.id] = true; session.transWords[t.src.id] = true; zhMark(t); }
     }
     if (t) session.sinceTrans = 0;
     return t;
@@ -4337,6 +5070,13 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     st.chk = null;
     if (!py && !vi) return false;
     var chk = { py: py ? pyCheck(w.pinyin, py, w.hanzi) : null, vi: null, typedVi: vi };
+    rcViCheck(it, st, chk, vi);
+    st.chk = chk;
+    return true;
+  }
+  // Chấm ô nghĩa (dùng chung Nhận mặt chữ / Nghe từ): AI tắt → tự so; AI bật → chờ AI (mặt sau hiện ngay, xong thì vẽ lại #rcres).
+  function rcViCheck(it, st, chk, vi) {
+    var w = it.data;
     if (vi && !aiOn()) chk.vi = { state: "local", ok: viMatch(vi, w.meaning) };
     else if (vi) {
       var v = chk.vi = { state: "wait", model: aiModel() };
@@ -4349,14 +5089,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         rcResRefresh(it);
       });
     }
-    st.chk = chk;
-    return true;
   }
   // Nút chấm gợi ý sau Kiểm tra (không bao giờ Dễ): sai âm / nghĩa sai → Quên; thiếu / sai thanh, nghĩa gần đúng → Khó; còn lại → Nhớ.
   // Ô để trống không tính. Nghĩa tự so không khớp từ khóa (có thể là từ đồng nghĩa, chưa chắc sai): pinyin sai âm → Quên, còn lại không gợi ý. 0 = chưa gợi ý.
   function rcSug(chk) {
     if (!chk) return 0;
-    var p = chk.py ? chk.py.res : "", v = chk.vi;
+    var p = chk.hz ? (chk.hz.ok ? "ok" : chk.hz.homo ? "tone" : "wrong") : chk.py ? chk.py.res : "", v = chk.vi; // Nghe từ gõ chữ Hán: đúng chữ = như pinyin đúng, đồng âm = như sai thanh
     var m = !v ? "" : v.state === "done" ? v.verdict : v.state === "wait" ? "wait" : v.ok ? "dung" : "unk";
     if (p === "wrong" || m === "sai") return 1;
     if (m === "wait" || m === "unk") return 0;
@@ -4447,27 +5185,29 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   var session = null;
 
   function startSession() {
-    var decks = selectedDecks();
+    var cram = cramNext; cramNext = null; // ôn dồn từ cứng đầu (startCram): hàng thẻ dựng sẵn, không từ mới / thẻ đến hạn / bài cũ
+    var decks = cram ? cram.decks : selectedDecks();
     if (!decks.length) { toast("Chọn ít nhất 1 chủ đề đã"); return; }
     if (session && session.timerId) clearInterval(session.timerId);
     recRelease();
     var now = Date.now();
-    var blocks = db.settings.sessionBlocks !== false;
+    var blocks = !cram && db.settings.sessionBlocks !== false;
     var isWord = function (it) { return it.kind === "word"; };
     var notWord = function (it) { return it.kind !== "word"; };
     // Chia khúc: khúc 1 chỉ thẻ từ; mẫu câu (đến hạn + chưa học) để dành cho khúc 2 "Nói & dịch".
     // Mỗi loại xếp lượt riêng → từ cấp bản đồ / bài giáo trình vẫn xen 1-1 với 12 chủ đề.
-    var pool = blocks ? buildNewPool(decks, "word") : buildNewPool(decks);
+    var pool = cram ? [] : blocks ? buildNewPool(decks, "word") : buildNewPool(decks);
     var phrasePool = blocks ? buildNewPool(decks, "phrase") : [];
     var firstNew = pool.splice(0, db.settings.newPerSession);
-    var allDue = dueItems(decks, now), room = reviewRoom(), due = allDue.slice(0, room);
+    var allDue = cram ? [] : dueItems(decks, now), room = reviewRoom(), due = allDue.slice(0, room);
     // Chia khúc: cắt trần riêng cho từ (khúc 1) và mẫu câu (khúc 2) để câu đến hạn không bị từ chiếm hết suất.
     // Không vượt trần: lượt ôn chỉ đếm lúc chấm, chạm trần thì capHit tự bỏ lượt ôn còn lại ở queue lẫn talk.
     var dueW = blocks ? allDue.filter(isWord).slice(0, room) : due;
     var dueP = blocks ? allDue.filter(notWord).slice(0, room) : [];
     session = {
       startedAt: now, elapsed: 0, timerId: null, decks: decks,
-      queue: interleave(dueW, firstNew), newPool: pool,
+      queue: cram ? cram.queue : interleave(dueW, firstNew), newPool: pool,
+      cram: cram ? { n: cram.n, total: cram.queue.length } : null,
       current: null, flipped: false, hint: false, keepPad: false,
       shown45: false, doneCount: 0, touched: {}, spokenFor: "",
       relearn: {}, // thẻ đang quay lại trong phiên (từ mới vừa hiểu / thẻ vừa Quên) — lượt này không tính là lượt ôn
@@ -4475,14 +5215,18 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       transSeen: {}, transWords: {}, transRetry: [], transShown: 0, sinceTrans: 0, trTyped: "",
       // thẻ Đặt câu: chữ đã ra, lượt làm lại ("Chưa được"), số thẻ đã ra, số thẻ thường từ thẻ đặt câu trước, số câu đã chấm (cả "Dễ quá")
       sentSeen: {}, sentRetry: [], sentShown: 0, sinceSent: 0, sentN: 0,
+      zhSeen: {}, // câu (normSent) đã ra ở thẻ dịch / Nghe câu trong phiên — mỗi câu 1 lần
       // thẻ Nhận mặt chữ: chữ đang gõ ở ô pinyin / nghĩa / câu, trạng thái Kiểm tra / đặt câu (session.rc)
       rcPy: "", rcVi: "", rcSen: "", rc: null,
+      // thẻ Nghe: máy có giọng đọc zh (chụp lại mỗi thẻ), tự đọc bị chặn; thẻ Nghe câu: đã ra, từ gốc đã dùng, lượt làm lại [{it, at}], số đã ra, số thẻ thường từ lần trước
+      lsOk: false, lsBlock: false, hearSeen: {}, hearWords: {}, hearRetry: [], hearShown: 0, sinceHear: 0,
+      leechInk: false, // thẻ Nghĩa → chữ của từ cứng đầu: đã viết ≥ 1 nét
       // chia khúc: khúc đang ở (0-2), thẻ chuyển tiếp đang hiện (số khúc sắp vào | null), hàng thẻ nói khúc 2,
       // mẫu câu chưa học để nạp thêm, lượt dịch làm lại khúc 2 [{it, at}], lượt xen nói/dịch, câu nhại/câu đề đã làm (khúc 3)
       blocks: blocks, block: 0, gate: null, gateWhy: "", pendNote: false,
       talk: dueP, phrasePool: phrasePool, talkRetry: [], talkTurn: 0, lines: {},
       // kiểm tra bài cũ đầu buổi (null = không có), thẻ bị kéo ôn sớm vì trả lời sai (lượt chấm lại không tính trần ôn)
-      warm: warmStart(), warmPull: {}
+      warm: cram ? null : warmStart(), warmPull: {}
     };
     if (room <= 0 && allDue.length) toast("Đủ " + reviewCap() + " lượt ôn hôm nay — giờ học từ mới");
     view = "session";
@@ -4495,10 +5239,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function tick() {
     if (!session) return;
     syncElapsed();
-    var clock = byId("clock"); if (clock) clock.textContent = fmtClock(session.elapsed) + " / 45:00";
-    var prog = byId("prog"); if (prog) prog.style.width = Math.min(100, session.elapsed / TARGET_SEC * 100) + "%";
+    var clock = byId("clock"); if (clock) clock.textContent = fmtClock(session.elapsed) + (session.cram ? "" : " / 45:00");
+    var prog = byId("prog"); if (prog && !session.cram) prog.style.width = Math.min(100, session.elapsed / TARGET_SEC * 100) + "%"; // ôn dồn: vạch theo số thẻ (updateCounts)
     if (session.blocks) blkTick();
-    if (session.elapsed >= TARGET_SEC && !session.shown45) {
+    if (session.elapsed >= TARGET_SEC && !session.shown45 && !session.cram) {
       session.shown45 = true;
       var b = byId("banner45"); if (b) b.hidden = false;
       // Đang đứng ở màn chọn khúc 3: vẽ lại 1 lần để hiện nút Kết thúc (màn này không có gì đang dở).
@@ -4552,11 +5296,11 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var r = session.talkRetry;
     if (r.length && r[0].at <= session.transShown) return r.shift().it; // câu "Chưa được": quay lại sau 2 câu dịch khác
     var t = nextTrans();
-    if (t) { session.transShown++; session.transSeen[t.id] = true; session.transWords[t.src.id] = true; return t; }
+    if (t) { session.transShown++; session.transSeen[t.id] = true; session.transWords[t.src.id] = true; zhMark(t); return t; }
     return r.length ? r.shift().it : null;
   }
-  // Vòng 4 lượt: nói · dịch · nói · đặt câu. Lượt nào không có thẻ thì sang lượt kế (đặt câu không có nguồn = bỏ lượt).
-  var TALK_ORDER = [talkPhrase, talkTrans, talkPhrase, talkSent];
+  // Vòng 5 lượt: nói · dịch · nói · đặt câu · nghe câu. Lượt nào không có thẻ thì sang lượt kế (đặt câu / nghe câu không có nguồn = bỏ lượt).
+  var TALK_ORDER = [talkPhrase, talkTrans, talkPhrase, talkSent, talkHear];
   function blkTalkNext() {
     var k = session.talkTurn % TALK_ORDER.length;
     for (var i = 0; i < TALK_ORDER.length; i++) {
@@ -4741,13 +5485,16 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     session.flipped = false; session.hint = false; session.keepPad = false; session.trTyped = "";
     session.rcPy = ""; session.rcVi = ""; session.rcSen = ""; session.rc = null; // ô gõ / kết quả thẻ Nhận mặt chữ, thẻ Đặt câu
     session.aiTr = null; session.aiSpk = null; // kết quả AI của thẻ cũ (về muộn thì bỏ)
+    session.spokenFor = ""; // thẻ mới (kể cả lượt làm lại cùng id) được tự đọc lại; vẽ lại cùng thẻ không qua đây nên không đọc lặp
+    session.lsOk = listenOk(); session.lsBlock = false; session.leechInk = false; // thẻ Nghe: chụp lại có giọng zh không; từ cứng đầu: chưa viết nét nào
+    if (session.cram) { session.current = session.queue.shift() || null; renderCard(); return; } // ôn dồn: chỉ hàng thẻ dựng sẵn
     if (session.blocks) { blkNext(); renderCard(); return; }
     if (!session.queue.length) refillQueue();
-    var tr = session.queue.length ? pickTrans() || pickSent() : null;
+    var tr = session.queue.length ? pickTrans() || pickSent() || pickHear() : null;
     if (tr) session.current = tr;
     else {
       session.current = session.queue.shift() || null;
-      if (session.current) { session.sinceTrans = (session.sinceTrans || 0) + 1; session.sinceSent = (session.sinceSent || 0) + 1; }
+      if (session.current) { session.sinceTrans = (session.sinceTrans || 0) + 1; session.sinceSent = (session.sinceSent || 0) + 1; session.sinceHear = (session.sinceHear || 0) + 1; }
     }
     renderCard();
   }
@@ -4782,12 +5529,15 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function flip() {
     if (!session.current || session.flipped || modeOf(session.current) === "new") return;
     if (session.aiTr && session.aiTr.state === "wait") return; // đang chờ AI chấm thẻ dịch: dùng "Bỏ qua AI"
+    if (lcNeedInk(session.current)) { toast("Từ cứng đầu: viết thử 1 nét trên bảng trước (hoặc Bỏ qua viết)"); return; }
     var rc = rcCur(session.current);
     // Bước đặt câu ("Dễ quá" / thẻ Đặt câu): "lật" = Chấm câu (đang chờ AI thì dùng "Bỏ qua AI")
     if (session.current.kind === "sent" || (rc && rc.step === "sent")) { rcSentCheck(session.current); return; }
     if (recIsLive() && REC.owner === "card:" + session.current.id) recStop(); // lật khi đang ghi = dừng ghi rồi so
     var ti = byId("trInput"); if (ti) session.trTyped = ti.value; // thẻ Dịch câu: "Kiểm tra" = lật, giữ câu đã gõ
     if (session.current.kind === "trans" && aiTransStart(session.current)) return; // AI bật + có chữ gõ: chờ AI rồi mới lật
+    if (session.current.kind === "hear" && hearStart(session.current)) return; // Nghe câu: như thẻ dịch (chiều Trung → Việt)
+    if (modeOf(session.current) === "listen") lsCheck(session.current); // Nghe từ: ô chữ / pinyin + nghĩa
     if (modeOf(session.current) === "recog") rcCheck(session.current); // có chữ gõ ở ô pinyin / nghĩa → chấm (mặt sau hiện ngay)
     session.flipped = true; session.keepPad = true;
     renderCard();
@@ -4810,13 +5560,15 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var it = session.current;
     if (!it || !session.flipped) return;
     var mode = modeOf(it);
-    if ((mode === "phrase" || mode === "trans" || mode === "sent") && grade !== 1 && grade !== 3) return;
+    if ((mode === "phrase" || mode === "trans" || mode === "sent" || mode === "hear") && grade !== 1 && grade !== 3) return;
     if (grade === 4 && rcEasyLock(it)) { toast("Nút Dễ đang khóa: " + rcEasyLock(it)); return; }
-    if (it.kind === "trans" || it.kind === "sent") {
-      // Thẻ dịch / đặt câu: SRS riêng (Chưa được = Quên, Được = Nhớ), không tính vào trần ôn; Chưa được → làm lại ở lượt sau cùng loại.
+    if (it.kind === "trans" || it.kind === "sent" || it.kind === "hear") {
+      // Thẻ dịch / đặt câu / nghe câu: SRS riêng (Chưa được = Quên, Được = Nhớ), không tính vào trần ôn; Chưa được → làm lại ở lượt sau cùng loại.
       applyGrade(it.id, grade);
       markTouched(it);
-      if (it.kind === "sent") {
+      if (it.kind === "hear") {
+        if (grade === 1) session.hearRetry.push({ it: it, at: session.hearShown + 1 });
+      } else if (it.kind === "sent") {
         sentCount(it);
         if (grade === 1) session.sentRetry.push(it);
       } else if (grade === 1) {
@@ -4827,11 +5579,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       return;
     }
     sentCount(it); // "Dễ quá": đã đặt 1 câu
+    if (session.cram) { cramGrade(it, grade); return; }
     // Lượt ôn = chấm một thẻ đã học từ trước (không tính mẫu câu mới gặp lần đầu) và không phải lượt quay lại
     // trong phiên (từ mới vừa hiểu / thẻ vừa Quên).
     // Thẻ bị kéo ôn sớm vì sai ở phần kiểm tra bài cũ: lượt chấm lại này cũng không tính (đã ra ngoài trần ôn).
     var pulled = !!(session.warmPull && session.warmPull[it.id]);
-    var isReview = !isNewItem(it) && !(session.relearn && session.relearn[it.id]) && !pulled;
+    var isReview = !session.cram && !isNewItem(it) && !(session.relearn && session.relearn[it.id]) && !pulled; // ôn dồn: không tính trần ôn
     if (pulled) delete session.warmPull[it.id];
     if (session.relearn && grade !== 1) delete session.relearn[it.id];
     var capHit = false;
@@ -4840,7 +5593,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       countReview(); // applyGrade → saveDb() lưu luôn
       capHit = before > 0 && reviewRoom() <= 0;
     }
+    var old = db.cards[it.id] || null; // trước khi chấm (applyGrade thay object mới) — để đếm hết cứng đầu
     applyGrade(it.id, grade);
+    if (it.kind === "word") leechAfterGrade(it, old, grade);
     markTouched(it);
     if (grade === 1) requeue(it);
     if (capHit) {
@@ -4855,6 +5610,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function endSession(force) {
     if (!session) return;
     syncElapsed();
+    if (session.cram) { // ôn dồn: không mốc 45 phút, thoát về danh sách từ cứng đầu (mục lịch sử #leech nếu mở từ đó)
+      if (backTo("#leech")) return;
+      closeSession(); view = "leech"; render(); return;
+    }
     if (!force && session.elapsed < TARGET_SEC && !confirm("Chưa đủ 45 phút đâu, thoát thật không?")) return;
     closeSession();
     view = "home"; render();
@@ -4876,6 +5635,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function escapeSession() {
     if (!session) return;
     syncElapsed();
+    if (session.cram) { endSession(true); return; }
     if (session.elapsed >= TARGET_SEC) { if (confirm("Kết thúc phiên và về trang chủ?")) endSession(true); }
     else endSession(false);
   }
@@ -5319,7 +6079,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function exportBackup() {
     try {
       // expand = bộ 🔗 Từ mở rộng, aipacks = cấp / nhánh AI soạn (cache AI mở rộng "hoctrung.aiexp.v1" và khóa AI không đi theo).
-      var data = { cards: db.cards, sessions: db.sessions, settings: db.settings, daily: db.daily, exams: EXDB, custom: CUSTOM, expand: EXPW, expandPhrases: EXPP, aipacks: AIPACKS };
+      var data = { cards: db.cards, sessions: db.sessions, settings: db.settings, daily: db.daily, exams: EXDB, custom: CUSTOM, expand: EXPW, expandPhrases: EXPP, aipacks: AIPACKS, msgs: MSGS, msgDeck: MSGD, mnemo: mnemoExport() };
       var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
       var url = URL.createObjectURL(blob);
       var a = document.createElement("a");
@@ -5327,6 +6087,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
       toast("Đã tải file backup");
+      pwaMarkExport(); // [P] ghi ngày xuất cuối (nhắc sau 7 ngày)
     } catch (e) { toast("Không xuất được backup"); }
   }
   // Gộp backup: không bao giờ làm mất thẻ; thẻ trùng giữ bản có `last` mới hơn (hòa thì reps nhiều hơn).
@@ -5455,6 +6216,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         }
         if (ppAdded) { saveExpP(); rebuildItems(); }
       }
+      var mnN = obj.mnemo && typeof obj.mnemo === "object" ? mnemoImport(obj.mnemo) : 0; // mẹo nhớ từ cứng đầu (gộp, giữ bản mới hơn)
+      var dcRes = dichImport(obj); // [F4] tin nhắn + bộ Từ tin nhắn (đổi id thẻ câu của file TRƯỚC khi gộp thẻ)
       var incDb = normalizeDb(obj);
       var wasEmpty = Object.keys(db.cards).length === 0;
       var r = mergeDb(db, incDb);
@@ -5542,6 +6305,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       toast("Đã nhập backup: +" + r.added + " thẻ mới, cập nhật " + r.updated + " thẻ" +
         (exAdded ? ", +" + exAdded + " câu đề" : "") + (wAdded ? ", +" + wAdded + " từ đề" : "") +
         (xAdded ? ", +" + xAdded + " từ mở rộng" : "") + (ppAdded ? ", +" + ppAdded + " câu đóng vai" : "") + (apAdded ? ", +" + apAdded + " cấp AI" + (apRen.length ? " (" + apRen.join("; ") + ")" : "") : "") +
+        (dcRes ? ", " + dcRes : "") + (mnN ? ", " + mnN + " mẹo nhớ" : "") +
         (lsAdded.length ? ", +" + lsAdded.length + " bài giáo trình" : ""));
     };
     reader.onerror = function () { toast("Không đọc được file"); };
@@ -7420,6 +8184,627 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (e.key === "Escape") { e.preventDefault(); rpLeave(); return; }
     if ((e.key === "r" || e.key === "R") && view === "roleplay" && rp && rp.phase === "chat") { e.preventDefault(); rpRecToggle(); }
   }
+  // ---------- [F4] tab Dịch tin nhắn (#dich): dịch Việt ↔ Trung bằng AI, nhặt từ mới vào bộ "Từ tin nhắn" ----------
+  // Chiều tự nhận: có chữ Hán → Trung→Việt, không → Việt→Trung. Pinyin / Hán Việt tra từ điển (không lấy của AI).
+  // Từ mới chưa có trong app tự vào bộ Từ tin nhắn (bấm Bỏ để gỡ), câu ví dụ = chính tin nhắn.
+  // Câu Việt mình viết + bản zh → mẫu câu của bộ (thẻ nói + thẻ dịch). Nhập thread cũ: dán đoạn chat hoặc file
+  // conversations.json (ChatGPT export) → tách phần chữ Hán → AI lọc từ theo khúc → chọn + Học.
+  var DICH = { draft: "", busy: false, tok: 0, res: null, err: "", openAt: null, imp: null };
+  var DICH_MAX = 2000;    // ký tự / tin
+  var DICH_CHUNK = 1500;  // ký tự / khúc khi nhập đoạn chat cũ
+  var DICH_PICK = 30;     // tick sẵn tối đa (HSK ≤ 5, kể cả khẩu ngữ)
+  var DICH_STOP = "的了是我你他她它们吗呢吧啊在有不也都和很这那个一好";
+  var AI_MSG_RULES = "Never write pinyin or romanization anywhere. All Chinese in Simplified characters only. Explanations in Vietnamese only. " +
+    "Do not invent meanings; if unsure, say so briefly.";
+  AI_TASKS.msg = { name: "dich_tin_nhan", maxTokens: 2500, timeoutMs: 45000, refusal: "AI từ chối dịch tin nhắn này", system:
+    "You translate chat messages for a Vietnamese learner of Mandarin Chinese (HSK 3 going to HSK 4) who texts with young people in mainland China.\n" +
+    "direction \"vi->zh\": text is a Vietnamese message the learner wants to send. zh = how a young native speaker would naturally text it on WeChat, " +
+    "keeping the tone, politeness and intimacy of the original (casual stays casual, warm stays warm, teasing stays teasing); natural particles and common " +
+    "internet expressions are fine, no forced slang. zh_alt = one different way: more polite/formal or shorter. note_vi = short note on nuance, tone or word choice " +
+    "(empty string if nothing worth noting). vi = empty string.\n" +
+    "direction \"zh->vi\": text is a Chinese message the learner received. vi = natural Vietnamese translation keeping the tone. note_vi = short explanation of slang, " +
+    "internet abbreviations (yyds, 绝绝子, 哈哈哈, 666, 笑死, xswl…), emoji meaning or cultural nuance; empty string if none. zh and zh_alt = empty strings.\n" +
+    "words: 0-8 words or short phrases worth learning, copied exactly as they appear in the Chinese text (zh for vi->zh, text for zh->vi). Prefer HSK 3-5 " +
+    "vocabulary, useful collocations and slang the learner may not know; skip function words and very easy words (的 了 是 我 你 他 好 吗 呢 吧 啊 很 不 在 有 这 那). " +
+    "meaning_vi: short Vietnamese meaning in this context. " + AI_POS_TXT + " hsk: HSK level 1-6, 0 for slang or outside HSK. why_vi: one short Vietnamese sentence " +
+    "on why it is useful or how it is used here.\n" + AI_MSG_RULES };
+  AI_TASKS.msg_bulk = { name: "loc_tu_doan_chat", maxTokens: 4000, timeoutMs: 90000, refusal: "AI từ chối đọc đoạn chat này", system:
+    "You extract vocabulary for a Vietnamese learner of Mandarin Chinese (HSK 3 going to HSK 4) from Chinese lines of an old chat (text, one line per message part).\n" +
+    "words: up to 25 words or short phrases worth learning that appear verbatim in text. Prefer HSK 3-5 vocabulary, useful collocations, slang and internet " +
+    "expressions; skip function words and very easy words (的 了 是 我 你 他 好 吗 呢 吧 啊 很 不 在 有 这 那). No duplicates. hanzi: copied exactly. " +
+    "meaning_vi: short Vietnamese meaning in context. " + AI_POS_TXT + " hsk: HSK level 1-6, 0 for slang or outside HSK. why_vi: one short Vietnamese sentence on " +
+    "why it is useful. sentence_zh: the shortest complete sentence from text that contains the word, copied exactly (at most about 40 characters). " +
+    "sentence_vi: natural Vietnamese translation of sentence_zh.\n" + AI_MSG_RULES };
+  function dichWordSchema(bulk) {
+    var S = { type: "string" }, p = { hanzi: S, meaning_vi: S, pos: { type: "string", enum: AI_POS }, hsk: { type: "integer" }, why_vi: S };
+    var req = ["hanzi", "meaning_vi", "pos", "hsk", "why_vi"];
+    if (bulk) { p.sentence_zh = S; p.sentence_vi = S; req = req.concat(["sentence_zh", "sentence_vi"]); }
+    return { type: "array", items: { type: "object", additionalProperties: false, required: req, properties: p } };
+  }
+  var AI_MSG_SCHEMA = {
+    type: "object", additionalProperties: false, required: ["zh", "zh_alt", "vi", "note_vi", "words"],
+    properties: { zh: { type: "string" }, zh_alt: { type: "string" }, vi: { type: "string" }, note_vi: { type: "string" }, words: dichWordSchema(false) }
+  };
+  var AI_MSG_BULK_SCHEMA = { type: "object", additionalProperties: false, required: ["words"], properties: { words: dichWordSchema(true) } };
+  function dichDir(t) { return HAN_RE.test(t) ? "zv" : "vz"; }
+  function dichDirTxt(t) {
+    t = String(t || "").trim();
+    if (!t) return ico("swap") + '<span>Tự nhận chiều: có chữ Hán → dịch sang Việt</span>';
+    return ico("swap") + '<span>' + (dichDir(t) === "zv" ? "Trung → Việt" : "Việt → Trung") + '</span>';
+  }
+  function dichZh(s, max) { return String(s == null ? "" : s).replace(AI_PY_RE, "").trim().slice(0, max || 1000); }
+  function dichOneLine(s) { return String(s || "").replace(/\s*\n+\s*/g, " ").trim(); }
+  function dichWhen(at) { var d = new Date(at); return pad2(d.getDate()) + "/" + pad2(d.getMonth() + 1) + " " + pad2(d.getHours()) + ":" + pad2(d.getMinutes()); }
+  function dichRows(t) { return Math.max(4, Math.min(10, String(t || "").split("\n").length + 1)); }
+  function dichGrow(t) { // ô nhập tự giãn theo chữ (tối đa nửa màn)
+    if (!t) return;
+    t.style.height = "auto";
+    t.style.height = Math.min(t.scrollHeight + 2, Math.max(160, Math.round(window.innerHeight * 0.5))) + "px";
+  }
+  // Từ AI trả → [{ hanzi, meaning, pos, hsk, why (+ sz, sv: câu chứa từ khi nhập đoạn chat) }]; bỏ từ không nằm trong chữ Hán (hay).
+  function dichWordsClean(list, hay, bulk) {
+    var seen = {}, out = [];
+    (Array.isArray(list) ? list : []).forEach(function (x) {
+      if (!x || typeof x !== "object") return;
+      var h = hzClean(x.hanzi);
+      if (!hzOk(h) || seen[h] || hay.indexOf(h) < 0 || (h.length === 1 && DICH_STOP.indexOf(h) >= 0)) return;
+      seen[h] = true;
+      var hsk = Math.floor(Number(x.hsk));
+      var w = { hanzi: h, meaning: aiTxt(x.meaning_vi, 200), pos: AI_POS.indexOf(x.pos) >= 0 ? x.pos : "", hsk: hsk >= 1 && hsk <= 6 ? hsk : 0, why: aiTxt(x.why_vi, 300) };
+      if (bulk) { var sz = dichOneLine(dichZh(x.sentence_zh, 200)); w.sz = sz.indexOf(h) >= 0 ? sz : ""; w.sv = w.sz ? aiTxt(x.sentence_vi, 300) : ""; }
+      out.push(w);
+    });
+    return out;
+  }
+  // Câu ví dụ của từ = chính tin nhắn (chữ Hán + nghĩa Việt cả câu). Tin dài quá 200 chữ: lấy câu chứa từ, bỏ nghĩa.
+  function dichEx(R, h) {
+    var zv = R.dir === "zv", zh = dichOneLine(zv ? R.src : R.out.indexOf(h) >= 0 ? R.out : R.alt), vi = dichOneLine(zv ? R.out : R.src);
+    if (zh.length > 200) {
+      var part = (zh.match(/[^。！？!?]+[。！？!?]*/g) || []).filter(function (p) { return p.indexOf(h) >= 0; })[0];
+      zh = (part || zh).trim().slice(0, 200); vi = "";
+    }
+    return { zh: zh, vi: vi.slice(0, 300) };
+  }
+  function dichWordVal(w, ex, at) {
+    var py = dictOk() ? pickPinyin(w.hanzi, "") : "";
+    return normalizeMsgW([{ hanzi: w.hanzi, pinyin: py, hanviet: py ? hanviet(w.hanzi, py) : "", meaning: w.meaning, pos: w.pos, hsk: w.hsk, chiettu: "",
+      examples: ex && ex.zh ? [{ zh: ex.zh, pinyin: dictOk() ? sentencePinyin(ex.zh) : "", vi: ex.vi }] : [], note: w.why, from: "msg:" + at }])[0];
+  }
+  // Bộ thẻ đổi: dựng lại thẻ; lần đầu có bộ → tự tick vào phiên (như Từ mở rộng).
+  function dichDeckChanged(had) {
+    rebuildItems();
+    if (!had && msgAny() && db.settings.selectedDecks.indexOf(MSG_DECK_ID) < 0) { db.settings.selectedDecks.push(MSG_DECK_ID); saveDb(); }
+  }
+  function dichAddWords(vals) { // → số từ đã thêm vào bộ Từ tin nhắn
+    var had = msgAny(), added = [];
+    vals.forEach(function (v) { if (v && !msgWHas(v.hanzi)) { MSGD.words.push(v); added.push(v.hanzi); delete MSGD.skip[v.hanzi]; } }); // + Học = thôi bỏ
+    if (!added.length) return 0;
+    if (!saveMsgW()) { MSGD.words = MSGD.words.filter(function (w) { return added.indexOf(w.hanzi) < 0; }); return 0; }
+    dichDeckChanged(had);
+    return added.length;
+  }
+  function dichPaint(anchor, focus) { if (view === "dich") renderKeepScroll(anchor || null, focus || null); }
+  // Nút Dịch: gọi AI + nạp từ điển song song; xong → lưu lịch sử, tự thêm từ mới, câu mình viết thành mẫu câu.
+  function dichGo() {
+    var t = String(DICH.draft || "").trim();
+    if (!t || DICH.busy || !aiOn()) return;
+    if (t.length > DICH_MAX) { toast("Tin nhắn dài quá (tối đa " + DICH_MAX + " ký tự) — tách ra vài lần"); return; }
+    var dir = dichDir(t), tok = ++DICH.tok, dictDone = false, got = null;
+    DICH.busy = true; DICH.err = "";
+    dichPaint();
+    var fin = function () {
+      if (tok !== DICH.tok || !dictDone || !got) return;
+      DICH.busy = false;
+      var R = got.ok ? dichClean(got.data, t, dir) : null;
+      if (!R) DICH.err = got.ok ? "AI trả lời sai định dạng" : got.reason;
+      else { dichSave(R); DICH.res = R; DICH.openAt = null; DICH.draft = ""; }
+      if (view !== "dich") return;
+      render();
+      var el = R ? byId("dichRes") : document.querySelector(".dicherr");
+      if (el) try { el.scrollIntoView({ block: "start", behavior: "smooth" }); } catch (e) { /* bỏ qua */ }
+    };
+    loadDict(function () { dictDone = true; fin(); });
+    aiCall("msg", { direction: dir === "zv" ? "zh->vi" : "vi->zh", text: t }, AI_MSG_SCHEMA).then(function (r) { got = r; fin(); });
+  }
+  function dichClean(d, src, dir) {
+    if (!d || typeof d !== "object") return null;
+    var zv = dir === "zv", zh = zv ? "" : dichZh(d.zh), alt = zv ? "" : dichZh(d.zh_alt), vi = zv ? aiTxt(d.vi, 2000) : "";
+    var out = zv ? vi : zh;
+    if (!out || (!zv && !HAN_RE.test(out))) return null;
+    if (alt && (normSent(alt) === normSent(zh) || !HAN_RE.test(alt))) alt = "";
+    var R = { at: Date.now(), dir: dir, src: src, out: out, alt: alt, note: aiTxt(d.note_vi, 800), phrase: false };
+    R.words = dichWordsClean(d.words, zv ? src : zh + "\n" + alt, false).slice(0, 10);
+    return R;
+  }
+  function dichSave(R) {
+    MSGS.push({ at: R.at, dir: R.dir, src: R.src, out: R.out, alt: R.alt, note: R.note });
+    if (MSGS.length > MSGS_MAX) MSGS = MSGS.slice(-MSGS_MAX);
+    saveMsgs();
+    var learned = learnedHanzi(), known = knownIdx(), had = msgAny(), vals = [], dict = dictOk();
+    R.noDict = !dict;
+    R.words.forEach(function (w) {
+      w.py = dict ? pickPinyin(w.hanzi, "") : "";
+      if (learned[w.hanzi]) w.st = "learned";
+      else if (known[w.hanzi]) { w.st = "known"; w.where = known[w.hanzi]; }
+      // từ đã bấm Bỏ trước đây / từ điển chưa tải (thẻ sẽ thiếu pinyin, Hán Việt): không tự thêm, để bấm + Học
+      else if (!dict || MSGD.skip[w.hanzi]) w.st = "off";
+      else { w.st = "add"; vals.push(dichWordVal(w, dichEx(R, w.hanzi), R.at)); }
+    });
+    var n = 0;
+    vals.forEach(function (v) { if (v && !msgWHas(v.hanzi)) { MSGD.words.push(v); n++; } });
+    R.words.forEach(function (w) { if (w.st === "add" && !msgWHas(w.hanzi)) w.st = "off"; });
+    // Việt → Trung: câu mình viết thành mẫu câu (thẻ nói + thẻ dịch) — chỉ nối thêm.
+    var zh = dichOneLine(R.out);
+    if (R.dir === "vz" && zh.length <= 200 && msgPIndex(zh) < 0) {
+      var d = new Date(R.at), p = normalizeExpP([{ zh: zh, pinyin: dictOk() ? sentencePinyin(zh) : "", vi: dichOneLine(R.src).slice(0, 300),
+        when: "Tin nhắn ngày " + d.getDate() + "/" + (d.getMonth() + 1), from: "msg:" + R.at }])[0];
+      if (p) { MSGD.phrases.push(p); R.phrase = true; }
+    }
+    if (!n && !R.phrase) return;
+    if (!saveMsgW()) { MSGD = loadMsgW(); R.phrase = false; R.words.forEach(function (w) { if (w.st === "add") w.st = "off"; }); return; }
+    dichDeckChanged(had);
+  }
+  // + Học / Bỏ 1 từ trong kết quả.
+  function dichWordToggle(h, on) {
+    var R = DICH.res, w = R ? R.words.filter(function (x) { return x.hanzi === h; })[0] : null;
+    if (!w) return;
+    var anchor = '.dkw[data-h="' + h + '"]';
+    if (!on) {
+      if (w.st !== "add") return;
+      MSGD.words = MSGD.words.filter(function (x) { return x.hanzi !== h; });
+      MSGD.skip[h] = Date.now(); MSGD.skip = normalizeMsgSkip(MSGD.skip); // nhớ đã bỏ: tin sau có lại cũng không tự thêm
+      saveMsgW(); rebuildItems();
+      w.st = "off"; dichPaint(anchor);
+      return;
+    }
+    if (w.st !== "off") return;
+    loadDict(function () {
+      var k = knownIdx()[h];
+      if (k) { w.st = "known"; w.where = k; }
+      else if (dichAddWords([dichWordVal(w, dichEx(R, h), R.at)])) w.st = "add";
+      if (!w.py && dictOk()) w.py = pickPinyin(h, "");
+      dichPaint(anchor);
+    });
+  }
+  function dichAddAll() {
+    var R = DICH.res;
+    if (!R) return;
+    loadDict(function () {
+      var known = knownIdx(), list = R.words.filter(function (w) { return w.st === "off" && !known[w.hanzi]; });
+      dichAddWords(list.map(function (w) { return dichWordVal(w, dichEx(R, w.hanzi), R.at); }));
+      list.forEach(function (w) { if (msgWHas(w.hanzi)) w.st = "add"; });
+      dichPaint(".dichres .dwh");
+    });
+  }
+  function dichCopy(t) {
+    var fb = function () {
+      var ok = false;
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = t; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.top = "0"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select(); ok = document.execCommand("copy"); ta.remove();
+      } catch (e) { ok = false; }
+      toast(ok ? "Đã chép" : "Không chép được — giữ ngón tay lên chữ để chọn");
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { toast("Đã chép"); }, fb);
+    else fb();
+  }
+  function dichCopyBtn(t) { return '<button class="small-btn dcopy" data-action="dich-copy" data-text="' + esc(t) + '">' + ico("doc") + 'Chép</button>'; }
+  function dichSz(zh) { var n = String(zh || "").length; return n > 40 ? " l3" : n > 14 ? " l2" : ""; }
+  function dichPy(zh) { return dictOk() ? sentencePinyin(zh) : ""; }
+  // Khối câu chữ Hán: chữ to + pinyin từ điển + loa + Chép.
+  function dichZhHtml(zh, copy) {
+    var p = dichPy(zh);
+    return '<div class="dzh zh' + dichSz(zh) + '" lang="zh-CN">' + esc(zh) + '</div>' +
+      (p ? '<div class="dpy pinyin">' + esc(p) + '</div>' : dichDictWait()) +
+      '<div class="dact">' + speakBtn(dichOneLine(zh)) + (copy ? dichCopyBtn(zh) : "") + '</div>';
+  }
+  function dichDictWait() { // chưa có từ điển: nạp 1 lần, xong vẽ lại; lỗi thì dừng (không tự nạp lại) — chờ bấm Thử lại / có mạng lại
+    if (dictOk()) return "";
+    if (DICH.dictFail) return '<div class="dpy faint">chưa có pinyin (mất mạng?) · <button class="link" data-action="dich-dict-retry">Thử lại</button></div>';
+    if (!DICH.dictKick) {
+      DICH.dictKick = true;
+      loadDict(function (ok) { DICH.dictKick = false; DICH.dictFail = !ok; dichPaint(); });
+    }
+    return '<div class="dpy faint">đang tải pinyin…</div>';
+  }
+  window.addEventListener("online", function () { if (DICH.dictFail) { DICH.dictFail = false; dichPaint(); } });
+  function dichNoAiHtml() {
+    return '<div class="dnoai"><b>Dịch tin nhắn cần AI.</b> Dán khóa OpenAI và bật “Dùng AI chấm” ở mục Tôi → AI. Khóa chỉ lưu trên máy này; ' +
+      'mỗi lần dịch = 1 lượt gọi AI (cộng vào chi phí tháng).</div>' +
+      '<div class="dbtns"><button class="primary" data-action="dich-ai">' + ico("gear") + 'Mở cài đặt AI</button></div>';
+  }
+  function dichWordHtml(w) {
+    var h = w.hanzi, len = Array.from(h).length, py = w.py || (dictOk() ? pickPinyin(h, "") : "");
+    var st = w.st === "add" ? '<em class="dst ok">✓ đã vào Từ tin nhắn</em>' : w.st === "learned" ? '<em class="dst">đã học</em>'
+      : w.st === "known" ? '<em class="dst">đã có ở ' + esc(w.where || "") + '</em>' : "";
+    var btn = w.st === "add" ? '<button class="small-btn dadd" data-action="dich-drop" data-h="' + esc(h) + '">Bỏ</button>'
+      : w.st === "off" ? '<button class="small-btn dadd" data-action="dich-add" data-h="' + esc(h) + '">+ Học</button>' : "";
+    return '<div class="dkw" data-h="' + esc(h) + '"><span class="zh dkh' + (len >= 5 ? " l5" : len === 4 ? " l4" : len === 3 ? " l3" : "") + '" lang="zh-CN">' + esc(h) + '</span>' +
+      '<div class="dkm">' + (py ? '<span class="py">' + esc(py) + '</span>' : "") +
+        '<span class="dmean">' + esc(w.meaning) + (w.hsk ? '<i> · HSK ' + w.hsk + '</i>' : '<i> · khẩu ngữ</i>') + '</span>' +
+        (w.why ? '<small>' + esc(w.why) + '</small>' : "") + st + '</div>' +
+      speakBtn(h, true) + btn + '</div>';
+  }
+  function dichResHtml(R) {
+    var zv = R.dir === "zv", h = '<section class="box dichres" id="dichRes"><h2>' + (zv ? "Trung → Việt" : "Việt → Trung") + '</h2>';
+    if (zv) h += '<div class="dlab">Tin gốc</div>' + dichZhHtml(R.src, false) +
+      '<div class="dlab">Tiếng Việt</div><div class="dvi">' + esc(R.out) + '</div><div class="dact">' + dichCopyBtn(R.out) + '</div>';
+    else h += '<blockquote class="dsrc">' + esc(R.src) + '</blockquote>' + dichZhHtml(R.out, true) +
+      (R.alt ? '<div class="dalt"><div class="dlab">Cách khác</div>' + dichZhHtml(R.alt, true) + '</div>' : "");
+    if (R.note) h += '<div class="dnote"><div class="dlab">Ghi chú</div><p>' + esc(R.note) + '</p></div>';
+    var left = R.words.filter(function (w) { return w.st === "off"; }).length;
+    if (!R.words.length) h += '<p class="dnone">Tin này không có từ mới đáng học.</p>';
+    else h += '<div class="row-between dwh"><h2>Từ mới</h2>' +
+        (left > 1 ? '<button class="small-btn primary" data-action="dich-add-all">+ Học tất cả (' + left + ')</button>' : "") + '</div>' +
+      R.words.map(dichWordHtml).join("") +
+      (R.noDict ? '<p class="dwnote">Từ điển chưa tải được (mạng chậm / mất mạng) nên từ mới chưa tự thêm — bấm <b>+ Học</b> khi có mạng.</p>' : "") +
+      '<p class="dwnote">Từ chưa có trong app tự vào bộ <b>Từ tin nhắn</b> (câu ví dụ = chính tin nhắn này), học từ phiên sau. Không muốn học thì bấm <b>Bỏ</b> — lần sau gặp lại cũng không tự thêm.' +
+        (R.phrase ? ' Câu bạn viết thành thẻ nói + thẻ dịch của bộ này.' : "") + '</p>';
+    return h + '</section>';
+  }
+  function dichHistHtml() {
+    var list = MSGS.slice(-10).reverse();
+    if (!list.length) return "";
+    return '<section class="box"><h2>Gần đây</h2><ul class="dhist">' + list.map(function (m) {
+      var open = DICH.openAt === m.at, zv = m.dir === "zv";
+      return '<li class="dhi' + (open ? " open" : "") + '"><button class="dhb" data-action="dich-h" data-at="' + m.at + '" aria-expanded="' + open + '">' +
+          '<span class="dhs' + (zv ? " zh" : "") + '"' + (zv ? ' lang="zh-CN"' : "") + '>' + esc(dichOneLine(m.src)) + '</span>' +
+          '<small>' + (zv ? "Trung → Việt" : "Việt → Trung") + ' · ' + dichWhen(m.at) + '</small>' + ico(open ? "chev-u" : "chev-d") + '</button>' +
+        (open ? '<div class="dho">' + (zv ? '<div class="dvi">' + esc(m.out) + '</div><div class="dact">' + speakBtn(dichOneLine(m.src)) + dichCopyBtn(m.out) + '</div>'
+          : dichZhHtml(m.out, true)) + (m.note ? '<p class="dhnote">' + esc(m.note) + '</p>' : "") + '</div>' : "") + '</li>';
+    }).join("") + '</ul></section>';
+  }
+  function dichHtml() {
+    if (DICH.imp) return dichImpHtml();
+    var on = aiOn(), t = DICH.draft;
+    return '<div class="wrap dich">' + mastHtml('<span lang="zh-CN">译</span>') +
+      '<div class="pagehead"><h1 class="hl">Dịch tin nhắn</h1></div>' +
+      '<p class="lede">Dán tin nhắn tiếng Việt hoặc tiếng Trung: app dịch theo giọng người trẻ Trung Quốc nhắn tin và nhặt từ mới vào bộ <b>Từ tin nhắn</b>.</p>' +
+      '<div class="dichform">' +
+        '<textarea id="dichIn" class="dichin" rows="' + dichRows(t) + '" maxlength="' + DICH_MAX + '" aria-label="Tin nhắn cần dịch" ' +
+          'placeholder="Dán / gõ tin nhắn tiếng Việt hoặc tiếng Trung"' + (DICH.busy ? " readonly" : "") + '>' + esc(t) + '</textarea>' +
+        (on ? '<div class="dichbar"><span id="dichDir" class="dichdir">' + dichDirTxt(t) + '</span>' +
+          '<button id="dichGo" class="primary dichgo" data-action="dich-go"' + (DICH.busy || !String(t).trim() ? " disabled" : "") + '>' + (DICH.busy ? "Đang dịch…" : "Dịch") + '</button></div>'
+          : dichNoAiHtml()) +
+        '<p class="dichpriv">' + ico("lock") + '<span>Tin nhắn được gửi tới OpenAI để dịch và lưu trong trình duyệt này + file backup.</span></p>' +
+        hintHtml('<kbd>Enter</kbd> xuống dòng · <kbd>Ctrl</kbd>+<kbd>Enter</kbd> dịch') +
+      '</div>' +
+      (DICH.err ? '<div class="dicherr" role="alert">' + ico("warn") + '<span>' + esc(DICH.err) + ' — chữ đã gõ vẫn còn, bấm Dịch để thử lại.</span></div>' : "") +
+      (DICH.busy ? '<p class="dwait">' + ico("clock") + '<span>Đang dịch…</span></p>' : DICH.res ? dichResHtml(DICH.res) : "") +
+      dichHistHtml() +
+      '<section class="box"><h2>Đoạn chat cũ</h2><ul class="items"><li><button class="item" data-action="dich-imp"><span class="gl" aria-hidden="true">聊</span>' +
+        '<span class="it"><b>Nhập đoạn chat cũ</b><small>Dán cả đoạn hội thoại hoặc file conversations.json của ChatGPT · lọc từ mới để học</small></span>' + ico("arrow") + '</button></li></ul></section>' +
+      '</div>';
+  }
+
+  // ---- nhập đoạn chat cũ: DICH.imp = { step: src | convs | ready | run | pick | done, … } ----
+  // Đoạn chữ Hán (≥ 2 chữ Hán) trong từng dòng; bỏ trùng. Pinyin / tiếng Việt xen giữa không gửi đi.
+  var DICH_SEG_RE = /[\u3400-\u9fff\uf900-\ufaff][㐀-鿿豈-﫿　-〿！-～0-9A-Za-z\s~·…—“”‘’]*/g;
+  function dichHanLines(text) {
+    var seen = {}, out = [];
+    String(text || "").split(/\r?\n/).forEach(function (l) {
+      (l.match(DICH_SEG_RE) || []).forEach(function (seg) {
+        seg = seg.replace(/[\sA-Za-z0-9~·—“‘]+$/, "").replace(/\s+/g, " ").trim();
+        if ((seg.match(/[\u3400-\u9fff\uf900-\ufaff]/g) || []).length < 2) return;
+        while (seg.length > DICH_CHUNK) { var a = seg.slice(0, DICH_CHUNK); if (!seen[a]) { seen[a] = true; out.push(a); } seg = seg.slice(DICH_CHUNK); }
+        if (!seen[seg]) { seen[seg] = true; out.push(seg); }
+      });
+    });
+    return out;
+  }
+  function dichChunks(lines) {
+    var out = [], cur = "";
+    lines.forEach(function (l) {
+      if (cur && cur.length + 1 + l.length > DICH_CHUNK) { out.push(cur); cur = ""; }
+      cur += (cur ? "\n" : "") + l;
+    });
+    if (cur) out.push(cur);
+    return out;
+  }
+  // Ước tính chi phí: ~700 token đề bài + chữ, trả ~2000 token / khúc.
+  function dichEst(chunks) {
+    var p = AI_MODELS[aiModel()], it = 0, ot = 0;
+    chunks.forEach(function (c) { it += 700 + Math.round(c.length * 1.1); ot += 2000; });
+    return (it * p.inP + ot * p.outP) / 1e6;
+  }
+  // Chữ của 1 tin hiện trong khung chat: chỉ tin người dùng / ChatGPT gửi cho người đọc (content_type text / multimodal_text,
+  // recipient "all") — bỏ lệnh gọi công cụ (code), kết quả duyệt web, suy nghĩ, tin ẩn; giọng nói: lấy bản ghi (audio_transcription).
+  function dichMsgText(node) {
+    var m = node && node.message, c = m && m.content, role = m && m.author && m.author.role;
+    if (!c || typeof c !== "object" || (role !== "user" && role !== "assistant")) return "";
+    if (c.content_type && c.content_type !== "text" && c.content_type !== "multimodal_text") return "";
+    if (m.recipient && m.recipient !== "all") return "";
+    if (m.metadata && m.metadata.is_visually_hidden_from_conversation) return "";
+    var parts = Array.isArray(c.parts) ? c.parts : typeof c.text === "string" ? [c.text] : [];
+    return parts.map(function (p) {
+      return typeof p === "string" ? p : p && p.content_type === "audio_transcription" && typeof p.text === "string" ? p.text : "";
+    }).filter(Boolean).join("\n").trim();
+  }
+  // Các tin của nhánh đang hiện (current_node → gốc theo parent): bỏ tin đã sửa, câu trả lời trước khi bấm tạo lại.
+  // File không có current_node: mọi nút, xếp theo giờ (nút không có giờ để cuối).
+  function dichPath(c) {
+    var map = c.mapping, id = c.current_node, out = [], seen = {};
+    if (typeof id === "string" && map[id]) {
+      while (typeof id === "string" && map[id] && !seen[id]) { seen[id] = true; out.push(map[id]); id = map[id].parent; }
+      out.reverse();
+    } else {
+      var at = function (n) { var v = n.message.create_time; return typeof v === "number" && isFinite(v) ? v : Infinity; };
+      out = Object.keys(map).map(function (k) { return map[k]; }).filter(function (n) { return n && n.message; });
+      out.sort(function (a, b) { var x = at(a), y = at(b); return x === y ? 0 : x < y ? -1 : 1; });
+    }
+    return out.filter(function (n) { return !!dichMsgText(n); });
+  }
+  // File conversations.json (ChatGPT → Settings → Data controls → Export): đọc 1 lần, liệt kê cuộc trò chuyện, không lưu file.
+  function dichFileRead(file) {
+    var I = DICH.imp;
+    if (!I || !file) return;
+    I.loading = true; I.err = "";
+    dichPaint();
+    var rd = new FileReader();
+    rd.onload = function () {
+      if (DICH.imp !== I) return;
+      I.loading = false;
+      var arr = null;
+      try { arr = JSON.parse(String(rd.result)); } catch (e) { arr = null; }
+      if (arr && !Array.isArray(arr) && Array.isArray(arr.conversations)) arr = arr.conversations;
+      if (!Array.isArray(arr)) { I.err = "File không phải conversations.json của ChatGPT"; dichPaint(); return; }
+      var convs = [];
+      arr.forEach(function (c, i) {
+        if (!c || typeof c !== "object" || !c.mapping || typeof c.mapping !== "object") return;
+        var path = dichPath(c), n = path.length, han = path.some(function (x) { return HAN_RE.test(dichMsgText(x)); });
+        if (n) convs.push({ i: i, title: aiS(c.title, 120) || "(không tên)", at: num(c.create_time, 0), n: n, han: han });
+      });
+      if (!convs.length) { I.err = "Không thấy cuộc trò chuyện nào trong file"; dichPaint(); return; }
+      convs.sort(function (a, b) { return (b.han - a.han) || (b.at - a.at); });
+      I.raw = arr; I.convs = convs; I.q = ""; I.step = "convs";
+      render();
+    };
+    rd.onerror = function () { if (DICH.imp === I) { I.loading = false; I.err = "Không đọc được file"; dichPaint(); } };
+    rd.readAsText(file);
+  }
+  function dichConvRows(I) {
+    var q = String(I.q || "").trim().toLowerCase(), list = I.convs.filter(function (c) { return !q || c.title.toLowerCase().indexOf(q) >= 0; });
+    if (!list.length) return '<p class="dnone">Không có cuộc trò chuyện nào khớp.</p>';
+    return '<ul class="items">' + list.slice(0, 60).map(function (c) {
+      var d = c.at ? new Date(c.at * 1000) : null;
+      return '<li><button class="item dconv' + (c.han ? "" : " off") + '" data-action="dich-conv" data-i="' + c.i + '"><span class="it"><b>' + esc(c.title) + '</b>' +
+        '<small>' + (d ? d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " · " : "") + c.n + ' tin' + (c.han ? "" : " · không có chữ Hán") + '</small></span>' +
+        ico("arrow") + '</button></li>';
+    }).join("") + '</ul>' + (list.length > 60 ? '<p class="dnone">Còn ' + (list.length - 60) + ' cuộc — gõ tên để lọc.</p>' : "");
+  }
+  function dichPickConv(i) {
+    var I = DICH.imp, c = I && I.raw ? I.raw[i] : null;
+    if (!c || !c.mapping) return;
+    I.title = aiS(c.title, 120);
+    dichPrepare(I, dichPath(c).map(dichMsgText).join("\n"));
+  }
+  function dichPrepare(I, text) {
+    var lines = dichHanLines(text);
+    if (!lines.length) { I.err = "Không thấy chữ Hán trong đoạn này"; dichPaint(); return; }
+    I.from = I.step; I.lines = lines; I.chunks = dichChunks(lines); I.err = ""; I.step = "ready";
+    render();
+  }
+  function dichRun() {
+    var I = DICH.imp;
+    if (!I || I.step !== "ready" || !aiOn()) return;
+    var tok = I.tok = (I.tok || 0) + 1;
+    I.step = "run"; I.i = 0; I.fails = 0; I.failWhy = ""; I.stopWhy = ""; I.found = []; I.seen = {};
+    loadDict(function () { /* nạp sẵn cho lúc thêm từ */ });
+    var next = function () {
+      if (DICH.imp !== I || I.tok !== tok) return;
+      if (I.i >= I.chunks.length) { dichPickStart(I); return; }
+      var ch = I.chunks[I.i];
+      aiCall("msg_bulk", { text: ch }, AI_MSG_BULK_SCHEMA).then(function (r) {
+        if (DICH.imp !== I || I.tok !== tok) return;
+        if (r.ok) dichWordsClean(r.data && r.data.words, ch, true).forEach(function (w) { if (!I.seen[w.hanzi]) { I.seen[w.hanzi] = true; I.found.push(w); } });
+        else {
+          I.fails++; I.failWhy = r.reason;
+          // khóa sai / hết credit / mất mạng: dừng, giữ từ đã lọc
+          if (r.status === 401 || r.status === 403 || r.status === 429 || /mạng/.test(r.reason || "")) { I.stopWhy = r.reason; dichPickStart(I); return; }
+        }
+        I.i++;
+        dichPaint();
+        next();
+      });
+    };
+    render();
+    next();
+  }
+  function dichPickStart(I) {
+    I.tok = (I.tok || 0) + 1;
+    // tick sẵn tối đa DICH_PICK từ HSK ≤ 5 (0 = khẩu ngữ / tiếng lóng)
+    loadDict(function () {
+      if (DICH.imp !== I) return;
+      var known = knownIdx(), n = 0;
+      I.words = I.found.filter(function (w) { return !known[w.hanzi]; });
+      I.skipped = I.found.length - I.words.length;
+      I.sel = {};
+      I.words.forEach(function (w, i) { w.py = dictOk() ? pickPinyin(w.hanzi, "") : ""; if (n < DICH_PICK && w.hsk <= 5) { I.sel[i] = true; n++; } });
+      I.step = "pick";
+      if (view === "dich") render();
+    });
+  }
+  function dichSelN(I) { return Object.keys(I.sel || {}).filter(function (k) { return I.sel[k]; }).length; }
+  function dichImpAdd() {
+    var I = DICH.imp;
+    if (!I || I.step !== "pick") return;
+    loadDict(function () {
+      if (DICH.imp !== I) return;
+      var at = Date.now();
+      I.added = dichAddWords(I.words.filter(function (w, i) { return I.sel[i]; }).map(function (w) {
+        return dichWordVal(w, w.sz ? { zh: w.sz, vi: w.sv } : null, at);
+      }));
+      I.step = "done";
+      render();
+    });
+  }
+  function dichImpHtml() {
+    var I = DICH.imp, h = '<div class="wrap dich dimp">' + mastHtml('<span lang="zh-CN">译</span>') +
+      '<button class="backlink" data-action="dich-imp-x">' + ico("back") + 'Dịch tin nhắn</button>' + '<h1 class="hl">Nhập đoạn chat cũ</h1>';
+    var err = I.err ? '<div class="dicherr" role="alert">' + ico("warn") + '<span>' + esc(I.err) + '</span></div>' : "";
+    if (!aiOn() && I.step !== "done") return h + '<p class="lede">Lọc từ trong đoạn chat cũ cũng cần AI.</p><div class="dichform">' + dichNoAiHtml() + '</div></div>';
+    if (I.step === "src") {
+      var nl = dichHanLines(I.text).length;
+      return h + '<p class="lede">Lấy từ mới từ thread bạn hay dịch qua lại. App chỉ gửi phần có chữ Hán cho AI (từng khúc ≤ ' + DICH_CHUNK + ' ký tự), rồi cho bạn chọn từ để học.</p>' +
+        '<section class="box"><h2>Dán đoạn hội thoại</h2>' +
+          '<textarea id="dichImpTx" class="dichin dimptx" rows="7" aria-label="Đoạn hội thoại" placeholder="Dán cả đoạn chat (Việt lẫn Trung đều được)">' + esc(I.text) + '</textarea>' +
+          '<div class="dichbar"><span id="dichImpCnt" class="dichdir">' + (nl ? nl + " đoạn có chữ Hán" : "Chưa thấy chữ Hán") + '</span>' +
+            '<button class="primary dichgo" data-action="dich-split">Tách chữ Hán</button></div></section>' +
+        '<section class="box"><h2>Hoặc file của ChatGPT</h2>' +
+          '<p class="dsteps">ChatGPT → Settings → Data controls → Export data → mở file zip nhận qua email, lấy <code>conversations.json</code>. File chỉ đọc trên máy này, không lưu lại.</p>' +
+          '<button class="small-btn" data-action="dich-file"' + (I.loading ? " disabled" : "") + '>' + ico("doc") + (I.loading ? "Đang đọc file…" : "Chọn file conversations.json") + '</button>' +
+          '<input type="file" id="dichFile" accept=".json,application/json" hidden></section>' + err + '</div>';
+    }
+    if (I.step === "convs") {
+      return h + '<p class="lede">' + I.convs.length + ' cuộc trò chuyện trong file. Chọn 1 cuộc để lọc từ.</p>' +
+        '<input type="search" id="dichConvQ" class="dconvq" placeholder="Lọc theo tên cuộc trò chuyện" aria-label="Lọc theo tên" value="' + esc(I.q || "") + '">' +
+        '<div id="dichConvList">' + dichConvRows(I) + '</div>' +
+        '<div class="dbtns"><button class="link" data-action="dich-imp-back">' + ico("back") + 'Chọn file khác / dán chữ</button></div>' + err + '</div>';
+    }
+    if (I.step === "ready") {
+      var chars = I.chunks.join("").length;
+      return h + (I.title ? '<p class="lede">' + esc(I.title) + '</p>' : "") +
+        '<section class="box"><h2>Sẵn sàng</h2><div class="dstat">' +
+          '<div><b>' + I.lines.length + '</b><small>đoạn có chữ Hán</small></div><div><b>' + chars + '</b><small>ký tự gửi đi</small></div>' +
+          '<div><b>' + I.chunks.length + '</b><small>lượt AI</small></div></div>' +
+          '<p class="dcost">Chi phí ước tính <b>~' + fmtUsd(dichEst(I.chunks)) + '</b> (' + esc(aiModel()) + ') · cộng vào chi phí tháng.' +
+            (I.chunks.length > 40 ? ' Đoạn chat dài: bấm <b>Dừng</b> giữa chừng được, từ đã lọc vẫn giữ.' : "") + '</p>' +
+          '<div class="dprev zh" lang="zh-CN">' + I.lines.slice(0, 4).map(function (l) { return '<div>' + esc(l.length > 60 ? l.slice(0, 59) + "…" : l) + '</div>'; }).join("") +
+            (I.lines.length > 4 ? '<div class="faint">…</div>' : "") + '</div>' +
+          '<div class="dbtns"><button class="primary" data-action="dich-run">Bắt đầu lọc từ' + ico("arrow") + '</button>' +
+            '<button class="link" data-action="dich-imp-back">' + ico("back") + 'Quay lại</button></div></section>' + err + '</div>';
+    }
+    if (I.step === "run") {
+      var pct = Math.round(100 * I.i / Math.max(1, I.chunks.length));
+      return h + '<section class="box"><h2>Đang lọc từ</h2>' +
+        '<div class="dprog" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '"><span style="width:' + pct + '%"></span></div>' +
+        '<p class="dprogt">Khúc <b>' + Math.min(I.i + 1, I.chunks.length) + '/' + I.chunks.length + '</b> · đã gom <b>' + I.found.length + '</b> từ' +
+          (I.fails ? ' · ' + I.fails + ' khúc lỗi' : "") + '</p>' +
+        '<div class="dbtns"><button class="small-btn" data-action="dich-stop">' + ico("stop") + 'Dừng, chọn từ đã lọc</button></div></section></div>';
+    }
+    if (I.step === "pick") {
+      var k = dichSelN(I);
+      return h + '<p class="lede">AI tìm được <b>' + I.found.length + '</b> từ' + (I.skipped ? ', bỏ ' + I.skipped + ' từ đã có trong app' : "") +
+          '. Tick sẵn tối đa ' + DICH_PICK + ' từ HSK ≤ 5 (cả khẩu ngữ); chọn rồi bấm + Học.</p>' +
+        (I.stopWhy || I.fails ? '<div class="dicherr">' + ico("warn") + '<span>' + (I.stopWhy ? "Dừng giữa chừng: " + esc(I.stopWhy) : I.fails + " khúc lỗi: " + esc(I.failWhy)) + '</span></div>' : "") +
+        (I.words.length ? '<div class="row-between dpickh"><h2>Từ mới · ' + I.words.length + '</h2><span><button class="link" data-action="dich-sel-all">Chọn hết</button>' +
+          '<button class="link" data-action="dich-sel-none">Bỏ hết</button></span></div>' +
+          I.words.map(function (w, i) {
+            var len = Array.from(w.hanzi).length;
+            return '<div class="dpick"><label><input type="checkbox" data-dimp="' + i + '"' + (I.sel[i] ? " checked" : "") + '>' +
+              '<span class="zh dkh' + (len >= 5 ? " l5" : len === 4 ? " l4" : len === 3 ? " l3" : "") + '" lang="zh-CN">' + esc(w.hanzi) + '</span>' +
+              '<span class="dkm">' + (w.py ? '<span class="py">' + esc(w.py) + '</span>' : "") +
+                '<span class="dmean">' + esc(w.meaning) + (w.hsk ? '<i> · HSK ' + w.hsk + '</i>' : '<i> · khẩu ngữ</i>') + '</span>' +
+                (w.sz ? '<small class="zh" lang="zh-CN">' + esc(w.sz) + '</small>' : w.why ? '<small>' + esc(w.why) + '</small>' : "") + '</span></label>' +
+              speakBtn(w.hanzi, true) + '</div>';
+          }).join("") +
+          '<div class="dimpbar"><button id="dichImpAdd" class="primary big" data-action="dich-imp-add"' + (k ? "" : " disabled") + '>+ Học ' + k + ' từ đã chọn</button></div>'
+          : '<p class="dnone">' + (I.found.length ? "Không có từ mới nào (mọi từ đã có trong app)." : "Chưa lọc được từ nào.") + '</p><div class="dbtns"><button class="primary" data-action="dich-imp-x">Xong</button></div>') + '</div>';
+    }
+    return h + '<section class="box"><p class="ddone"><b>' + (I.added || 0) + '</b> từ đã vào bộ <b>Từ tin nhắn</b> — học từ phiên sau (bộ tự được chọn ở Chọn chủ đề).</p>' +
+      '<div class="dbtns"><button class="primary" data-action="dich-imp-x">Xong</button></div></section></div>';
+  }
+  // Đóng màn nhập (Xong / ← Dịch tin nhắn / Back / bấm tab Dịch): bỏ kết quả AI đang chờ.
+  function dichImpClose() { var I = DICH.imp; if (I) I.tok = (I.tok || 0) + 1; DICH.imp = null; }
+  function dichAction(a, el) {
+    var I = DICH.imp;
+    switch (a) {
+      case "dich-go": dichGo(); break;
+      case "dich-dict-retry": DICH.dictFail = false; dichPaint(); break;
+      case "dich-copy": dichCopy(el.getAttribute("data-text") || ""); break;
+      case "dich-h": { var at = Number(el.getAttribute("data-at")); DICH.openAt = DICH.openAt === at ? null : at; dichPaint('[data-action="dich-h"][data-at="' + at + '"]'); break; }
+      case "dich-add": dichWordToggle(el.getAttribute("data-h"), true); break;
+      case "dich-drop": dichWordToggle(el.getAttribute("data-h"), false); break;
+      case "dich-add-all": dichAddAll(); break;
+      case "dich-ai": aiFocusNext = true; view = "me"; render(); break;
+      case "dich-imp": DICH.imp = { step: "src", text: "" }; render(); break;
+      case "dich-imp-x": if (!backTo("#dich")) { dichImpClose(); render(); } break;
+      case "dich-imp-back": if (I) { I.err = ""; I.step = I.step === "ready" && I.from === "convs" ? "convs" : "src"; if (I.step === "src") { I.raw = null; I.convs = null; } render(); } break;
+      case "dich-file": { var f = byId("dichFile"); if (f) { f.value = ""; f.click(); } break; }
+      case "dich-split": if (I) dichPrepare(I, I.text); break;
+      case "dich-conv": dichPickConv(Number(el.getAttribute("data-i"))); break;
+      case "dich-run": dichRun(); break;
+      case "dich-stop": if (I && I.step === "run") dichPickStart(I); break;
+      case "dich-imp-add": dichImpAdd(); break;
+      case "dich-sel-all": case "dich-sel-none": if (I && I.words) { I.sel = {}; if (a === "dich-sel-all") I.words.forEach(function (w, i) { I.sel[i] = true; }); dichPaint(".dpickh"); } break;
+      default: break;
+    }
+  }
+  // Sự kiện riêng của màn Dịch (gắn 1 lần trên #app, chạy cùng các listener chung).
+  app.addEventListener("input", function (e) {
+    var t = e.target;
+    if (!t || view !== "dich") return;
+    if (t.id === "dichIn") {
+      DICH.draft = t.value; dichGrow(t);
+      var d = byId("dichDir"); if (d) d.innerHTML = dichDirTxt(t.value);
+      var g = byId("dichGo"); if (g) g.disabled = DICH.busy || !t.value.trim();
+    } else if (t.id === "dichImpTx" && DICH.imp) {
+      DICH.imp.text = t.value;
+      var c = byId("dichImpCnt"), nl = t.value.length < 200000 ? dichHanLines(t.value).length : -1;
+      if (c) c.textContent = nl < 0 ? "Đoạn dài — bấm Tách chữ Hán" : nl ? nl + " đoạn có chữ Hán" : "Chưa thấy chữ Hán";
+    } else if (t.id === "dichConvQ" && DICH.imp && DICH.imp.convs) {
+      DICH.imp.q = t.value;
+      var L = byId("dichConvList"); if (L) L.innerHTML = dichConvRows(DICH.imp);
+    }
+  });
+  // Enter = xuống dòng trong ô; Ctrl/Cmd+Enter = Dịch.
+  app.addEventListener("keydown", function (e) {
+    var t = e.target;
+    if (t && t.id === "dichIn" && e.key === "Enter" && (e.ctrlKey || e.metaKey) && !e.isComposing) { e.preventDefault(); if (!e.repeat) dichGo(); }
+  });
+  app.addEventListener("change", function (e) {
+    var t = e.target;
+    if (!t || view !== "dich") return;
+    if (t.id === "dichFile") { var f = t.files && t.files[0]; dichFileRead(f); return; }
+    var di = t.getAttribute && t.getAttribute("data-dimp"), I = DICH.imp;
+    if (di != null && I && I.sel) {
+      I.sel[di] = !!t.checked;
+      var b = byId("dichImpAdd"), k = dichSelN(I);
+      if (b) { b.textContent = "+ Học " + k + " từ đã chọn"; b.disabled = !k; }
+    }
+  });
+  // Nhập backup: tin nhắn (gộp theo thời gian + nội dung) + bộ Từ tin nhắn (từ theo hanzi, câu chỉ nối thêm).
+  // Đổi id thẻ câu "tu-tin-nhan:p|tp:<i>" của file về chỉ số câu ở máy này (gọi TRƯỚC khi gộp thẻ). → chuỗi tóm tắt cho toast.
+  function dichImport(obj) {
+    var had = msgAny(), mAdd = 0, wAdd = 0, pAdd = 0;
+    if (Array.isArray(obj.msgs)) {
+      var keys = {};
+      MSGS.forEach(function (m) { keys[msgKey(m)] = true; });
+      normalizeMsgs(obj.msgs).forEach(function (m) { if (!keys[msgKey(m)]) { keys[msgKey(m)] = true; MSGS.push(m); mAdd++; } });
+      if (mAdd) { MSGS = normalizeMsgs(MSGS); saveMsgs(); }
+    }
+    var D = obj.msgDeck && typeof obj.msgDeck === "object" ? obj.msgDeck : null;
+    if (D && Array.isArray(D.phrases)) {
+      var pm = {};
+      normalizeExpP(D.phrases).forEach(function (p, i) {
+        var j = msgPIndex(p.zh);
+        if (j < 0) { MSGD.phrases.push(p); j = MSGD.phrases.length - 1; pAdd++; }
+        pm[i] = j;
+      });
+      if (obj.cards && typeof obj.cards === "object") {
+        var rc = {};
+        Object.keys(obj.cards).forEach(function (id) {
+          var mm = /^tu-tin-nhan:(tp|p):(\d+)$/.exec(id);
+          if (!mm) rc[id] = obj.cards[id];
+          else if (pm[mm[2]] != null) rc[MSG_DECK_ID + ":" + mm[1] + ":" + pm[mm[2]]] = obj.cards[id];
+        });
+        obj.cards = rc;
+      }
+    }
+    if (D && Array.isArray(D.words)) normalizeMsgW(D.words).forEach(function (w) { if (!msgWHas(w.hanzi)) { MSGD.words.push(w); wAdd++; } });
+    var sk = D ? normalizeMsgSkip(D.skip) : {}, sAdd = 0; // từ đã Bỏ trong file: gộp (trừ từ đang học)
+    Object.keys(sk).forEach(function (h) { if (!(h in MSGD.skip) && !msgWHas(h)) { MSGD.skip[h] = sk[h]; sAdd++; } });
+    if (sAdd) MSGD.skip = normalizeMsgSkip(MSGD.skip);
+    if (wAdd || pAdd) { saveMsgW(); dichDeckChanged(had); }
+    else if (sAdd) saveMsgW();
+    var out = [];
+    if (mAdd) out.push("+" + mAdd + " tin nhắn");
+    if (wAdd) out.push("+" + wAdd + " từ tin nhắn");
+    if (pAdd) out.push("+" + pAdd + " câu tin nhắn");
+    return out.join(", ");
+  }
+
   // Khúc 3: cấp bản đồ đang học có đóng vai (không có thì cấp đã mở có đóng vai); mỗi lần mở đổi sang cấp kế (UI.blkRp).
   function blkRpPick() {
     var on = mapOnKeys().filter(rpHasMeta), studying = on.length > 0;
@@ -7473,10 +8858,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (dueLater > 0) notes.push((due ? "" : "Đã ôn đủ trần hôm nay · ") + "còn " + dueLater + " thẻ để mấy hôm tới");
     if (lsMissing) notes.push(ico("warn") + lsMissing + " bài giáo trình chưa tải được");
     if (mpMissing) notes.push(ico("warn") + mpMissing + " cấp bản đồ chưa tải được");
+    var pwaNote = pwaHomeNote(); if (pwaNote) notes.push(pwaNote); // [P] nhắc xuất backup
     // Kiểm tra bài cũ: tự chạy đầu buổi (mỗi ngày 1 lần) — mục này chỉ báo trạng thái, bấm = vào học.
     // Không có buổi trước (người mới / nghỉ lâu) → warmStart() trả null, đầu buổi sẽ không có câu nào: báo đúng như vậy.
     var wn = warmN(), wdone = warmDoneToday(), wdays = wn && !wdone ? warmDays().length : 0;
     var warmSub = !wn ? "Đang tắt · bật lại ở mục Tôi" : wdone ? "Đã làm hôm nay" : !wdays ? "Chưa có buổi trước để kiểm tra" : wn + " câu từ buổi trước · Trung ↔ Việt · tự chạy đầu buổi";
+    var lcN = leechItems().length; // từ cứng đầu: hàng 03 chỉ hiện khi có
     var deckRow = function (d) {
       var c = deckCounts(d, now);
       var checked = s.selectedDecks.indexOf(d.id) >= 0 ? " checked" : "";
@@ -7509,7 +8896,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       var act = d.lesson ? ' data-action="ls-open" data-id="' + esc(d.id) + '"'
         : d.map ? ' data-action="map-lv" data-key="' + esc(d.map) + '"'
         : MAP_TOPIC[d.id] ? ' data-action="map-goto" data-id="' + esc(d.id) + '"' : ' data-action="topics"';
-      var kind = d.lesson ? "Giáo trình" : d.map ? "Bản đồ" : d.id === CUSTOM_DECK_ID ? "Từ trong đề" : d.id === EXP_DECK_ID ? "Từ mở rộng" : "Chủ đề";
+      var kind = d.lesson ? "Giáo trình" : d.map ? "Bản đồ" : d.id === CUSTOM_DECK_ID ? "Từ trong đề" : d.id === EXP_DECK_ID ? "Từ mở rộng" : d.id === MSG_DECK_ID ? "Tin nhắn" : "Chủ đề";
       return '<li><button class="item"' + act + ' aria-label="' + esc(deckTitle(d)) + ' — đã học ' + pct + '%">' +
         '<span class="gl" aria-hidden="true">' + deckGlyph(d) + '</span>' +
         '<span class="it"><b>' + esc(deckTitle(d)) + '</b><small>' + kind + ' · mới ' + c.fresh + ' · đến hạn ' + c.due + '</small></span>' +
@@ -7530,6 +8917,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
           '<span class="it"><b>Kiểm tra bài cũ</b><small>' + warmSub + '</small></span>' + ico("arrow") + '</button></li>' +
         '<li><button class="item" data-action="start"><span class="no">02</span>' +
           '<span class="it"><b>Ôn thẻ đến hạn</b><small>' + due + ' thẻ hôm nay' + (reviewCap() ? ' · trần ' + reviewCap() + ' lượt / ngày' : "") + '</small></span>' + ico("arrow") + '</button></li>' +
+        (lcN ? '<li><button class="item" data-action="leech"><span class="no">03</span>' +
+          '<span class="it"><b>Từ cứng đầu · ' + lcN + ' từ</b><small>Quên từ ' + LEECH_LAPSES + ' lần trở lên · ôn dồn có viết tay</small></span>' + ico("arrow") + '</button></li>' : "") +
       '</ul></section>' +
       '<section class="box"><div class="row-between"><h2>Đang học</h2><button class="link" data-action="topics" aria-expanded="' + !!UI.topicsOpen + '">' +
         (UI.topicsOpen ? "Xong" : "Chọn chủ đề") + '</button></div>' +
@@ -7592,6 +8981,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
           '<button data-action="export">' + ico("down") + 'Xuất backup</button>' +
           '<button data-action="import">' + ico("up") + 'Nhập backup</button>' +
         '</div>' +
+        pwaMeHtml() + // [P] giữ dữ liệu · xuất lần cuối · cài app
         '<input type="file" id="importFile" accept="application/json,.json" hidden>' +
       '</section>' +
       '<p class="keys">Phím tắt trong phiên: <kbd>Space</kbd> lật / nhớ · <kbd>1-4</kbd> chấm · <kbd>Enter</kbd> đã hiểu · <kbd>R</kbd> ghi âm (thẻ nói) · <kbd>Esc</kbd> thoát</p>' +
@@ -7660,7 +9050,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
           '<button class="small-btn barx" data-action="end" title="Kết thúc phiên" aria-label="Kết thúc phiên">' + ico("x") + '</button>' +
           (blk ? '<div id="blks" class="blks' + (session.warm ? " wu" : "") + '">' + blkSegsHtml() + '</div>'
             : '<div class="track"><div id="prog" class="fill"></div></div>') +
-          '<span id="clock" class="clock">00:00 / 45:00</span>' +
+          '<span id="clock" class="clock">' + (session && session.cram ? "00:00" : "00:00 / 45:00") + '</span>' +
         '</div>' +
         '<div class="bar-sub"><div id="counts" class="bcount"></div>' +
           (blk ? '<button id="blkNext" class="link blknext" data-action="blk-next"' + (session.block >= BLOCKS.length - 1 || warmActive() ? " hidden" : "") + ' title="Sang khúc sau">Khúc sau →</button>' : "") +
@@ -7671,7 +9061,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       '</div>';
   }
   // Dấu son dọc 2 chữ ở góc phải đầu thẻ = loại thẻ.
-  var CARD_SEAL = { "new": "新词", recog: "认字", recall: "写字", phrase: "口语", trans: "翻译", sent: "造句", warm: "温故" };
+  var CARD_SEAL = { "new": "新词", recog: "认字", recall: "写字", phrase: "口语", trans: "翻译", sent: "造句", warm: "温故", listen: "听写", hear: "听句" };
   function cardSealHtml(cls) {
     var s = CARD_SEAL[cls] || "";
     return s ? '<span class="cseal" aria-hidden="true">' + s.split("").join("<br>") + '</span>' : "";
@@ -7679,11 +9069,16 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   // Mũi tên trong nhãn serif nghiêng: Playfair vẽ "→" kiểu mũi tên lông → đặt mũi tên bằng chữ thường (sans).
   function ckLabel(t) { return String(t).replace(/→/g, '<i class="ar">→</i>'); }
   // Đầu thẻ: loại thẻ (serif nghiêng) + dòng phụ (chữ Hán đại diện + tên chủ đề · AI soạn) + dấu son. HSK + loại từ nằm ở dòng Hán Việt.
-  function tagRow(it, label, cls) {
-    var w = it.data, sub = '<span class="cdeck"><i class="zh" aria-hidden="true">' + esc(deckGlyph(it.deck)) + '</i>' + esc(deckTitle(it.deck) || it.deckId) + '</span>';
+  // hideDeck: mặt trước thẻ hỏi ra chữ Hán (Nghe từ / Nghe câu / Nghĩa → chữ) — bỏ chữ đại diện bộ và phần chữ Hán của tên bộ
+  // (tên bài giáo trình title_zh), vì chúng hay chứa đúng chữ / từ đang hỏi.
+  function tagRow(it, label, cls, hideDeck) {
+    var w = it.data, dt = deckTitle(it.deck) || it.deckId;
+    var sub = hideDeck ? '<span class="cdeck">' + esc(dt.replace(/[\u3400-\u9fff\uf900-\ufaff].*$/, "").trim() || "Bộ thẻ") + '</span>'
+      : '<span class="cdeck"><i class="zh" aria-hidden="true">' + esc(deckGlyph(it.deck)) + '</i>' + esc(dt) + '</span>';
     if (w.src === "ai") sub += it.deck.lesson ? ' · <span title="Từ bổ sung (không có trong text slide)">bổ sung</span>'
       : ' · <span title="AI soạn — pinyin, Hán Việt tra từ điển">AI soạn</span>';
-    return '<div class="tags cmeta"><p class="ckind ' + cls + '">' + ckLabel(label) + '<small>' + sub + '</small></p>' + cardSealHtml(cls) + '</div>';
+    var lc = isLeech(it) ? '<span class="tag lch">cứng đầu</span>' : ""; // từ quên ≥ 4 lần
+    return '<div class="tags cmeta"><p class="ckind ' + cls + '">' + ckLabel(label) + lc + '<small>' + sub + '</small></p>' + cardSealHtml(cls) + '</div>';
   }
   // Chữ Hán to trên thẻ: mỗi chữ một ô 田字格 riêng (viền son, nét đứt chéo + chữ thập qua tâm từng chữ).
   // Cỡ ô theo số ký tự (--n): 1–2 chữ ô 150px, từ dài thu nhỏ để vẫn nằm trên một hàng ở điện thoại.
@@ -7740,11 +9135,11 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   // Hàng chấm: 4 (2) cột sát mép, kẻ dọc, dính đáy; "Nhớ" tô son. Số phím (1 ·) chỉ hiện trên máy có bàn phím.
   function gradeBtnHtml(cls, grade, label, c, sug, act) {
     return '<button class="' + cls + (sug === grade ? " aisug" : "") + '" data-action="' + (act || "grade") + '" data-grade="' + grade + '"><b>' + label + '</b>' +
-      '<small><span class="gk">' + grade + ' · </span>' + intervalLabel(c, grade) + '</small></button>';
+      '<small><span class="gk">' + grade + ' · </span>' + (c.keep && grade !== 1 ? "giữ lịch" : intervalLabel(c, grade)) + '</small></button>';
   }
   // sug = nút được gợi ý (tô .aisug, 0 = không); lock = lý do khóa nút Dễ ("" = không khóa).
   function grades4Html(it, sug, lock) {
-    var c = cardOf(it.id);
+    var c = session && session.cram ? cramCard(it) : cardOf(it.id); // ôn dồn: số ngày theo cách chấm của ôn dồn
     var easy = lock ? '<button class="g4 locked" aria-disabled="true" data-action="grade" data-grade="4" title="Dễ đang khóa: ' + esc(lock) + '"><b>Dễ</b><small>' + ico("lock") + ' khóa</small></button>'
       : gradeBtnHtml("g4", 4, "Dễ", c, sug);
     return '<div class="grades dock">' +
@@ -7801,32 +9196,35 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       (st.chk ? '<div id="rcres" class="rcres">' + rcResInner(it, st.chk) + '</div>' : "") +
       meaningHtml(w.meaning) +
       hvHtml(w, true) +
-      chietTuHtml(w) +
+      leechTipHtml(it, true) + // từ cứng đầu: khối Mẹo nhớ (gồm chiết tự)
       '<div class="examples">' + exampleHtml(pickExample(it)) + '</div>' +
       expSlot(it) +
       grades4Html(it, rcSug(st.chk)) + '</div>';
   }
   function recallHtml(it) {
     var w = it.data, st = rcState(it);
-    var head = tagRow(it, "Nghĩa → chữ", "recall") + meaningHtml(w.meaning, true) +
+    var head = tagRow(it, "Nghĩa → chữ", "recall", !session.flipped) + meaningHtml(w.meaning, true) +
       (w.pos ? '<div class="pos">' + esc(w.pos) + '</div>' : "");
     if (st.step === "sent") { // "Dễ quá": đặt câu mà không lộ chữ Hán (lộ ở kết quả)
       return '<div class="card rccard">' + head + (session.flipped
         ? bigHanziHtml(w.hanzi) + pyRowHtml(w.pinyin, w.hanzi) + hvHtml(w) + rcSentBackHtml(it)
         : rcSentFormHtml(it, true)) + '</div>';
     }
+    var lc = isLeech(it); // từ cứng đầu: bảng viết tay luôn bật, Lật sáng khi đã viết ≥ 1 nét, thay "Dễ quá" bằng "Bỏ qua viết"
     if (!session.flipped) {
       var hint = !w.hanviet ? "" : session.hint ? hvHtml(w)
         : '<div class="center"><button class="link hintbtn" data-action="hint">' + ico("bulb") + 'Gợi ý Hán Việt</button></div>';
-      return '<div class="card">' + head + hint + padHtml() +
-        '<div class="actions dock"><button class="primary big" data-action="flip">Lật</button>' +
-          '<button class="small-btn rceasy" type="button" data-action="rc-easy">Dễ quá →</button></div>' +
+      return '<div class="card">' + head + hint + (lc ? '<p class="lcnote">Từ cứng đầu — viết thử lên bảng rồi mới lật</p>' + leechPadHtml() : padHtml()) +
+        '<div class="actions dock"><button id="rcFlip" class="primary big" data-action="flip"' + (lc && !session.leechInk ? " disabled" : "") + '>Lật</button>' +
+          (lc ? '<button class="small-btn rceasy" type="button" data-action="lc-skipdraw">Bỏ qua viết</button>'
+            : '<button class="small-btn rceasy" type="button" data-action="rc-easy">Dễ quá →</button>') + '</div>' +
         hintHtml('<kbd>Space</kbd> / <kbd>Enter</kbd> lật · <kbd>Esc</kbd> thoát') + '</div>';
     }
     return '<div class="card">' + head +
       bigHanziHtml(w.hanzi) + pyRowHtml(w.pinyin, w.hanzi) +
       hvHtml(w) +
-      padHtml() +
+      (lc ? leechPadHtml() : padHtml()) +
+      leechTipHtml(it, false) +
       '<div class="examples">' + exampleHtml(pickExample(it)) + '</div>' +
       expSlot(it) +
       grades4Html(it) + '</div>';
@@ -7857,7 +9255,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       return '<div class="rcln ' + cls + '"><span class="rclab">' + lab + '</span><span class="rcmk" aria-hidden="true">' + mk + '</span>' +
         '<div class="rcbody"><div class="rcyou">' + you + '</div><div class="rcsub">' + sub + '</div></div></div>';
     };
-    var p = chk.py;
+    var p = chk.py, hz = chk.hz;
+    if (hz) out += ln(hz.ok ? "ok" : hz.homo ? "mid" : "no", "Chữ", hz.ok ? "✓" : hz.homo ? "≈" : "✕", '<span class="zh rczh" lang="zh-CN">' + esc(hz.typed) + '</span>', // Nghe từ: gõ chữ Hán
+      hz.ok ? "đúng chữ" : (hz.homo === "same" ? "đúng âm, sai chữ" : hz.homo ? "gần đúng âm (khác thanh), sai chữ" : "sai chữ") + ' — đáp án <b class="zh rczh" lang="zh-CN">' + esc(w.hanzi) + '</b> ' + esc(w.pinyin || ""));
     if (p && p.res !== "skip" && p.res !== "blank") {
       var you = p.syl.map(function (x) {
         return '<span class="rcs ' + x.st + '">' + (x.typed ? esc(x.typed) : "thiếu") + '</span>';
@@ -8094,7 +9494,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var el = byId("counts");
     if (!el || !session) return;
     var lab, txt;
-    if (warmActive()) {
+    if (session.cram) { // ôn dồn: vạch tiến độ theo số thẻ còn lại (không theo 45 phút)
+      var left = cramLeft(), prog = byId("prog");
+      if (prog) prog.style.width = Math.round(100 * (1 - left / Math.max(session.cram.total, left, 1))) + "%";
+      lab = "Ôn dồn";
+      txt = session.cram.n + " từ cứng đầu · đã làm " + session.doneCount + " · còn " + left;
+    } else if (warmActive()) {
       var w = session.warm;
       lab = "Bài cũ";
       txt = w.phase === "sum" ? "xong" : "câu " + (w.i + 1) + "/" + w.qs.length + (w.graded ? " · đúng " + w.ok + "/" + w.graded : "");
@@ -8102,7 +9507,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       var nl = Object.keys(session.lines || {}).length;
       lab = BLOCKS[session.block][0];
       txt = session.block === 1
-        ? session.doneCount + " thẻ" + (session.talk.length ? " · nói còn " + session.talk.length : "") + " · dịch " + session.transShown + (session.sentN ? " · đặt " + session.sentN + " câu" : "")
+        ? [session.talk.length ? "nói " + session.talk.length : "", "dịch " + session.transShown, session.sentN ? "đặt " + session.sentN : "", session.hearShown ? "nghe " + session.hearShown : ""].filter(Boolean).join(" · ") // gọn cho màn 360px: không cắt mất "nghe" / "đặt"
         : "đã làm " + Object.keys(session.touched).length + " thẻ" + (nl ? " · " + nl + " câu nhại/đề" : "");
     } else {
       var due = 0, fresh = 0;
@@ -8127,16 +9532,20 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (warmActive()) html = warmHtml(); // kiểm tra bài cũ đầu buổi (trước khúc 1)
     else if (!it) {
       syncElapsed();
-      if (session.blocks) html = session.gate != null ? gateHtml() : readHtml();
+      if (session.cram) html = cramDoneHtml();
+      else if (session.blocks) html = session.gate != null ? gateHtml() : readHtml();
       else html = session.elapsed >= TARGET_SEC || capReached() ? doneHtml() : emptyHtml();
     } else {
       var mode = modeOf(it);
       html = mode === "new" ? newWordHtml(it)
         : mode === "recog" ? recogHtml(it)
         : mode === "recall" ? recallHtml(it)
+        : mode === "listen" ? lsWordHtml(it)
+        : mode === "hear" ? hearHtml(it)
         : mode === "trans" ? transHtml(it)
         : mode === "sent" ? sentHtml(it)
         : phraseHtml(it);
+      if (it.kind === "word" && mode !== "new") mnemoKick(it); // từ cứng đầu: nhờ AI soạn mẹo nhớ sẵn (1 lần / chữ, hiện ở mặt sau)
     }
     area.innerHTML = html;
     expKick(it); // thẻ từ của 12 chủ đề: nạp dữ liệu 🔗 Mở rộng nếu chưa có
@@ -8164,8 +9573,14 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (it && it.kind === "phrase") aiSpkCheck(); // lật thẻ nói đã có câu nghe được → gửi AI chấm
   }
   function autoSpeak(it) {
-    if (!it || !db.settings.autoSpeak) return;
+    if (!it) return;
     var mode = modeOf(it);
+    if ((mode === "listen" || mode === "hear") && !session.flipped) { // thẻ Nghe: mặt trước luôn tự đọc (đề là tiếng), có dò bị chặn
+      var lk = it.id + ":front";
+      if (session.spokenFor !== lk) { session.spokenFor = lk; lsSay(lsText(it), LS_RATE, true); }
+      return;
+    }
+    if (!db.settings.autoSpeak) return;
     var shouldSpeak = mode === "new" || session.flipped;
     if (!shouldSpeak) return;
     var key = it.id + ":" + (session.flipped ? "back" : "front");
@@ -8187,7 +9602,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (lastView && lastView !== view) { try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* bỏ qua */ } }
     lastView = view;
     if (view === "stats") app.innerHTML = statsHtml();
+    else if (view === "leech") app.innerHTML = leechHtml();
     else if (view === "me") app.innerHTML = meHtml();
+    else if (view === "dich") app.innerHTML = dichHtml();
     else if (view === "session") { app.innerHTML = sessionShellHtml(); renderCard(); tick(); }
     else if (view === "exams" && EXAM_INDEX.length) app.innerHTML = examsHtml();
     else if (view === "exam" && exam) renderExam(false);
@@ -8233,6 +9650,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   // Hash không gửi lên server (GitHub Pages không 404), ?t= giữ nguyên.
   // history.state = { d: độ sâu màn, n: số mục tính từ mục gốc (Trang chủ), p: hash màn trước }.
   var DEPTH = { home: 0, exams: 1, lessons: 1, me: 1, stats: 2, session: 1, map: 1, exam: 2, lesson: 2, "exam-loading": 2, "lesson-loading": 2, "map-lv": 2, "map-loading": 2, roleplay: 3, "roleplay-loading": 3 };
+  DEPTH.leech = 2;
+  DEPTH.dich = 1;
   var fromPop = false;
   try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) { /* bỏ qua */ }
   function baseUrl() { return location.pathname + location.search; }
@@ -8245,7 +9664,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       case "lesson": return lesson ? "#lesson/" + lesson.id : "#lessons";
       case "lesson-loading": return lessonPending ? "#lesson/" + lessonPending : "#lessons";
       case "stats": return "#stats";
+      case "leech": return "#leech";
       case "me": return "#me";
+      case "dich": return DICH.imp ? "#dich/nhap" : "#dich"; // màn Nhập đoạn chat cũ: mục lịch sử riêng (con của Dịch)
       case "session": return "#session";
       case "map": return "#map";
       case "map-lv": return mapLv ? "#map/" + mapLv.key : "#map";
@@ -8259,7 +9680,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (fromPop) return;
     var r = routeOf();
     if (r === location.hash) return;
-    var st = history.state || {}, n = Number(st.n) || 0, d = DEPTH[view] || 0;
+    var st = history.state || {}, n = Number(st.n) || 0, d = view === "dich" && DICH.imp ? 2 : DEPTH[view] || 0;
     try {
       if (!r && n > 0) { history.go(-n); return; } // về Trang chủ: lùi về mục gốc, stack không phình
       if (d > (Number(st.d) || 0)) history.pushState({ d: d, n: n + 1, p: location.hash }, "", r || baseUrl());
@@ -8281,6 +9702,11 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if ((m = /^#lesson\/(.+)$/.exec(h)) && LESSON_META[m[1]]) { openLesson(m[1]); return; }
     if ((m = /^#map\/(.+)$/.exec(h))) { var mk = m[1]; try { mk = decodeURIComponent(mk); } catch (e) { /* bỏ qua */ } if (MAP_LV[mk]) { openMapLevel(mk); return; } h = "#map"; }
     if ((m = /^#roleplay\/(.+)$/.exec(h))) { var rk = m[1]; try { rk = decodeURIComponent(rk); } catch (e) { /* bỏ qua */ } if (MAP_LV[rk]) { openRoleplay(rk); return; } h = "#map"; }
+    if (h === "#leech") { view = "leech"; render(); return; }
+    if (h === "#dich" || h === "#dich/nhap") { // Back từ màn nhập về Dịch = đóng màn nhập; mở lại #dich/nhap mà không còn gì dở = về Dịch
+      if (h === "#dich") dichImpClose();
+      view = "dich"; render(); return;
+    }
     view = h === "#exams" ? "exams" : h === "#lessons" ? "lessons" : h === "#stats" ? "stats" : h === "#me" ? "me" : h === "#map" && MAP_INDEX.length ? "map" : "home";
     render();
   }
@@ -8319,9 +9745,18 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function onAction(action, el) {
     switch (action) {
       case "start": startSession(); break;
+      // từ cứng đầu: danh sách, ôn dồn, bỏ qua viết, mẹo nhớ thử lại · thẻ Nghe: nghe lại / đọc chậm
+      case "leech": if (!backTo("#leech")) { view = "leech"; render(); } break;
+      case "lc-cram": startCram(); break;
+      case "lc-skipdraw": lcSkipDraw(); break;
+      case "mn-retry": mnemoRetry(); break;
+      case "ls-play": lsReplay(false); break;
+      case "ls-slow": lsReplay(true); break;
       case "stats": view = "stats"; render(); break;
       case "home": view = "home"; render(); break;
       case "me": if (!backTo("#me")) { view = "me"; render(); } break;
+      case "dich": if (!backTo("#dich")) { dichImpClose(); view = "dich"; render(); } break; // bấm tab Dịch: luôn về ô dịch
+      case "dich-go": case "dich-copy": case "dich-h": case "dich-add": case "dich-drop": case "dich-add-all": case "dich-ai": case "dich-imp": case "dich-imp-x": case "dich-file": case "dich-split": case "dich-conv": case "dich-run": case "dich-stop": case "dich-imp-add": case "dich-imp-back": case "dich-sel-all": case "dich-sel-none": case "dich-dict-retry": dichAction(action, el); break;
       case "topics": UI.topicsOpen = !UI.topicsOpen; saveUi(); if (view !== "home") { view = "home"; render(); } else renderKeepScroll('[data-action="topics"]'); break;
       case "export": exportBackup(); break;
       case "import": { var f = byId("importFile"); if (f) { f.value = ""; f.click(); } break; }
@@ -8703,6 +10138,140 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     } catch (e) { /* bỏ qua */ }
     routeTo(h);
   }
+  // ---------- [P] app cài được (PWA): service worker, giữ dữ liệu lâu dài, nhắc xuất backup ----------
+  // sw.js cài sẵn vỏ app → mở được khi mất mạng; bản mới chờ sẵn → thanh "Có bản mới · Tải lại" (không tự tải lại giữa phiên).
+  var PWA_EXPORT_KEY = "hoctrung.lastexport.v1"; // lần xuất backup cuối (ms) — riêng máy này, không đi theo backup
+  var PWA_REMIND_DAYS = 7;
+  var PWA = { persist: null, prompt: null, waiting: null, reloading: false, installed: false };
+  function pwaMarkExport() {
+    try { localStorage.setItem(PWA_EXPORT_KEY, String(Date.now())); } catch (e) { /* bỏ qua */ }
+    pwaRefresh();
+    if (view === "home") renderKeepScroll(); // dòng nhắc "N ngày chưa xuất backup" ở Trang Học mất ngay
+  }
+  function pwaLastExport() {
+    var n = 0;
+    try { n = Number(localStorage.getItem(PWA_EXPORT_KEY)) || 0; } catch (e) { /* bỏ qua */ }
+    return n;
+  }
+  // số ngày chưa xuất; chưa xuất lần nào thì tính từ buổi học đầu tiên (chưa học buổi nào → 0)
+  function pwaBackupDays() {
+    var last = pwaLastExport();
+    if (!last) {
+      var first = (db.sessions || []).map(function (s) { return s.date; }).filter(Boolean).sort()[0];
+      last = first ? new Date(first + "T00:00:00").getTime() : Date.now();
+    }
+    return Math.max(0, Math.floor((Date.now() - last) / 86400000));
+  }
+  function pwaBackupDue() { return pwaBackupDays() > PWA_REMIND_DAYS; }
+  // 1 dòng nhắc ở Trang Học (mảng notes) — "" khi chưa tới hạn
+  function pwaHomeNote() {
+    if (!pwaBackupDue()) return "";
+    return '<span class="pwanote">' + ico("warn") + (pwaLastExport() ? pwaBackupDays() + " ngày chưa xuất backup" : "Chưa xuất backup lần nào") +
+      ' · <button class="link" data-action="export">Xuất ngay</button></span>';
+  }
+  // các dòng thêm vào mục Sao lưu ở tab Tôi (giữ dữ liệu · xuất lần cuối · cài app)
+  function pwaMeHtml() {
+    var last = pwaLastExport(), due = pwaBackupDue(), d = last ? new Date(last) : null;
+    var ios = /iPhone|iPad|iPod/.test(navigator.userAgent), web = /^https?:$/.test(location.protocol);
+    var keep = PWA.persist === true
+      ? '<div class="setting"><span>Dữ liệu: <b>được giữ lâu dài</b><small class="snote">Trình duyệt sẽ không tự xóa tiến độ khi máy đầy bộ nhớ.</small></span>' +
+        '<span class="pwamk ok">' + ico("check") + 'giữ</span></div>'
+      : '<div class="setting"><span>Dữ liệu: trình duyệt có thể tự xóa — <b>nhớ Xuất backup</b><small class="snote">Cài app ra màn hình chính để trình duyệt giữ dữ liệu lâu dài.</small></span>' +
+        '<span class="pwamk due">' + ico("warn") + 'chưa chắc</span></div>';
+    var exp = '<div class="setting"><span>' + (d ? 'Xuất lần cuối: <b>' + d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + '</b>' : 'Chưa xuất backup lần nào') +
+      (due ? '<small class="snote due">' + (d ? 'Đã ' + pwaBackupDays() + ' ngày' : 'Đã học hơn ' + PWA_REMIND_DAYS + ' ngày') + ' — nên xuất lại để phòng mất dữ liệu.</small>'
+        : '<small class="snote">Nhắc lại khi quá ' + PWA_REMIND_DAYS + ' ngày chưa xuất.</small>') + '</span>' +
+      (due ? '<span class="pwamk due">' + ico("clock") + 'nhắc</span>' : d ? '<span class="pwamk ok">' + ico("check") + 'ổn</span>' : "") + '</div>';
+    var inst = PWA.installed
+      ? '<div class="setting"><span>Đang chạy như app đã cài<small class="snote">Mở từ màn hình chính · dùng được khi mất mạng.</small></span>' +
+        '<span class="pwamk ok">' + ico("check") + 'đã cài</span></div>'
+      : '<div class="setting"><span>Cài app: ' + (ios ? 'Safari → Chia sẻ → Thêm vào MH chính' : 'Chrome → ⋮ → Thêm vào màn hình chính') +
+        '<small class="snote">' + (web ? 'Mở như app, không thanh địa chỉ · học được cả khi mất mạng (trừ AI và audio đề).' : 'Mở bản web (https) để cài app và dùng khi mất mạng.') + '</small></span>' +
+        (PWA.prompt ? '<button class="small-btn" data-action="pwa-install">' + ico("down") + 'Cài app</button>' : "") + '</div>';
+    return '<div class="pwabox" id="pwaBox">' + keep + exp + inst + '</div>';
+  }
+  // trạng thái đổi (persist trả về, có nút cài, vừa xuất…) → vẽ lại đúng khối của mình, không vẽ lại cả màn
+  function pwaRefresh() {
+    var box = byId("pwaBox");
+    if (box) box.outerHTML = pwaMeHtml();
+  }
+  function pwaInstall() {
+    var p = PWA.prompt;
+    if (!p) return;
+    PWA.prompt = null;
+    try {
+      p.prompt();
+      p.userChoice.then(function (c) { if (c && c.outcome === "accepted") toast("Đang cài app…"); pwaRefresh(); }, pwaRefresh);
+    } catch (e) { pwaRefresh(); }
+  }
+  // thanh nhỏ "Có bản mới · Tải lại" (ẩn trong phiên học — .wrap.sess / html.insess); bấm mới tải lại, không tự tải
+  function pwaShowBar(worker) {
+    PWA.waiting = worker;
+    var bar = byId("swBar");
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.id = "swBar"; bar.className = "swbar"; bar.setAttribute("role", "status");
+      bar.innerHTML = '<span>Có bản mới</span><span aria-hidden="true">·</span><button type="button" class="swgo">Tải lại</button>' +
+        '<button type="button" class="swx" title="Để sau" aria-label="Để sau">' + ico("x") + '</button>';
+      bar.querySelector(".swgo").addEventListener("click", pwaApply);
+      bar.querySelector(".swx").addEventListener("click", function () { bar.hidden = true; }); // để sau: bản mới tự vào ở lần mở app sau
+      document.body.appendChild(bar);
+    }
+    bar.hidden = false;
+  }
+  function pwaApply() {
+    var w = PWA.waiting;
+    PWA.reloading = true;
+    if (!w) { location.reload(); return; }
+    w.postMessage({ type: "skip" }); // sw.js skipWaiting → controllerchange → tải lại
+    setTimeout(function () { location.reload(); }, 4000); // dự phòng
+  }
+  function pwaWatch(reg) {
+    var sw = navigator.serviceWorker;
+    if (reg.waiting && sw.controller) pwaShowBar(reg.waiting);
+    reg.addEventListener("updatefound", function () {
+      var w = reg.installing;
+      if (!w) return;
+      w.addEventListener("statechange", function () { if (w.state === "installed" && sw.controller) pwaShowBar(w); });
+    });
+    // quay lại app sau một lúc → hỏi có bản mới không (tối đa 30 phút / lần)
+    var checked = Date.now();
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState !== "visible" || Date.now() - checked < 1800000) return;
+      checked = Date.now();
+      reg.update().catch(function () { /* mất mạng */ });
+    });
+  }
+  function pwaInit() {
+    try { PWA.installed = !!(window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true; } catch (e) { /* bỏ qua */ }
+    var st = navigator.storage;
+    if (st && st.persisted) {
+      st.persisted().then(function (p) { return p || (st.persist ? st.persist() : false); })
+        .then(function (p) { PWA.persist = !!p; pwaRefresh(); }, function () { /* bỏ qua */ });
+    }
+    window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); PWA.prompt = e; pwaRefresh(); });
+    window.addEventListener("appinstalled", function () { PWA.prompt = null; PWA.installed = true; pwaRefresh(); toast("Đã cài app — mở từ màn hình chính"); });
+    app.addEventListener("click", function (e) {
+      if (e.target.closest && e.target.closest('[data-action="pwa-install"]')) pwaInstall();
+    });
+    if (!/^https?:$/.test(location.protocol) || !("serviceWorker" in navigator)) return;
+    var hadCtl = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener("controllerchange", function () {
+      if (PWA.reloading) { location.reload(); return; }
+      if (hadCtl) return;
+      // Lần mở đầu: bài / cấp / đề / từ điển nạp lúc boot (trước khi SW điều khiển trang) chưa vào cache → tải lại 1 lần qua SW để lưu.
+      hadCtl = true;
+      try {
+        performance.getEntriesByType("resource").forEach(function (x) {
+          if (/\/(lessons|map|exams|expand|dict)\/[^/?#]+\.js$/.test(x.name)) fetch(x.name).catch(function () { /* mất mạng: lần sau */ });
+        });
+      } catch (e) { /* bỏ qua */ }
+    });
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").then(pwaWatch, function () { /* không đăng ký được: app vẫn chạy như web thường */ });
+    });
+  }
+  pwaInit();
   // Nạp file các bài giáo trình đang học TRƯỚC khi dựng thẻ (chờ xong/lỗi, tối đa 8s).
   function boot() {
     var ids = db.settings.enabledLessons.filter(function (id) { return !!LESSON_META[id]; });

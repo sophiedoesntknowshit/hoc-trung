@@ -2,7 +2,7 @@
 
 **Mở app:** double-click `index.html` là chạy (không cần mạng). Nếu trình duyệt chặn file `decks/*.js`, mở terminal tại thư mục `app` rồi chạy `python -m http.server 8080` và vào `http://localhost:8080`.
 
-**Giao diện:** kiểu tạp chí (nền đỏ thẫm, hoặc Giấy ngà ở tab **Tôi** → **Giao diện**). Thanh tab dưới đáy: **学 Học · 图 Bản đồ · 考 Luyện đề · 书 Giáo trình · 我 Tôi**; trong phiên 45 phút thanh tab ẩn. Cài đặt, thống kê, backup nằm ở tab **Tôi**.
+**Giao diện:** kiểu tạp chí (nền đỏ thẫm, hoặc Giấy ngà ở tab **Tôi** → **Giao diện**). Thanh tab dưới đáy: **学 Học · 译 Dịch · 图 Bản đồ · 考 Luyện đề · 书 Giáo trình · 我 Tôi**; trong phiên 45 phút thanh tab ẩn. Cài đặt, thống kê, backup nằm ở tab **Tôi**.
 
 **Học:** tab **Học** → **Chọn chủ đề** (tick chủ đề muốn học) → bấm khối son **Vào học**. Mở lúc nào cũng được, nhưng đã mở là đủ 45 phút; bấm Kết thúc sớm sẽ bị hỏi lại.
 
@@ -66,6 +66,19 @@
 - **Khóa chỉ lưu trên máy này** (localStorage `hoctrung.ai.v1`), **không** vào Xuất backup, không lên GitHub, sau khi lưu chỉ hiện dạng `sk-…abcd`. Đổi máy/điện thoại thì dán lại. Câu trả lời của bạn được gửi sang OpenAI. Nên đặt trần chi tiêu (limit) trong trang OpenAI. Sửa giá/model trong `AI_MODELS` của `index.html`.
 
 **Thêm từ:** sửa file trong `decks/` (mỗi file một chủ đề, mở bằng Notepad/VS Code). Chữ Hán trùng giữa 2 chủ đề vẫn là 2 thẻ riêng.
+
+## Cài app ra màn hình chính
+Mở link app bằng Chrome trên điện thoại → tab **Tôi** → **Cài app** (hoặc Chrome → ⋮ → **Thêm vào màn hình chính**). Mở từ biểu tượng 学 là chạy như app, mất mạng vẫn học được (trừ AI, audio đề chưa nghe lần nào). Có bản mới thì hiện thanh **Có bản mới · Tải lại** (không hiện giữa phiên học và lúc đóng vai; bấm **×** để lúc khác — bản mới tự vào ở lần mở app sau). Mạng chập chờn: chờ quá 3,5 giây thì app mở bằng bản đã lưu. Tab **Tôi** → **Sao lưu** ghi dữ liệu có được trình duyệt giữ lâu dài không; quá 7 ngày chưa **Xuất backup** thì trang Học có dòng nhắc.
+
+## Từ cứng đầu
+Từ đã **Quên từ 4 lần** = từ cứng đầu (nhãn "cứng đầu" trên thẻ). Gặp lại: mặt sau có **Mẹo nhớ** (AI soạn 1 lần từ chiết tự thật — mẹo nêu thành phần không có trong chiết tự bị loại; từ chưa có chiết tự thì không soạn; không có AI thì dùng chiết tự); thẻ Nghĩa → chữ bắt viết tay ít nhất 1 nét mới lật được (có **Bỏ qua viết**). Trang Học → **03 Từ cứng đầu** → danh sách + **Ôn dồn** (phiên ngắn chỉ gồm các từ này, viết tay rồi nhận mặt chữ; mỗi từ chỉ tính lịch ôn 1 lần / buổi ở lượt đầu, lượt sau chỉ ghi khi Quên, ôn sớm không nhân trọn khoảng ôn cũ). Nhớ liền 3 lần cách nhau ≥ 3 ngày thì hết cứng đầu. Mẹo nhớ đi theo backup.
+
+## Thẻ Nghe
+- **Nghe từ:** từ đã ôn ≥ 3 lần thỉnh thoảng ra dạng nghe: không hiện chữ, app đọc (có nút đọc chậm) → gõ chữ Hán hoặc pinyin + nghĩa → Kiểm tra, app gợi ý nút chấm. Máy không có giọng đọc tiếng Trung thì thẻ ra dạng Nhận mặt chữ như cũ.
+- **Nghe câu:** ở khúc Nói & dịch (hoặc chen trong phiên không chia khúc), nghe câu ví dụ của từ đã học → gõ nghĩa tiếng Việt → AI chấm theo ý (không có AI thì tự so) → Chưa được / Được.
+
+## Dịch tin nhắn (tab 译 Dịch, cần AI)
+Dán hoặc gõ tin nhắn → **Dịch** (Ctrl+Enter). Có chữ Hán = dịch Trung → Việt, không có = Việt → Trung (giọng nhắn tin tự nhiên + 1 cách khác + giải thích tiếng lóng), nút **Chép** để dán sang app chat. Từ mới chưa có trong app **tự vào bộ "Từ tin nhắn"** (信), câu ví dụ là chính tin nhắn; bấm **Bỏ** nếu không muốn học (app nhớ, tin sau có lại từ đó cũng không tự thêm; muốn học thì bấm **+ Học**). Từ điển chưa tải được (mất mạng) thì từ mới chưa tự thêm — bấm **+ Học** khi có mạng. Câu mày tự viết (Việt → Trung) thành thẻ nói + thẻ dịch. **Nhập đoạn chat cũ**: dán cả đoạn, hoặc chọn file `conversations.json` (ChatGPT → Settings → Data controls → Export, làm trên máy tính) → chọn cuộc trò chuyện → app lấy từ mới theo từng khúc → chọn từ để học. Tin nhắn được gửi tới OpenAI để dịch, lưu trong trình duyệt (`hoctrung.msgs.v1`, `hoctrung.msgw.v1`) và đi theo backup.
 
 ## Mất tài khoản công ty / đổi máy — làm sao học tiếp
 
