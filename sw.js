@@ -3,7 +3,7 @@
 // - Trang .html: mạng trước, rớt mạng (hoặc mạng treo quá 3,5 giây) mới lấy cache (có mạng tốt luôn thấy bản mới).
 // - .js / font / ảnh / dữ liệu: cache trước + làm mới nền (stale-while-revalidate), lưu dần file đã mở (map/ lessons/ exams/ expand/ dict/), giữ qua lần đổi VERSION.
 // - Audio / video / yêu cầu có Range: KHÔNG chặn, không cache (để trình duyệt tự tua; không lưu phản hồi 206).
-var VERSION = "2026-10-21b";
+var VERSION = "2026-10-21c";
 var CACHE = "hoctrung-" + VERSION;
 var DECKS = ["chao-hoi", "an-uong", "di-lai", "hoi-duong", "mua-sam", "khach-san", "san-bay-du-lich",
   "thoi-tiet-thoi-gian", "tam-chuyen", "suc-khoe", "dien-thoai-thanh-toan", "nha-cua-sinh-hoat"];
@@ -100,7 +100,7 @@ self.addEventListener("fetch", function (e) {
   if (req.method !== "GET") return;
   if (req.headers.has("range")) return; // tua audio: để trình duyệt tự lo
   var url = new URL(req.url);
-  if (url.origin !== self.location.origin) return; // OpenAI, CDN…: không đụng
+  if (url.origin !== self.location.origin) return; // OpenAI, hộp thư ChatGPT (script.google.com + redirect googleusercontent), CDN…: không đụng
   if (req.destination === "audio" || req.destination === "video") return;
   if (req.mode === "navigate" || /\.html?$/i.test(url.pathname) || /\/$/.test(url.pathname)) { e.respondWith(networkFirst(e, req)); return; }
   if (CACHE_EXT.test(url.pathname)) e.respondWith(staleWhileRevalidate(e, req));

@@ -1873,6 +1873,26 @@ button.dhb:hover{background:none}
 .dimpbar button.primary.big{margin:0}
 .ddone{margin:0;font-family:var(--serif);font-size:19px;line-height:1.45;color:var(--ink)}
 .ddone b{font-weight:500;color:var(--zhu-ink)}
+/* nối với ChatGPT: mục gọn — chưa nối = 1 dòng chỉ dẫn + ô dán link + Lưu; đã nối = 1 dòng trạng thái + Nhận ngay + Ngắt kết nối */
+.dinbox > h2{margin-bottom:8px}
+.dinbhelp{margin:0;font-size:13px;line-height:1.5;color:var(--ink3)}
+.dinbhelp code{overflow-wrap:anywhere}
+.dinbrow{display:flex;align-items:stretch;gap:8px;margin-top:10px}
+.dinbrow input{flex:1;min-width:0} /* giữ 16px như mọi ô nhập: < 16px thì Safari iPhone tự phóng to trang khi chạm */
+.dinbrow input::placeholder{font-size:14.5px}
+.dinbrow input[readonly]{color:var(--ink2)}
+.dinbrow button{flex:none;min-width:72px}
+.dinbst{display:flex;align-items:flex-start;gap:8px;margin:0;font-size:14px;line-height:1.5;color:var(--ink2);overflow-wrap:anywhere}
+.dinbrow + .dinbst{margin-top:10px}
+.dinbst .ic{flex:none;margin-top:2px;color:var(--ink3)}
+.dinbst.ok .ic{color:var(--green-ink)}
+.dinbst.err{color:var(--orange-ink)}
+.dinbst.err .ic{color:var(--orange-ink)}
+.dinbst b{font-family:var(--serif);font-weight:500;color:var(--ink);font-variant-numeric:lining-nums tabular-nums}
+.dinbbtn{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 12px;margin-top:8px}
+.dinbbtn .small-btn{gap:6px}
+.dinbbtn .small-btn .ic{width:16px;height:16px;color:var(--zhu-ink)}
+button.dinboff{font-size:13.5px;font-weight:400;color:var(--ink2);text-decoration-color:var(--rule2)}
 @media (max-width:360px){.dzh{font-size:27px}.dzh.l2{font-size:22px}.dkw{grid-template-columns:64px minmax(0,1fr) auto auto;gap:0 8px}.dkh{font-size:27px}.dkh.l3{font-size:21px}.dkh.l4{font-size:16px}.dkh.l5{font-size:12px}
   .dpick label{grid-template-columns:22px 64px minmax(0,1fr);gap:0 10px}.dstat b{font-size:27px}button.dichgo{min-width:104px}}
 @media (max-height:500px){.dimpbar{bottom:calc(var(--tabh) + env(safe-area-inset-bottom))}textarea.dichin{min-height:88px}}
@@ -3917,7 +3937,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     // viết hoa cả chữ đầu sau dấu kết câu (toUpperCase giữ dấu thanh: ǒ → Ǒ)
     return s.replace(new RegExp("([.!?]\\s+[\"“‘「『(]?)([" + PY_LETTERS + "])", "g"), function (m0, a, b) { return a + b.toUpperCase(); });
   }
-  function hzOk(h) { return /^[\u3400-\u9fff\uf900-\ufaff…]{1,10}$/.test(h) && HAN_RE.test(h); }
+  function hzOk(h) { return /^[\u3400-\u9fff\uf900-\ufaff…]{1,10}$/.test(h) && /[\u3400-\u9fff\uf900-\ufaff]/.test(h); } // không dùng HAN_RE: hàm chạy cả lúc nạp bộ Từ tin nhắn (normalizeMsgSkip), khi HAN_RE (khai báo bên dưới) chưa có giá trị
   function hzClean(h) { return aiZh(h).replace(/[\s·。，,.!?！？]/g, ""); }
   var AI_POS = ["danh", "động", "tính", "phó", "lượng", "giới", "liên", "trợ", "đại", "số", "cụm"];
   var AI_POS_TXT = "pos = part-of-speech code: danh=noun, động=verb, tính=adjective, phó=adverb, lượng=measure word, giới=preposition, " +
@@ -8446,7 +8466,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function dichHistHtml() {
     var list = MSGS.slice(-10).reverse();
     if (!list.length) return "";
-    return '<section class="box"><h2>Gần đây</h2><ul class="dhist">' + list.map(function (m) {
+    return '<section class="box" id="dichHist"><h2>Gần đây</h2><ul class="dhist">' + list.map(function (m) {
       var open = DICH.openAt === m.at, zv = m.dir === "zv";
       return '<li class="dhi' + (open ? " open" : "") + '"><button class="dhb" data-action="dich-h" data-at="' + m.at + '" aria-expanded="' + open + '">' +
           '<span class="dhs' + (zv ? " zh" : "") + '"' + (zv ? ' lang="zh-CN"' : "") + '>' + esc(dichOneLine(m.src)) + '</span>' +
@@ -8473,6 +8493,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       (DICH.err ? '<div class="dicherr" role="alert">' + ico("warn") + '<span>' + esc(DICH.err) + ' — chữ đã gõ vẫn còn, bấm Dịch để thử lại.</span></div>' : "") +
       (DICH.busy ? '<p class="dwait">' + ico("clock") + '<span>Đang dịch…</span></p>' : DICH.res ? dichResHtml(DICH.res) : "") +
       dichHistHtml() +
+      inboxHtml() + // [F4] Nối với ChatGPT
       '<section class="box"><h2>Đoạn chat cũ</h2><ul class="items"><li><button class="item" data-action="dich-imp"><span class="gl" aria-hidden="true">聊</span>' +
         '<span class="it"><b>Nhập đoạn chat cũ</b><small>Dán cả đoạn hội thoại hoặc file conversations.json của ChatGPT · lọc từ mới để học</small></span>' + ico("arrow") + '</button></li></ul></section>' +
       '</div>';
@@ -8792,11 +8813,22 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         obj.cards = rc;
       }
     }
+    var sk = D ? normalizeMsgSkip(D.skip) : {}, sAdd = 0, fileW = {}, drop = {};
+    if (D && Array.isArray(D.words)) D.words.forEach(function (w) { if (w && typeof w === "object") fileW[hzClean(w.hanzi)] = true; });
+    // Đổi máy mà dán link hộp thư ChatGPT trước khi nhập backup: từ đã Bỏ ở máy cũ bị tự thêm lại → theo file, bỏ khỏi bộ
+    // (chỉ từ chưa học ở máy này và trong file cũng chưa học; từ đang học giữ nguyên)
+    Object.keys(sk).forEach(function (h) {
+      var id = MSG_DECK_ID + ":" + h, fc = obj.cards && typeof obj.cards === "object" ? obj.cards[id] : null;
+      if (fileW[h] || !msgWHas(h) || cardState(id) !== "new" || (fc && fc.state && fc.state !== "new")) return;
+      drop[h] = true;
+    });
+    var nDrop = Object.keys(drop).length;
+    if (nDrop) MSGD.words = MSGD.words.filter(function (w) { return !drop[w.hanzi]; });
     if (D && Array.isArray(D.words)) normalizeMsgW(D.words).forEach(function (w) { if (!msgWHas(w.hanzi)) { MSGD.words.push(w); wAdd++; } });
-    var sk = D ? normalizeMsgSkip(D.skip) : {}, sAdd = 0; // từ đã Bỏ trong file: gộp (trừ từ đang học)
+    // từ đã Bỏ trong file: gộp (trừ từ đang học)
     Object.keys(sk).forEach(function (h) { if (!(h in MSGD.skip) && !msgWHas(h)) { MSGD.skip[h] = sk[h]; sAdd++; } });
     if (sAdd) MSGD.skip = normalizeMsgSkip(MSGD.skip);
-    if (wAdd || pAdd) { saveMsgW(); dichDeckChanged(had); }
+    if (wAdd || pAdd || nDrop) { saveMsgW(); dichDeckChanged(had); }
     else if (sAdd) saveMsgW();
     var out = [];
     if (mAdd) out.push("+" + mAdd + " tin nhắn");
@@ -8804,6 +8836,285 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (pAdd) out.push("+" + pAdd + " câu tin nhắn");
     return out.join(", ");
   }
+
+  // ---------- [F4] Nối với ChatGPT: hộp thư (Google Apps Script trên Gmail riêng của người học) ----------
+  // GPT "Dịch tin nhắn" trong ChatGPT dịch xong thì gửi { message, words } vào hộp thư (Google Sheet). App tự nhận mục mới
+  // → lịch sử tin nhắn + bộ Từ tin nhắn, y như dịch trong tab Dịch (dichWordVal / dichEx / skip / knownIdx / learnedHanzi).
+  // localStorage "hoctrung.inbox.v1" = { url (phần trước "?"), key, since (id cuối đã nhận), lastAt, lastN (từ mới lần cuối), total }
+  // — riêng máy này, KHÔNG đi theo backup (có key), nhập backup không đụng tới.
+  // Hộp thư: GET url?action=ping|pull&key=K[&since=N] → { ok, … } (Google trả qua redirect, fetch tự theo; CORS cho GET).
+  var INBOX_KEY = "hoctrung.inbox.v1";
+  var INBOX_GAP = 60000;   // tự nhận tối đa 1 lần / 60 giây (Nhận ngay bỏ qua)
+  var INBOX_WAIT = 20000;  // chờ hộp thư trả lời tối đa (ms)
+  var INBOX_PAGE = 200;    // hộp thư trả tối đa 200 mục / lần → đủ 200 thì gọi tiếp
+  var INBOX_PAGES = 20;    // tối đa 20 lượt / lần nhận
+  var INBOX = { busy: false, testing: false, tok: 0, at: 0, err: "", draft: "" };
+  function inboxLoad() {
+    try {
+      var o = JSON.parse(localStorage.getItem(INBOX_KEY) || "null");
+      if (!o || typeof o !== "object" || !o.url || !o.key) return null;
+      return { url: String(o.url), key: String(o.key), since: Math.max(0, num(o.since, 0)), lastAt: num(o.lastAt, 0), lastN: num(o.lastN, 0), total: num(o.total, 0) };
+    } catch (e) { return null; }
+  }
+  var INB = inboxLoad();
+  function inboxStore() {
+    try { localStorage.setItem(INBOX_KEY, JSON.stringify(INB)); return true; } catch (e) { return false; }
+  }
+  // Link dán vào → { url, key } hoặc { err }. Bỏ dấu cách / xuống dòng lẫn vào, chấp nhận tham số khác và link /dev.
+  function inboxParse(raw) {
+    var s = String(raw || "").replace(/\s+/g, ""), u = null;
+    if (!s) return { err: "Dán link hộp thư vào ô trước đã" };
+    if (!/^https?:\/\//i.test(s)) s = "https://" + s;
+    try { u = new URL(s); } catch (e) { u = null; }
+    if (!u || u.hostname !== "script.google.com" || !/^(\/a\/[^\/]+)?\/macros\/s\/[A-Za-z0-9_-]+\/(exec|dev)$/.test(u.pathname.replace(/\/+$/, "")))
+      return { err: "Không phải link hộp thư — link đúng có dạng https://script.google.com/macros/s/…/exec?key=…" };
+    var key = (u.searchParams.get("key") || "").trim();
+    if (!key) return { err: "Link thiếu phần ?key=… — chép đủ cả link trong hướng dẫn" };
+    return { url: "https://script.google.com" + u.pathname.replace(/\/+$/, ""), key: key };
+  }
+  // Gọi hộp thư → Promise { ok: true, data } | { ok: false, reason } (không bao giờ reject).
+  function inboxGet(C, q) {
+    var qs = Object.keys(q).map(function (k) { return encodeURIComponent(k) + "=" + encodeURIComponent(q[k]); });
+    var url = C.url + "?" + qs.concat(["key=" + encodeURIComponent(C.key)]).join("&");
+    return new Promise(function (resolve) {
+      var done = false, ctl = null, timer = null;
+      var give = function (r) { if (!done) { done = true; clearTimeout(timer); resolve(r); } };
+      try { ctl = typeof AbortController === "function" ? new AbortController() : null; } catch (e) { ctl = null; }
+      timer = setTimeout(function () {
+        try { if (ctl) ctl.abort(); } catch (e) { /* bỏ qua */ }
+        give({ ok: false, reason: "Hộp thư không trả lời (mạng chậm?)" });
+      }, INBOX_WAIT);
+      var opt = { method: "GET", cache: "no-store", credentials: "omit", redirect: "follow" };
+      if (ctl) opt.signal = ctl.signal;
+      var p;
+      try { p = fetch(url, opt); } catch (e) { p = Promise.reject(e); }
+      p.then(function (res) {
+        return res.text().then(function (txt) {
+          if (!res.ok) { give({ ok: false, reason: "Hộp thư lỗi " + res.status }); return; }
+          var d = null;
+          try { d = JSON.parse(txt); } catch (e) { d = null; }
+          // trang HTML (đăng nhập Google / lỗi script) thay vì JSON: web app chưa để Who has access = Anyone hoặc link cũ
+          // (chữ trong câu báo khớp HUONG_DAN-GPT.md — giao diện Google tiếng Anh)
+          if (!d || typeof d !== "object") { give({ ok: false, reason: "Hộp thư không trả dữ liệu — vào Deploy → Manage deployments: Who has access phải là “Anyone” (Bất kỳ ai), link đúng Web app URL" }); return; }
+          if (d.ok !== true) {
+            var er = aiS(d.error, 120);
+            give({ ok: false, reason: er === "bad key" ? "Sai key — chép lại đủ link (cả phần ?key=…)" : "Hộp thư báo lỗi" + (er ? ": " + er : "") });
+            return;
+          }
+          give({ ok: true, data: d });
+        });
+      }).catch(function () {
+        give({ ok: false, reason: navigator.onLine === false ? "Mất mạng — có mạng lại app tự nhận" : "Không kết nối được hộp thư (mất mạng, hoặc Who has access chưa là “Anyone”)" });
+      });
+    });
+  }
+  // 1 mục hộp thư → bản ghi lịch sử tin nhắn { at, dir, src, out, alt, note } hoặc null (thiếu / không có chữ Hán).
+  // vi2zh: chữ Hán = translation, tiếng Việt = source; zh2vi: chữ Hán = source, tiếng Việt = translation.
+  // "今天先摸鱼吧 — jīntiān xiān mōyú ba": pinyin GPT kèm sau gạch ngang ở cuối dòng (như khi hiện "Cách khác") → bỏ. Dòng còn chữ Hán sau gạch thì giữ.
+  function inboxNoPy(s) {
+    return String(s == null ? "" : s).split("\n").map(function (l) { return l.replace(/\s+[—–-]+\s*[A-Za-z\u00c0-\u024f][^\u3400-\u9fff\uf900-\ufaff]*$/, ""); }).join("\n");
+  }
+  function inboxMsg(m, at) {
+    if (!m || typeof m !== "object") return null;
+    var s = aiS(m.source, 2000), t = aiS(m.translation, 2000);
+    var dir = m.direction === "zh2vi" ? "zv" : m.direction === "vi2zh" ? "vz" : HAN_RE.test(s) && !HAN_RE.test(t) ? "zv" : "vz";
+    var zh = dir === "zv" ? s : dichZh(inboxNoPy(t), 2000), vi = dir === "zv" ? t : s;
+    if (!zh || !vi || !HAN_RE.test(zh)) return null;
+    var alt = dir === "vz" ? dichZh(inboxNoPy(m.alt), 1000) : "";
+    if (alt && (normSent(alt) === normSent(zh) || !HAN_RE.test(alt))) alt = "";
+    return { at: at, dir: dir, src: dir === "zv" ? zh : vi, out: dir === "zv" ? vi : zh, alt: alt, note: aiTxt(m.note_vi, 800) };
+  }
+  // GPT có thể gửi pos "lóng" (tiếng lóng) — app không có loại này → "cụm" (như dịch trong app).
+  function inboxWord(w) {
+    var pos = String(w && typeof w === "object" && w.pos || "").trim();
+    if (pos.normalize) pos = pos.normalize("NFC");
+    if (!/^l[oó]ng$/i.test(pos)) return w;
+    var o = {}; Object.keys(w).forEach(function (k) { o[k] = w[k]; }); o.pos = "cụm";
+    return o;
+  }
+  // Nhập 1 lượt mục (đã lọc id) → { w: từ mới, m: tin nhắn mới, p: câu mới, fail: lưu lỗi }. Từ điển chưa có → pinyin / Hán Việt rỗng, dictRepair điền sau.
+  // Lưu lỗi (bộ nhớ đầy / bị chặn): trả lại như trước lượt này + fail = true → không nâng since, lần sau nhận lại đúng các mục đó.
+  function inboxApply(items) {
+    var had = msgAny(), learned = learnedHanzi(), known = knownIdx(), n = { w: 0, m: 0, p: 0 }, keys = {}, dict = dictOk();
+    MSGS.forEach(function (m) { keys[msgKey(m)] = true; });
+    items.forEach(function (it, i) {
+      var P = it.payload && typeof it.payload === "object" ? it.payload : {};
+      var t = Date.parse(it.time), timed = isFinite(t) && t > 0, at = timed ? t : Date.now() + i;
+      var R = inboxMsg(P.message, at);
+      // lịch sử: chống trùng theo thời gian + nội dung (mục không có giờ: theo nội dung)
+      if (R && !keys[msgKey(R)] && (timed || !MSGS.some(function (m) { return m.src === R.src && m.out === R.out; }))) {
+        keys[msgKey(R)] = true; n.m++;
+        MSGS.push({ at: R.at, dir: R.dir, src: R.src, out: R.out, alt: R.alt, note: R.note });
+      }
+      var list = (Array.isArray(P.words) ? P.words : []).map(inboxWord);
+      // từ phải nằm trong chữ Hán của tin (như dịch trong app); tin thiếu / hỏng thì nhận từ không kèm câu ví dụ
+      var hay = R ? (R.dir === "zv" ? R.src : R.out + "\n" + R.alt) : list.map(function (w) { return w && typeof w === "object" ? hzClean(w.hanzi) : ""; }).join("\n");
+      dichWordsClean(list, hay, false).slice(0, 10).forEach(function (w) {
+        if (learned[w.hanzi] || known[w.hanzi] || MSGD.skip[w.hanzi] || msgWHas(w.hanzi)) return; // đã học / đã có / đã bấm Bỏ
+        var v = dichWordVal(w, R ? dichEx(R, w.hanzi) : null, at);
+        if (v) { MSGD.words.push(v); n.w++; }
+      });
+      // Việt → Trung: câu mình viết thành mẫu câu của bộ — chỉ nối thêm
+      var zh = R && R.dir === "vz" ? dichOneLine(R.out) : "";
+      if (zh && zh.length <= 200 && msgPIndex(zh) < 0) {
+        var d = new Date(at), p = normalizeExpP([{ zh: zh, pinyin: dict ? sentencePinyin(zh) : "", vi: dichOneLine(R.src).slice(0, 300),
+          when: "Tin nhắn ngày " + d.getDate() + "/" + (d.getMonth() + 1), from: "msg:" + at }])[0];
+        if (p) { MSGD.phrases.push(p); n.p++; }
+      }
+    });
+    if (n.m) { MSGS = normalizeMsgs(MSGS); if (!saveMsgs()) { MSGS = loadMsgs(); n.m = 0; n.fail = true; } }
+    if (n.w || n.p) {
+      if (!saveMsgW()) { MSGD = loadMsgW(); n.w = 0; n.p = 0; n.fail = true; }
+      else dichDeckChanged(had); // rebuildItems (phiên đang chạy giữ nguyên hàng thẻ) + lần đầu có bộ thì tự chọn vào phiên
+    }
+    return n;
+  }
+  // Vẽ lại RIÊNG khối "Nối với ChatGPT" (nếu đang ở Dịch) — không gọi render(): ô tin nhắn #dichIn giữ nguyên
+  // (đang gõ dở bằng bộ gõ Telex / pinyin thì chữ không bị lặp, bàn phím iPhone không đóng). Focus trong khối: trả về ô / nút tương ứng.
+  function inboxPaint() {
+    if (view !== "dich" || DICH.imp) return;
+    var b = document.querySelector(".dinbox");
+    if (!b) return;
+    var ae = document.activeElement, inside = !!(ae && ae !== b && b.contains(ae)), url = inside && ae.id === "inboxUrl", act = inside ? ae.getAttribute("data-action") : null, sel = null;
+    if (url) try { sel = { s: ae.selectionStart, e: ae.selectionEnd }; } catch (e) { sel = null; }
+    b.outerHTML = inboxHtml();
+    if (!inside) return;
+    var nb = document.querySelector(".dinbox"), f = !nb ? null : url ? byId("inboxUrl") : act ? nb.querySelector('[data-action="' + act + '"]') : null;
+    if (!f || f.disabled) return;
+    try { f.focus({ preventScroll: true }); } catch (e) { f.focus(); }
+    if (sel && url) try { f.setSelectionRange(sel.s, sel.e); } catch (e) { /* bỏ qua */ }
+  }
+  // Có tin mới: vẽ lại riêng mục "Gần đây" (chưa có thì chèn trước khối ChatGPT). Mục nằm phía trên chỗ đang xem → giữ khối ChatGPT đứng yên.
+  function inboxHistPaint() {
+    if (view !== "dich" || DICH.imp) return;
+    var o = byId("dichHist"), b = document.querySelector(".dinbox"), h = dichHistHtml();
+    if (!h || (!o && !b)) return;
+    var top = o || b, keep = b && top.getBoundingClientRect().top < 0, t0 = keep ? b.getBoundingClientRect().top : 0;
+    if (o) o.outerHTML = h; else b.insertAdjacentHTML("beforebegin", h);
+    var nb = keep ? document.querySelector(".dinbox") : null;
+    if (nb) { var d = nb.getBoundingClientRect().top - t0; if (d) window.scrollBy(0, d); }
+  }
+  // Nhận xong: chỉ vẽ phần đổi — Dịch: khối ChatGPT (+ Gần đây nếu có tin mới); Học: cả màn, chỉ khi có từ / câu mới.
+  // Đang trong phiên: không vẽ gì (thẻ đang học giữ nguyên; bộ thẻ đã rebuildItems trong inboxApply).
+  function inboxRepaint(got) {
+    if (session) return;
+    if (view === "dich") { if (got && got.m) inboxHistPaint(); inboxPaint(); }
+    else if (view === "home" && got && (got.w || got.p)) renderKeepScroll();
+  }
+  // Tự nhận: mở app, vào tab Dịch, app quay lại — tối đa 1 lần / INBOX_GAP, không chạy song song.
+  function inboxAuto() {
+    if (!INB || INBOX.busy || INBOX.testing || Date.now() - INBOX.at < INBOX_GAP) return;
+    inboxPull(false);
+  }
+  // Nhận mục mới (loud = bấm Nhận ngay: báo cả lỗi / không có gì mới). Lỗi khi tự nhận: chỉ ghi ở khối.
+  function inboxPull(loud) {
+    if (!INB) return;
+    if (INBOX.busy || INBOX.testing) { if (loud) toast("Đang nhận…"); return; }
+    var tok = ++INBOX.tok, pages = 0, got = { w: 0, m: 0, p: 0 }, dictTried = false;
+    INBOX.busy = true; INBOX.at = Date.now(); INBOX.err = "";
+    if (loud) inboxPaint();
+    var end = function (why) {
+      if (tok !== INBOX.tok) return;
+      INBOX.busy = false; INBOX.err = why || "";
+      if (INB && (!why || got.w)) { INB.lastAt = Date.now(); INB.lastN = got.w; inboxStore(); } // lượt sau lỗi: phần đã nhận vẫn tính
+      if (got.w) { if (!session || loud) toast("Nhận " + got.w + " từ mới từ ChatGPT"); } // đang học: không chen toast vào thẻ
+      else if (why) { if (loud) toast(why); }
+      else if (loud) toast(got.m ? "Nhận " + got.m + " tin nhắn từ ChatGPT — không có từ mới" : "Chưa có gì mới từ ChatGPT");
+      inboxRepaint(got);
+    };
+    var step = function () {
+      inboxGet(INB, { action: "pull", since: INB.since }).then(function (r) {
+        if (tok !== INBOX.tok || !INB) return;
+        if (!r.ok) { end(r.reason); return; }
+        var raw = Array.isArray(r.data.items) ? r.data.items : [], seen = {}, since = INB.since, top = since;
+        var items = raw.filter(function (it) { // bỏ mục hỏng / đã nhận (id ≤ since) / trùng id trong lượt
+          if (!it || typeof it !== "object") return false;
+          var id = Number(it.id);
+          if (!isFinite(id) || id <= since || seen[id]) return false;
+          seen[id] = true; if (id > top) top = id;
+          return true;
+        }).sort(function (a, b) { return Number(a.id) - Number(b.id); });
+        var next = function () {
+          if (tok !== INBOX.tok || !INB) return;
+          if (items.length) {
+            var n = inboxApply(items); got.w += n.w; got.m += n.m; got.p += n.p; INB.total += n.w;
+            // lưu lỗi: KHÔNG nâng since → lần sau (hết đầy bộ nhớ, bấm Nhận ngay) nhận lại đúng các mục này
+            if (n.fail) { inboxStore(); end("Không lưu được từ (bộ nhớ trình duyệt đầy / bị chặn?)"); return; }
+          }
+          if (top > INB.since) INB.since = top;
+          inboxStore();
+          if (raw.length >= INBOX_PAGE && top > since && ++pages < INBOX_PAGES) step(); else end("");
+        };
+        // có mục mới: nạp từ điển 1 lần (pinyin / Hán Việt); lỗi thì vẫn nhận, để trống cho dictRepair điền sau
+        if (items.length && !dictTried && !dictOk()) { dictTried = true; loadDict(function () { next(); }); }
+        else next();
+      });
+    };
+    step();
+  }
+  // Lưu = gọi thử (ping); được thì lưu cấu hình rồi nhận luôn.
+  function inboxSaveUrl() {
+    var inp = byId("inboxUrl"), raw = inp ? inp.value : INBOX.draft, P = inboxParse(raw);
+    INBOX.draft = raw;
+    if (P.err) { INBOX.err = P.err; inboxPaint(); return; }
+    var tok = ++INBOX.tok;
+    INBOX.testing = true; INBOX.busy = false; INBOX.err = "";
+    inboxPaint();
+    inboxGet(P, { action: "ping" }).then(function (r) {
+      if (tok !== INBOX.tok) return;
+      INBOX.testing = false;
+      if (!r.ok) { INBOX.err = r.reason; inboxPaint(); return; }
+      var same = INB && INB.url === P.url && INB.key === P.key;
+      INB = same ? INB : { url: P.url, key: P.key, since: 0, lastAt: 0, lastN: 0, total: 0 };
+      if (!inboxStore()) { INB = null; INBOX.err = "Không lưu được (bộ nhớ trình duyệt đầy / bị chặn?)"; inboxPaint(); return; }
+      INBOX.draft = ""; INBOX.at = 0;
+      var c = Number(r.data.count);
+      toast("Đã nối ChatGPT" + (isFinite(c) && c > 0 ? " · hộp thư có " + c + " mục" : ""));
+      inboxPull(false);
+      inboxPaint();
+    });
+  }
+  function inboxOff() {
+    if (!INB || !confirm("Ngắt kết nối ChatGPT? Từ đã nhận vẫn giữ; muốn nối lại thì dán link hộp thư lần nữa.")) return;
+    INBOX.tok++; INBOX.busy = false; INBOX.testing = false; INBOX.err = ""; INBOX.draft = "";
+    INB = null;
+    try { localStorage.removeItem(INBOX_KEY); } catch (e) { /* bỏ qua */ }
+    inboxPaint();
+  }
+  function inboxWhen(t) {
+    var d = new Date(t), n = new Date();
+    return d.toDateString() === n.toDateString() ? pad2(d.getHours()) + ":" + pad2(d.getMinutes()) : dichWhen(t);
+  }
+  // Khối "Nối với ChatGPT" ở tab Dịch: chưa nối = ô dán link + Lưu; đã nối = 1 dòng trạng thái + Nhận ngay + Ngắt kết nối.
+  function inboxHtml() {
+    var h = '<section class="box dinbox" aria-labelledby="dinbH"><h2 id="dinbH">Nối với ChatGPT</h2>';
+    if (!INB) {
+      return h + '<p class="dinbhelp">Dịch bằng GPT “Dịch tin nhắn” trong ChatGPT, từ mới tự về đây. Tạo hộp thư theo hướng dẫn trong file <code>chatgpt/HUONG_DAN-GPT.md</code> rồi dán link.</p>' +
+        '<div class="dinbrow"><input id="inboxUrl" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Link hộp thư" ' +
+          'placeholder="https://script.google.com/macros/s/…/exec?key=…" value="' + esc(INBOX.draft) + '"' + (INBOX.testing ? " readonly" : "") + '>' +
+          '<button class="small-btn" data-action="inbox-save"' + (INBOX.testing ? " disabled" : "") + '>' + (INBOX.testing ? "Đang thử…" : "Lưu") + '</button></div>' +
+        (INBOX.err ? '<p class="dinbst err" role="alert">' + ico("warn") + '<span>' + esc(INBOX.err) + '</span></p>' : "") + '</section>';
+    }
+    var st = INBOX.busy ? '<p class="dinbst">' + ico("clock") + '<span>Đã nối ChatGPT · đang nhận…</span></p>'
+      : INBOX.err ? '<p class="dinbst err" role="status">' + ico("warn") + '<span>Đã nối ChatGPT · lần nhận gần nhất lỗi: ' + esc(INBOX.err) + '</span></p>'
+      : '<p class="dinbst ok">' + ico("check") + '<span>Đã nối ChatGPT · ' + (INB.lastAt ? "nhận lần cuối " + inboxWhen(INB.lastAt) : "chưa nhận lần nào") +
+        ' · <b>' + INB.total + '</b> từ</span></p>';
+    return h + st + '<div class="dinbbtn"><button class="small-btn" data-action="inbox-pull"' + (INBOX.busy ? " disabled" : "") + '>' + ico("down") + 'Nhận ngay</button>' +
+      '<button class="link dinboff" data-action="inbox-off">Ngắt kết nối</button></div></section>';
+  }
+  function inboxAction(a) {
+    if (a === "inbox-save") inboxSaveUrl();
+    else if (a === "inbox-pull") inboxPull(true);
+    else if (a === "inbox-off") inboxOff();
+  }
+  app.addEventListener("input", function (e) { if (e.target && e.target.id === "inboxUrl") INBOX.draft = e.target.value; });
+  app.addEventListener("keydown", function (e) {
+    if (e.target && e.target.id === "inboxUrl" && e.key === "Enter" && !e.isComposing) { e.preventDefault(); if (!e.repeat && !INBOX.testing) inboxSaveUrl(); }
+  });
+  // app quay lại (mở lại từ nền / đổi tab trình duyệt) → tự nhận
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) inboxAuto(); });
+  // có mạng lại sau lượt nhận lỗi → nhận lại luôn (bỏ qua giới hạn 60 giây của lượt lỗi)
+  window.addEventListener("online", function () { if (INB && !INBOX.busy && !INBOX.testing && INBOX.err) { INBOX.at = 0; inboxAuto(); } });
 
   // Khúc 3: cấp bản đồ đang học có đóng vai (không có thì cấp đã mở có đóng vai); mỗi lần mở đổi sang cấp kế (UI.blkRp).
   function blkRpPick() {
@@ -9600,6 +9911,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     voiceSweep(); // rời thẻ / câu đang ghi → bỏ bản ghi, tắt mic
     // Đổi màn: dừng giọng đọc còn dở (giọng máy của màn cũ không đọc đè sang màn mới).
     if (lastView && lastView !== view) { try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* bỏ qua */ } }
+    var enterDich = view === "dich" && lastView !== "dich"; // vào tab Dịch → tự nhận hộp thư ChatGPT (sau khi vẽ)
     lastView = view;
     if (view === "stats") app.innerHTML = statsHtml();
     else if (view === "leech") app.innerHTML = leechHtml();
@@ -9622,6 +9934,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     syncHistory();
     window.scrollTo(0, 0);
     if (view === "me" && aiFocusNext) aiFocusGo();
+    if (enterDich) setTimeout(inboxAuto, 0);
   }
   // Vẽ lại màn hiện tại nhưng giữ chỗ cuộn (tick nhiều ô cài đặt liền nhau không bị nhảy lên đầu trang).
   // Vẽ lại mà giữ chỗ: anchorSel = control vừa chạm, giữ đứng yên trên màn hình (dòng phía trên đổi cao thấp
@@ -9757,6 +10070,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       case "me": if (!backTo("#me")) { view = "me"; render(); } break;
       case "dich": if (!backTo("#dich")) { dichImpClose(); view = "dich"; render(); } break; // bấm tab Dịch: luôn về ô dịch
       case "dich-go": case "dich-copy": case "dich-h": case "dich-add": case "dich-drop": case "dich-add-all": case "dich-ai": case "dich-imp": case "dich-imp-x": case "dich-file": case "dich-split": case "dich-conv": case "dich-run": case "dich-stop": case "dich-imp-add": case "dich-imp-back": case "dich-sel-all": case "dich-sel-none": case "dich-dict-retry": dichAction(action, el); break;
+      case "inbox-save": case "inbox-pull": case "inbox-off": inboxAction(action); break; // [F4] Nối với ChatGPT
       case "topics": UI.topicsOpen = !UI.topicsOpen; saveUi(); if (view !== "home") { view = "home"; render(); } else renderKeepScroll('[data-action="topics"]'); break;
       case "export": exportBackup(); break;
       case "import": { var f = byId("importFile"); if (f) { f.value = ""; f.click(); } break; }
@@ -10289,6 +10603,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       else if (mmiss.length) toast("Không tải được bản đồ chủ đề (" + mmiss.join(", ") + ") — từ của cấp đang học chưa có trong phiên. Mở cấp trong Bản đồ để thử lại.");
       if (DECKS.length) mapAdvance(null, false); // tiến độ nhập từ backup / máy khác có thể đã đạt 80%
       if (dictFixNeeded()) setTimeout(function () { loadDict(); }, 2000); // dữ liệu AI đã lưu có "?" / pinyin hỏng → nạp từ điển để sửa
+      if (DECKS.length) setTimeout(inboxAuto, 1500); // [F4] mở app: nhận từ mới từ hộp thư ChatGPT (nền, lỗi thì lặng lẽ)
     };
     var part = function () { if (--wait <= 0) go(); };
     if (!wait) { go(); return; }

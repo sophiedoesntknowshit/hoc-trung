@@ -80,6 +80,12 @@ Từ đã **Quên từ 4 lần** = từ cứng đầu (nhãn "cứng đầu" tr�
 ## Dịch tin nhắn (tab 译 Dịch, cần AI)
 Dán hoặc gõ tin nhắn → **Dịch** (Ctrl+Enter). Có chữ Hán = dịch Trung → Việt, không có = Việt → Trung (giọng nhắn tin tự nhiên + 1 cách khác + giải thích tiếng lóng), nút **Chép** để dán sang app chat. Từ mới chưa có trong app **tự vào bộ "Từ tin nhắn"** (信), câu ví dụ là chính tin nhắn; bấm **Bỏ** nếu không muốn học (app nhớ, tin sau có lại từ đó cũng không tự thêm; muốn học thì bấm **+ Học**). Từ điển chưa tải được (mất mạng) thì từ mới chưa tự thêm — bấm **+ Học** khi có mạng. Câu mày tự viết (Việt → Trung) thành thẻ nói + thẻ dịch. **Nhập đoạn chat cũ**: dán cả đoạn, hoặc chọn file `conversations.json` (ChatGPT → Settings → Data controls → Export, làm trên máy tính) → chọn cuộc trò chuyện → app lấy từ mới theo từng khúc → chọn từ để học. Tin nhắn được gửi tới OpenAI để dịch, lưu trong trình duyệt (`hoctrung.msgs.v1`, `hoctrung.msgw.v1`) và đi theo backup.
 
+**Nối với ChatGPT (dịch bằng GPT trong ChatGPT Plus):**
+- Dịch tin nhắn bằng GPT **"Dịch tin nhắn"** trong ChatGPT; mỗi lần dịch, GPT gửi tin + từ mới vào **hộp thư** riêng (Google Apps Script trên Gmail của mày). Tạo hộp thư theo `chatgpt/HUONG_DAN-GPT.md`.
+- Dán link hộp thư (`https://script.google.com/macros/s/…/exec?key=…`) **1 lần** ở tab **Dịch** → mục **Nối với ChatGPT** → **Lưu** (app gọi thử, báo được hay lỗi).
+- Từ mới **tự về** bộ **Từ tin nhắn** + lịch sử **Gần đây** khi mở app, khi vào tab Dịch, khi quay lại app (tối đa 1 lần/phút; **Nhận ngay** để lấy liền). Giống dịch trong app: bỏ từ đã học / đã có / đã bấm **Bỏ**, câu mày viết thành thẻ nói + thẻ dịch. Đang học phiên 45 phút thì nhận ngầm, không đụng thẻ đang học.
+- Link + key lưu riêng máy này (`hoctrung.inbox.v1`), **không** đi theo Xuất backup — đổi máy thì dán lại link. Sang máy mới: **nhập backup trước**, rồi mới dán link hộp thư (app vẫn tự bỏ lại từ mày đã Bỏ ở máy cũ, nhưng làm đúng thứ tự cho chắc). **Ngắt kết nối** chỉ xóa link, từ đã nhận vẫn giữ.
+
 ## Mất tài khoản công ty / đổi máy — làm sao học tiếp
 
 App này không cần tài khoản, không cần mạng, không gọi API nào (trừ khi bạn tự bật **AI chấm bài** — khóa OpenAI không nằm trong backup, sang máy mới phải dán lại). Chỉ cần 2 thứ: **thư mục `app`** và **file backup tiến độ**. Cất cả hai trên Google Drive cá nhân là đủ.
