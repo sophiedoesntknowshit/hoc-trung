@@ -501,6 +501,16 @@ html .wrap.sess{padding-top:0}
 /* nút AI gợi ý: gạch son 2px trên đỉnh ô + viền trong */
 .grades button.aisug::before{content:"";position:absolute;left:0;right:0;top:-1px;height:3px;background:var(--zhu-ink)}
 .grades .g3.aisug::before{background:var(--on-zhu)}
+/* có gợi ý (AI / chấm pinyin) ở nút khác "Nhớ": nút được gợi ý tô son, "Nhớ" về như nút thường (không 2 nút son cạnh nhau) */
+.grades:has(.aisug:not(.g3)) .g3{background:none;color:var(--ink);border-left-color:var(--rule)}
+.grades:has(.aisug:not(.g3)) .g3 small{color:var(--ink3)}
+.grades:has(.aisug:not(.g3)) .g3 + button{border-left-color:var(--rule)}
+.grades:has(.aisug:not(.g3)) .g3:hover{background:var(--hover);border-color:var(--rule)}
+.grades button.aisug:not(.g3){background:var(--zhu);color:var(--on-zhu);border-left-color:var(--zhu)}
+.grades button.aisug:not(.g3) small{color:var(--on-zhu)}
+.grades button.aisug:not(.g3) + button{border-left-color:var(--zhu)}
+.grades button.aisug:not(.g3)::before{background:var(--on-zhu)}
+.grades button.aisug:not(.g3):hover{background:var(--zhu-hi);border-color:var(--zhu-hi)}
 @media (pointer:coarse){.grades .gk,.blkopt kbd{display:none}}
 /* thanh nút dính đáy (điện thoại / màn ngang): sát mép, chừa vùng an toàn */
 @media (max-width:600px),(max-height:500px){
@@ -665,6 +675,68 @@ html.insess .bar{top:var(--smh)}
 .wuvi2{font-family:var(--serif);font-style:italic;font-size:15.5px;line-height:1.45;color:var(--ink2)}
 .wuw{margin-top:4px;font-size:13px;color:var(--ink3)}
 .wuw b.zh{margin:0 4px;font-weight:400;font-size:18px;color:var(--zhu-ink)}
+
+/* --- thẻ Nhận mặt chữ có ô gõ: 2 ô (nhãn serif nghiêng + ô nền nổi gạch son dưới), khối kết quả 2 dòng kẻ mảnh (dấu ✓ ≈ ✕ + chữ),
+   bước đặt câu "Dễ quá" / thẻ Đặt câu (đề serif nghiêng, chữ Hán son), nút Dễ bị khóa --- */
+.rcform{display:flex;flex-direction:column;gap:10px;margin:16px 0 0}
+.rcf{display:flex;align-items:center;gap:12px;margin:0}
+.rcfl{flex:none;width:58px;font-family:var(--serif);font-style:italic;font-size:15px;line-height:1.2;color:var(--ink3);text-align:left}
+.rcin{flex:1;min-width:0;width:100%;min-height:52px;padding:8px 14px;font-size:18px;line-height:1.3;color:var(--ink);background:var(--raise);
+  border:1px solid var(--rule2);border-bottom:2px solid var(--zhu-line);border-radius:var(--r)}
+.rcin.rcpy{font-family:var(--py);letter-spacing:.02em}
+.rcin:hover{border-color:var(--ink3);border-bottom-color:var(--zhu-line)}
+.rcin:focus{border-color:var(--zhu-line);border-bottom-color:var(--zhu-ink)}
+.rcin::placeholder{font-family:var(--sans);font-size:14.5px;letter-spacing:0}
+.actions > button.rceasy{color:var(--ink2)}
+.rcres{margin:16px 0 0;border-top:1px solid var(--rule);text-align:left}
+.rcln{display:grid;grid-template-columns:58px 18px minmax(0,1fr);column-gap:8px;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--rule)}
+.rclab{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--ink3)}
+.rcmk{font-weight:600;font-size:17px;line-height:1;text-align:center}
+.rcln.ok .rcmk{color:var(--green-ink)}
+.rcln.mid .rcmk{color:var(--orange-ink)}
+.rcln.no .rcmk{color:var(--red-ink)}
+.rcln.unk .rcmk,.rcln.wait .rcmk{color:var(--ink3)}
+.rcbody{min-width:0}
+.rcyou{font-family:var(--py);font-size:18px;line-height:1.4;color:var(--ink);overflow-wrap:anywhere}
+.rcyou .rcvi{font-family:var(--sans);font-size:16px}
+.rcs.ok{color:var(--green-ink)}
+.rcs.tone,.rcs.notone{color:var(--orange-ink);text-decoration:underline;text-decoration-color:var(--orange-line);text-underline-offset:.22em}
+.rcs.bad{color:var(--red-ink);text-decoration:underline wavy var(--red-line);text-decoration-thickness:1px;text-underline-offset:.22em}
+.rcs.miss{display:inline-block;min-width:2em;border-bottom:2px dashed var(--red-line);font-family:var(--sans);font-size:13px;font-style:italic;line-height:1.3;color:var(--red-ink);text-align:center}
+.rcsub{margin-top:2px;font-size:13px;line-height:1.45;color:var(--ink2)}
+.rcsub b{font-family:var(--py);font-weight:500;font-size:14.5px;color:var(--ink)}
+.rcsub .aiwait{font-size:14px}
+.rcsrc{color:var(--ink3);white-space:nowrap}
+.rcsug{padding:8px 0 0;font-size:13px;line-height:1.45;color:var(--ink3)}
+.rcsug b{font-weight:600;color:var(--zhu-ink)}
+.rcres + .meaning{margin-top:18px}
+.rcsh{margin:20px 0 0;text-align:center;font-family:var(--serif);font-style:italic;font-size:19px;line-height:1.35;color:var(--ink2);font-variant-numeric:lining-nums}
+.rcsh b.zh{margin:0 2px;font-family:var(--kai);font-style:normal;font-weight:400;font-synthesis:none;font-size:1.35em;color:var(--zhu-ink)}
+.rcshs{margin:4px 0 0;text-align:center;font-size:12.5px;line-height:1.45;color:var(--ink3)}
+.rcsh.rcsh2{margin:22px 0 0;text-align:left;font-size:16px;color:var(--zhu-ink)}
+.rcsh2 + .aibox,.rcsh2 + .ailine{margin-top:8px}
+.rcsh2 + .vcmp{margin-top:8px}
+.rcexs .ex:first-child{margin-top:14px}
+.rcmore{display:flex;align-items:center;gap:6px;margin:20px 0 0;font-family:var(--serif);font-style:italic;font-size:15.5px;color:var(--zhu-ink)}
+.rcmore + .expbox{margin-top:4px}
+.rclock{display:flex;align-items:center;gap:6px;margin-top:4px;color:var(--ink2)}
+.rclock .ic{width:14px;height:14px;color:var(--zhu-ink)}
+.aichk b.zh{font-family:var(--kai);font-weight:400;font-synthesis:none;font-size:17px}
+.grades button.locked{cursor:not-allowed;color:var(--ink3)}
+.grades button.locked b{color:var(--ink3)}
+.grades button.locked:hover{background:none}
+.grades button.locked small .ic{width:12px;height:12px;margin-right:2px;vertical-align:-1px}
+.hanzi.mid.rcword{margin-top:18px;font-size:clamp(36px,11vw,48px);line-height:1.3}
+.rcwm{margin:0;text-align:center;font-family:var(--serif);font-weight:500;font-size:21px;line-height:1.3;color:var(--ink);text-wrap:balance;font-variant-numeric:lining-nums}
+.rcwm small{margin-left:6px;font-family:var(--sans);font-weight:400;font-size:12.5px;color:var(--ink3)}
+@media (max-width:359px){.rcfl{width:50px}.rcln{grid-template-columns:50px 16px minmax(0,1fr)}}
+@media (max-height:500px){
+  .rcform{gap:6px;margin-top:6px}
+  .rcin{min-height:44px;font-size:17px}
+  .rcsh{margin-top:8px;font-size:17px}
+  .rcshs{display:none}
+  .hanzi.mid.rcword{margin-top:6px}
+}
 
 /* --- màn ngang thấp (≤500px cao): gọn phần trên thẻ để đáp án / tiêu đề khúc / số liệu nằm trên thanh nút dính đáy ---
    đầu thẻ 1 dòng (dòng phụ nối sau loại thẻ, dấu son nằm ngang), ô chữ Hán nhỏ lại, nghĩa 28px, bớt khoảng cách dọc */
@@ -1657,6 +1729,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   var TRANS_EVERY = 6;
   var TRANS_MAX = 8;
   var TRANS_KEYS = 4; // số từ khóa gợi ý tối đa trên thẻ dịch
+  // Thẻ "Đặt câu" (từ đã nhớ ≥ 2 lần, AI chấm): phiên không chia khúc chen 1 thẻ sau mỗi SENT_EVERY thẻ thường, tối đa SENT_MAX thẻ / phiên.
+  var SENT_EVERY = 8;
+  var SENT_MAX = 5;
   // Phiên chia 3 khúc (settings.sessionBlocks, mặc định bật; tắt = phiên trộn như cũ). Mỗi khúc 15 phút:
   // 0 "Thẻ" (thẻ từ) · 1 "Nói & dịch" (thẻ nói xen thẻ dịch) · 2 "Nghe & đọc" (nhại 1 bài khóa / làm tiếp 1 phần đề).
   var BLOCK_SEC = 15 * 60;
@@ -2861,7 +2936,29 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       "missing_vi: in Vietnamese, the idea(s) the learner missed or misunderstood, naming the Chinese word responsible (characters only); empty string if nothing is missing.\n" +
       "note_vi: 1 short, direct sentence in Vietnamese about the key word or grammar point (no greetings, no praise padding).\n" +
       "correct_vi: a natural Vietnamese translation of zh.\n" +
-      "Explanations in Vietnamese only. Never write pinyin or romanization." }
+      "Explanations in Vietnamese only. Never write pinyin or romanization." },
+    // Thẻ Nhận mặt chữ: người học xem 1 từ rồi gõ nghĩa tiếng Việt (schema AI_MEANING_SCHEMA).
+    meaning: { name: "cham_nghia_tu", maxTokens: 400, system:
+      "You grade a Vietnamese learner of Mandarin Chinese (HSK 3-4). They saw a Chinese word (hanzi, pinyin, pos) and typed what it means (learner_vi).\n" +
+      "reference_meaning is the app's Vietnamese gloss; it may list several senses. Grade by IDEA and be lenient: synonyms, English words, longer or shorter phrasing, " +
+      "missing Vietnamese diacritics, typos, and giving only one of several senses are all \"dung\" as long as the main sense is right.\n" +
+      "\"gan-dung\" = related but imprecise: clearly too broad or too narrow, only a minor secondary sense, or a nuance that would make the learner misuse the word.\n" +
+      "\"sai\" = a different meaning, an unrelated word, empty, nonsense or not Vietnamese/English.\n" +
+      "note_vi: ONE short sentence in Vietnamese explaining the difference (quote at most the single Chinese word); empty string when verdict is \"dung\".\n" +
+      "Never write pinyin or romanization. Do not invent meanings, usage rules or facts; if unsure whether the learner's meaning fits, choose gan-dung and say so briefly in note_vi." },
+    // "Dễ quá" / thẻ Đặt câu: người học đặt 1 câu tiếng Trung có từ đích (schema AI_SENT_SCHEMA).
+    sentence: { name: "cham_dat_cau", maxTokens: 900, system:
+      "You are a fair Mandarin Chinese examiner for a Vietnamese learner at HSK 3-4 level whose goal is everyday conversation.\n" +
+      "The learner wrote ONE Chinese sentence (learner_zh) that must use the target word (word: hanzi, pinyin, Vietnamese meaning, part of speech).\n" +
+      "uses_word: true only if learner_zh contains the target word used with its intended meaning (a split or expanded form such as 见了面 for 见面 counts).\n" +
+      "verdict: \"dat\" = uses the word correctly, grammatical, and natural for a native speaker at this level; " +
+      "\"gan-dat\" = understandable and uses the word, but has a small grammar slip, an unnatural collocation, or a wrong measure word / particle; " +
+      "\"chua-dat\" = does not use the word, uses it with the wrong meaning or wrong grammatical role, broken grammar, not a full sentence, or not Chinese.\n" +
+      "fixed_zh: learner_zh with the MINIMUM edits needed to be correct (keep their idea and words); exactly learner_zh if nothing is wrong.\n" +
+      "better_zh: the most natural way a native speaker would say the learner's idea using the target word (may equal fixed_zh).\n" +
+      "note_vi: 1-2 short, direct sentences in Vietnamese about the main problem or one usage tip (no greetings, no praise padding); quote only the single Chinese word you discuss.\n" +
+      "All Chinese in Simplified characters only — never write pinyin or romanization anywhere. Explanations in Vietnamese only. " +
+      "Do not invent meanings, usage rules or facts; if unsure whether a usage is natural, choose gan-dat and say so briefly in note_vi." }
   };
   var AI_GRADE_SCHEMA = {
     type: "object", additionalProperties: false,
@@ -2889,6 +2986,20 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       missing_vi: { type: "string" },
       note_vi: { type: "string" },
       correct_vi: { type: "string" }
+    }
+  };
+  var AI_MEANING_SCHEMA = {
+    type: "object", additionalProperties: false, required: ["verdict", "note_vi"],
+    properties: { verdict: { type: "string", enum: ["dung", "gan-dung", "sai"] }, note_vi: { type: "string" } }
+  };
+  var AI_SENT_SCHEMA = {
+    type: "object", additionalProperties: false, required: ["verdict", "uses_word", "fixed_zh", "better_zh", "note_vi"],
+    properties: {
+      verdict: { type: "string", enum: ["dat", "gan-dat", "chua-dat"] },
+      uses_word: { type: "boolean" },
+      fixed_zh: { type: "string" },
+      better_zh: { type: "string" },
+      note_vi: { type: "string" }
     }
   };
   // Gọi 1 lượt chat.completions có json_schema. Không bao giờ reject: { ok: true, data, model } | { ok: false, reason, status? }.
@@ -3002,8 +3113,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     else { st.state = "fail"; st.reason = r && !r.ok ? r.reason : "AI trả lời sai định dạng"; }
   }
   // Tô nút chấm được AI gợi ý (không vẽ lại cả thẻ).
-  function aiMarkGrade(st) {
-    var g = aiSugGrade(st);
+  function aiMarkGrade(st) { markSugGrade(aiSugGrade(st)); }
+  function markSugGrade(g) { // g = số nút chấm được gợi ý (0 = bỏ tô)
     Array.prototype.forEach.call(document.querySelectorAll("#cardArea .grades [data-grade]"), function (b) {
       b.classList.toggle("aisug", g > 0 && Number(b.getAttribute("data-grade")) === g);
     });
@@ -3022,8 +3133,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function aiReveal(sel, again) {
     var el = document.querySelector(sel || "#vbox .aibox, #vbox .ailine"); if (!el) return;
     // Chữ Hán trong khung có thể làm khung cao thêm khi font tải xong → canh lại 1 lần sau đó (khi cuộn mượt đã xong).
+    // Khung bị vẽ lại trong lúc chờ (vd từ điển nạp xong, thêm dòng pinyin) mà vẫn ở thẻ đó → tìm lại theo sel.
+    var cid = session && session.current ? session.current.id : null;
     if (!again && document.fonts && document.fonts.ready) document.fonts.ready.then(function () {
-      setTimeout(function () { if (el.isConnected) aiReveal(sel, true); }, 450);
+      setTimeout(function () { if (el.isConnected || (cid && session && session.current && session.current.id === cid)) aiReveal(sel, true); }, 450);
     });
     var bar = document.querySelector("#app .bar"), dock = document.querySelector("#cardArea .dock");
     var top = bar ? Math.max(0, bar.getBoundingClientRect().bottom) : 0, bot = dockTop(dock);
@@ -3253,6 +3366,166 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     return s.toLowerCase().replace(/u:/g, "ü").replace(/v/g, "ü").replace(PY_KEEP_RE, "");
   }
   function pyBare(k) { return k.replace(/[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜńňǹḿ]/g, function (c) { return PY_TONELESS[c]; }); }
+  // ---------- chấm pinyin tại chỗ (thẻ Nhận mặt chữ) — hàm thuần, không đụng app; test bằng node (tools: tách đoạn giữa 2 dòng mốc pyCheck bên dưới) ----------
+  // [pyCheck]
+  // Chữ có dấu → [chữ gốc, thanh]. ă ĕ ĭ ŏ ŭ (dấu trăng của bàn phím Việt, trông như dấu ˇ) = thanh 3.
+  // Dấu riêng của tiếng Việt (hỏi, ngã, nặng) → thanh -1: âm vẫn so được, thanh coi là sai.
+  var PYC_MARK = {};
+  ("āa1 áa2 ǎa3 àa4 ēe1 ée2 ěe3 èe4 īi1 íi2 ǐi3 ìi4 ōo1 óo2 ǒo3 òo4 ūu1 úu2 ǔu3 ùu4 ǖü1 ǘü2 ǚü3 ǜü4 ńn2 ňn3 ǹn4 ḿm2 " +
+    "ăa3 ĕe3 ĭi3 ŏo3 ŭu3 ảa- ãa- ạa- ẻe- ẽe- ẹe- ỉi- ĩi- ịi- ỏo- õo- ọo- ủu- ũu- ụu-")
+    .split(" ").forEach(function (x) { if (x) PYC_MARK[x.charAt(0)] = [x.charAt(1), x.charAt(2) === "-" ? -1 : Number(x.charAt(2))]; });
+  // Vần hợp lệ (để tách 1 cụm viết liền nhiều âm tiết trong đáp án, vd "Běijīng").
+  var PYC_SYL = /^(?:(?:zh|ch|sh|[bpmfdtnlgkhjqxrzcsyw])?(?:iang|iong|uang|ueng|ang|eng|ing|ong|ian|iao|uai|uan|üan|üe|ün|ai|ao|an|ei|en|er|ia|ie|in|iu|ou|ua|uo|ui|un|a|e|i|o|u|ü|ê)r?|ng|hng|hm|m|n)$/;
+  // Chuỗi pinyin → mảng "chữ": { c: chữ gốc không dấu (v, u: → ü), t: thanh của dấu (0 = không dấu), raw, dig: số thanh gõ ngay sau (5 = nhẹ), sep: có dấu cách / nháy sau }.
+  function pycUnits(s) {
+    s = String(s == null ? "" : s); if (s.normalize) s = s.normalize("NFC");
+    var ch = Array.from(s.toLowerCase()), out = [];
+    for (var i = 0; i < ch.length; i++) {
+      var c = ch[i], last = out[out.length - 1], m = PYC_MARK[c];
+      if (c === "u" && ch[i + 1] === ":") { out.push({ c: "ü", t: 0, raw: "u:", dig: 0, sep: false }); i++; }
+      else if (c === "v") out.push({ c: "ü", t: 0, raw: "v", dig: 0, sep: false });
+      else if (m) out.push({ c: m[0], t: m[1], raw: c, dig: 0, sep: false });
+      else if (/[a-zü]/.test(c) || c === "ê") out.push({ c: c, t: 0, raw: c, dig: 0, sep: false });
+      else if (/[0-5]/.test(c)) { if (last) { last.dig = c === "0" ? 5 : Number(c); last.raw += c; } }
+      else if (/[\s'’‘`´\-·.,，、…]/.test(c)) { if (last) last.sep = true; }
+      else out.push({ c: "#", t: 0, raw: c, dig: 0, sep: false }); // chữ lạ (ơ ư đ, số 6-9…): không khớp âm nào
+    }
+    // j q x y + ü viết là u (qù = qü)
+    for (var k = 1; k < out.length; k++) {
+      if (out[k].c === "ü" && /[jqxy]/.test(out[k - 1].c)) out[k].c = "u";
+      // lue / nue (cách gõ ASCII của lüe / nüe; pinyin không có vần "ue" sau l / n): u không dấu, liền sau l / n, ngay trước e → ü
+      // (trừ "luer" = lu + er, vd 路儿)
+      else if (out[k].c === "u" && !out[k].t && !out[k].dig && !out[k].sep && /[ln]/.test(out[k - 1].c) && out[k + 1] && out[k + 1].c === "e" &&
+        !(out[k + 2] && out[k + 2].c === "r" && !out[k + 1].dig && !out[k + 1].sep)) out[k].c = "ü";
+    }
+    return out;
+  }
+  function pycBase(us) { return us.map(function (u) { return u.c; }).join(""); }
+  // Thanh của 1 âm tiết: số gõ (cuối cùng) > dấu (đầu tiên) > 0 (không gõ thanh).
+  function pycTone(us) {
+    var d = 0, t = 0;
+    us.forEach(function (u) { if (u.dig) d = u.dig; if (!t && u.t) t = u.t; });
+    return d || t;
+  }
+  function pycClash(us) { // có từ 2 thanh khác nhau (số gõ hoặc dấu) trong cùng 1 âm tiết
+    var seen = 0;
+    return us.some(function (u) {
+      return [u.dig, u.t].some(function (v) { if (!v || v === seen) return false; if (seen) return true; seen = v; return false; });
+    });
+  }
+  // Tách 1 cụm chữ liền (đáp án viết dính) thành âm tiết hợp lệ, mỗi âm tiết tối đa 1 dấu thanh; không tách được → null.
+  function pycSplit(us) {
+    var memo = {};
+    var go = function (p) {
+      if (p === us.length) return [];
+      if (memo[p] !== undefined) return memo[p];
+      memo[p] = null;
+      for (var n = Math.min(7, us.length - p); n >= 1; n--) {
+        var part = us.slice(p, p + n);
+        if (!PYC_SYL.test(pycBase(part)) || part.filter(function (u) { return u.t || u.dig; }).length > 1) continue;
+        var rest = go(p + n);
+        if (rest) { memo[p] = [part].concat(rest); break; }
+      }
+      return memo[p];
+    };
+    return go(0);
+  }
+  // Đáp án → [{ b: âm không dấu, alt: âm thay thế (nàr ↔ na er), e: thanh 1-5, d: âm tiết hiển thị, ch: chữ Hán ứng (nếu đếm khớp) }].
+  function pycExpected(py, hanzi) {
+    var us = pycUnits(py), toks = [], cur = [];
+    us.forEach(function (u) {
+      if (u.c === "#") { if (cur.length) toks.push(cur); cur = []; return; }
+      cur.push(u);
+      if (u.sep || u.dig) { toks.push(cur); cur = []; }
+    });
+    if (cur.length) toks.push(cur);
+    var han = Array.from(String(hanzi || "")).filter(function (c) { return /[㐀-鿿豈-﫿]/.test(c); });
+    if (toks.length !== han.length) { // cụm viết liền: thử tách theo vần
+      var sp = [];
+      toks.forEach(function (t) { var s = pycSplit(t); if (s) sp = sp.concat(s); else sp.push(t); });
+      if (sp.length === han.length || toks.some(function (t) { return t.filter(function (u) { return u.t || u.dig; }).length > 1; })) toks = sp;
+    }
+    var out = toks.map(function (t) {
+      var b = pycBase(t), e = pycTone(t);
+      return { b: b, alt: b.length > 1 && /r$/.test(b) && b !== "er" ? b.slice(0, -1) + "er" : "", e: e > 0 ? e : 5,
+        d: t.map(function (u) { return u.raw.replace(/[0-5]$/, ""); }).join("") };
+    });
+    if (out.length !== han.length) { // 儿化 viết 1 âm tiết (huìr) nhưng chữ Hán có 儿 riêng (一会儿): bỏ 儿 đứng ngay sau âm tiết đó
+      var h2 = [], j = 0;
+      out.forEach(function (x) { h2.push(han[j]); j += x.alt && han[j + 1] === "儿" ? 2 : 1; });
+      if (j === han.length) han = h2;
+    }
+    if (out.length === han.length) out.forEach(function (x, i) { x.ch = han[i]; });
+    return out;
+  }
+  function pycEd(a, b) { // khoảng cách sửa (Levenshtein) giữa 2 chuỗi ngắn
+    var prev = [], i, j;
+    for (j = 0; j <= b.length; j++) prev[j] = j;
+    for (i = 1; i <= a.length; i++) {
+      var row = [i];
+      for (j = 1; j <= b.length; j++) row[j] = Math.min(prev[j] + 1, row[j - 1] + 1, prev[j - 1] + (a.charAt(i - 1) === b.charAt(j - 1) ? 0 : 1));
+      prev = row;
+    }
+    return prev[b.length];
+  }
+  // Thanh được chấp nhận của âm tiết i: thanh đáp án + biến điệu (一: 1 / 2 trước thanh 4 / 4 trước thanh khác; 不: 4 / 2 trước thanh 4; 3-3: thanh 3 đứng trước thanh 3 đọc 2).
+  function pycOkTones(ex, i) {
+    var x = ex[i], nx = ex[i + 1], ok = [x.e];
+    if (x.ch === "一" && nx) ok.push(1, nx.e === 4 ? 2 : 4);
+    if (x.ch === "不" && nx) ok.push(4, nx.e === 4 ? 2 : 4);
+    if (x.e === 3 && nx && nx.e === 3) ok.push(2);
+    return ok;
+  }
+  // Chấm pinyin người học gõ so với đáp án. Chấp nhận dấu hoặc số 1-5 (nhẹ: bỏ trống / 5 / 0), gõ liền hoặc cách, v / u: = ü, chữ hoa.
+  // Tách âm tiết bằng cách khớp với chuỗi âm tiết của đáp án (quy hoạch động theo khoảng cách sửa).
+  // → { res: ok | notone | tone | wrong | blank | skip, syl: [{ d: âm đáp án, typed: phần người học gõ, st: ok | tone | notone | bad | miss }], extra }
+  function pyCheck(expected, typed, hanzi) {
+    var ex = pycExpected(expected, hanzi), us = pycUnits(typed);
+    if (!us.length) return { res: "blank", syl: [], extra: "" };
+    if (!ex.length) return { res: "skip", syl: [], extra: "" };
+    var L = us.length, n = ex.length, INF = 1e9, hasSep = us.some(function (u, k) { return k < L - 1 && (u.sep || u.dig); });
+    var str = pycBase(us), dp = [], from = [];
+    for (var i = 0; i <= n; i++) { dp.push([]); from.push([]); for (var p = 0; p <= L; p++) dp[i][p] = INF; }
+    dp[0][0] = 0;
+    for (i = 0; i < n; i++) {
+      var b = ex[i].b, alt = ex[i].alt, maxLen = Math.max(b.length, alt.length) + 4;
+      for (p = 0; p <= L; p++) {
+        if (dp[i][p] >= INF) continue;
+        for (var q = p; q <= Math.min(L, p + maxLen); q++) {
+          var seg = str.slice(p, q), c = pycEd(seg, b);
+          if (alt) c = Math.min(c, pycEd(seg, alt));
+          // người học có cách âm tiết: ưu tiên ranh giới đúng chỗ cách / số thanh (chỉ để chọn cách tô khi sai)
+          if (hasSep && q > p && q < L && !(us[q - 1].sep || us[q - 1].dig)) c += 0.01;
+          if (dp[i][p] + c < dp[i + 1][q]) { dp[i + 1][q] = dp[i][p] + c; from[i + 1][q] = p; }
+        }
+      }
+    }
+    var best = INF, end = 0;
+    for (p = 0; p <= L; p++) if (dp[n][p] + (L - p) < best) { best = dp[n][p] + (L - p); end = p; }
+    var cuts = [end];
+    for (i = n; i > 0; i--) cuts.unshift(from[i][cuts[0]]);
+    var syl = [], anyTone = false, bad = false;
+    for (i = 0; i < n; i++) {
+      var part = us.slice(cuts[i], cuts[i + 1]), sb = pycBase(part), x = ex[i];
+      var s = { d: x.d, typed: part.map(function (u) { return u.raw; }).join(""), st: "ok" };
+      if (!part.length) { s.st = "miss"; bad = true; }
+      else if (sb !== x.b && sb !== x.alt) { s.st = "bad"; bad = true; }
+      else {
+        // 儿化 gõ tách (hui4 er, na3er): thanh lấy ở phần trước "er", số / dấu gõ cho "er" bỏ qua
+        var tp = sb === x.alt && sb !== x.b ? part.slice(0, part.length - 2) : part, t = pycTone(tp);
+        if (t) anyTone = true;
+        if (pycClash(tp)) s.st = "tone"; // 2 thanh khác nhau trong 1 âm tiết (xi3an1, ní3): không đoán, tính sai thanh
+        else if (t === 0) s.st = x.e === 5 ? "ok" : "notone";
+        else if (pycOkTones(ex, i).indexOf(t) < 0) s.st = "tone";
+      }
+      syl.push(s);
+    }
+    var extra = us.slice(end).map(function (u) { return u.raw; }).join("");
+    if (extra) bad = true;
+    var res = bad ? "wrong" : syl.every(function (s) { return s.st === "ok"; }) ? "ok" : anyTone ? "tone" : "notone";
+    return { res: res, syl: syl, extra: extra };
+  }
+  // [/pyCheck]
   // Chữ đa âm đứng một mình (không ghép thành từ trong từ điển): cách đọc hay gặp nhất, thay cho cách đọc đầu của từ điển
   // (từ điển xếp 还 huán|hái, 得 děi|de, 吗 má|ma…). Chỉ dùng khi cách đọc đó có trong từ điển.
   var PY_PREF = {};
@@ -3814,7 +4087,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function learnedCount() {
     return Object.keys(db.cards).filter(function (k) {
       var p = k.split(":")[0];
-      return db.cards[k].state !== "new" && !isTransId(k) && (ITEM_BY_ID[k] || LESSON_META[p] || MAP_DECK[p]);
+      return db.cards[k].state !== "new" && !isAuxId(k) && (ITEM_BY_ID[k] || LESSON_META[p] || MAP_DECK[p]);
     }).length;
   }
 
@@ -3902,6 +4175,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   }
   function modeOf(it) {
     if (it.kind === "trans") return "trans";
+    if (it.kind === "sent") return "sent";
     if (it.kind === "phrase") return "phrase";
     var c = db.cards[it.id];
     if (!c || c.state === "new") return "new";
@@ -3912,7 +4186,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   // Nguồn: câu ví dụ của từ đã học (thẻ từ state "review") + mẫu câu đã học, trong các bộ đang chọn.
   // Tiến độ lưu ở db.cards bằng id riêng, không đụng id cũ: "<deckId>:t:<hanzi>:<i>" (câu ví dụ thứ i của từ),
   // "<deckId>:tp:<i>" (mẫu câu thứ i). Không vào ITEMS (không thành "từ mới", không tính vào trần ôn).
-  function isTransId(k) { return /:tp?:/.test(k); }
+  // Thẻ phụ có lịch ôn riêng (thẻ dịch ":t:" / ":tp:", thẻ đặt câu ":s:"): không phải từ / mẫu câu → không tính thẻ đã gặp, % bài, bài cũ.
+  function isAuxId(k) { return /:(?:tp?|s):/.test(k); }
   function transItems(decks) {
     var ids = {}, out = [];
     decks.forEach(function (d) { ids[d.id] = true; });
@@ -3993,6 +4268,180 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     return picked;
   }
 
+  // ---------- thẻ Đặt câu (từ đã nhớ ≥ 2 lần, AI chấm) ----------
+  // Id riêng "<deckId>:s:<hanzi>" (lịch ôn riêng trong db.cards, như thẻ dịch): không vào ITEMS, không tính trần ôn,
+  // thẻ đã gặp, % bản đồ, câu kiểm tra bài cũ (isAuxId). Nguồn: thẻ từ state review, reps ≥ 2, trong các bộ đang học; mỗi chữ 1 lần / phiên.
+  function sentItem(it) { return { id: it.deckId + ":s:" + it.data.hanzi, deckId: it.deckId, deck: it.deck, kind: "sent", data: it.data, src: it }; }
+  // Thẻ đặt câu kế tiếp: thẻ đến hạn trước (hạn sớm nhất), không có thì từ đủ điều kiện chưa có thẻ (ngẫu nhiên).
+  function nextSent() {
+    var now = Date.now(), due = [], fresh = [], ids = {};
+    session.decks.forEach(function (d) { ids[d.id] = true; });
+    ITEMS.forEach(function (it) {
+      if (it.kind !== "word" || !ids[it.deckId] || session.sentSeen[it.data.hanzi]) return;
+      // thẻ từ còn đến hạn, chưa chấm trong phiên: để lượt sau (mặt trước thẻ Đặt câu lộ pinyin + nghĩa của thẻ từ sắp ôn)
+      if (isDue(it.id, now) && !session.touched[it.id]) return;
+      var sc = db.cards[it.deckId + ":s:" + it.data.hanzi];
+      if (sc && sc.state !== "new") { if (sc.due <= now) due.push({ it: it, due: sc.due }); return; }
+      var c = db.cards[it.id];
+      if (c && c.state === "review" && c.reps >= 2) fresh.push(it);
+    });
+    var pick = due.length ? due.sort(function (a, b) { return a.due - b.due; })[0].it : fresh.length ? fresh[Math.floor(Math.random() * fresh.length)] : null;
+    return pick ? sentItem(pick) : null;
+  }
+  function sentFresh() { // lấy thẻ mới / đến hạn, ghi đã ra
+    var t = nextSent();
+    if (t) { session.sentShown++; session.sentSeen[t.data.hanzi] = true; }
+    return t;
+  }
+  // Phiên không chia khúc (gọi ở nextCard khi còn thẻ thường): đủ SENT_EVERY thẻ thường thì chen 1 thẻ (lượt làm lại trước).
+  function pickSent() {
+    if (!session.sentSeen) { session.sentSeen = {}; session.sentRetry = []; session.sentShown = 0; session.sinceSent = 0; }
+    if (session.sinceSent < SENT_EVERY) return null;
+    var t = session.sentRetry.shift() || (session.sentShown < SENT_MAX ? sentFresh() : null);
+    if (t) session.sinceSent = 0;
+    return t;
+  }
+  // Khúc 2: lượt "đặt câu" trong vòng nói · dịch · nói · đặt câu.
+  function talkSent() { return session.sentRetry.shift() || sentFresh(); }
+
+  // ---------- thẻ Nhận mặt chữ có ô gõ (pinyin + nghĩa), "Dễ quá" → đặt câu ----------
+  // session.rc = { id, step: "front" | "sent", chk: kết quả Kiểm tra | null, sent: { state: wait|done|fail|off, typed, res, model, reason } | null }
+  // Chữ đang gõ giữ ở session.rcPy / rcVi / rcSen (như trTyped): vẽ lại không mất, "Quay lại" giữ nguyên.
+  function rcState(it) {
+    if (!session.rc || session.rc.id !== it.id) session.rc = { id: it.id, step: it.kind === "sent" ? "sent" : "front", chk: null, sent: null };
+    return session.rc;
+  }
+  function rcCur(it) { return session.rc && session.rc.id === it.id ? session.rc : null; }
+  function rcRead() { // lấy chữ trong các ô đang hiện
+    var a = byId("rcPy"), b = byId("rcVi"), c = byId("rcSen");
+    if (a) session.rcPy = a.value;
+    if (b) session.rcVi = b.value;
+    if (c && !c.readOnly) session.rcSen = c.value;
+  }
+  // So nghĩa tại chỗ (AI tắt / lỗi): bỏ dấu tiếng Việt, tách từ, có từ khóa chung với nghĩa chuẩn → coi là đúng.
+  var VI_STOP = " la va hoac cua cai con su viec mot nhung cac thi ma de o bi duoc cho voi nay kia do ";
+  function viFold(s) {
+    s = String(s || "").toLowerCase(); if (s.normalize) s = s.normalize("NFD");
+    return s.replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/[^a-z0-9]+/g, " ").trim();
+  }
+  function viMatch(typed, ref) {
+    var ks = {};
+    viFold(ref).split(" ").forEach(function (w) { if (w && VI_STOP.indexOf(" " + w + " ") < 0) ks[w] = true; });
+    return viFold(typed).split(" ").some(function (w) { return !!w && !!ks[w]; });
+  }
+  // Kiểm tra (mặt trước Nhận mặt chữ): pinyin chấm tại chỗ, nghĩa nhờ AI (chờ thì mặt sau vẫn hiện ngay) hoặc tự so.
+  // Cả 2 ô trống → false (lật như cũ, không gợi ý).
+  function rcCheck(it) {
+    rcRead();
+    var st = rcState(it), py = String(session.rcPy || "").trim(), vi = String(session.rcVi || "").trim(), w = it.data;
+    st.chk = null;
+    if (!py && !vi) return false;
+    var chk = { py: py ? pyCheck(w.pinyin, py, w.hanzi) : null, vi: null, typedVi: vi };
+    if (vi && !aiOn()) chk.vi = { state: "local", ok: viMatch(vi, w.meaning) };
+    else if (vi) {
+      var v = chk.vi = { state: "wait", model: aiModel() };
+      aiCall("meaning", { hanzi: w.hanzi, pinyin: w.pinyin || "", pos: w.pos || "", reference_meaning: w.meaning || "", learner_vi: vi }, AI_MEANING_SCHEMA).then(function (r) {
+        var d = r && r.ok ? r.data : null;
+        if (d && ["dung", "gan-dung", "sai"].indexOf(d.verdict) >= 0) {
+          v.state = "done"; v.verdict = d.verdict; v.note = d.verdict === "dung" ? "" : aiTxt(d.note_vi, 300); v.model = r.model;
+        } else { v.state = "local"; v.ok = viMatch(vi, w.meaning); v.reason = r && !r.ok ? r.reason : "AI trả lời sai định dạng"; }
+        if (!session || session.rc !== st || st.chk !== chk || !session.current || session.current.id !== it.id) return; // đã sang thẻ khác: bỏ
+        rcResRefresh(it);
+      });
+    }
+    st.chk = chk;
+    return true;
+  }
+  // Nút chấm gợi ý sau Kiểm tra (không bao giờ Dễ): sai âm / nghĩa sai → Quên; thiếu / sai thanh, nghĩa gần đúng → Khó; còn lại → Nhớ.
+  // Ô để trống không tính. Nghĩa tự so không khớp từ khóa (có thể là từ đồng nghĩa, chưa chắc sai): pinyin sai âm → Quên, còn lại không gợi ý. 0 = chưa gợi ý.
+  function rcSug(chk) {
+    if (!chk) return 0;
+    var p = chk.py ? chk.py.res : "", v = chk.vi;
+    var m = !v ? "" : v.state === "done" ? v.verdict : v.state === "wait" ? "wait" : v.ok ? "dung" : "unk";
+    if (p === "wrong" || m === "sai") return 1;
+    if (m === "wait" || m === "unk") return 0;
+    var pyOn = p === "ok" || p === "tone" || p === "notone";
+    if (!pyOn && !m) return 0;
+    return p === "tone" || p === "notone" || m === "gan-dung" ? 2 : 3;
+  }
+  function rcResRefresh(it) {
+    var el = byId("rcres"), st = rcCur(it);
+    if (!el || !st || !st.chk) return;
+    el.innerHTML = rcResInner(it, st.chk);
+    markSugGrade(rcSug(st.chk));
+  }
+  // "Dễ quá →" (mặt trước Nhận mặt chữ / Nghĩa → chữ): sang bước đặt câu; "Quay lại" về mặt trước, giữ chữ đã gõ.
+  function rcEasy() {
+    var it = session.current, mode = it ? modeOf(it) : "";
+    if (!it || session.flipped || (mode !== "recog" && mode !== "recall")) return;
+    rcRead();
+    rcState(it).step = "sent";
+    session.keepPad = false;
+    renderCard();
+  }
+  function rcBack() {
+    var it = session.current, st = it ? rcCur(it) : null;
+    if (!st || st.step !== "sent" || session.flipped || it.kind === "sent" || (st.sent && st.sent.state === "wait")) return;
+    rcRead();
+    st.step = "front"; st.sent = null;
+    renderCard();
+  }
+  // Chấm câu: AI bật + có chữ gõ (kể cả câu không có chữ Hán: AI chấm Chưa đạt, như thẻ Dịch câu) → chờ AI ("Đang chấm…", Bỏ qua AI được) rồi lật;
+  // không thì lật luôn, hiện câu ví dụ để tự so.
+  function rcSentCheck(it) {
+    var st = rcState(it);
+    if (session.flipped || (st.sent && st.sent.state === "wait")) return;
+    rcRead();
+    var typed = String(session.rcSen || "").trim(), w = it.data;
+    if (it.kind !== "sent" && !typed) { toast("Gõ 1 câu trước đã"); var inp = byId("rcSen"); if (inp) inp.focus(); return; }
+    if (typed && session.sentSeen) session.sentSeen[w.hanzi] = true; // đã đặt câu với từ này: phiên này khỏi ra thẻ Đặt câu của nó
+    if (!aiOn() || !typed) {
+      st.sent = { state: "off", typed: typed };
+      session.flipped = true; session.keepPad = false;
+      renderCard();
+      return;
+    }
+    var s = st.sent = { state: "wait", typed: typed, model: aiModel() };
+    if (!dictOk() && DICT.state !== "loading") loadDict(function (ok) { // pinyin câu sửa: nạp từ điển song song, xong thì vẽ lại kết quả (cao thêm → canh lại)
+      if (ok && session && session.rc === st && st.sent === s && s.state === "done" && session.flipped && session.current && session.current.id === it.id) { session.keepPad = true; renderCard(); aiReveal(AI_BOX_SEL); }
+    });
+    aiCall("sentence", { word: { hanzi: w.hanzi, pinyin: w.pinyin || "", meaning: w.meaning || "", pos: w.pos || "" }, learner_zh: typed }, AI_SENT_SCHEMA).then(function (r) {
+      var res = r && r.ok ? rcSentClean(r.data, typed) : null;
+      if (res) { s.state = "done"; s.res = res; s.model = r.model; }
+      else { s.state = "fail"; s.reason = r && !r.ok ? r.reason : "AI trả lời sai định dạng"; }
+      if (!session || session.rc !== st || st.sent !== s || !session.current || session.current.id !== it.id) return; // đã sang thẻ khác: bỏ
+      if (res && it.kind === "word" && res.verdict === "dat" && res.uses) expState(it).open = true; // đạt → mở sẵn Mở rộng
+      session.flipped = true; session.keepPad = true;
+      renderCard(); aiReveal(AI_BOX_SEL);
+    });
+    session.keepPad = true;
+    renderCard();
+  }
+  function rcSentClean(d, typed) {
+    if (!d || typeof d !== "object" || ["dat", "gan-dat", "chua-dat"].indexOf(d.verdict) < 0) return null;
+    return { verdict: d.verdict, uses: d.uses_word !== false, fixed: aiZh(d.fixed_zh) || typed, better: aiZh(d.better_zh), note: aiTxt(d.note_vi, 400) };
+  }
+  function rcSentSkip() {
+    var st = session && session.current ? rcCur(session.current) : null;
+    if (!st || !st.sent || st.sent.state !== "wait" || session.flipped) return;
+    session.flipped = true; session.keepPad = true; // kết quả về muộn vẫn hiện nếu còn ở thẻ này
+    renderCard();
+  }
+  // Gợi ý chấm sau Chấm câu. Thẻ từ: đạt → Dễ, gần đạt → Nhớ, chưa đạt / không dùng từ → Khó (+ khóa Dễ). Thẻ Đặt câu: đạt → Được, còn lại → Chưa được.
+  function rcSentSug(it) {
+    var st = rcCur(it), s = st && st.sent;
+    if (!s || s.state !== "done" || !s.res) return 0;
+    var r = s.res;
+    if (it.kind === "sent") return r.verdict === "dat" && r.uses ? 3 : 1;
+    return r.verdict === "chua-dat" || !r.uses ? 2 : r.verdict === "dat" ? 4 : 3;
+  }
+  // Lý do khóa nút Dễ của thẻ từ ("" = không khóa): AI chấm câu chưa đạt / câu không dùng từ.
+  function rcEasyLock(it) {
+    var st = rcCur(it), s = st && st.sent;
+    if (it.kind !== "word" || !s || s.state !== "done" || !s.res) return "";
+    return !s.res.uses ? "câu chưa dùng từ này" : s.res.verdict === "chua-dat" ? "câu chưa đạt" : "";
+  }
+
   // ---------- phiên học ----------
   var view = "home";
   var session = null;
@@ -4024,6 +4473,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       relearn: {}, // thẻ đang quay lại trong phiên (từ mới vừa hiểu / thẻ vừa Quên) — lượt này không tính là lượt ôn
       // thẻ Dịch câu: đã ra (id), từ gốc đã dùng, lượt làm lại ("Chưa được"), số thẻ đã ra, số thẻ thường từ thẻ dịch trước
       transSeen: {}, transWords: {}, transRetry: [], transShown: 0, sinceTrans: 0, trTyped: "",
+      // thẻ Đặt câu: chữ đã ra, lượt làm lại ("Chưa được"), số thẻ đã ra, số thẻ thường từ thẻ đặt câu trước, số câu đã chấm (cả "Dễ quá")
+      sentSeen: {}, sentRetry: [], sentShown: 0, sinceSent: 0, sentN: 0,
+      // thẻ Nhận mặt chữ: chữ đang gõ ở ô pinyin / nghĩa / câu, trạng thái Kiểm tra / đặt câu (session.rc)
+      rcPy: "", rcVi: "", rcSen: "", rc: null,
       // chia khúc: khúc đang ở (0-2), thẻ chuyển tiếp đang hiện (số khúc sắp vào | null), hàng thẻ nói khúc 2,
       // mẫu câu chưa học để nạp thêm, lượt dịch làm lại khúc 2 [{it, at}], lượt xen nói/dịch, câu nhại/câu đề đã làm (khúc 3)
       blocks: blocks, block: 0, gate: null, gateWhy: "", pendNote: false,
@@ -4102,10 +4555,16 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (t) { session.transShown++; session.transSeen[t.id] = true; session.transWords[t.src.id] = true; return t; }
     return r.length ? r.shift().it : null;
   }
+  // Vòng 4 lượt: nói · dịch · nói · đặt câu. Lượt nào không có thẻ thì sang lượt kế (đặt câu không có nguồn = bỏ lượt).
+  var TALK_ORDER = [talkPhrase, talkTrans, talkPhrase, talkSent];
   function blkTalkNext() {
-    var order = session.talkTurn % 2 ? [talkTrans, talkPhrase] : [talkPhrase, talkTrans];
-    session.talkTurn++;
-    return order[0]() || order[1]();
+    var k = session.talkTurn % TALK_ORDER.length;
+    for (var i = 0; i < TALK_ORDER.length; i++) {
+      var t = TALK_ORDER[(k + i) % TALK_ORDER.length]();
+      if (t) { session.talkTurn = k + i + 1; return t; }
+    }
+    session.talkTurn = k + 1;
+    return null;
   }
   // Vị trí trong queue của từ bị kéo ôn vì Sai ở bài cũ mà chưa chấm trong phiên (chỉ khúc 1); -1 = không còn.
   function blkWarmLeft() {
@@ -4280,14 +4739,15 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function nextCard() {
     recRelease(); // bản ghi của thẻ nói cũ bỏ đi, thẻ mới ghi lại từ đầu
     session.flipped = false; session.hint = false; session.keepPad = false; session.trTyped = "";
+    session.rcPy = ""; session.rcVi = ""; session.rcSen = ""; session.rc = null; // ô gõ / kết quả thẻ Nhận mặt chữ, thẻ Đặt câu
     session.aiTr = null; session.aiSpk = null; // kết quả AI của thẻ cũ (về muộn thì bỏ)
     if (session.blocks) { blkNext(); renderCard(); return; }
     if (!session.queue.length) refillQueue();
-    var tr = session.queue.length ? pickTrans() : null;
+    var tr = session.queue.length ? pickTrans() || pickSent() : null;
     if (tr) session.current = tr;
     else {
       session.current = session.queue.shift() || null;
-      if (session.current) session.sinceTrans = (session.sinceTrans || 0) + 1;
+      if (session.current) { session.sinceTrans = (session.sinceTrans || 0) + 1; session.sinceSent = (session.sinceSent || 0) + 1; }
     }
     renderCard();
   }
@@ -4322,9 +4782,13 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function flip() {
     if (!session.current || session.flipped || modeOf(session.current) === "new") return;
     if (session.aiTr && session.aiTr.state === "wait") return; // đang chờ AI chấm thẻ dịch: dùng "Bỏ qua AI"
+    var rc = rcCur(session.current);
+    // Bước đặt câu ("Dễ quá" / thẻ Đặt câu): "lật" = Chấm câu (đang chờ AI thì dùng "Bỏ qua AI")
+    if (session.current.kind === "sent" || (rc && rc.step === "sent")) { rcSentCheck(session.current); return; }
     if (recIsLive() && REC.owner === "card:" + session.current.id) recStop(); // lật khi đang ghi = dừng ghi rồi so
     var ti = byId("trInput"); if (ti) session.trTyped = ti.value; // thẻ Dịch câu: "Kiểm tra" = lật, giữ câu đã gõ
     if (session.current.kind === "trans" && aiTransStart(session.current)) return; // AI bật + có chữ gõ: chờ AI rồi mới lật
+    if (modeOf(session.current) === "recog") rcCheck(session.current); // có chữ gõ ở ô pinyin / nghĩa → chấm (mặt sau hiện ngay)
     session.flipped = true; session.keepPad = true;
     renderCard();
   }
@@ -4333,21 +4797,36 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     session.hint = true; session.keepPad = true;
     renderCard();
   }
+  // Số "đã đặt N câu" của phiên: chỉ tính khi có gõ câu, mỗi từ 1 lần (Chưa được → làm lại không đếm thêm).
+  function sentCount(it) {
+    var rs = rcCur(it), h = it.data && it.data.hanzi;
+    if (!rs || !rs.sent || !rs.sent.typed || !h) return;
+    if (!session.sentWords) session.sentWords = {};
+    if (session.sentWords[h]) return;
+    session.sentWords[h] = true;
+    session.sentN = (session.sentN || 0) + 1;
+  }
   function gradeCurrent(grade) {
     var it = session.current;
     if (!it || !session.flipped) return;
-    if ((modeOf(it) === "phrase" || modeOf(it) === "trans") && grade !== 1 && grade !== 3) return;
-    if (it.kind === "trans") {
-      // Thẻ dịch: SRS riêng (Chưa được = Quên, Được = Nhớ), không tính vào trần ôn; Chưa được → làm lại ở lượt dịch sau.
+    var mode = modeOf(it);
+    if ((mode === "phrase" || mode === "trans" || mode === "sent") && grade !== 1 && grade !== 3) return;
+    if (grade === 4 && rcEasyLock(it)) { toast("Nút Dễ đang khóa: " + rcEasyLock(it)); return; }
+    if (it.kind === "trans" || it.kind === "sent") {
+      // Thẻ dịch / đặt câu: SRS riêng (Chưa được = Quên, Được = Nhớ), không tính vào trần ôn; Chưa được → làm lại ở lượt sau cùng loại.
       applyGrade(it.id, grade);
       markTouched(it);
-      if (grade === 1) {
+      if (it.kind === "sent") {
+        sentCount(it);
+        if (grade === 1) session.sentRetry.push(it);
+      } else if (grade === 1) {
         if (session.blocks) session.talkRetry.push({ it: it, at: session.transShown + 2 });
         else session.transRetry.push(it);
       }
       nextCard();
       return;
     }
+    sentCount(it); // "Dễ quá": đã đặt 1 câu
     // Lượt ôn = chấm một thẻ đã học từ trước (không tính mẫu câu mới gặp lần đầu) và không phải lượt quay lại
     // trong phiên (từ mới vừa hiểu / thẻ vừa Quên).
     // Thẻ bị kéo ôn sớm vì sai ở phần kiểm tra bài cũ: lượt chấm lại này cũng không tính (đã ra ngoài trần ôn).
@@ -4386,10 +4865,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     recRelease();
     recordSession();
     clearInterval(session.timerId); session.timerId = null;
-    var r = session.rec || { minutes: 0, cards: 0 };
+    var r = session.rec || { minutes: 0, cards: 0 }, sn = session.sentN || 0;
     session = null;
     updateMini();
-    toast("Đã lưu phiên: " + r.minutes + " phút, " + r.cards + " thẻ" + (r.lines ? ", " + r.lines + " câu" : "") +
+    toast("Đã lưu phiên: " + r.minutes + " phút, " + r.cards + " thẻ" + (r.lines ? ", " + r.lines + " câu" : "") + (sn ? ", đặt " + sn + " câu" : "") +
       (r.warmup ? ", bài cũ " + r.warmup.ok + "/" + r.warmup.n : ""));
   }
   window.addEventListener("pagehide", recordSession);
@@ -5823,7 +6302,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function lessonLearned(id) {
     var pre = id + ":", n = 0;
     Object.keys(db.cards).forEach(function (k) {
-      if (k.indexOf(pre) === 0 && k.indexOf(pre + "p:") !== 0 && !isTransId(k) && db.cards[k].state !== "new") n++;
+      if (k.indexOf(pre) === 0 && k.indexOf(pre + "p:") !== 0 && !isAuxId(k) && db.cards[k].state !== "new") n++;
     });
     return n;
   }
@@ -7192,7 +7671,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       '</div>';
   }
   // Dấu son dọc 2 chữ ở góc phải đầu thẻ = loại thẻ.
-  var CARD_SEAL = { "new": "新词", recog: "认字", recall: "写字", phrase: "口语", trans: "翻译", warm: "温故" };
+  var CARD_SEAL = { "new": "新词", recog: "认字", recall: "写字", phrase: "口语", trans: "翻译", sent: "造句", warm: "温故" };
   function cardSealHtml(cls) {
     var s = CARD_SEAL[cls] || "";
     return s ? '<span class="cseal" aria-hidden="true">' + s.split("").join("<br>") + '</span>' : "";
@@ -7263,10 +7742,13 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     return '<button class="' + cls + (sug === grade ? " aisug" : "") + '" data-action="' + (act || "grade") + '" data-grade="' + grade + '"><b>' + label + '</b>' +
       '<small><span class="gk">' + grade + ' · </span>' + intervalLabel(c, grade) + '</small></button>';
   }
-  function grades4Html(it) {
+  // sug = nút được gợi ý (tô .aisug, 0 = không); lock = lý do khóa nút Dễ ("" = không khóa).
+  function grades4Html(it, sug, lock) {
     var c = cardOf(it.id);
+    var easy = lock ? '<button class="g4 locked" aria-disabled="true" data-action="grade" data-grade="4" title="Dễ đang khóa: ' + esc(lock) + '"><b>Dễ</b><small>' + ico("lock") + ' khóa</small></button>'
+      : gradeBtnHtml("g4", 4, "Dễ", c, sug);
     return '<div class="grades dock">' +
-      gradeBtnHtml("g1", 1, "Quên", c) + gradeBtnHtml("g2", 2, "Khó", c) + gradeBtnHtml("g3", 3, "Nhớ", c) + gradeBtnHtml("g4", 4, "Dễ", c) +
+      gradeBtnHtml("g1", 1, "Quên", c, sug) + gradeBtnHtml("g2", 2, "Khó", c, sug) + gradeBtnHtml("g3", 3, "Nhớ", c, sug) + easy +
       '</div>' + hintHtml('<kbd>1-4</kbd> chấm · <kbd>Space</kbd> = Nhớ');
   }
   function grades2Html(it) {
@@ -7304,28 +7786,42 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       hintHtml('<kbd>Enter</kbd> đã hiểu · thẻ sẽ quay lại sau ~8 thẻ') +
       '</div>';
   }
+  // Thẻ Nhận mặt chữ. Mặt trước: chữ Hán + loa + 2 ô gõ (pinyin, nghĩa) → Kiểm tra (2 ô trống = Lật như cũ) · "Dễ quá →" sang bước đặt câu.
+  // Mặt sau sau Kiểm tra: khối kết quả 2 dòng (Pinyin ✓ ≈ ✕ / Nghĩa ✓ ≈ ✕) ở trên phần đáp án như cũ, nút chấm được gợi ý.
   function recogHtml(it) {
-    var w = it.data;
+    var w = it.data, st = rcState(it);
     var head = tagRow(it, "Nhận mặt chữ", "recog") + bigHanziHtml(w.hanzi);
-    if (!session.flipped) {
-      return '<div class="card">' + head + pyRowHtml("", w.hanzi) + '<p class="ask">Đọc được không? Nghĩa là gì?</p>' + flipBtnHtml() + '</div>';
+    if (st.step === "sent") {
+      return '<div class="card rccard">' + head + (session.flipped
+        ? pyRowHtml(w.pinyin, w.hanzi) + meaningHtml(w.meaning) + hvHtml(w, true) + rcSentBackHtml(it)
+        : pyRowHtml("", w.hanzi) + rcSentFormHtml(it, false)) + '</div>';
     }
+    if (!session.flipped) return '<div class="card rccard">' + head + pyRowHtml("", w.hanzi) + rcFrontHtml(w) + '</div>';
     return '<div class="card">' + head + pyRowHtml(w.pinyin, w.hanzi) +
+      (st.chk ? '<div id="rcres" class="rcres">' + rcResInner(it, st.chk) + '</div>' : "") +
       meaningHtml(w.meaning) +
       hvHtml(w, true) +
       chietTuHtml(w) +
       '<div class="examples">' + exampleHtml(pickExample(it)) + '</div>' +
       expSlot(it) +
-      grades4Html(it) + '</div>';
+      grades4Html(it, rcSug(st.chk)) + '</div>';
   }
   function recallHtml(it) {
-    var w = it.data;
+    var w = it.data, st = rcState(it);
     var head = tagRow(it, "Nghĩa → chữ", "recall") + meaningHtml(w.meaning, true) +
       (w.pos ? '<div class="pos">' + esc(w.pos) + '</div>' : "");
+    if (st.step === "sent") { // "Dễ quá": đặt câu mà không lộ chữ Hán (lộ ở kết quả)
+      return '<div class="card rccard">' + head + (session.flipped
+        ? bigHanziHtml(w.hanzi) + pyRowHtml(w.pinyin, w.hanzi) + hvHtml(w) + rcSentBackHtml(it)
+        : rcSentFormHtml(it, true)) + '</div>';
+    }
     if (!session.flipped) {
       var hint = !w.hanviet ? "" : session.hint ? hvHtml(w)
         : '<div class="center"><button class="link hintbtn" data-action="hint">' + ico("bulb") + 'Gợi ý Hán Việt</button></div>';
-      return '<div class="card">' + head + hint + padHtml() + flipBtnHtml() + '</div>';
+      return '<div class="card">' + head + hint + padHtml() +
+        '<div class="actions dock"><button class="primary big" data-action="flip">Lật</button>' +
+          '<button class="small-btn rceasy" type="button" data-action="rc-easy">Dễ quá →</button></div>' +
+        hintHtml('<kbd>Space</kbd> / <kbd>Enter</kbd> lật · <kbd>Esc</kbd> thoát') + '</div>';
     }
     return '<div class="card">' + head +
       bigHanziHtml(w.hanzi) + pyRowHtml(w.pinyin, w.hanzi) +
@@ -7334,6 +7830,124 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       '<div class="examples">' + exampleHtml(pickExample(it)) + '</div>' +
       expSlot(it) +
       grades4Html(it) + '</div>';
+  }
+  // 2 ô gõ mặt trước Nhận mặt chữ. Nút chính là nút submit của form (Enter / phím "Xong" trên điện thoại = Kiểm tra); chữ nút đổi Lật ↔ Kiểm tra khi gõ.
+  // Điện thoại: phím của ô Pinyin là "Tiếp" (sang ô Nghĩa khi ô Nghĩa còn trống, xem rcPyNext). Ví dụ cách gõ không trùng từ đang hỏi.
+  var RC_PYEX = [["cài dān", "vd: cai4 dan1 hoặc càidān"], ["nǐ hǎo", "vd: ni3 hao3 hoặc nǐhǎo"]];
+  function rcFrontHtml(w) {
+    var py = session.rcPy || "", vi = session.rcVi || "", has = !!(py.trim() || vi.trim());
+    var wk = pyBare(pyKey(w && w.pinyin));
+    var ph = RC_PYEX.filter(function (x) { return wk.indexOf(pyBare(pyKey(x[0]))) < 0; })[0] || ["", "số 1-4 hoặc dấu, vd: ma1 / mā"];
+    return '<form id="rcForm" class="rcform" action="#" autocomplete="off">' +
+        '<label class="rcf"><span class="rcfl">Pinyin</span><input id="rcPy" class="rcin rcpy" type="text" lang="en" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="next"' +
+          ' placeholder="' + esc(ph[1]) + '" value="' + esc(py) + '"></label>' +
+        '<label class="rcf"><span class="rcfl">Nghĩa</span><input id="rcVi" class="rcin" type="text" lang="vi" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"' +
+          ' placeholder="nghĩa tiếng Việt" value="' + esc(vi) + '"></label>' +
+      '</form>' +
+      '<div class="actions dock"><button id="rcGo" class="primary big" type="submit" form="rcForm">' + (has ? "Kiểm tra" : "Lật") + '</button>' +
+        '<button class="small-btn rceasy" type="button" data-action="rc-easy">Dễ quá →</button></div>' +
+      hintHtml('<kbd>Enter</kbd> kiểm tra (2 ô trống = lật) · <kbd>Space</kbd> lật khi không gõ · <kbd>Esc</kbd> thoát');
+  }
+  var RC_PYTXT = { ok: "đúng âm, đúng thanh", notone: "đúng âm — chưa gõ thanh" };
+  var RC_SUGTXT = { 1: "Quên", 2: "Khó", 3: "Nhớ" };
+  // Ruột #rcres: 2 dòng kết quả (vẽ lại riêng khi AI chấm nghĩa xong). Đúng / sai luôn kèm chữ + dấu, không chỉ màu.
+  function rcResInner(it, chk) {
+    var out = "", w = it.data;
+    var ln = function (cls, lab, mk, you, sub) {
+      return '<div class="rcln ' + cls + '"><span class="rclab">' + lab + '</span><span class="rcmk" aria-hidden="true">' + mk + '</span>' +
+        '<div class="rcbody"><div class="rcyou">' + you + '</div><div class="rcsub">' + sub + '</div></div></div>';
+    };
+    var p = chk.py;
+    if (p && p.res !== "skip" && p.res !== "blank") {
+      var you = p.syl.map(function (x) {
+        return '<span class="rcs ' + x.st + '">' + (x.typed ? esc(x.typed) : "thiếu") + '</span>';
+      }).join(" ") + (p.extra ? ' <span class="rcs bad">' + esc(p.extra) + '</span>' : "");
+      var offs = p.syl.filter(function (x) { return x.st === "tone" || x.st === "notone"; }).map(function (x) { return x.d; });
+      var sub = p.res === "tone" ? "sai thanh — đúng là <b>" + esc(offs.join(" ")) + "</b>"
+        : p.res === "notone" ? RC_PYTXT.notone + ": <b>" + esc(w.pinyin) + "</b>"
+        : p.res === "wrong" ? "sai âm — đáp án <b>" + esc(w.pinyin) + "</b>" : RC_PYTXT.ok;
+      out += ln(p.res === "ok" ? "ok" : p.res === "wrong" ? "no" : "mid", "Pinyin", p.res === "ok" ? "✓" : p.res === "wrong" ? "✕" : "≈", you, sub);
+    }
+    var v = chk.vi;
+    if (v) {
+      var vy = '<span class="rcvi">' + esc(chk.typedVi) + '</span>';
+      if (v.state === "wait") out += ln("wait", "Nghĩa", "…", vy, '<span class="aiwait">AI đang chấm…</span>');
+      else if (v.state === "done") {
+        var vd = AI_VERDICT[v.verdict];
+        out += ln(v.verdict === "dung" ? "ok" : v.verdict === "sai" ? "no" : "mid", "Nghĩa", vd[0], vy,
+          esc(vd[1]) + (v.note ? " — " + esc(v.note) : "") + ' <span class="rcsrc">· AI</span>');
+      } else {
+        out += ln(v.ok ? "ok" : "unk", "Nghĩa", v.ok ? "✓" : "≠", vy,
+          (v.ok ? "có từ khóa trùng nghĩa mẫu" : "khác từ khóa nghĩa mẫu — xem nghĩa ở dưới") +
+          ' <span class="rcsrc">· tự so' + (v.reason ? " (AI không chấm được: " + esc(v.reason) + ")" : "") + '</span>');
+      }
+    }
+    var g = rcSug(chk);
+    return out + (g ? '<div class="rcsug">Gợi ý: <b>' + RC_SUGTXT[g] + '</b> — bạn bấm để xác nhận</div>' : "");
+  }
+  // Bước đặt câu (mặt trước): đề + ô gõ chữ Hán + Chấm câu (+ Quay lại ở thẻ từ). hide = không lộ chữ Hán (thẻ Nghĩa → chữ).
+  function rcSentFormHtml(it, hide) {
+    var w = it.data, st = rcCur(it), s = st && st.sent, waiting = !!(s && s.state === "wait"), aux = it.kind === "sent";
+    var word = hide ? "từ này" : '<b class="zh" lang="zh-CN">' + esc(w.hanzi) + '</b>';
+    return '<p class="rcsh">Đặt 1 câu có ' + word + '</p>' +
+      (aux ? "" : '<p class="rcshs">' + (aiOn() ? "Câu đạt thì gợi ý Dễ; chưa đạt thì nút Dễ bị khóa" : "AI đang tắt — chấm xong tự so với câu ví dụ") + '</p>') +
+      '<form id="rcSenForm" class="trform" action="#" autocomplete="off"><input id="rcSen" class="trin zh" type="text" lang="zh-CN" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"' +
+        ' aria-label="Gõ 1 câu tiếng Trung" placeholder="Gõ 1 câu tiếng Trung…" value="' + esc(session.rcSen || "") + '"' + (waiting ? " readonly" : "") + '></form>' +
+      (waiting
+        ? '<div class="actions dock aiwaitrow"><button class="primary big" disabled>Đang chấm…</button><button class="small-btn" data-action="rc-skip">Bỏ qua AI</button></div>'
+        : '<div class="actions dock"><button class="primary big" data-action="flip">Chấm câu</button>' +
+          (aux ? "" : '<button class="small-btn" type="button" data-action="rc-back">' + ico("back") + 'Quay lại</button>') + '</div>') +
+      hintHtml('<kbd>Enter</kbd> chấm câu · <kbd>Esc</kbd> thoát');
+  }
+  var RC_SVERD = { "dat": ["✓", "Đạt", "dung"], "gan-dat": ["≈", "Gần đạt", "gan-dung"], "chua-dat": ["✕", "Chưa đạt", "sai"] };
+  // Kết quả chấm câu: câu của mình, câu sửa (loa), cách nói tự nhiên (loa), ghi chú; AI tắt / lỗi → 2 câu ví dụ của từ để tự so.
+  function rcSentBoxHtml(it) {
+    var st = rcCur(it), s = (st && st.sent) || { state: "off", typed: "" }, w = it.data, typed = s.typed || "";
+    var spy = function (zh) { return dictOk() ? sentencePinyin(zh) : ""; };
+    var row = function (lab, zh, py, cls) {
+      return '<div class="trrow' + (cls ? " " + cls : "") + '"><span class="trlab">' + lab + '</span><span class="trzh zh">' + esc(zh) + '</span>' + speakBtn(zh, true) + '</div>' +
+        (py ? '<div class="trpy">' + esc(py) + '</div>' : "");
+    };
+    var mine = typed ? row("Câu của bạn", typed, "", "rcmine") : "";
+    var exs = (Array.isArray(w.examples) ? w.examples : []).slice(0, 2).map(exampleHtml).join("");
+    var self = '<div class="vcmp trres">' + mine + '<div class="trnote">' + (typed ? "Tự so với câu ví dụ của từ rồi tự chấm" : "Chưa gõ câu — so câu trong đầu với câu ví dụ rồi tự chấm") + '</div></div>' +
+      (exs ? '<div class="examples rcexs">' + exs + '</div>' : "");
+    if (s.state === "wait") return '<div class="aibox wait"><div class="aihead"><span class="aiwait">Đang chấm…</span><span class="aitag">AI chấm · ' + esc(s.model || aiModel()) + '</span></div></div>' + self;
+    if (s.state === "fail") return '<div class="ailine warn">' + ico("warn") + '<span>AI không chấm được: ' + esc(s.reason || "lỗi") + ' — tự so như dưới</span></div>' + self;
+    if (s.state !== "done" || !s.res) return self;
+    var r = s.res, vd = RC_SVERD[r.verdict], sug = rcSentSug(it), lock = rcEasyLock(it);
+    var fixedSame = normSent(r.fixed) === normSent(typed), betterSame = !r.better || normSent(r.better) === normSent(fixedSame ? typed : r.fixed);
+    var sugName = it.kind === "sent" ? (sug === 3 ? "Được" : "Chưa được") : { 2: "Khó", 3: "Nhớ", 4: "Dễ" }[sug];
+    return '<div class="aibox v-' + vd[2] + '">' +
+      '<div class="aihead"><span class="aiverd"><span class="aimk" aria-hidden="true">' + vd[0] + '</span>' + vd[1] + '</span><span class="aitag">AI chấm · ' + esc(s.model || aiModel()) + '</span></div>' +
+      '<div class="aichk"><span class="' + (r.uses ? "ok" : "no") + '">Dùng <b class="zh">' + esc(w.hanzi) + '</b> ' + (r.uses ? "✓" : "✕") + '</span></div>' +
+      '<div class="vcmp trres rcsres">' + mine +
+        (fixedSame ? "" : row("Câu sửa", r.fixed, spy(r.fixed), "rcfix")) +
+        (betterSame ? "" : row("Tự nhiên hơn", r.better, spy(r.better), "")) + '</div>' +
+      (r.note ? '<div class="ainote">' + esc(r.note) + '</div>' : "") +
+      '<div class="aisugtxt">AI gợi ý: <b>' + esc(sugName) + '</b> — bạn bấm để xác nhận' + (lock ? '<span class="rclock">' + ico("lock") + 'Nút Dễ khóa: ' + esc(lock) + '</span>' : "") + '</div>' +
+      '</div>';
+  }
+  // Mặt sau bước đặt câu của thẻ từ: khối kết quả, đạt → Mở rộng mở sẵn ("Dễ thì học thêm mấy từ này"), 4 nút chấm (gợi ý, có thể khóa Dễ).
+  function rcSentBackHtml(it) {
+    var st = rcCur(it), s = st && st.sent, dat = !!(s && s.state === "done" && s.res && s.res.verdict === "dat" && s.res.uses);
+    var inner = expInner(it);
+    return '<p class="rcsh rcsh2">Câu với <b class="zh" lang="zh-CN">' + esc(it.data.hanzi) + '</b></p>' + rcSentBoxHtml(it) +
+      (dat && inner ? '<p class="rcmore">' + ico("link") + 'Dễ thì học thêm mấy từ này</p>' : "") +
+      '<div id="expbox" class="expbox">' + inner + '</div>' +
+      grades4Html(it, rcSentSug(it), rcEasyLock(it));
+  }
+  // Thẻ Đặt câu (từ đã nhớ ≥ 2 lần): từ (chữ Hán, pinyin, nghĩa) + ô gõ câu → AI chấm → Chưa được / Được.
+  function sentHtml(it) {
+    var w = it.data, c = cardOf(it.id);
+    var head = tagRow(it, "Đặt câu", "sent") +
+      '<div class="hanzi mid zh rcword">' + esc(w.hanzi) + '</div>' + pyRowHtml(w.pinyin, w.hanzi) +
+      '<div class="rcwm">' + esc(shortMeaning(w.meaning)) + (w.pos ? ' <small>' + esc(w.pos) + '</small>' : "") + '</div>';
+    if (!session.flipped) return '<div class="card rccard">' + head + rcSentFormHtml(it, false) + '</div>';
+    var sug = rcSentSug(it);
+    return '<div class="card rccard">' + head + rcSentBoxHtml(it) +
+      '<div class="grades two dock">' + gradeBtnHtml("g1", 1, "Chưa được", c, sug) + gradeBtnHtml("g3", 3, "Được", c, sug) + '</div>' +
+      hintHtml('<kbd>1</kbd> Chưa được · <kbd>3</kbd> / <kbd>Space</kbd> Được') + '</div>';
   }
   function phraseHtml(it) {
     var p = it.data;
@@ -7418,7 +8032,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       '<div class="mestats dstats"><div><b>' + session.doneCount + '</b><span>lượt</span></div>' +
         '<div><b>' + Object.keys(session.touched).length + '</b><span>thẻ</span></div>' +
         '<div><b>' + minutes + '</b><span>phút</span></div></div>' +
-      '<p class="dnote">Ngon.</p>' +
+      '<p class="dnote">Ngon.</p>' + (session.sentN ? '<p class="blkdone">Đã đặt ' + session.sentN + ' câu</p>' : "") +
       (capReached() && session.elapsed < TARGET_SEC ? '<p class="capdone">Đủ ' + reviewCap() + ' lượt ôn hôm nay và hết từ mới. Thẻ còn lại để mấy hôm tới — giờ có thể mở Giáo trình hoặc Luyện đề.</p>' : "") +
       '<div class="actions dock"><button class="primary big" data-action="end-force">Kết thúc</button></div>' +
       hintHtml('<kbd>Enter</kbd> kết thúc') + '</div>';
@@ -7471,7 +8085,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         opt("blk-exam", ep, "考", "Làm tiếp 1 phần đề", esub, 2) +
         (hasMap ? opt("blk-rp", rpP, "演", "Đóng vai 1 tình huống", rsub, 3) : "") +
       '</div>' +
-      '<p class="blkdone">Phiên này: ' + Object.keys(session.touched).length + ' thẻ' + (nl ? " · " + nl + " câu nhại/đề" : "") + '</p>' +
+      '<p class="blkdone">Phiên này: ' + Object.keys(session.touched).length + ' thẻ' + (session.sentN ? " · đặt " + session.sentN + " câu" : "") + (nl ? " · " + nl + " câu nhại/đề" : "") + '</p>' +
       (done45 ? '<div class="actions dock"><button class="primary big" data-action="end-force">Kết thúc</button></div>' : "") +
       hintHtml('<kbd>1</kbd> nhại bài · <kbd>2</kbd> làm đề' + (hasMap ? " · <kbd>3</kbd> đóng vai" : "") + (done45 ? " · <kbd>Enter</kbd> kết thúc" : "") + ' · <kbd>Esc</kbd> thoát') + '</div>';
   }
@@ -7488,13 +8102,13 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       var nl = Object.keys(session.lines || {}).length;
       lab = BLOCKS[session.block][0];
       txt = session.block === 1
-        ? session.doneCount + " thẻ" + (session.talk.length ? " · nói còn " + session.talk.length : "") + " · dịch " + session.transShown
+        ? session.doneCount + " thẻ" + (session.talk.length ? " · nói còn " + session.talk.length : "") + " · dịch " + session.transShown + (session.sentN ? " · đặt " + session.sentN + " câu" : "")
         : "đã làm " + Object.keys(session.touched).length + " thẻ" + (nl ? " · " + nl + " câu nhại/đề" : "");
     } else {
       var due = 0, fresh = 0;
       session.queue.forEach(function (it) { if (isNewItem(it)) fresh++; else due++; });
       lab = BLOCKS[0][0];
-      txt = "đã làm " + session.doneCount + " · còn ôn " + due + " · mới " + fresh;
+      txt = "đã làm " + session.doneCount + " · còn ôn " + due + " · mới " + fresh + (session.sentN ? " · đặt " + session.sentN + " câu" : "");
     }
     el.innerHTML = '<em>' + esc(lab) + '</em><span>' + esc(txt) + '</span>';
   }
@@ -7521,6 +8135,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         : mode === "recog" ? recogHtml(it)
         : mode === "recall" ? recallHtml(it)
         : mode === "trans" ? transHtml(it)
+        : mode === "sent" ? sentHtml(it)
         : phraseHtml(it);
     }
     area.innerHTML = html;
@@ -7529,12 +8144,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     updateBlkBar();
     var pad = byId("pad");
     if (pad) { drawGrid(pad); restorePad(pad, snap); }
-    var ti = byId("trInput") || byId("wuInput");
+    var ti = byId("trInput") || byId("wuInput") || byId("rcSen");
     var low = window.matchMedia && window.matchMedia("(max-height:500px)").matches;
     if (!session.keepPad) {
       window.scrollTo(0, 0);
       // Màn ngang (thấp): ô gõ (bài cũ: cả nút Nói ngay dưới) thường nằm dưới thanh nút dính đáy → cuộn vừa đủ để thấy.
-      if (low) revealAboveDock(byId("wvbox") || ti);
+      if (low) revealAboveDock(byId("wvbox") || ti || byId("rcVi"));
     }
     // Màn ngang: đáp án (nghĩa ở thẻ Từ mới / mặt sau Nhận mặt chữ; chữ + pinyin ở mặt sau Nghĩa → chữ) nằm dưới dock → cuộn vừa đủ.
     if (low && (session.flipped || !session.keepPad)) {
@@ -7556,7 +8171,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var key = it.id + ":" + (session.flipped ? "back" : "front");
     if (session.spokenFor === key) return;
     session.spokenFor = key;
-    speak(it.kind === "word" ? it.data.hanzi : it.data.zh);
+    speak(it.kind === "word" || it.kind === "sent" ? it.data.hanzi : it.data.zh);
   }
 
   // ---------- render chung ----------
@@ -7731,6 +8346,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       case "clear-pad": clearPad(); break;
       case "grade": gradeCurrent(Number(el.getAttribute("data-grade"))); break;
       case "ai-skip": aiTransSkip(); break;
+      // thẻ Nhận mặt chữ: "Dễ quá →" / Quay lại / Bỏ qua AI khi chấm câu
+      case "rc-easy": rcEasy(); break;
+      case "rc-back": rcBack(); break;
+      case "rc-skip": rcSentSkip(); break;
       // kiểm tra bài cũ đầu buổi
       case "wu-check": warmCheck(); break;
       case "wu-hint": warmHint(); break;
@@ -7944,6 +8563,11 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (t.id === "auSeek" && audioEl) { seekHold = true; audioEl.currentTime = Number(t.value) || 0; return; }
     if (t.id === "exFree" && exam) exam.free[t.getAttribute("data-n")] = t.value;
     if (t.id === "trInput" && session) session.trTyped = t.value;
+    if ((t.id === "rcPy" || t.id === "rcVi") && session) { // giữ chữ đang gõ; nút chính: có chữ = Kiểm tra, 2 ô trống = Lật
+      if (t.id === "rcPy") session.rcPy = t.value; else session.rcVi = t.value;
+      var go = byId("rcGo"); if (go) go.textContent = String(session.rcPy || "").trim() || String(session.rcVi || "").trim() ? "Kiểm tra" : "Lật";
+    }
+    if (t.id === "rcSen" && session && !t.readOnly) session.rcSen = t.value;
     if (t.id === "wuInput") { var wq = warmCur(); if (wq) wq.typed = t.value; }
     if (t.id === "rpIn" && rp) rp.draft = t.value;
     var mn = t.getAttribute && t.getAttribute("data-mnew");
@@ -7970,10 +8594,19 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var mn = e.target && e.target.getAttribute && e.target.getAttribute("data-mnew");
     if (mn && e.key === "Enter" && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); if (!e.repeat) mapAiBranchStart(mn); }
   });
+  // Điện thoại (màn cảm ứng): phím "Tiếp" của ô Pinyin khi ô Nghĩa còn trống → sang ô Nghĩa, chưa Kiểm tra. Máy tính: Enter = Kiểm tra như cũ. true = đã chuyển ô.
+  function rcPyNext(t) {
+    if (!t || t.id !== "rcPy" || !window.matchMedia || !matchMedia("(pointer:coarse)").matches) return false;
+    var v = byId("rcVi");
+    if (!v || String(v.value || "").trim()) return false;
+    v.focus();
+    return true;
+  }
   // Ô gõ thẻ Dịch câu nằm trong form: phím "Xong/Enter" của bàn phím điện thoại (có máy không gửi keydown Enter) = Kiểm tra.
   app.addEventListener("submit", function (e) {
     e.preventDefault();
     if (e.target && e.target.id === "trForm" && view === "session" && session) flip();
+    if (e.target && (e.target.id === "rcForm" || e.target.id === "rcSenForm") && view === "session" && session && !rcPyNext(document.activeElement)) flip(); // Kiểm tra / Chấm câu
     if (e.target && e.target.id === "wuForm" && view === "session" && session) warmCheck();
     if (e.target && e.target.id === "rpForm" && view === "roleplay") rpSend();
   });
@@ -7996,9 +8629,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   document.addEventListener("keydown", function (e) {
     if (view !== "session" || !session) return;
     var t = e.target;
-    // Ô gõ của thẻ Dịch câu: Enter = Kiểm tra (trừ lúc bộ gõ Trung đang ghép chữ), Esc = rời ô; phím khác (Space…) gõ bình thường.
-    if (t && (t.id === "trInput" || t.id === "wuInput")) {
-      if (e.key === "Enter" && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); if (!e.repeat) { if (t.id === "wuInput") warmCheck(); else flip(); } }
+    // Ô gõ của thẻ Dịch câu / bài cũ / thẻ Nhận mặt chữ (pinyin, nghĩa, câu): Enter = Kiểm tra (trừ lúc bộ gõ đang ghép chữ),
+    // Esc = rời ô; phím khác (Space, 1-4…) gõ bình thường, không thành phím tắt phiên.
+    if (t && (t.id === "trInput" || t.id === "wuInput" || t.id === "rcPy" || t.id === "rcVi" || t.id === "rcSen")) {
+      if (e.key === "Enter" && !e.isComposing && e.keyCode !== 229) { e.preventDefault(); if (!e.repeat && !rcPyNext(t)) { if (t.id === "wuInput") warmCheck(); else flip(); } }
       else if (e.key === "Escape") { e.preventDefault(); t.blur(); }
       return;
     }
