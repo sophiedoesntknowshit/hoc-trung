@@ -3,7 +3,7 @@
 // - Trang .html: mạng trước, rớt mạng (hoặc mạng treo quá 3,5 giây) mới lấy cache (có mạng tốt luôn thấy bản mới).
 // - .js / font / ảnh / dữ liệu: cache trước + làm mới nền (stale-while-revalidate), lưu dần file đã mở (map/ lessons/ exams/ expand/ dict/), giữ qua lần đổi VERSION.
 // - Audio / video / yêu cầu có Range: KHÔNG chặn, không cache (để trình duyệt tự tua; không lưu phản hồi 206).
-var VERSION = "2026-10-21c";
+var VERSION = "2026-10-27a";
 var CACHE = "hoctrung-" + VERSION;
 var DECKS = ["chao-hoi", "an-uong", "di-lai", "hoi-duong", "mua-sam", "khach-san", "san-bay-du-lich",
   "thoi-tiet-thoi-gian", "tam-chuyen", "suc-khoe", "dien-thoai-thanh-toan", "nha-cua-sinh-hoat"];

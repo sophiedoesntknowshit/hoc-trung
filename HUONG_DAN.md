@@ -86,6 +86,9 @@ Dán hoặc gõ tin nhắn → **Dịch** (Ctrl+Enter). Có chữ Hán = dịch 
 - Từ mới **tự về** bộ **Từ tin nhắn** + lịch sử **Gần đây** khi mở app, khi vào tab Dịch, khi quay lại app (tối đa 1 lần/phút; **Nhận ngay** để lấy liền). Giống dịch trong app: bỏ từ đã học / đã có / đã bấm **Bỏ**, câu mày viết thành thẻ nói + thẻ dịch. Đang học phiên 45 phút thì nhận ngầm, không đụng thẻ đang học.
 - Link + key lưu riêng máy này (`hoctrung.inbox.v1`), **không** đi theo Xuất backup — đổi máy thì dán lại link. Sang máy mới: **nhập backup trước**, rồi mới dán link hộp thư (app vẫn tự bỏ lại từ mày đã Bỏ ở máy cũ, nhưng làm đúng thứ tự cho chắc). **Ngắt kết nối** chỉ xóa link, từ đã nhận vẫn giữ.
 
+## Luyện nói với ChatGPT (Voice)
+Tạo 1 Project trong ChatGPT tên "Luyện nói", dán lời dặn `chatgpt/luyen-noi-instructions.txt` vào Instructions (bạn Trung tên 小雨, chỉ nói tiếng Trung, sửa lỗi ngay trong câu). Trang Học → **Luyện nói với ChatGPT** chép sẵn câu mở đầu kèm tối đa 15 từ đang học (từ cứng đầu → đến hạn → vừa ôn) → dán vào chat mới của Project → bấm **Voice** nói chuyện. Xong nói **"tổng kết"** → ChatGPT in khung câu sai + từ mới → copy → app: tab Dịch → **Nhập đoạn chat cũ** → dán → chọn từ để học.
+
 ## Mất tài khoản công ty / đổi máy — làm sao học tiếp
 
 App này không cần tài khoản, không cần mạng, không gọi API nào (trừ khi bạn tự bật **AI chấm bài** — khóa OpenAI không nằm trong backup, sang máy mới phải dán lại). Chỉ cần 2 thứ: **thư mục `app`** và **file backup tiến độ**. Cất cả hai trên Google Drive cá nhân là đủ.

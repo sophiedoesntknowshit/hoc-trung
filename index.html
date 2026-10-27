@@ -4504,6 +4504,27 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function isLeechCard(c) { return !!c && c.lapses - (c.ul || 0) >= LEECH_LAPSES; }
   function isLeech(it) { return !!it && it.kind === "word" && isLeechCard(db.cards[it.id]); }
   // Danh sách: mỗi chữ 1 thẻ (thẻ quên nhiều nhất), quên nhiều lên trước.
+  // Luyện nói với ChatGPT (Project "Luyện nói", lời dặn ở chatgpt/luyen-noi-instructions.txt): chép tối đa SPEAK_N từ đang học
+  // thành câu mở đầu để dán vào chat rồi bấm Voice. Thứ tự: từ cứng đầu → từ đến hạn (hạn sớm trước) → từ vừa ôn gần nhất.
+  var SPEAK_N = 15;
+  function speakWords() {
+    var now = Date.now(), seen = {}, out = [];
+    var add = function (it) { var h = it && it.data && it.data.hanzi; if (!h || seen[h]) return; seen[h] = true; out.push(it); };
+    var learned = ITEMS.filter(function (it) { var c = db.cards[it.id]; return it.kind === "word" && !!c && c.state !== "new"; });
+    leechItems().forEach(add);
+    learned.filter(function (it) { return isDue(it.id, now); }).sort(function (a, b) { return db.cards[a.id].due - db.cards[b.id].due; }).forEach(add);
+    learned.slice().sort(function (a, b) { return (db.cards[b.id].last || 0) - (db.cards[a.id].last || 0); }).forEach(add);
+    return out.slice(0, SPEAK_N);
+  }
+  function speakPrompt(ws) {
+    return "今天我们用语音聊天练口语。我在学这些词，请在聊天里多用，也想办法让我用：" +
+      ws.map(function (it) { return it.data.hanzi; }).join("、") + "。话题随便，日常生活就行。准备好了就先问我一个问题。";
+  }
+  function speakCopy() {
+    var ws = speakWords();
+    if (!ws.length) { toast("Chưa có từ nào đã học — học vài buổi rồi quay lại"); return; }
+    dichCopy(speakPrompt(ws), "Đã chép " + ws.length + " từ — dán vào Project Luyện nói trong ChatGPT rồi bấm Voice");
+  }
   function leechItems() {
     var by = {};
     ITEMS.forEach(function (it) {
@@ -8396,7 +8417,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       dichPaint(".dichres .dwh");
     });
   }
-  function dichCopy(t) {
+  function dichCopy(t, msg) {
+    msg = msg || "Đã chép";
     var fb = function () {
       var ok = false;
       try {
@@ -8404,9 +8426,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         ta.value = t; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.top = "0"; ta.style.opacity = "0";
         document.body.appendChild(ta); ta.select(); ok = document.execCommand("copy"); ta.remove();
       } catch (e) { ok = false; }
-      toast(ok ? "Đã chép" : "Không chép được — giữ ngón tay lên chữ để chọn");
+      toast(ok ? msg : "Không chép được — giữ ngón tay lên chữ để chọn");
     };
-    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { toast("Đã chép"); }, fb);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(function () { toast(msg); }, fb);
     else fb();
   }
   function dichCopyBtn(t) { return '<button class="small-btn dcopy" data-action="dich-copy" data-text="' + esc(t) + '">' + ico("doc") + 'Chép</button>'; }
@@ -9175,6 +9197,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var wn = warmN(), wdone = warmDoneToday(), wdays = wn && !wdone ? warmDays().length : 0;
     var warmSub = !wn ? "Đang tắt · bật lại ở mục Tôi" : wdone ? "Đã làm hôm nay" : !wdays ? "Chưa có buổi trước để kiểm tra" : wn + " câu từ buổi trước · Trung ↔ Việt · tự chạy đầu buổi";
     var lcN = leechItems().length; // từ cứng đầu: hàng 03 chỉ hiện khi có
+    var spN = speakWords().length; // luyện nói với ChatGPT: chỉ hiện khi đã có từ đã học
     var deckRow = function (d) {
       var c = deckCounts(d, now);
       var checked = s.selectedDecks.indexOf(d.id) >= 0 ? " checked" : "";
@@ -9230,6 +9253,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
           '<span class="it"><b>Ôn thẻ đến hạn</b><small>' + due + ' thẻ hôm nay' + (reviewCap() ? ' · trần ' + reviewCap() + ' lượt / ngày' : "") + '</small></span>' + ico("arrow") + '</button></li>' +
         (lcN ? '<li><button class="item" data-action="leech"><span class="no">03</span>' +
           '<span class="it"><b>Từ cứng đầu · ' + lcN + ' từ</b><small>Quên từ ' + LEECH_LAPSES + ' lần trở lên · ôn dồn có viết tay</small></span>' + ico("arrow") + '</button></li>' : "") +
+        (spN ? '<li><button class="item" data-action="speak-copy"><span class="no">' + (lcN ? "04" : "03") + '</span>' +
+          '<span class="it"><b>Luyện nói với ChatGPT</b><small>Chép ' + spN + ' từ đang học · dán vào Project Luyện nói rồi bấm Voice</small></span>' + ico("doc") + '</button></li>' : "") +
       '</ul></section>' +
       '<section class="box"><div class="row-between"><h2>Đang học</h2><button class="link" data-action="topics" aria-expanded="' + !!UI.topicsOpen + '">' +
         (UI.topicsOpen ? "Xong" : "Chọn chủ đề") + '</button></div>' +
@@ -10058,6 +10083,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function onAction(action, el) {
     switch (action) {
       case "start": startSession(); break;
+      case "speak-copy": speakCopy(); break;
       // từ cứng đầu: danh sách, ôn dồn, bỏ qua viết, mẹo nhớ thử lại · thẻ Nghe: nghe lại / đọc chậm
       case "leech": if (!backTo("#leech")) { view = "leech"; render(); } break;
       case "lc-cram": startCram(); break;
