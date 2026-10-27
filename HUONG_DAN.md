@@ -82,9 +82,13 @@ Dán hoặc gõ tin nhắn → **Dịch** (Ctrl+Enter). Có chữ Hán = dịch 
 
 **Nối với ChatGPT (dịch bằng GPT trong ChatGPT Plus):**
 - Dịch tin nhắn bằng GPT **"Dịch tin nhắn"** trong ChatGPT; mỗi lần dịch, GPT gửi tin + từ mới vào **hộp thư** riêng (Google Apps Script trên Gmail của mày). Tạo hộp thư theo `chatgpt/HUONG_DAN-GPT.md`.
-- Dán link hộp thư (`https://script.google.com/macros/s/…/exec?key=…`) **1 lần** ở tab **Dịch** → mục **Nối với ChatGPT** → **Lưu** (app gọi thử, báo được hay lỗi).
+- Dán link hộp thư (`https://script.google.com/macros/s/…/exec?key=…`) **1 lần** ở tab **Dịch** → mục **Nối với ChatGPT / Notion** → **Lưu** (app gọi thử, báo được hay lỗi).
+- **Notion:** từ mới ChatGPT ghi vào bảng Notion cũng về bộ **Từ tin nhắn** qua cùng hộp thư (hộp thư đọc Notion mỗi giờ; bấm **Nhận ngay** thì đọc Notion luôn rồi nhận, chờ tới 1 phút) — cách nối: `chatgpt/HUONG_DAN-NOTION.md`. Pinyin / Hán Việt lấy từ điển của app, thiếu thì dùng của Notion; chiết tự lấy của Notion.
 - Từ mới **tự về** bộ **Từ tin nhắn** + lịch sử **Gần đây** khi mở app, khi vào tab Dịch, khi quay lại app (tối đa 1 lần/phút; **Nhận ngay** để lấy liền). Giống dịch trong app: bỏ từ đã học / đã có / đã bấm **Bỏ**, câu mày viết thành thẻ nói + thẻ dịch. Đang học phiên 45 phút thì nhận ngầm, không đụng thẻ đang học.
 - Link + key lưu riêng máy này (`hoctrung.inbox.v1`), **không** đi theo Xuất backup — đổi máy thì dán lại link. Sang máy mới: **nhập backup trước**, rồi mới dán link hộp thư (app vẫn tự bỏ lại từ mày đã Bỏ ở máy cũ, nhưng làm đúng thứ tự cho chắc). **Ngắt kết nối** chỉ xóa link, từ đã nhận vẫn giữ.
+
+## Ôn từ mới gần đây (cần AI để có hội thoại)
+Trang Học → **Ôn từ mới gần đây**: gom từ mới mấy hôm nay (bộ Từ tin nhắn — Dịch, ChatGPT, Notion — và thẻ từ vừa học lần đầu ở bộ bất kỳ; tối đa 15 từ, cần ít nhất 3). Mỗi ngày lần đầu mở app, AI xào chỗ từ đó thành **1 đoạn hội thoại** kiểu 2 bạn trẻ nhắn tin (bật/tắt Pinyin, Dịch, **Đọc cả đoạn**, **Nói vai B**) + **4–6 câu luyện** (dịch Việt → Trung, AI chấm; điền từ vào chỗ trống). Câu sai → từ đó ra ôn lại ngay. Bài lưu theo ngày trên máy này (`hoctrung.remix.v1`, không vào backup), mở lại không gọi AI lại. AI tắt: vẫn xem danh sách từ + câu ví dụ + nghe.
 
 ## Luyện nói với ChatGPT (Voice)
 Tạo 1 Project trong ChatGPT tên "Luyện nói", dán lời dặn `chatgpt/luyen-noi-instructions.txt` vào Instructions (bạn Trung tên 小雨, chỉ nói tiếng Trung, sửa lỗi ngay trong câu). Trang Học → **Luyện nói với ChatGPT** chép sẵn câu mở đầu kèm tối đa 15 từ đang học (từ cứng đầu → đến hạn → vừa ôn) → dán vào chat mới của Project → bấm **Voice** nói chuyện. Xong nói **"tổng kết"** → ChatGPT in khung câu sai + từ mới → copy → app: tab Dịch → **Nhập đoạn chat cũ** → dán → chọn từ để học.

@@ -1898,6 +1898,65 @@ button.dinboff{font-size:13.5px;font-weight:400;color:var(--ink2);text-decoratio
 @media (max-height:500px){.dimpbar{bottom:calc(var(--tabh) + env(safe-area-inset-bottom))}textarea.dichin{min-height:88px}}
 @media (prefers-reduced-motion:reduce){.dwait{animation:none}.dprog span{transition:none}}
 /* ==== [/S6] ==== */
+/* ==== [RX] Ôn từ mới gần đây (màn #remix) + dòng Notion ở khối hộp thư ==== */
+.dinbst + .dinbst{margin-top:6px}
+.dinbbtn + .dinbhelp,.dinbhelp + .dinbhelp{margin-top:6px}
+.rxwrap .lede b{color:var(--ink);font-weight:500}
+.rxnoai{display:flex;align-items:flex-start;gap:8px;margin:14px 0 0;font-size:14.5px;line-height:1.5;color:var(--ink2)}
+.rxnoai .ic{flex:none;margin-top:3px;color:var(--zhu-ink)}
+.rxwrap button.rxgen{margin-top:18px}
+.rxwrap .dicherr + button.rxgen{margin-top:12px}
+/* danh sách từ: hàng mục lục (chữ Hán son · nghĩa serif + pinyin nhỏ · loa); chưa có bài: kèm câu ví dụ có sẵn */
+.rxws .rxw{gap:12px;align-items:flex-start}
+.rxws .rxz{flex:none;min-width:42px;max-width:40%;padding-top:2px;font-size:28px;line-height:1.15;color:var(--zhu-ink);overflow-wrap:anywhere}
+.rxws .rxpy{font-family:var(--py);font-size:13.5px;color:var(--ink2)}
+.rxws .rxex{display:block;margin-top:6px}
+.rxws .rxex > .zh{display:block;font-size:19px;line-height:1.5;color:var(--ink-zh)}
+.rxws .rxex .spk{vertical-align:-4px}
+.rxws .rxev{display:block;font-family:var(--serif);font-style:italic;font-size:14.5px;line-height:1.45;color:var(--ink2)}
+.rxws .rxw > .spk{flex:none;margin-right:-6px}
+/* hội thoại: như bài khóa (.tline của S4) — A / B serif nghiêng, B nhạt hơn */
+.rxti{margin:-2px 0 0;font-family:var(--serif);font-style:italic;font-size:17px;line-height:1.35;color:var(--ink)}
+.rxdlg .lstools button.lsread{padding:4px 12px;gap:6px;font-size:13.5px}
+.rxdlg .lstools button.lsread .ic{width:15px;height:15px}
+.rxlines{margin-top:8px}
+.tline.rxl .spkr{width:1.6em;padding-top:5px;font-family:var(--serif);font-style:italic;font-size:18px;line-height:1.3}
+.tline.rxl.rxb .spkr{color:var(--ink2)}
+.rxnote{display:flex;align-items:flex-start;gap:8px;margin:12px 0 0;padding:2px 0 2px 12px;border-left:2px solid var(--zhu-line);font-size:14.5px;line-height:1.55;color:var(--ink2)}
+.rxnote .ic{flex:none;margin-top:3px;color:var(--zhu-ink)}
+/* luyện: nhãn kiểu câu serif nghiêng son + số câu · câu Việt serif to / câu Khải có chỗ trống · 4 lựa chọn 2 cột kẻ mảnh */
+.rxlede{margin:0;font-size:14.5px;line-height:1.5;color:var(--ink2)}
+.rxpr button.rxgo{margin-top:14px}
+/* Luyện = nút chính son của màn (nền .box > button.primary.big biến nút trong mục thành nút phụ viền mảnh) */
+.box.rxpr > button.primary.big.rxgo{justify-content:center;background:var(--zhu);border-color:var(--zhu);color:var(--on-zhu);font-weight:600}
+.box.rxpr > button.primary.big.rxgo::after{content:none}
+.box.rxpr > button.primary.big.rxgo:hover{background:var(--zhu-hi);border-color:var(--zhu-hi)}
+.rxk{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0}
+.rxk span{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--zhu-ink)}
+.rxk small{font-size:12.5px;color:var(--ink3);font-variant-numeric:lining-nums tabular-nums}
+.rxvi{margin:14px 0 0;font-family:var(--serif);font-size:24px;line-height:1.35;color:var(--ink);text-wrap:balance}
+.rxq .trform{margin-top:18px}
+.rxq .aibox,.rxq .ailine{margin-top:16px}
+.rxzh{margin:16px 0 0;font-size:26px;line-height:1.6;color:var(--ink-zh);word-break:break-all}
+.rxzh button.spk.sm{vertical-align:-4px}
+.rxblank{display:inline-block;width:2.6em;height:1.1em;margin:0 2px;vertical-align:-.2em;border-bottom:2px solid var(--zhu-ink)}
+.rxfill{padding:0 2px;border-bottom:2px solid currentColor}
+.rxfill.ok{color:var(--green-ink)}
+.rxfill.bad{color:var(--red-ink)}
+.opts.rxopts{grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--rule);border-left:1px solid var(--rule)}
+.opts.rxopts .opt{justify-content:center;min-height:60px;padding:10px 30px;border:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.opts.rxopts > .opt:first-child{border-top:0}
+.opts.rxopts .opt .ot{flex:none;min-width:0}
+.opts.rxopts .opt .zh{font-size:22px;overflow-wrap:anywhere}
+.rxres{margin:14px 0 0;font-size:15px;font-weight:500}
+.rxres.ok{color:var(--green-ink)}
+.rxres.bad{color:var(--red-ink)}
+.rxres b.zh{margin:0 2px;font-weight:400;font-size:19px}
+.rxcv{margin:4px 0 0;font-family:var(--serif);font-style:italic;font-size:16px;line-height:1.45;color:var(--ink2)}
+.rxsum .wuscore{display:flex;align-items:baseline;justify-content:center;gap:4px;margin:14px 0 0;font-family:var(--serif)}
+.rxagain{display:flex;justify-content:center;margin-top:10px}
+.rxagain .ic{margin-right:4px}
+/* ==== [/RX] ==== */
 </style>
 <script>/* chọn giao diện TRƯỚC khi vẽ (tránh nháy): bật đúng 1 khối style. settings.theme: "dem" (mặc định) | "giay" | "system";
    giá trị cũ: "dark"/"auto" → dem, "light" → giay */(function(){var t;try{var s=JSON.parse(localStorage.getItem("hoctrung.v1")||"{}").settings;t=s&&s.theme}catch(e){}
@@ -2162,6 +2221,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       if (!v || seen[v.hanzi]) return;
       seen[v.hanzi] = true;
       v.src = "msg"; v.from = aiS(w.from, 80);
+      var ad = num(w.added, 0); if (ad > 0) v.added = ad; // lúc thêm vào bộ (Ôn từ mới gần đây) — từ cũ không có: lấy giờ trong from "msg:<at>"
       out.push(v);
     });
     return out;
@@ -2514,6 +2574,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var ul = Math.floor(num(c.ul, 0)), lk = Math.floor(num(c.lk, 0));
     if (ul > 0) o.ul = Math.min(ul, o.lapses);
     if (lk > 0) o.lk = Math.min(lk, 9);
+    // trường tùy chọn fs = lúc học lần đầu (thẻ rời trạng thái new — applyGrade / understood); thẻ cũ không có (Ôn từ mới gần đây bỏ qua)
+    var fs = num(c.fs, 0);
+    if (fs > 0) o.fs = fs;
     return o;
   }
   function normalizeDb(obj) {
@@ -2758,7 +2821,10 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     return c.interval + " ngày";
   }
   function applyGrade(id, grade) {
-    db.cards[id] = computeGrade(cardOf(id), grade, Date.now());
+    var old = cardOf(id), now = Date.now(), c = computeGrade(old, grade, now), it = ITEM_BY_ID[id];
+    if (old.fs) c.fs = old.fs; // computeGrade dựng object mới: chép lại lúc học lần đầu
+    else if (old.state === "new" && it && it.kind === "word") c.fs = now;
+    db.cards[id] = c;
     saveDb();
     mapGraded(id);
   }
@@ -2817,6 +2883,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       btns[i].innerHTML = lsReadLabel(on);
       btns[i].className = lsReadCls(on);
     }
+    var rb = app.querySelectorAll('[data-action="rx-read"]'), ron = !!reading && reading.key === "rx"; // [RX] Đọc cả đoạn
+    for (var j = 0; j < rb.length; j++) { rb[j].innerHTML = rxReadLabel(ron); rb[j].className = lsReadCls(ron); }
   }
   function stopReading() {
     readToken++;
@@ -3021,6 +3089,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (REC.owner.indexOf("card:") === 0) return view === "session" && !!session && !!session.current && REC.owner === "card:" + session.current.id;
     if (REC.owner.indexOf("wu:") === 0) return view === "session" && warmActive() && REC.owner === warmOwner(); // kiểm tra bài cũ: đúng câu đang hỏi
     if (REC.owner.indexOf("rp:") === 0) return view === "roleplay" && !!rp && rp.phase === "chat" && REC.owner === rpOwner(rp); // đóng vai: đúng hội thoại đang hiện
+    if (REC.owner.indexOf("rx:") === 0) return view === "remix" && REC.owner === rxOwner(); // Ôn từ mới: đúng lượt B đang nói
     return view === "lesson" && !!lesson && lesson.tab === "texts" && !!lesson.shadow && REC.owner === shadowOwner();
   }
   function voiceSweep() { if (REC.owner && !voiceAlive()) recRelease(); }
@@ -5563,6 +5632,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var it = session.current;
     if (!it || modeOf(it) !== "new") return;
     var c = cardOf(it.id);
+    if (c.state === "new" && !c.fs && it.kind === "word") c.fs = Date.now(); // học lần đầu (Ôn từ mới gần đây)
     c.state = "learning"; c.interval = 0; c.due = Date.now();
     db.cards[it.id] = c; saveDb();
     markTouched(it); requeue(it); nextCard();
@@ -5668,6 +5738,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var r = session.rec || { minutes: 0, cards: 0 }, sn = session.sentN || 0;
     session = null;
     updateMini();
+    setTimeout(rxAuto, 1500); // [RX] bài Ôn từ mới chưa soạn được vì đang trong phiên → soạn sau khi phiên đóng
     toast("Đã lưu phiên: " + r.minutes + " phút, " + r.cards + " thẻ" + (r.lines ? ", " + r.lines + " câu" : "") + (sn ? ", đặt " + sn + " câu" : "") +
       (r.warmup ? ", bài cũ " + r.warmup.ok + "/" + r.warmup.n : ""));
   }
@@ -6138,7 +6209,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     Object.keys(inc.cards).forEach(function (id) {
       var a = out.cards[id], b = inc.cards[id];
       if (!a) { out.cards[id] = b; added++; return; }
+      var fs = a.fs && b.fs ? Math.min(a.fs, b.fs) : a.fs || b.fs || 0; // lúc học lần đầu: giữ mốc sớm hơn, bên nào thiếu cũng không mất
       if (b.last > a.last || (b.last === a.last && b.reps > a.reps)) { out.cards[id] = b; updated++; }
+      if (fs) out.cards[id].fs = fs;
     });
     var seen = {};
     out.sessions = out.sessions.concat(inc.sessions).filter(function (s) {
@@ -8291,7 +8364,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       if (!hzOk(h) || seen[h] || hay.indexOf(h) < 0 || (h.length === 1 && DICH_STOP.indexOf(h) >= 0)) return;
       seen[h] = true;
       var hsk = Math.floor(Number(x.hsk));
-      var w = { hanzi: h, meaning: aiTxt(x.meaning_vi, 200), pos: AI_POS.indexOf(x.pos) >= 0 ? x.pos : "", hsk: hsk >= 1 && hsk <= 6 ? hsk : 0, why: aiTxt(x.why_vi, 300) };
+      if (!(hsk >= 1 && hsk <= 6) && typeof x.hsk === "string") { var hm = /[1-6]/.exec(x.hsk); hsk = hm ? Number(hm[0]) : 0; } // Notion: "HSK 4"
+      var w = { hanzi: h, meaning: aiTxt(x.meaning_vi, 200), pos: dichPos(x.pos), hsk: hsk >= 1 && hsk <= 6 ? hsk : 0, why: aiTxt(x.why_vi, 300) };
+      // từ Notion (qua hộp thư): pinyin / Hán Việt / chiết tự của bảng — dùng khi từ điển của app không có (dichWordVal)
+      if (x.pinyin) w.py0 = aiS(x.pinyin, 80);
+      if (x.hanviet) w.hv0 = aiS(x.hanviet, 80);
+      if (x.chiettu) w.ct0 = aiS(x.chiettu, 400);
       if (bulk) { var sz = dichOneLine(dichZh(x.sentence_zh, 200)); w.sz = sz.indexOf(h) >= 0 ? sz : ""; w.sv = w.sz ? aiTxt(x.sentence_vi, 300) : ""; }
       out.push(w);
     });
@@ -8306,10 +8384,21 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     }
     return { zh: zh, vi: vi.slice(0, 300) };
   }
+  // Loại từ: mã của app ("danh") hoặc chữ đầy đủ ("Danh từ", "động từ" — bảng Notion) → mã; lạ → "".
+  function dichPos(p) {
+    var s = String(p == null ? "" : p).trim().toLowerCase();
+    if (s.normalize) s = s.normalize("NFC");
+    if (AI_POS.indexOf(s) < 0) s = s.replace(/\s+từ$/, "");
+    return AI_POS.indexOf(s) >= 0 ? s : "";
+  }
+  // Pinyin / Hán Việt: từ điển của app trước; từ điển chưa nạp / không có từ (Hán Việt còn "?") → của Notion (py0 / hv0). added = lúc thêm vào bộ.
   function dichWordVal(w, ex, at) {
-    var py = dictOk() ? pickPinyin(w.hanzi, "") : "";
-    return normalizeMsgW([{ hanzi: w.hanzi, pinyin: py, hanviet: py ? hanviet(w.hanzi, py) : "", meaning: w.meaning, pos: w.pos, hsk: w.hsk, chiettu: "",
-      examples: ex && ex.zh ? [{ zh: ex.zh, pinyin: dictOk() ? sentencePinyin(ex.zh) : "", vi: ex.vi }] : [], note: w.why, from: "msg:" + at }])[0];
+    var dict = dictOk(), py = dict ? pickPinyin(w.hanzi, w.py0 || "") : "";
+    if (!py && w.py0) py = w.py0;
+    var hv = dict && py ? hanviet(w.hanzi, py) : "";
+    if (w.hv0 && (!hv || hv.indexOf("?") >= 0)) hv = w.hv0;
+    return normalizeMsgW([{ hanzi: w.hanzi, pinyin: py, hanviet: hv, meaning: w.meaning, pos: w.pos, hsk: w.hsk, chiettu: w.ct0 || "",
+      examples: ex && ex.zh ? [{ zh: ex.zh, pinyin: dict ? sentencePinyin(ex.zh) : "", vi: ex.vi }] : [], note: w.why, from: "msg:" + at, added: Date.now() }])[0];
   }
   // Bộ thẻ đổi: dựng lại thẻ; lần đầu có bộ → tự tick vào phiên (như Từ mở rộng).
   function dichDeckChanged(had) {
@@ -8870,12 +8959,16 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   var INBOX_WAIT = 20000;  // chờ hộp thư trả lời tối đa (ms)
   var INBOX_PAGE = 200;    // hộp thư trả tối đa 200 mục / lần → đủ 200 thì gọi tiếp
   var INBOX_PAGES = 20;    // tối đa 20 lượt / lần nhận
-  var INBOX = { busy: false, testing: false, tok: 0, at: 0, err: "", draft: "" };
+  var INBOX_NOTION_WAIT = 60000; // Nhận ngay: chờ hộp thư đọc Notion (action=syncnotion) tối đa 60 giây
+  var INBOX_NO_NOTION = /^(notion not set|bad action|unknown action)$/i; // chưa nối Notion / script cũ chưa có syncnotion (Code.gs trả "unknown action") → bỏ qua lặng lẽ
+  // phase "notion" = Nhận ngay đang chờ hộp thư đọc Notion; nerr = lỗi đọc Notion lần Nhận ngay gần nhất (hiện ở khối)
+  var INBOX = { busy: false, testing: false, tok: 0, at: 0, err: "", draft: "", phase: "", nerr: "" };
   function inboxLoad() {
     try {
       var o = JSON.parse(localStorage.getItem(INBOX_KEY) || "null");
       if (!o || typeof o !== "object" || !o.url || !o.key) return null;
-      return { url: String(o.url), key: String(o.key), since: Math.max(0, num(o.since, 0)), lastAt: num(o.lastAt, 0), lastN: num(o.lastN, 0), total: num(o.total, 0) };
+      return { url: String(o.url), key: String(o.key), since: Math.max(0, num(o.since, 0)), lastAt: num(o.lastAt, 0), lastN: num(o.lastN, 0), total: num(o.total, 0),
+        lastSrc: aiS(o.lastSrc, 40) }; // lastSrc = "từ Notion" | "từ ChatGPT" | "từ Notion + ChatGPT" của lần nhận cuối
     } catch (e) { return null; }
   }
   var INB = inboxLoad();
@@ -8894,8 +8987,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (!key) return { err: "Link thiếu phần ?key=… — chép đủ cả link trong hướng dẫn" };
     return { url: "https://script.google.com" + u.pathname.replace(/\/+$/, ""), key: key };
   }
-  // Gọi hộp thư → Promise { ok: true, data } | { ok: false, reason } (không bao giờ reject).
-  function inboxGet(C, q) {
+  // Gọi hộp thư → Promise { ok: true, data } | { ok: false, reason, code? } (không bao giờ reject). code = chữ "error" hộp thư trả về.
+  // wait = chờ tối đa (ms), mặc định INBOX_WAIT.
+  function inboxGet(C, q, wait) {
     var qs = Object.keys(q).map(function (k) { return encodeURIComponent(k) + "=" + encodeURIComponent(q[k]); });
     var url = C.url + "?" + qs.concat(["key=" + encodeURIComponent(C.key)]).join("&");
     return new Promise(function (resolve) {
@@ -8905,7 +8999,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       timer = setTimeout(function () {
         try { if (ctl) ctl.abort(); } catch (e) { /* bỏ qua */ }
         give({ ok: false, reason: "Hộp thư không trả lời (mạng chậm?)" });
-      }, INBOX_WAIT);
+      }, wait || INBOX_WAIT);
       var opt = { method: "GET", cache: "no-store", credentials: "omit", redirect: "follow" };
       if (ctl) opt.signal = ctl.signal;
       var p;
@@ -8920,7 +9014,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
           if (!d || typeof d !== "object") { give({ ok: false, reason: "Hộp thư không trả dữ liệu — vào Deploy → Manage deployments: Who has access phải là “Anyone” (Bất kỳ ai), link đúng Web app URL" }); return; }
           if (d.ok !== true) {
             var er = aiS(d.error, 120);
-            give({ ok: false, reason: er === "bad key" ? "Sai key — chép lại đủ link (cả phần ?key=…)" : "Hộp thư báo lỗi" + (er ? ": " + er : "") });
+            give({ ok: false, code: er, reason: er === "bad key" ? "Sai key — chép lại đủ link (cả phần ?key=…)" : "Hộp thư báo lỗi" + (er ? ": " + er : "") });
             return;
           }
           give({ ok: true, data: d });
@@ -8954,14 +9048,43 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var o = {}; Object.keys(w).forEach(function (k) { o[k] = w[k]; }); o.pos = "cụm";
     return o;
   }
-  // Nhập 1 lượt mục (đã lọc id) → { w: từ mới, m: tin nhắn mới, p: câu mới, fail: lưu lỗi }. Từ điển chưa có → pinyin / Hán Việt rỗng, dictRepair điền sau.
+  // Mục từ Notion (payload.origin "notion"; hộp thư đọc bảng Notion mỗi giờ): 1 dòng bảng = 1 từ, message = câu ví dụ (source, có thể rỗng)
+  // + nghĩa câu (translation). Không vào lịch sử tin nhắn (không phải tin nhắn). Từ không cần nằm trong câu ví dụ; câu gắn vào từ khi câu có
+  // chữ đó (mục chỉ 1 từ: gắn luôn), không có câu thì thêm từ không kèm ví dụ. Từ đã có trong bộ mà thiếu chiết tự / pinyin / Hán Việt → điền.
+  // C = { learned, known, fill } (fill = true nếu có từ cũ được điền). → số từ mới.
+  function inboxNotion(P, at, C) {
+    var m = P.message && typeof P.message === "object" ? P.message : {};
+    var zh = dichOneLine(dichZh(m.source, 400)), vi = zh && HAN_RE.test(zh) ? dichOneLine(aiTxt(m.translation, 600)) : "";
+    if (!HAN_RE.test(zh)) zh = "";
+    var list = (Array.isArray(P.words) ? P.words : []).map(inboxWord);
+    var hay = zh + "\n" + list.map(function (w) { return w && typeof w === "object" ? hzClean(w.hanzi) : ""; }).join("\n");
+    var ws = dichWordsClean(list, hay, false).slice(0, 10), k = 0;
+    ws.forEach(function (w) {
+      var old = MSGD.words.filter(function (x) { return x.hanzi === w.hanzi; })[0];
+      if (old) {
+        if (!old.chiettu && w.ct0) { old.chiettu = w.ct0; C.fill = true; }
+        if (!old.pinyin && w.py0) { old.pinyin = w.py0; C.fill = true; }
+        if (!old.hanviet && w.hv0) { old.hanviet = w.hv0; C.fill = true; }
+        return;
+      }
+      if (C.learned[w.hanzi] || C.known[w.hanzi] || MSGD.skip[w.hanzi]) return; // đã học / có ở bộ khác / đã bấm Bỏ
+      var ex = zh && (zh.indexOf(w.hanzi) >= 0 || ws.length === 1) ? { zh: zh.slice(0, 200), vi: vi.slice(0, 300) } : null;
+      var v = dichWordVal(w, ex, at);
+      if (v) { MSGD.words.push(v); k++; }
+    });
+    return k;
+  }
+  // Nhập 1 lượt mục (đã lọc id) → { w: từ mới (wn của Notion + wc của ChatGPT), m: tin nhắn mới, p: câu mới, fail: lưu lỗi }.
+  // Từ điển chưa có → pinyin / Hán Việt rỗng (hoặc của Notion), dictRepair điền sau.
   // Lưu lỗi (bộ nhớ đầy / bị chặn): trả lại như trước lượt này + fail = true → không nâng since, lần sau nhận lại đúng các mục đó.
   function inboxApply(items) {
-    var had = msgAny(), learned = learnedHanzi(), known = knownIdx(), n = { w: 0, m: 0, p: 0 }, keys = {}, dict = dictOk();
+    var had = msgAny(), learned = learnedHanzi(), known = knownIdx(), n = { w: 0, m: 0, p: 0, wn: 0, wc: 0 }, keys = {}, dict = dictOk();
+    var C = { learned: learned, known: known, fill: false };
     MSGS.forEach(function (m) { keys[msgKey(m)] = true; });
     items.forEach(function (it, i) {
       var P = it.payload && typeof it.payload === "object" ? it.payload : {};
       var t = Date.parse(it.time), timed = isFinite(t) && t > 0, at = timed ? t : Date.now() + i;
+      if (P.origin === "notion") { var k = inboxNotion(P, at, C); n.w += k; n.wn += k; return; }
       var R = inboxMsg(P.message, at);
       // lịch sử: chống trùng theo thời gian + nội dung (mục không có giờ: theo nội dung)
       if (R && !keys[msgKey(R)] && (timed || !MSGS.some(function (m) { return m.src === R.src && m.out === R.out; }))) {
@@ -8974,7 +9097,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       dichWordsClean(list, hay, false).slice(0, 10).forEach(function (w) {
         if (learned[w.hanzi] || known[w.hanzi] || MSGD.skip[w.hanzi] || msgWHas(w.hanzi)) return; // đã học / đã có / đã bấm Bỏ
         var v = dichWordVal(w, R ? dichEx(R, w.hanzi) : null, at);
-        if (v) { MSGD.words.push(v); n.w++; }
+        if (v) { MSGD.words.push(v); n.w++; n.wc++; }
       });
       // Việt → Trung: câu mình viết thành mẫu câu của bộ — chỉ nối thêm
       var zh = R && R.dir === "vz" ? dichOneLine(R.out) : "";
@@ -8985,8 +9108,8 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       }
     });
     if (n.m) { MSGS = normalizeMsgs(MSGS); if (!saveMsgs()) { MSGS = loadMsgs(); n.m = 0; n.fail = true; } }
-    if (n.w || n.p) {
-      if (!saveMsgW()) { MSGD = loadMsgW(); n.w = 0; n.p = 0; n.fail = true; }
+    if (n.w || n.p || C.fill) {
+      if (!saveMsgW()) { MSGD = loadMsgW(); n.w = 0; n.wn = 0; n.wc = 0; n.p = 0; n.fail = true; }
       else dichDeckChanged(had); // rebuildItems (phiên đang chạy giữ nguyên hàng thẻ) + lần đầu có bộ thì tự chọn vào phiên
     }
     return n;
@@ -9028,20 +9151,25 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (!INB || INBOX.busy || INBOX.testing || Date.now() - INBOX.at < INBOX_GAP) return;
     inboxPull(false);
   }
+  // Nguồn của các từ vừa nhận (toast + dòng trạng thái của khối).
+  function inboxSrc(g) { return g.wn && g.wc ? "từ Notion + ChatGPT" : g.wn ? "từ Notion" : "từ ChatGPT"; }
   // Nhận mục mới (loud = bấm Nhận ngay: báo cả lỗi / không có gì mới). Lỗi khi tự nhận: chỉ ghi ở khối.
+  // Nhận ngay: nhờ hộp thư đọc Notion trước (action=syncnotion, chờ tối đa INBOX_NOTION_WAIT) rồi mới nhận; chưa nối Notion → bỏ qua lặng lẽ,
+  // lỗi khác → ghi ở khối (INBOX.nerr) và vẫn nhận phần đã có. Tự nhận (mở app / vào Dịch / quay lại app) không gọi syncnotion.
   function inboxPull(loud) {
     if (!INB) return;
     if (INBOX.busy || INBOX.testing) { if (loud) toast("Đang nhận…"); return; }
-    var tok = ++INBOX.tok, pages = 0, got = { w: 0, m: 0, p: 0 }, dictTried = false;
-    INBOX.busy = true; INBOX.at = Date.now(); INBOX.err = "";
+    var tok = ++INBOX.tok, pages = 0, got = { w: 0, m: 0, p: 0, wn: 0, wc: 0 }, dictTried = false;
+    INBOX.busy = true; INBOX.at = Date.now(); INBOX.err = ""; INBOX.phase = loud ? "notion" : "";
     if (loud) inboxPaint();
     var end = function (why) {
       if (tok !== INBOX.tok) return;
-      INBOX.busy = false; INBOX.err = why || "";
-      if (INB && (!why || got.w)) { INB.lastAt = Date.now(); INB.lastN = got.w; inboxStore(); } // lượt sau lỗi: phần đã nhận vẫn tính
-      if (got.w) { if (!session || loud) toast("Nhận " + got.w + " từ mới từ ChatGPT"); } // đang học: không chen toast vào thẻ
+      INBOX.busy = false; INBOX.phase = ""; INBOX.err = why || "";
+      var src = inboxSrc(got);
+      if (INB && (!why || got.w)) { INB.lastAt = Date.now(); INB.lastN = got.w; INB.lastSrc = got.w ? src : ""; inboxStore(); } // lượt sau lỗi: phần đã nhận vẫn tính
+      if (got.w) { if (!session || loud) toast("Nhận " + got.w + " từ mới " + src); } // đang học: không chen toast vào thẻ
       else if (why) { if (loud) toast(why); }
-      else if (loud) toast(got.m ? "Nhận " + got.m + " tin nhắn từ ChatGPT — không có từ mới" : "Chưa có gì mới từ ChatGPT");
+      else if (loud) toast(got.m ? "Nhận " + got.m + " tin nhắn từ ChatGPT — không có từ mới" : INBOX.nerr ? "Chưa có gì mới từ ChatGPT · Notion lỗi (xem khối Nối)" : "Chưa có gì mới từ ChatGPT / Notion");
       inboxRepaint(got);
     };
     var step = function () {
@@ -9059,7 +9187,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         var next = function () {
           if (tok !== INBOX.tok || !INB) return;
           if (items.length) {
-            var n = inboxApply(items); got.w += n.w; got.m += n.m; got.p += n.p; INB.total += n.w;
+            var n = inboxApply(items); got.w += n.w; got.m += n.m; got.p += n.p; got.wn += n.wn; got.wc += n.wc; INB.total += n.w;
             // lưu lỗi: KHÔNG nâng since → lần sau (hết đầy bộ nhớ, bấm Nhận ngay) nhận lại đúng các mục này
             if (n.fail) { inboxStore(); end("Không lưu được từ (bộ nhớ trình duyệt đầy / bị chặn?)"); return; }
           }
@@ -9072,7 +9200,14 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
         else next();
       });
     };
-    step();
+    if (!loud) { step(); return; }
+    inboxGet(INB, { action: "syncnotion" }, INBOX_NOTION_WAIT).then(function (r) {
+      if (tok !== INBOX.tok || !INB) return;
+      INBOX.nerr = r.ok || INBOX_NO_NOTION.test(r.code || "") || r.code === "bad key" ? "" : r.code || r.reason; // sai key: lượt nhận báo
+      INBOX.phase = "";
+      inboxPaint();
+      step();
+    });
   }
   // Lưu = gọi thử (ping); được thì lưu cấu hình rồi nhận luôn.
   function inboxSaveUrl() {
@@ -9091,14 +9226,14 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       if (!inboxStore()) { INB = null; INBOX.err = "Không lưu được (bộ nhớ trình duyệt đầy / bị chặn?)"; inboxPaint(); return; }
       INBOX.draft = ""; INBOX.at = 0;
       var c = Number(r.data.count);
-      toast("Đã nối ChatGPT" + (isFinite(c) && c > 0 ? " · hộp thư có " + c + " mục" : ""));
+      toast("Đã nối hộp thư" + (isFinite(c) && c > 0 ? " · có " + c + " mục" : ""));
       inboxPull(false);
       inboxPaint();
     });
   }
   function inboxOff() {
     if (!INB || !confirm("Ngắt kết nối ChatGPT? Từ đã nhận vẫn giữ; muốn nối lại thì dán link hộp thư lần nữa.")) return;
-    INBOX.tok++; INBOX.busy = false; INBOX.testing = false; INBOX.err = ""; INBOX.draft = "";
+    INBOX.tok++; INBOX.busy = false; INBOX.testing = false; INBOX.err = ""; INBOX.draft = ""; INBOX.phase = ""; INBOX.nerr = "";
     INB = null;
     try { localStorage.removeItem(INBOX_KEY); } catch (e) { /* bỏ qua */ }
     inboxPaint();
@@ -9107,22 +9242,25 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var d = new Date(t), n = new Date();
     return d.toDateString() === n.toDateString() ? pad2(d.getHours()) + ":" + pad2(d.getMinutes()) : dichWhen(t);
   }
-  // Khối "Nối với ChatGPT" ở tab Dịch: chưa nối = ô dán link + Lưu; đã nối = 1 dòng trạng thái + Nhận ngay + Ngắt kết nối.
+  // Khối "Nối với ChatGPT / Notion" ở tab Dịch: chưa nối = ô dán link + Lưu; đã nối = dòng trạng thái (+ lỗi đọc Notion) + Nhận ngay + Ngắt kết nối.
   function inboxHtml() {
-    var h = '<section class="box dinbox" aria-labelledby="dinbH"><h2 id="dinbH">Nối với ChatGPT</h2>';
+    var h = '<section class="box dinbox" aria-labelledby="dinbH"><h2 id="dinbH">Nối với ChatGPT / Notion</h2>';
+    var notion = '<p class="dinbhelp">Nối Notion (từ mới ghi trong bảng Notion tự về): hướng dẫn trong file <code>chatgpt/HUONG_DAN-NOTION.md</code>.</p>';
     if (!INB) {
-      return h + '<p class="dinbhelp">Dịch bằng GPT “Dịch tin nhắn” trong ChatGPT, từ mới tự về đây. Tạo hộp thư theo hướng dẫn trong file <code>chatgpt/HUONG_DAN-GPT.md</code> rồi dán link.</p>' +
+      return h + '<p class="dinbhelp">Dịch bằng GPT “Dịch tin nhắn” trong ChatGPT, từ mới tự về đây. Tạo hộp thư theo hướng dẫn trong file <code>chatgpt/HUONG_DAN-GPT.md</code> rồi dán link.</p>' + notion +
         '<div class="dinbrow"><input id="inboxUrl" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Link hộp thư" ' +
           'placeholder="https://script.google.com/macros/s/…/exec?key=…" value="' + esc(INBOX.draft) + '"' + (INBOX.testing ? " readonly" : "") + '>' +
           '<button class="small-btn" data-action="inbox-save"' + (INBOX.testing ? " disabled" : "") + '>' + (INBOX.testing ? "Đang thử…" : "Lưu") + '</button></div>' +
         (INBOX.err ? '<p class="dinbst err" role="alert">' + ico("warn") + '<span>' + esc(INBOX.err) + '</span></p>' : "") + '</section>';
     }
-    var st = INBOX.busy ? '<p class="dinbst">' + ico("clock") + '<span>Đã nối ChatGPT · đang nhận…</span></p>'
-      : INBOX.err ? '<p class="dinbst err" role="status">' + ico("warn") + '<span>Đã nối ChatGPT · lần nhận gần nhất lỗi: ' + esc(INBOX.err) + '</span></p>'
-      : '<p class="dinbst ok">' + ico("check") + '<span>Đã nối ChatGPT · ' + (INB.lastAt ? "nhận lần cuối " + inboxWhen(INB.lastAt) : "chưa nhận lần nào") +
-        ' · <b>' + INB.total + '</b> từ</span></p>';
-    return h + st + '<div class="dinbbtn"><button class="small-btn" data-action="inbox-pull"' + (INBOX.busy ? " disabled" : "") + '>' + ico("down") + 'Nhận ngay</button>' +
-      '<button class="link dinboff" data-action="inbox-off">Ngắt kết nối</button></div></section>';
+    var st = INBOX.busy ? '<p class="dinbst">' + ico("clock") + '<span>Đã nối · ' + (INBOX.phase === "notion" ? "đang đọc Notion (có thể tới 1 phút)…" : "đang nhận…") + '</span></p>'
+      : INBOX.err ? '<p class="dinbst err" role="status">' + ico("warn") + '<span>Đã nối · lần nhận gần nhất lỗi: ' + esc(INBOX.err) + '</span></p>'
+      : '<p class="dinbst ok">' + ico("check") + '<span>Đã nối · ' + (INB.lastAt ? "nhận lần cuối " + inboxWhen(INB.lastAt) +
+          (INB.lastN && INB.lastSrc ? " (" + INB.lastN + " từ mới " + esc(INB.lastSrc) + ")" : "") : "chưa nhận lần nào") +
+        (INB.total && INB.total !== INB.lastN ? ' · tổng <b>' + INB.total + '</b> từ' : '') + '</span></p>';
+    var nst = INBOX.nerr && INBOX.phase !== "notion" ? '<p class="dinbst err" role="status">' + ico("warn") + '<span>Đọc Notion lỗi: ' + esc(INBOX.nerr) + ' — xem mục lỗi trong <code>chatgpt/HUONG_DAN-NOTION.md</code></span></p>' : "";
+    return h + st + nst + '<div class="dinbbtn"><button class="small-btn" data-action="inbox-pull"' + (INBOX.busy ? " disabled" : "") + '>' + ico("down") + 'Nhận ngay</button>' +
+      '<button class="link dinboff" data-action="inbox-off">Ngắt kết nối</button></div>' + notion + '</section>';
   }
   function inboxAction(a) {
     if (a === "inbox-save") inboxSaveUrl();
@@ -9137,6 +9275,431 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   document.addEventListener("visibilitychange", function () { if (!document.hidden) inboxAuto(); });
   // có mạng lại sau lượt nhận lỗi → nhận lại luôn (bỏ qua giới hạn 60 giây của lượt lỗi)
   window.addEventListener("online", function () { if (INB && !INBOX.busy && !INBOX.testing && INBOX.err) { INBOX.at = 0; inboxAuto(); } });
+
+  // ---------- [RX] Ôn từ mới gần đây: AI xào từ mới mấy hôm nay thành 1 đoạn hội thoại + bài luyện (mỗi ngày 1 bài) ----------
+  // Kho từ (rxPool): từ của bộ Từ tin nhắn thêm vào sau mốc bài trước (mọi nguồn: Dịch, ChatGPT, Notion — trường added) + thẻ từ ở bất kỳ bộ nào
+  // học lần đầu (card.fs) sau mốc. Chưa có mốc: RX_FIRST_DAYS ngày gần nhất. Chống trùng theo chữ Hán, tối đa RX_MAX — Từ tin nhắn trước, rồi HSK cao, rồi mới nhất.
+  // Bài: mỗi ngày lần đầu mở app (sau khi tự nhận hộp thư xong) nếu AI bật + kho ≥ RX_MIN từ → gọi AI "remix" 1 lần (rxAuto); không gọi khi đang trong phiên.
+  // localStorage "hoctrung.remix.v1" = { mark: lúc tạo bài gần nhất, tried: ngày đã tự gọi AI, days: { "YYYY-MM-DD": bài } } — riêng máy này, không vào backup.
+  // bài = { at, title, note, words: [{ h, m, py, ez, ev, hsk }], lines: [{ who: "A"|"B", zh, vi }],
+  //         ex: [{ k: "trans"|"cloze", vi, zh (cloze: chỗ trống "＿＿"), ans, w (từ đang luyện), opts }], res: { ok, n, bad: [chỉ số câu sai], at } | null }
+  var RX_KEY = "hoctrung.remix.v1", RX_MAX = 15, RX_MIN = 3, RX_KEEP = 7, RX_FIRST_DAYS = 3, RX_BLANK = "＿＿";
+  // busy / err: đang gọi AI / lỗi lần gọi gần nhất; run: lượt luyện đang làm { i, ok, bad, phase: ask|wait|show, typed, ai, pick }; b: lượt B đang nói (Nói vai B)
+  // day: khóa ngày của bài đang luyện (qua 0h vẫn chấm / lưu đúng bài đó)
+  var RX = { busy: false, err: "", tok: 0, run: null, b: null, day: "" };
+  function rxLoad() {
+    var o = null;
+    try { o = JSON.parse(localStorage.getItem(RX_KEY) || "null"); } catch (e) { o = null; }
+    o = o && typeof o === "object" ? o : {};
+    var src = o.days && typeof o.days === "object" ? o.days : {}, days = {};
+    Object.keys(src).filter(function (k) { return /^\d{4}-\d{2}-\d{2}$/.test(k) && src[k] && Array.isArray(src[k].lines) && Array.isArray(src[k].words) && Array.isArray(src[k].ex); })
+      .sort().slice(-RX_KEEP).forEach(function (k) { days[k] = src[k]; });
+    return { mark: num(o.mark, 0), tried: typeof o.tried === "string" ? o.tried : "", days: days };
+  }
+  var RXS = rxLoad();
+  function rxSave() { try { localStorage.setItem(RX_KEY, JSON.stringify(RXS)); return true; } catch (e) { return false; } }
+  // Bài đang dùng: đang luyện / đang mở #remix → bài đó (kể cả đã qua 0h); không thì bài hôm nay; hôm nay chưa có → bài hôm qua chưa làm (bài tạo muộn buổi tối).
+  function rxDay() {
+    if (RX.day && RXS.days[RX.day] && (RX.run || view === "remix")) return RX.day; // đang ở màn #remix: giữ bài đang mở
+    var t = dateKey(new Date()), y = dateKey(new Date(Date.now() - DAY_MS));
+    if (RXS.days[t]) return t;
+    return RXS.days[y] && !RXS.days[y].res ? y : "";
+  }
+  function rxToday() { var k = rxDay(); return k ? RXS.days[k] : null; }
+  function rxWord(L, h) { return L.words.filter(function (w) { return w.h === h; })[0] || null; }
+  function msgAddedAt(w) { if (w.added) return w.added; var m = /^msg:(\d+)/.exec(String(w.from || "")); return m ? Number(m[1]) : 0; }
+  function rxPool() {
+    var from = RXS.mark || Date.now() - RX_FIRST_DAYS * DAY_MS, out = [], seen = {};
+    var add = function (w, t, msg) {
+      var h = w && w.hanzi;
+      if (!h || seen[h] || !(t > from)) return;
+      seen[h] = true;
+      var ex = (Array.isArray(w.examples) ? w.examples : []).filter(function (e) { return e && e.zh; })[0] || null;
+      out.push({ h: String(h), m: String(w.meaning || w.vi || ""), py: String(w.pinyin || ""), ez: ex ? String(ex.zh) : "", ev: ex ? String(ex.vi || "") : "",
+        hsk: wordLevel(w), msg: msg ? 1 : 0, t: t });
+    };
+    MSGD.words.forEach(function (w) { add(w, msgAddedAt(w), true); });
+    ITEMS.forEach(function (it) { var c = db.cards[it.id]; if (it.kind === "word" && c && c.fs) add(it.data, c.fs, false); });
+    return out.sort(function (a, b) { return (b.msg - a.msg) || (b.hsk - a.hsk) || (b.t - a.t); }).slice(0, RX_MAX)
+      .map(function (x) { return { h: x.h, m: x.m, py: x.py, ez: x.ez, ev: x.ev, hsk: x.hsk }; });
+  }
+  AI_TASKS.remix = { name: "xao_tu_moi", maxTokens: 4000, timeoutMs: 90000, refusal: "AI từ chối soạn bài", system:
+    "You write a short daily review for a Vietnamese learner of Mandarin Chinese (HSK 3 going to HSK 4) who chats with young people in mainland China.\n" +
+    "words: vocabulary the learner met in the last few days (hanzi, meaning_vi, sometimes example_zh).\n" +
+    "title_vi: a short Vietnamese title for the dialogue.\n" +
+    "lines: 6-10 turns alternating A, B, A, B... (who = \"A\" or \"B\"): two young friends talking or texting about everyday life, natural and casual like WeChat " +
+    "(a little humor is fine, no emoji). Use at least 70% of the given words, each copied exactly as given and used with the given meaning. Every other word " +
+    "must be HSK 4 or easier. zh = the line in Chinese; vi = natural Vietnamese translation of that line.\n" +
+    "exercises: 4-6 items, each practicing one given word (word = its hanzi exactly; a different word for each item when possible), mixing both kinds:\n" +
+    "- kind \"trans\": vi = a NEW short Vietnamese sentence (not from the dialogue) whose natural translation needs word; zh = that natural Chinese translation " +
+    "using word; answer = empty string.\n" +
+    "- kind \"cloze\": zh = a NEW short Chinese sentence that uses word exactly once, with word replaced by " + RX_BLANK + "; answer = word; " +
+    "vi = Vietnamese translation of the full sentence. The context must make word the ONLY fitting choice among the given words: any other given word " +
+    "in the blank must be clearly wrong or unnatural. wrong_options = 3 other given words (copied exactly) that clearly do NOT fit the blank.\n" +
+    "For kind \"trans\", wrong_options = [].\n" +
+    "note_vi: 1-2 short Vietnamese sentences on one usage point worth noticing in the dialogue; empty string if none.\n" + AI_MSG_RULES };
+  var AI_REMIX_SCHEMA = (function () {
+    var S = { type: "string" };
+    return { type: "object", additionalProperties: false, required: ["title_vi", "lines", "exercises", "note_vi"], properties: {
+      title_vi: S,
+      lines: { type: "array", items: { type: "object", additionalProperties: false, required: ["who", "zh", "vi"],
+        properties: { who: { type: "string", enum: ["A", "B"] }, zh: S, vi: S } } },
+      exercises: { type: "array", items: { type: "object", additionalProperties: false, required: ["kind", "vi", "zh", "answer", "word", "wrong_options"],
+        properties: { kind: { type: "string", enum: ["trans", "cloze"] }, vi: S, zh: S, answer: S, word: S, wrong_options: { type: "array", items: S } } } },
+      note_vi: S } };
+  })();
+  function rxShuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  // Từ của 1 câu luyện → 1 từ trong bài (AI chép lệch: 社恐症 / 摆烂了 → 社恐 / 摆烂); không khớp → "" (câu sai không đưa từ nào ra ôn).
+  function rxLessonWord(w, hz, zh, ans) {
+    var has = function (h) { return hz.indexOf(h) >= 0; }, near = function (x) { return x ? hz.filter(function (h) { return x.indexOf(h) >= 0 || h.indexOf(x) >= 0; }) : []; };
+    if (ans && has(ans)) return ans;
+    if (w && has(w)) return w;
+    var m = near(w).concat(near(ans));
+    if (!m.length) m = hz.filter(function (h) { return zh.indexOf(h) >= 0; });
+    return m.sort(function (a, b) { return b.length - a.length; })[0] || "";
+  }
+  // Kết quả AI → bài (null = không dùng được; { err } = dùng quá ít từ). Câu điền: đáp án + 3 từ khác trong bài làm lựa chọn —
+  // ưu tiên wrong_options AI chọn (từ chắc chắn không hợp chỗ trống), thiếu mới bốc ngẫu nhiên (khác chữ, không chứa nhau).
+  function rxClean(d, words) {
+    if (!d || typeof d !== "object") return null;
+    var lines = (Array.isArray(d.lines) ? d.lines : []).map(function (l) {
+      if (!l || typeof l !== "object") return null;
+      var zh = dichOneLine(dichZh(l.zh, 200));
+      return zh && HAN_RE.test(zh) ? { who: l.who === "B" ? "B" : "A", zh: zh, vi: dichOneLine(aiTxt(l.vi, 300)) } : null;
+    }).filter(Boolean).slice(0, 12);
+    if (lines.length < 4) return null;
+    var hz = words.map(function (w) { return w.h; });
+    var used = hz.filter(function (h) { return lines.some(function (l) { return l.zh.indexOf(h) >= 0; }); }).length;
+    if (used * 2 < hz.length) return { err: "AI chỉ dùng " + used + "/" + hz.length + " từ trong hội thoại" };
+    var ex = (Array.isArray(d.exercises) ? d.exercises : []).map(function (x) {
+      if (!x || typeof x !== "object") return null;
+      var w = hzClean(x.word), vi = dichOneLine(aiTxt(x.vi, 300)), zh = dichOneLine(dichZh(x.zh, 200));
+      if (!hzOk(w)) w = "";
+      if (x.kind === "cloze") {
+        var ans = hzClean(x.answer);
+        if (!hzOk(ans)) ans = w;
+        zh = zh.replace(/_{2,}|＿+|（\s*）|\(\s*\)/g, RX_BLANK);
+        if (zh.indexOf(RX_BLANK) < 0 && ans && zh.split(ans).length === 2) zh = zh.replace(ans, RX_BLANK); // chỉ khi đáp án xuất hiện đúng 1 lần
+        if (!ans || zh.split(RX_BLANK).length !== 2 || zh.indexOf(ans) >= 0) return null; // vẫn lộ đáp án trong câu → bỏ
+        var fit = function (h) { return h !== ans && h.indexOf(ans) < 0 && ans.indexOf(h) < 0; };
+        var bad = (Array.isArray(x.wrong_options) ? x.wrong_options : []).map(hzClean)
+          .filter(function (h, k, a) { return hz.indexOf(h) >= 0 && fit(h) && a.indexOf(h) === k; }).slice(0, 3);
+        var others = bad.concat(rxShuffle(hz.filter(function (h) { return fit(h) && bad.indexOf(h) < 0; }))).slice(0, 3);
+        if (others.length < 2) return null;
+        return { k: "cloze", zh: zh, ans: ans, vi: vi, w: rxLessonWord(w, hz, zh, ans), opts: rxShuffle(others.concat([ans])) };
+      }
+      if (!vi || !HAN_RE.test(zh)) return null;
+      return { k: "trans", vi: vi, zh: zh, ans: "", w: rxLessonWord(w, hz, zh, "") };
+    }).filter(Boolean).slice(0, 6);
+    if (ex.length < 2) return null; // không đủ câu luyện → coi như sai định dạng (hiện Thử lại)
+    // miss: từ đã bị phạt vì câu sai trong bài này (mỗi từ chỉ đưa ra ôn 1 lần / bài, Làm lại không trừ thêm)
+    return { at: Date.now(), title: dichOneLine(aiTxt(d.title_vi, 120)), note: aiTxt(d.note_vi, 500), words: words, lines: lines, ex: ex, res: null, miss: {} };
+  }
+  // Gọi AI soạn bài hôm nay từ kho từ hiện tại (loud = bấm nút ở màn #remix). Xong: lưu bài + mốc; đang trong phiên thì chỉ lưu, không vẽ / toast.
+  function rxGen(loud) {
+    if (RX.busy || !aiOn()) return;
+    var t0 = Date.now(), words = rxPool(); // mốc = lúc chụp kho: từ thêm / học lần đầu trong lúc AI đang soạn vẫn vào bài sau
+    if (words.length < RX_MIN) { if (loud) toast("Chưa đủ " + RX_MIN + " từ mới để xào bài"); return; }
+    var tok = ++RX.tok;
+    RX.busy = true; RX.err = "";
+    rxRepaint();
+    var payload = words.map(function (w) { var o = { hanzi: w.h, meaning_vi: shortMeaning(w.m) || w.m }; if (w.ez) o.example_zh = w.ez; return o; });
+    aiCall("remix", { words: payload }, AI_REMIX_SCHEMA).then(function (r) {
+      if (tok !== RX.tok) return;
+      RX.busy = false;
+      var L = r.ok ? rxClean(r.data, words) : null;
+      if (!L || L.err) { RX.err = !r.ok ? r.reason : L ? L.err : "AI trả lời sai định dạng"; rxRepaint(); return; }
+      RXS = rxLoad(); // tab khác có thể vừa ghi
+      RXS.days[dateKey(new Date())] = L; RXS.mark = Math.max(RXS.mark, t0); // lưu theo ngày lúc lưu (AI kéo qua 0h → bài của ngày mới)
+      RX.day = "";
+      rxSave();
+      RX.run = null; RX.b = null;
+      if (!session && view !== "remix") toast("Có bài Ôn từ mới hôm nay · " + L.words.length + " từ");
+      rxRepaint();
+    });
+  }
+  function rxRepaint() {
+    if (session) return;
+    if (view === "remix" || view === "home") renderKeepScroll();
+  }
+  // Tự soạn bài: mỗi ngày 1 lần (lần đầu mở app / quay lại app), chờ tự nhận hộp thư xong để từ mới vào kho trước.
+  function rxAuto(n) {
+    n = n || 0;
+    if (!aiOn() || RX.busy || session) return; // đang trong phiên: closeSession gọi lại sau khi phiên đóng
+    var day = dateKey(new Date());
+    RXS = rxLoad();
+    if (RXS.days[day] || RXS.tried === day) return;
+    if (INBOX.busy && n < 40) { setTimeout(function () { rxAuto(n + 1); }, 1500); return; }
+    if (rxPool().length < RX_MIN || navigator.onLine === false) return; // mất mạng: chưa tính lượt hôm nay, có mạng lại thì thử ("online")
+    RXS.tried = day; rxSave();
+    rxGen(false);
+  }
+  function rxWordPy(w) { return w.py || (dictOk() ? pickPinyin(w.h, "") : ""); }
+  function rxLinePy(zh) { return dictOk() ? sentencePinyin(zh) : ""; }
+  function rxReadLabel(on) { return on ? ico("stop") + "Dừng đọc" : ico("play") + "Đọc cả đoạn"; }
+  // Màn #remix: (1) danh sách từ (chưa có bài: kèm câu ví dụ có sẵn) · (2) hội thoại · (3) Luyện / tổng kết.
+  function rxHtml() {
+    var L = rxToday(), words = L ? L.words : rxPool(), n = words.length, showEx = !L;
+    var lede = L ? 'Bài hôm nay: <b>' + n + '</b> từ mới mấy hôm nay, AI xào thành 1 đoạn hội thoại' + (L.ex.length ? ' + <b>' + L.ex.length + '</b> câu luyện' : "") + '.'
+      : n >= RX_MIN ? '<b>' + n + '</b> từ mới ' + (RXS.mark ? "từ sau bài trước" : "trong " + RX_FIRST_DAYS + " ngày qua") + ' — từ Dịch, ChatGPT, Notion và thẻ vừa học lần đầu.'
+      : 'Chưa đủ ' + RX_MIN + ' từ mới để ôn — từ Dịch, ChatGPT, Notion và thẻ học lần đầu sẽ gom về đây.';
+    var rows = words.map(function (w) {
+      var py = rxWordPy(w);
+      return '<li class="item rxw"><span class="rxz zh" lang="zh-CN">' + esc(w.h) + '</span>' +
+        '<span class="it"><b>' + esc(shortMeaning(w.m) || "—") + '</b><small>' + (py ? '<span class="rxpy">' + esc(py) + '</span>' : "") + (w.hsk ? (py ? " · " : "") + "HSK " + w.hsk : "") + '</small>' +
+        (showEx && w.ez ? '<span class="rxex"><span class="zh" lang="zh-CN">' + lsZhSpk(w.ez, speakBtn(w.ez, true)) + '</span>' + (w.ev ? '<span class="rxev">' + esc(w.ev) + '</span>' : "") + '</span>' : "") +
+        '</span>' + speakBtn(w.h, true) + '</li>';
+    }).join("");
+    var gen = "";
+    if (!L && n >= RX_MIN) {
+      if (!aiOn()) gen = '<p class="rxnoai">' + ico("spark") + '<span>Bật AI ở tab Tôi để app xào thành hội thoại + bài luyện</span></p>';
+      else if (RX.busy) gen = '<p class="dwait">' + ico("spark") + 'AI đang xào thành hội thoại…</p>';
+      else gen = (RX.err ? '<div class="dicherr">' + ico("warn") + '<span>Chưa xào được: ' + esc(RX.err) + '</span></div>' : "") +
+        '<button class="primary big rxgen" data-action="rx-gen">' + (RX.err ? "Thử lại" : "Xào thành hội thoại") + '</button>';
+    }
+    return '<div class="wrap rxwrap">' + mastHtml('<span lang="zh-CN">新词</span>') +
+      '<button class="backlink" data-action="home">' + ico("back") + 'Học</button>' +
+      '<h1 class="hl">Ôn từ mới</h1><p class="lede">' + lede + '</p>' + gen +
+      (n ? '<section class="box"><h2>Từ mới</h2><ul class="items rxws">' + rows + '</ul></section>' : "") +
+      (L ? rxDlgHtml(L) + rxPrHtml(L) : "") + '</div>';
+  }
+  function rxDlgHtml(L) {
+    var py = UI.rxPy !== false, vi = UI.rxVi !== false, b = RX.b, on = !!reading && reading.key === "rx";
+    var tog = function (act, v, label) {
+      return '<button class="small-btn lsshow' + (v ? " primary" : "") + '" data-action="' + act + '" aria-pressed="' + v + '">' + (v ? ico("check") : "") + label + '</button>';
+    };
+    var lines = L.lines.map(function (ln, i) {
+      var isB = ln.who === "B", cur = b === i, pick = b != null && isB && !cur, lpy = py ? rxLinePy(ln.zh) : "";
+      return '<div class="tline rxl' + (isB ? " rxb" : "") + (cur ? " shcur" : pick ? " shpick" : "") + (on && reading.elId === "rxl-" + i ? " reading" : "") + '" id="rxl-' + i + '"' +
+          (pick ? ' data-action="rx-bpick" data-i="' + i + '"' : "") + '>' +
+        '<span class="spkr">' + ln.who + '</span><div class="tb"><div class="tzh zh" lang="zh-CN">' + lsZhSpk(ln.zh, speakBtn(ln.zh, true)) + '</div>' +
+        (lpy ? '<div class="ex-py">' + esc(lpy) + '</div>' : "") + (vi && ln.vi ? '<div class="ex-vi">' + esc(ln.vi) + '</div>' : "") +
+        (cur ? '<div id="vbox" class="vbox shctl" data-action="noop">' + rxVoiceInner(L) + '</div>' : "") + '</div></div>';
+    }).join("");
+    var bOn = b != null, role = micSupported() && L.lines.some(function (ln) { return ln.who === "B"; })
+      ? '<div class="shbar' + (bOn ? " on" : "") + '"><button class="small-btn shtoggle' + (bOn ? " primary" : "") + '" data-action="rx-b" aria-pressed="' + bOn + '">' +
+          (bOn ? ico("x") + "Tắt nói vai B" : ico("mic") + "Nói vai B") + '</button>' +
+        '<span class="muted small">' + (bOn ? "Máy đọc lượt A, bạn nói lượt B — bấm lượt B nào để nói lại" : "Bạn đóng vai B: nghe A rồi nói lượt của B, app so với câu mẫu") + '</span></div>' : "";
+    return '<section class="box rxdlg"><h2>Hội thoại</h2>' + (L.title ? '<p class="rxti">' + esc(L.title) + '</p>' : "") +
+      '<div class="lstools"><span class="lslab">Hiện</span>' + tog("rx-py", py, "Pinyin") + tog("rx-vi", vi, "Dịch") +
+        '<button class="' + lsReadCls(on) + '" data-action="rx-read">' + rxReadLabel(on) + '</button></div>' + role +
+      '<div class="rxlines">' + lines + '</div>' +
+      (L.note ? '<p class="rxnote">' + ico("bulb") + '<span>' + esc(L.note) + '</span></p>' : "") + '</section>';
+  }
+  function rxReadAll() {
+    var L = rxToday();
+    if (!L) return;
+    if (recIsLive()) recStop();
+    readAll("rx", L.lines.map(function (ln, i) { return { text: ln.zh, elId: "rxl-" + i }; }));
+  }
+  // ---- Nói vai B: dùng hạ tầng ghi âm + nhận giọng (REC), owner "rx:<bài>:<lượt>" ----
+  function rxOwner() { var L = rxToday(); return L && RX.b != null && L.lines[RX.b] ? "rx:" + L.at + ":" + RX.b : ""; }
+  function rxVoiceInner(L) {
+    var ln = L && RX.b != null ? L.lines[RX.b] : null;
+    if (!ln) return "";
+    var owner = rxOwner(), cmp = voiceCmp(owner, ln.zh);
+    return '<div class="vctl">' + micBtnHtml(owner, "Nói lượt này", true) + playBtnHtml(owner) +
+        '<button class="spk vref" data-action="speak" data-text="' + esc(ln.zh) + '" title="Nghe câu mẫu">' + ico("play") + 'Nghe mẫu</button></div>' +
+      (cmp ? '<div class="vzh zh">' + markedZhHtml(ln.zh, cmp) + '</div>' : "") + voiceStatusHtml(owner, ln.zh, true) +
+      '<div class="vnext"><button class="small-btn primary" data-action="rx-bnext">Lượt B tiếp ' + ico("arrow") + '</button></div>';
+  }
+  function rxBGo(i) {
+    var L = rxToday();
+    if (!L || !L.lines[i]) return;
+    recRelease(); stopReading();
+    RX.b = i;
+    renderKeepScroll();
+    var el = byId("rxl-" + i);
+    if (el) try { el.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (e) { /* bỏ qua */ }
+    var prev = L.lines[i - 1];
+    if (prev && prev.who !== "B") speak(prev.zh); // máy đọc lượt A ngay trước làm câu gợi
+  }
+  function rxBNext() {
+    var L = rxToday();
+    if (!L) return;
+    for (var i = RX.b == null ? 0 : RX.b + 1; i < L.lines.length; i++) if (L.lines[i].who === "B") { rxBGo(i); return; }
+    if (RX.b != null) toast("Hết lượt B — bấm lượt nào để nói lại");
+  }
+  function rxBToggle() {
+    if (RX.b != null) { recRelease(); RX.b = null; renderKeepScroll(); return; }
+    rxBNext();
+  }
+  // ---- Luyện: dịch Việt → Trung (AI chấm bằng task "trans" nếu bật, không thì tự chấm) + điền chỗ trống (4 lựa chọn, chấm tại chỗ) ----
+  function rxPrHtml(L) {
+    var ex = L.ex || [], n = ex.length, r = RX.run;
+    if (!n) return "";
+    var h = '<section class="box rxpr" id="rxPr"><h2>Luyện</h2>';
+    var q = r ? ex[r.i] : null;
+    if (!q) {
+      RX.run = null;
+      if (L.res) return h + rxSumHtml(L) + '</section>';
+      return h + '<p class="rxlede">' + n + ' câu: dịch Việt → Trung và điền từ vào chỗ trống. Câu sai thì từ đó ra ôn lại ngay ở buổi học sau.</p>' +
+        '<button class="primary big rxgo" data-action="rx-go">Luyện ' + n + ' câu</button></section>';
+    }
+    return h + '<div class="rxq"><p class="rxk"><span>' + (q.k === "cloze" ? "Điền vào chỗ trống" : "Dịch sang tiếng Trung") + '</span><small>Câu ' + (r.i + 1) + ' / ' + n + '</small></p>' +
+      (q.k === "cloze" ? rxClozeHtml(q, r, n) : rxTransHtml(q, r)) + '</div></section>';
+  }
+  function rxTransHtml(q, r) {
+    var vi = '<div class="rxvi">' + esc(q.vi) + '</div>';
+    if (r.phase !== "show") {
+      var wait = r.phase === "wait";
+      return vi + '<form id="rxForm" class="trform" action="#" autocomplete="off"><input id="rxIn" class="trin zh" type="text" lang="zh-CN" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="done"' +
+          ' aria-label="Gõ câu tiếng Trung" placeholder="Gõ chữ Hán vào đây…" value="' + esc(r.typed || "") + '"' + (wait ? " readonly" : "") + '></form>' +
+        (wait ? '<div class="actions dock aiwaitrow"><button class="primary big" disabled>Đang chấm…</button><button class="small-btn" data-action="rx-skip-ai">Bỏ qua AI</button></div>'
+          : '<div class="actions dock"><button class="primary big" data-action="rx-check">Kiểm tra</button></div>');
+    }
+    var typed = String(r.typed || "").trim(), cmp = typed && normSpeech(typed) ? compareSpeech(q.zh, typed) : null, sug = aiSugGrade(r.ai), py = rxLinePy(q.zh);
+    var lv = cmp ? (cmp.pct >= 85 ? "good" : cmp.pct >= 50 ? "mid" : "low") : "";
+    return vi + aiBoxHtml(r.ai, typed, ["Chưa", "Được"]) +
+      '<div class="vcmp trres">' +
+        (cmp ? '<div class="trrow"><span class="trlab">Bạn viết</span><span class="trzh zh">' + markedZhHtml(typed, { ok: cmp.okH }) + '</span></div>' : "") +
+        '<div class="trrow"><span class="trlab">Câu mẫu</span><span class="trzh zh">' + markedZhHtml(q.zh, cmp) + '</span>' + speakBtn(q.zh, true) + '</div>' +
+        (py ? '<div class="trpy">' + esc(py) + '</div>' : "") + (cmp ? '<div class="vpct ' + lv + '">Khớp ' + cmp.pct + '%</div>' : "") +
+        '<div class="trnote">' + (sug ? "AI chấm theo nghĩa — bạn vẫn bấm xác nhận" : cmp ? "Câu khác mẫu vẫn có thể đúng — tự chấm" : "So câu trong đầu với câu mẫu rồi tự chấm") + '</div>' +
+      '</div>' +
+      '<div class="grades two dock">' +
+        '<button class="g1' + (sug === 1 ? " aisug" : "") + '" data-action="rx-grade" data-ok="0"><b>Chưa</b><small>ôn lại từ này</small></button>' +
+        '<button class="g3' + (sug === 3 ? " aisug" : "") + '" data-action="rx-grade" data-ok="1"><b>Được</b><small>câu tiếp</small></button></div>';
+  }
+  function rxClozeHtml(q, r, n) {
+    var done = r.pick != null, ok = done && r.pick === q.ans, parts = q.zh.split(RX_BLANK);
+    var fill = done ? '<span class="rxfill ' + (ok ? "ok" : "bad") + '">' + esc(q.ans) + '</span>' : '<span class="rxblank" role="img" aria-label="chỗ trống"></span>'; // gạch son vẽ bằng CSS (＿ không có trong font WenKai đã cắt)
+    var opts = '<div class="opts rxopts">' + q.opts.map(function (o) {
+      var cls = "opt" + (done ? (o === q.ans ? " right" : o === r.pick ? " wrong" : " dim") : "");
+      return '<button class="' + cls + '" data-action="rx-pick" data-v="' + esc(o) + '"' + (done ? " disabled" : "") + '><span class="ot"><span class="zh" lang="zh-CN">' + esc(o) + '</span></span></button>';
+    }).join("") + '</div>';
+    return '<div class="rxzh zh" lang="zh-CN">' + esc(parts[0]) + fill + esc(parts.slice(1).join(RX_BLANK)) + (done ? " " + speakBtn(parts.join(q.ans), true) : "") + '</div>' + opts +
+      (done ? '<p class="rxres ' + (ok ? "ok" : "bad") + '">' + (ok ? "✓ Đúng" : '✕ Chưa đúng — đáp án là <b class="zh">' + esc(q.ans) + '</b>') + '</p>' +
+        (q.vi ? '<p class="rxcv">' + esc(q.vi) + '</p>' : "") +
+        '<div class="actions dock"><button class="primary big" data-action="rx-next">' + (r.i + 1 >= n ? "Xem kết quả" : "Câu tiếp") + '</button></div>' : "");
+  }
+  function rxSumHtml(L) {
+    var res = L.res, bad = (res.bad || []).map(function (i) { return L.ex[i]; }).filter(Boolean);
+    var nw = bad.filter(function (q) { return q.w && rxWord(L, q.w); }).length;
+    return '<div class="rxsum"><div class="wuscore"><span class="wsl">Đúng</span><b>' + res.ok + '</b><span class="wsn">/' + res.n + '</span></div>' +
+      '<p class="wunote">' + (!bad.length ? "Đúng hết — mai có bài mới." : bad.length + " câu sai" +
+        (nw === bad.length ? " — từ của các câu này đã đưa ra ôn lại ngay" : nw ? " — " + nw + " câu có từ đã đưa ra ôn lại ngay" : "")) + '</p>' +
+      (bad.length ? '<ul class="wubad">' + bad.map(function (q) {
+        var zh = q.k === "cloze" ? q.zh.split(RX_BLANK).join(q.ans) : q.zh, w = q.w ? rxWord(L, q.w) : null; // từ không thuộc bài: không ghi "Ôn lại"
+        return '<li><div class="wuzh2"><span class="zh" lang="zh-CN">' + esc(zh) + '</span>' + speakBtn(zh, true) + '</div>' +
+          (q.vi ? '<div class="wuvi2">' + esc(q.vi) + '</div>' : "") +
+          (w ? '<div class="wuw">Ôn lại: <b class="zh">' + esc(q.w) + '</b> ' + esc(shortMeaning(w.m)) + '</div>' : "") + '</li>';
+      }).join("") + '</ul>' : "") +
+      '<div class="rxagain"><button class="link" data-action="rx-go">' + ico("retry") + 'Làm lại</button></div></div>';
+  }
+  // Vẽ lại riêng khối Luyện (không vẽ cả màn: giữ chỗ cuộn, giọng đọc đang chạy). top = cuộn khối lên đầu (bắt đầu / câu mới / tổng kết).
+  function rxPrPaint(top) {
+    var L = rxToday(), el = byId("rxPr");
+    if (view !== "remix" || !L || !el) return;
+    el.outerHTML = rxPrHtml(L);
+    var nb = byId("rxPr");
+    if (top && nb) try { nb.scrollIntoView({ block: "start", behavior: "smooth" }); } catch (e) { nb.scrollIntoView(); }
+    var inp = byId("rxIn"), coarse = !!(window.matchMedia && matchMedia("(pointer:coarse)").matches);
+    if (inp && !inp.readOnly && !coarse) try { inp.focus({ preventScroll: true }); } catch (e) { /* bỏ qua */ }
+    var res = !top && nb ? nb.querySelector(".aibox, .ailine, .rxres") : null;
+    if (res) try { res.scrollIntoView({ block: "nearest", behavior: "smooth" }); } catch (e) { /* bỏ qua */ }
+  }
+  function rxGo() {
+    var L = rxToday();
+    if (!L || !L.ex.length) return;
+    RX.day = rxDay();
+    RX.run = { i: 0, ok: 0, bad: [], phase: "ask", typed: "", ai: null, pick: null };
+    rxPrPaint(true);
+  }
+  function rxCur() { var L = rxToday(), r = RX.run; return L && r && L.ex[r.i] ? { L: L, r: r, q: L.ex[r.i] } : null; }
+  function rxCheck() {
+    var c = rxCur();
+    if (!c || c.q.k !== "trans" || c.r.phase !== "ask") return;
+    var r = c.r, q = c.q, inp = byId("rxIn");
+    if (inp) r.typed = inp.value;
+    var typed = String(r.typed || "").trim();
+    r.ai = null; r.phase = "show";
+    if (typed && normSpeech(typed) && aiOn()) {
+      var st = { state: "wait", model: aiModel() }, w = q.w ? rxWord(c.L, q.w) : null;
+      r.ai = st; r.phase = "wait";
+      aiCall("trans", { vi: q.vi, situation: "", reference_zh: q.zh, learned_words: q.w ? [q.w + " = " + shortMeaning(w ? w.m : "")] : [], learner_zh: typed }, AI_GRADE_SCHEMA)
+        .then(function (res) {
+          aiApply(st, res);
+          if (RX.run !== r || r.ai !== st) return; // đã sang câu khác (Bỏ qua AI mà còn ở câu này: kết quả về muộn vẫn hiện)
+          r.phase = "show";
+          rxPrPaint(false);
+        });
+    }
+    rxPrPaint(false);
+  }
+  function rxSkipAi() { var c = rxCur(); if (c && c.r.phase === "wait") { c.r.phase = "show"; rxPrPaint(false); } }
+  // Chấm 1 câu: sai → từ của câu ra ôn lại (rxMiss).
+  function rxMark(c, ok) {
+    if (ok) c.r.ok++;
+    else {
+      c.r.bad.push(c.r.i);
+      var h = c.q.w, miss = c.L.miss || (c.L.miss = {});
+      if (h && rxWord(c.L, h) && !miss[h]) { miss[h] = 1; rxSave(); rxMiss(h, c.L); } // mỗi từ chỉ phạt 1 lần / bài
+    }
+  }
+  function rxGrade(ok) {
+    var c = rxCur();
+    if (!c || c.q.k !== "trans" || c.r.phase !== "show") return;
+    rxMark(c, ok);
+    rxNext();
+  }
+  function rxPick(v) {
+    var c = rxCur();
+    if (!c || c.q.k !== "cloze" || c.r.pick != null) return;
+    c.r.pick = v; c.r.phase = "show";
+    rxMark(c, v === c.q.ans);
+    rxPrPaint(false);
+  }
+  function rxNext() {
+    var c = rxCur();
+    if (!c || c.r.phase !== "show") return;
+    var r = c.r;
+    r.i++; r.phase = "ask"; r.typed = ""; r.ai = null; r.pick = null;
+    if (r.i >= c.L.ex.length) {
+      c.L.res = { ok: r.ok, n: c.L.ex.length, bad: r.bad.slice(), at: Date.now() };
+      rxSave();
+      RX.run = null;
+    }
+    rxPrPaint(true);
+  }
+  // Câu sai: từ đã có thẻ (đã học) → đến hạn ngay như câu sai của kiểm tra bài cũ (due = bây giờ, ease −0.15, interval ≤ 1).
+  // Từ chưa thành thẻ → nằm trong bộ Từ tin nhắn (chưa có thì thêm từ dữ liệu của bài) và lên đầu hàng từ mới của bộ.
+  function rxMiss(h, L) {
+    if (!h) return;
+    var now = Date.now(), hit = false;
+    ITEMS.forEach(function (it) {
+      var c = db.cards[it.id];
+      if (it.kind !== "word" || it.data.hanzi !== h || !c || c.state === "new") return;
+      c.due = now; c.ease = Math.max(1.3, round2(c.ease - 0.15)); c.interval = Math.min(c.interval, 1); hit = true;
+    });
+    if (hit) { saveDb(); return; }
+    var had = msgAny(), at = -1, x = rxWord(L, h);
+    MSGD.words.forEach(function (w, k) { if (w.hanzi === h) at = k; });
+    var v = at >= 0 ? MSGD.words.splice(at, 1)[0]
+      : x && x.m ? dichWordVal({ hanzi: h, meaning: x.m, pos: "", hsk: x.hsk || 0, why: "Làm sai ở bài Ôn từ mới gần đây", py0: x.py }, x.ez ? { zh: x.ez, vi: x.ev } : null, now) : null;
+    if (!v) return;
+    MSGD.words.unshift(v); delete MSGD.skip[h];
+    if (!saveMsgW()) { MSGD = loadMsgW(); return; }
+    dichDeckChanged(had);
+  }
+  function rxAction(a, el) {
+    if (a === "rx-gen") rxGen(true);
+    else if (a === "rx-py") { UI.rxPy = UI.rxPy === false; saveUi(); renderKeepScroll('[data-action="rx-py"]'); }
+    else if (a === "rx-vi") { UI.rxVi = UI.rxVi === false; saveUi(); renderKeepScroll('[data-action="rx-vi"]'); }
+    else if (a === "rx-read") rxReadAll();
+    else if (a === "rx-b") rxBToggle();
+    else if (a === "rx-bpick") rxBGo(Number(el.getAttribute("data-i")));
+    else if (a === "rx-bnext") rxBNext();
+    else if (a === "rx-go") rxGo();
+    else if (a === "rx-check") rxCheck();
+    else if (a === "rx-skip-ai") rxSkipAi();
+    else if (a === "rx-grade") rxGrade(el.getAttribute("data-ok") === "1");
+    else if (a === "rx-pick") rxPick(el.getAttribute("data-v"));
+    else if (a === "rx-next") rxNext();
+  }
+  // quay lại app (có thể đã sang ngày mới) → tự soạn bài nếu chưa có
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) setTimeout(rxAuto, 3000); });
+  window.addEventListener("online", function () { setTimeout(rxAuto, 3000); }); // mở app lúc mất mạng → có mạng lại thì soạn bài
 
   // Khúc 3: cấp bản đồ đang học có đóng vai (không có thì cấp đã mở có đóng vai); mỗi lần mở đổi sang cấp kế (UI.blkRp).
   function blkRpPick() {
@@ -9198,6 +9761,12 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     var warmSub = !wn ? "Đang tắt · bật lại ở mục Tôi" : wdone ? "Đã làm hôm nay" : !wdays ? "Chưa có buổi trước để kiểm tra" : wn + " câu từ buổi trước · Trung ↔ Việt · tự chạy đầu buổi";
     var lcN = leechItems().length; // từ cứng đầu: hàng 03 chỉ hiện khi có
     var spN = speakWords().length; // luyện nói với ChatGPT: chỉ hiện khi đã có từ đã học
+    // Ôn từ mới gần đây: hiện khi có bài hôm nay hoặc kho ≥ RX_MIN từ. Số thứ tự hàng đánh liền (01, 02, …)
+    var rxL = rxToday(), rxN = rxL ? rxL.words.length : rxPool().length, rxOn = !!rxL || rxN >= RX_MIN, rowNo = 2;
+    var nextNo = function () { return pad2(++rowNo); };
+    var rxDayW = rxL && rxDay() !== dateKey(new Date()) ? "hôm qua" : "hôm nay"; // bài tối qua chưa làm vẫn mở được tới khi có bài mới
+    var rxSub = rxL ? (rxL.res ? "Đã luyện " + rxDayW + " · đúng " + rxL.res.ok + "/" + rxL.res.n : "Hội thoại" + (rxL.ex.length ? " + " + rxL.ex.length + " câu luyện" : "") + " · bài " + rxDayW)
+      : !aiOn() ? "Từ mới mấy hôm nay · nghe lại câu ví dụ" : RX.busy ? "AI đang xào thành hội thoại…" : "Từ mới mấy hôm nay · AI xào thành hội thoại + bài luyện";
     var deckRow = function (d) {
       var c = deckCounts(d, now);
       var checked = s.selectedDecks.indexOf(d.id) >= 0 ? " checked" : "";
@@ -9251,9 +9820,11 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
           '<span class="it"><b>Kiểm tra bài cũ</b><small>' + warmSub + '</small></span>' + ico("arrow") + '</button></li>' +
         '<li><button class="item" data-action="start"><span class="no">02</span>' +
           '<span class="it"><b>Ôn thẻ đến hạn</b><small>' + due + ' thẻ hôm nay' + (reviewCap() ? ' · trần ' + reviewCap() + ' lượt / ngày' : "") + '</small></span>' + ico("arrow") + '</button></li>' +
-        (lcN ? '<li><button class="item" data-action="leech"><span class="no">03</span>' +
+        (lcN ? '<li><button class="item" data-action="leech"><span class="no">' + nextNo() + '</span>' +
           '<span class="it"><b>Từ cứng đầu · ' + lcN + ' từ</b><small>Quên từ ' + LEECH_LAPSES + ' lần trở lên · ôn dồn có viết tay</small></span>' + ico("arrow") + '</button></li>' : "") +
-        (spN ? '<li><button class="item" data-action="speak-copy"><span class="no">' + (lcN ? "04" : "03") + '</span>' +
+        (rxOn ? '<li><button class="item" data-action="remix"><span class="no">' + nextNo() + '</span>' +
+          '<span class="it"><b>Ôn từ mới gần đây · ' + rxN + ' từ</b><small>' + rxSub + '</small></span>' + ico("arrow") + '</button></li>' : "") +
+        (spN ? '<li><button class="item" data-action="speak-copy"><span class="no">' + nextNo() + '</span>' +
           '<span class="it"><b>Luyện nói với ChatGPT</b><small>Chép ' + spN + ' từ đang học · dán vào Project Luyện nói rồi bấm Voice</small></span>' + ico("doc") + '</button></li>' : "") +
       '</ul></section>' +
       '<section class="box"><div class="row-between"><h2>Đang học</h2><button class="link" data-action="topics" aria-expanded="' + !!UI.topicsOpen + '">' +
@@ -9753,6 +10324,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function refreshVoice() {
     if (view === "session" && warmActive()) { warmVoiceRefresh(); return; }
     if (view === "roleplay") { rpVoiceRefresh(); return; }
+    if (view === "remix") { var rb = byId("vbox"); if (rb) rb.innerHTML = rxVoiceInner(rxToday()); return; }
     var el = byId("vbox");
     if (!el) return;
     if (view === "session" && session && session.current && session.current.kind === "phrase") {
@@ -9932,16 +10504,25 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   function render() {
     if (session && view !== "session" && !AWAY_VIEWS[view]) closeSession();
     updateMini();
-    if (view !== "lesson" && reading) stopReading();
+    if (reading && view !== "lesson" && !(view === "remix" && reading.key === "rx")) stopReading(); // đọc cả đoạn ở #remix: vẽ lại (bật Pinyin…) không dừng
     voiceSweep(); // rời thẻ / câu đang ghi → bỏ bản ghi, tắt mic
     // Đổi màn: dừng giọng đọc còn dở (giọng máy của màn cũ không đọc đè sang màn mới).
     if (lastView && lastView !== view) { try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* bỏ qua */ } }
     var enterDich = view === "dich" && lastView !== "dich"; // vào tab Dịch → tự nhận hộp thư ChatGPT (sau khi vẽ)
+    // vào màn Ôn từ mới: bài đã luyện xong → hiện tổng kết (bỏ lượt Làm lại đang dở); lượt đầu đang dở thì làm tiếp
+    if (view === "remix" && lastView !== "remix") {
+      if (RX.run) { var rxL0 = rxToday(); if (!rxL0 || rxL0.res) RX.run = null; }
+      if (!RX.run) { RX.day = ""; RX.day = rxDay(); } // ghim bài đang mở (qua 0h vẫn thấy / lưu đúng bài)
+    }
     lastView = view;
     if (view === "stats") app.innerHTML = statsHtml();
     else if (view === "leech") app.innerHTML = leechHtml();
     else if (view === "me") app.innerHTML = meHtml();
     else if (view === "dich") app.innerHTML = dichHtml();
+    else if (view === "remix") { // [RX] Ôn từ mới gần đây: pinyin tra từ điển → chưa nạp thì nạp rồi vẽ lại
+      app.innerHTML = rxHtml();
+      if (!dictOk() && DICT.state !== "loading") loadDict(function (ok) { if (ok && view === "remix") renderKeepScroll(null, "#rxIn"); });
+    }
     else if (view === "session") { app.innerHTML = sessionShellHtml(); renderCard(); tick(); }
     else if (view === "exams" && EXAM_INDEX.length) app.innerHTML = examsHtml();
     else if (view === "exam" && exam) renderExam(false);
@@ -9990,6 +10571,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
   var DEPTH = { home: 0, exams: 1, lessons: 1, me: 1, stats: 2, session: 1, map: 1, exam: 2, lesson: 2, "exam-loading": 2, "lesson-loading": 2, "map-lv": 2, "map-loading": 2, roleplay: 3, "roleplay-loading": 3 };
   DEPTH.leech = 2;
   DEPTH.dich = 1;
+  DEPTH.remix = 2; // [RX] màn con của Học (không thanh tab: khối Luyện có hàng nút dính đáy)
   var fromPop = false;
   try { if ("scrollRestoration" in history) history.scrollRestoration = "manual"; } catch (e) { /* bỏ qua */ }
   function baseUrl() { return location.pathname + location.search; }
@@ -10003,6 +10585,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       case "lesson-loading": return lessonPending ? "#lesson/" + lessonPending : "#lessons";
       case "stats": return "#stats";
       case "leech": return "#leech";
+      case "remix": return "#remix";
       case "me": return "#me";
       case "dich": return DICH.imp ? "#dich/nhap" : "#dich"; // màn Nhập đoạn chat cũ: mục lịch sử riêng (con của Dịch)
       case "session": return "#session";
@@ -10041,6 +10624,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if ((m = /^#map\/(.+)$/.exec(h))) { var mk = m[1]; try { mk = decodeURIComponent(mk); } catch (e) { /* bỏ qua */ } if (MAP_LV[mk]) { openMapLevel(mk); return; } h = "#map"; }
     if ((m = /^#roleplay\/(.+)$/.exec(h))) { var rk = m[1]; try { rk = decodeURIComponent(rk); } catch (e) { /* bỏ qua */ } if (MAP_LV[rk]) { openRoleplay(rk); return; } h = "#map"; }
     if (h === "#leech") { view = "leech"; render(); return; }
+    if (h === "#remix") { view = "remix"; render(); return; }
     if (h === "#dich" || h === "#dich/nhap") { // Back từ màn nhập về Dịch = đóng màn nhập; mở lại #dich/nhap mà không còn gì dở = về Dịch
       if (h === "#dich") dichImpClose();
       view = "dich"; render(); return;
@@ -10097,6 +10681,9 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       case "dich": if (!backTo("#dich")) { dichImpClose(); view = "dich"; render(); } break; // bấm tab Dịch: luôn về ô dịch
       case "dich-go": case "dich-copy": case "dich-h": case "dich-add": case "dich-drop": case "dich-add-all": case "dich-ai": case "dich-imp": case "dich-imp-x": case "dich-file": case "dich-split": case "dich-conv": case "dich-run": case "dich-stop": case "dich-imp-add": case "dich-imp-back": case "dich-sel-all": case "dich-sel-none": case "dich-dict-retry": dichAction(action, el); break;
       case "inbox-save": case "inbox-pull": case "inbox-off": inboxAction(action); break; // [F4] Nối với ChatGPT
+      // [RX] Ôn từ mới gần đây
+      case "remix": if (!backTo("#remix")) { view = "remix"; render(); } break;
+      case "rx-gen": case "rx-py": case "rx-vi": case "rx-read": case "rx-b": case "rx-bpick": case "rx-bnext": case "rx-go": case "rx-check": case "rx-skip-ai": case "rx-grade": case "rx-pick": case "rx-next": rxAction(action, el); break;
       case "topics": UI.topicsOpen = !UI.topicsOpen; saveUi(); if (view !== "home") { view = "home"; render(); } else renderKeepScroll('[data-action="topics"]'); break;
       case "export": exportBackup(); break;
       case "import": { var f = byId("importFile"); if (f) { f.value = ""; f.click(); } break; }
@@ -10109,6 +10696,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       case "v-rec": {
         if (view === "session" && warmActive()) { warmRecToggle(); break; } // kiểm tra bài cũ: nói = nhận chữ vào ô
         if (view === "roleplay") { rpRecToggle(); break; } // đóng vai: nói = nhận chữ vào ô
+        if (view === "remix") { if (rxOwner()) recToggle(rxOwner()); break; } // Ôn từ mới: nói vai B
         var vo =view === "session" && session && session.current ? "card:" + session.current.id : view === "lesson" ? shadowOwner() : "";
         if (vo) recToggle(vo);
         if (view === "lesson") sessNote(vo); // đang trong phiên (khúc 3): tính 1 câu nhại
@@ -10345,6 +10933,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (t.id === "rcSen" && session && !t.readOnly) session.rcSen = t.value;
     if (t.id === "wuInput") { var wq = warmCur(); if (wq) wq.typed = t.value; }
     if (t.id === "rpIn" && rp) rp.draft = t.value;
+    if (t.id === "rxIn" && RX.run) RX.run.typed = t.value;
     var mn = t.getAttribute && t.getAttribute("data-mnew");
     if (mn) MAPNEW_TXT[mn] = t.value;
   });
@@ -10384,6 +10973,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
     if (e.target && (e.target.id === "rcForm" || e.target.id === "rcSenForm") && view === "session" && session && !rcPyNext(document.activeElement)) flip(); // Kiểm tra / Chấm câu
     if (e.target && e.target.id === "wuForm" && view === "session" && session) warmCheck();
     if (e.target && e.target.id === "rpForm" && view === "roleplay") rpSend();
+    if (e.target && e.target.id === "rxForm" && view === "remix") rxCheck(); // Ôn từ mới: Enter / "Xong" = Kiểm tra
   });
   // Listener gắn 1 lần trên #app (delegation) nên đổi thẻ / vẽ lại canvas không rò listener.
   if (window.PointerEvent) {
@@ -10630,6 +11220,7 @@ var m=document.querySelector("meta[name=theme-color]");if(m)m.setAttribute("cont
       if (DECKS.length) mapAdvance(null, false); // tiến độ nhập từ backup / máy khác có thể đã đạt 80%
       if (dictFixNeeded()) setTimeout(function () { loadDict(); }, 2000); // dữ liệu AI đã lưu có "?" / pinyin hỏng → nạp từ điển để sửa
       if (DECKS.length) setTimeout(inboxAuto, 1500); // [F4] mở app: nhận từ mới từ hộp thư ChatGPT (nền, lỗi thì lặng lẽ)
+      if (DECKS.length) setTimeout(rxAuto, 3000); // [RX] lần đầu mở app trong ngày: AI xào bài Ôn từ mới (chờ tự nhận hộp thư xong)
     };
     var part = function () { if (--wait <= 0) go(); };
     if (!wait) { go(); return; }
